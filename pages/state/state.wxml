@@ -1,0 +1,32 @@
+<view class="contain">
+
+<scroll-view>
+
+<!--头部-->
+<view class="headerView">
+ <image class="picture" src="{{picture}}"></image>
+ <label class="name">{{name}}</label>
+   <view class="userinfo-desc">{{plate_no}}</view>
+ <view class="userinfo-desc"><label class="province-text">{{province}}</label>{{city}}</view>
+</view>
+
+<!--表格-->
+ <block wx:for-items="{{items}}" wx:key="item.id">   
+<view class="item">
+ <image class="icon" src="{{item.icon}}"></image>
+ <label>{{item.text}}</label>
+  <text class="sta-text" wx:if="{{status==1}}">审核中</text>
+  <text class="sta-text" wx:elif="{{status==2}}">未通过</text>
+  <text class="sta-text" wx:elif="{{status==3}}">已认证</text>
+</view>
+ </block>
+ <view class="ar_cont" wx:if="{{status==2}}">
+    <text class="ar_cont_h1">未通过原因</text>
+    <text class="ar_cont_text">
+     {{comment}}
+    </text>
+    <button class="btn-quit" bindtap="bookTap">重新认证</button>
+ </view>
+</scroll-view>
+
+</view>

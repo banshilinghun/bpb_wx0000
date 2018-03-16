@@ -1,0 +1,119 @@
+<view>
+  <view class="page-section page-section-spacing swiper">
+    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white">
+      <block wx:for="{{banners}}" wx:key="item.id">
+        <swiper-item>
+          <image src="{{item}}" mode="scaleToFill" style="width:100%;height:446rpx;"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="profile-wrapper">
+    <block>
+      <view class="profile frpro">
+        <view class="profile-item cwsfts">{{adInfo.name}}</view>
+      </view>
+    </block>
+    <block>
+      <view class="profile">
+        <view class="profile-item">广告类型:</view>
+        <view class="right-text">
+          <label class="data-text" wx:if="{{adInfo.type==0}}">车尾</label>
+          <label class="data-text" wx:if="{{adInfo.type==1}}">车内</label>
+          <label class="data-text" wx:if="{{adInfo.type==2}}">车尾+车内</label>
+        </view>
+      </view>
+    </block>
+    <block>
+      <view class="profile">
+        <view class="profile-item">实际收益:</view>
+        <view class="right-text">{{adInfo.amount}}元</view>
+      </view>
+    </block>
+    <block>
+      <view class="profile">
+        <view class="profile-item">投放车辆:</view>
+        <view class="right-text">{{adInfo.total_count}}辆</view>
+      </view>
+    </block>
+    <block>
+      <view class="profile">
+        <view class="profile-item">投放时间:</view>
+        <view class="right-text">{{adInfo.begin_date}}
+          <label class="data-blt">~</label>{{adInfo.end_date}}</view>
+      </view>
+    </block>
+  </view>
+  <block wx:if="{{checkPlan}}">
+     <view class="profile-wrapper" bindtap="checkPlan" data-adId="{{adInfo.id}}">
+      <view class="profile frpro">
+        <view class="profile-item cwsfts">检测计划</view>
+        <image class="profile-arrow" src="/image/arrow.png"></image>
+      </view>
+    </view>
+  </block>
+  <block wx:if="{{receive==1}}">
+    <view class="profile-wrapper">
+      <view class="profile frpro">
+        <view class="profile-item cwsfts">快递寄送</view>
+      </view>
+      <view class="item item2">
+        <view class="myad-li myad-li2">
+          <view class="message message2">
+            {{reCity}}{{reCounty}}{{reDetail}}
+          </view>
+        </view>
+      </view>
+      <view class="item item3">
+        <view class="item-middle">
+          <view>
+            <text class="title title2">{{recipients}}</text>
+            <text class="ponetext">{{rePhone}}</text>
+          </view>
+        </view>
+        <view class="item_right">
+          <view>
+            <label class="province-text" wx:if="{{shippingStatus==0}}">[未派送]</label>
+            <label class="province-text" wx:if="{{shippingStatus==1}}">[派送中]</label>
+            <label class="province-text" wx:if="{{shippingStatus==2}}">[已签收]</label>
+          </view>
+        </view>
+      </view>
+      <block wx:if="{{haveExp}}">
+        <view class="items-list">
+          <view class="lists">
+            <view class="list" wx:for="{{expList}}" wx:key="{{item.time}}" wx:for-item="item" wx:for-index="index">
+              <view class="time">
+                <text class='ymdate'>{{item.ymdate}}</text>
+                <text>{{item.hmtime}}</text>
+              </view>
+              <view class="{{(index === 0) ? 'bg text' : 'text'}}">
+                <text>  {{item.context}}</text>
+              </view>
+            </view>
+            <view class='expmenu' bindtap="expmenu" wx:if="{{showMenu}}">查看物流详情
+              <image src='../../image/expdown.png'></image>
+            </view>
+             <view class='expmenu' bindtap="expmenuUp" wx:if="{{!showMenu}}">收起物流详情
+              <image src='../../image/expup.png'></image>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </block>
+  <form bindsubmit="formSubmit" report-submit="{{istrue}}">
+  <button class="btn-quit"  formType="submit" wx:if="{{sta==10}}"> 领取广告 </button>
+  </form>
+  <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==0}}"> 登记 </button>
+  <button class="btn-gray" wx:if="{{sta==11}}"> 登记 </button>
+  <button class="btn-gray" wx:if="{{sta==9}}"> 已投完 </button>
+  <button class="btn-gray" wx:if="{{sta==1}}"> 登记审核中 </button>
+  <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==2}}"> 审核失败，请重新登记 </button>
+  <button class="btn-gray" wx:if="{{sta==3}}"> {{ckdate}}开始检测 </button>
+  <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==4}}"> 开始检测 </button>
+  <button class="btn-gray" wx:if="{{sta==5}}"> 检测审核中</button>
+  <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==6}}"> 审核失败，请重新检测</button>
+  <button class="btn-gray" wx:if="{{sta==7}}"> 已领取其它广告</button>
+  <button class="btn-gray" wx:if="{{sta==8}}"> 广告已结束</button>
+</view>

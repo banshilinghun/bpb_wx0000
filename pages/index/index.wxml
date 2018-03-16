@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<view>
+    <block>
+      <image class='idneximg' src="{{img}}"  ></image>
+    </block>
+
+</view>

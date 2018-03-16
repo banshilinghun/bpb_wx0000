@@ -1,0 +1,6 @@
+.idneximg{
+  width:356rpx;height:194rpx;
+  margin: 0 auto;
+  display: block;
+  margin-top: 120rpx
+}

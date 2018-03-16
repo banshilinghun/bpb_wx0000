@@ -1,0 +1,41 @@
+<!--index.wxml-->
+<view>
+  <view class="message_list">
+    <block>
+      <view class="item2">
+        <!-- <view class="item-left">
+          <image src="{{item.logo}}" class="image" />
+        </view> -->
+        <view class="item-middle">
+          <view>
+            <text class="title">押金</text>
+            <text class="title-txt" wx:if="{{haveDeposit==0}}">（可退）</text>
+            <text class="title-txt" wx:if="{{haveDeposit==1}}">（已缴纳）</text>
+          </view>
+          <view class="myad-li">
+            <view class="message">为确保广告任务正常进行，需缴纳押金</view>
+            <view class="message">
+              无广告任务进行时，可随时提取到账户
+            </view>
+          </view>
+        </view>
+        <view class="item_right">
+          <view wx:if="{{haveDeposit==0}}">
+            <text class="time">15元</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+    <view class="profile-wrapper" catchtap="loadProfile">
+    <block wx:for="{{myProfile}}" wx:key="item.id">
+      <view class="profile" id="{{item.id}}" >
+      <view class="itemcircle" src="{{item.icon}}"></view>
+        <view class="profile-item"> {{item.desc}} </view>
+      </view>
+    </block>
+  </view>
+  <button class="btn-quit" bindtap="payDeposit" wx:if="{{haveDeposit==0}}" loading="{{loading}}"> 缴纳押金 </button>
+  <button class="btn-quit returnDeposit" bindtap="returnDeposit" wx:if="{{haveDeposit==1}}"> 退回押金 </button>
+</view>
+ 

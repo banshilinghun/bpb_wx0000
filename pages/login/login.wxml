@@ -1,0 +1,23 @@
+<view class="content">
+      <view class="logo">
+    <image mode="aspectFit" src="https://wxapi.benpaobao.com/static/app_img/logo.png"></image>
+  </view>
+    <form bindsubmit="formSubmit">
+        <view class="input-area">
+          <view class="input-log">  
+            <image class="userinfo-logIcon" src="{{logIcon}}"></image>  
+            <input id="username" name="username" maxlength='40' type="text" placeholder="手机号" />
+          </view>
+          <view class="input-log">
+            <image class="userinfo-logIcon" src="{{pwdIcon}}"></image>  
+            <input id="password" name="password" maxlength='20' type="password" placeholder="密码" />
+          </view>
+        </view>
+        <view class="btn-area">
+            <button  disabled="{{disabled}}" style="background-color:{{loginBtnBgBgColor}}"   formType="submit"  loading="{{btnLoading}}"> {{loginBtnTxt}} </button>
+            <view class="txt-area">
+                <navigator  url="../register/register"><text class="register regtext">注册账号</text></navigator> 
+            </view>
+        </view>
+    </form>
+</view>

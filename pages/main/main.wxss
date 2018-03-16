@@ -1,0 +1,157 @@
+page {
+  background-color: #eee;
+}
+
+.message_list {
+  background-color: #f2f2f2;
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+}
+
+.item2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16rpx;
+  background-color: #fff;
+  /**  border: 1rpx solid #eaeaea;
+  border-bottom: 1rpx solid #d0d0d0;
+  border-radius: 5rpx;*/
+}
+
+.item-left {
+  margin-top: 15rpx;
+  display: table-cell;
+  text-align: center;
+}
+
+.image {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 64rpx;
+  background-color: #eee;
+}
+
+.item-middle {
+  flex: 1;
+  margin-left: 15rpx;
+  padding-top: 13rpx;
+  overflow: hidden;
+}
+
+.title {
+  color: #444;
+  font-family: "微软雅黑";
+  font-weight: bold;
+  line-height: 20rpx;
+  padding: 32rpx 16rpx, 0, 16rpx;
+  font-size: 30rpx;
+  margin-top: 60rpx;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+}
+
+.message {
+  font-family: "微软雅黑";
+  color: #888;
+  line-height: 24rpx;
+  font-size: 24rpx;
+  padding: 0 16rpx, 0, 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 16rpx;
+}
+
+.item_right {
+  padding-top: 10rpx;
+  overflow: hidden;
+  padding-right: 10px;
+  text-align: right;
+}
+
+.time {
+  color: #03d0b7;
+  font-size: 24rpx;
+}
+
+.mark {
+  position: relative;
+  left: 5rpx;
+  margin-top: 10rpx;
+  padding-top: 8rpx;
+  padding-bottom: 2px;
+  background-color: #f74c31;
+  text-align: center;
+  font-size: 18rpx;
+  width: 40rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  display: table-cell;
+}
+
+.line {
+  height: 1px;
+  width: 100%;
+  background-color: #e0e1e2;
+}
+
+.data-blt {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.data-text {
+  color: #ff555c;
+}
+
+.myad-li {
+  margin-top: 10rpx;
+}
+
+.btn-red {
+  border: none;
+  border-radius: 0 !important;
+  background: #fb523e;
+  color: #fff;
+  font-size: 15px;
+}
+
+.btn-gray {
+  border: none;
+  border-radius: 0 !important;
+  background: #ccc;
+  color: #fff;
+  font-size: 15px;
+}
+
+button::after {
+  content: none;
+}
+
+.watwx {
+  padding-left: 6rpx;
+}
+
+.mesge2 {
+  width: 50%;
+  display: inline-block;
+}
+
+.axstw {
+  margin-bottom: 20rpx;
+}
+
+.texst {
+  height: 88rpx;
+}
+
+.province-text {
+  font-size: 24rpx;
+  color: #ff5a39;
+}
+.timetxt{
+color:#999;
+}

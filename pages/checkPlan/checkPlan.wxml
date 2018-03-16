@@ -1,0 +1,28 @@
+<view>
+  <view class='tips'>*检测审核通过后才可提取收益</view>
+  <black wx:for-items="{{planList}}" wx:key="item.date">
+  <view class="profile-wrapper">
+    <view class="profile">
+      <image class="itemicon" src="../../image/plan1.png"></image>
+      <view class='item-text'>检测时间</view>
+      <view class="profile-item">{{item.date}}</view>
+    </view>
+    <view class="profile">
+      <image class="itemicon" src="../../image/plan2.png"></image>
+      <view class='item-text'>收益</view>
+      <view class="profile-item">{{item.amount}}元</view>
+    </view>
+    <view class="profile nobd">
+      <image class="itemicon" src="../../image/plan3.png"></image>
+      <view class='item-text'>检测状态</view>
+      <view class="profile-item">
+        <label class="pltext1" wx:if="{{item.status==0}}">检测尚未开始</label>
+        <label wx:if="{{item.status==3}}">检测通过</label>
+        <label class='pltext3' wx:if="{{item.status==4}}">检测进行中</label>
+        <label wx:if="{{item.status==2}}" class="pltext2">检测未通过</label>
+        <label wx:if="{{item.status==1}}">检测审核中</label>
+      </view>
+    </view>
+  </view>
+  </black>
+</view>

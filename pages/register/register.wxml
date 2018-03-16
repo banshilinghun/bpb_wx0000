@@ -1,0 +1,25 @@
+<view class="content">
+  <view class="logo">
+    <image mode="aspectFit" src="https://wxapi.benpaobao.com/static/app_img/logo.png"></image>
+  </view>
+  <form bindsubmit="formSubmit" report-submit="istrue">
+    <view class="input-area">
+      <view class="input-log">
+        <image class="userinfo-logIcon" src="{{logIcon}}"></image>
+        <input id="username" name="username" maxlength='11' type="number" placeholder="手机号" bindinput="mobileInputEvent" />
+      </view>
+      <view class="smsCode">
+        <image class="userinfo-verifiIcon" src="{{verifiIcon}}"></image>
+        <input id="smsCode" name="smsCode" maxlength='6' type="number" placeholder="验证码" />
+        <button bindtap="getSmsCode" disabled="{{smsCodeDisabled}}" style="background-color:{{getSmsCodeBtnColor}};color:{{color}}" class="getSmsCodeBtn">{{getSmsCodeBtnTxt}}</button>
+      </view>
+        <view class="input-log">  
+            <image class="userinfo-logIcon" src="{{pwdIcon}}"></image>  
+            <input id="password" name="password" maxlength='20' type="password" placeholder="密码" />
+          </view>
+    </view>
+    <view class="btn-area">
+      <button disabled="{{registDisabled}}" style="background-color:{{registBtnBgBgColor}}" formType="submit" loading="{{btnLoading}}"> {{registBtnTxt}} </button>
+    </view>
+  </form>
+</view>

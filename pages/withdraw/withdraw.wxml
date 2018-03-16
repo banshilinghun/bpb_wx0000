@@ -1,0 +1,58 @@
+<view class="container">
+
+  <view class="page-body">
+    <view class="profile-wrapper">
+      <block wx:if="{{!haveCard}}">
+        <view class="profile" bindtap="addCard">
+          <image class="itemicon" src="../../image/bankCard.png"></image>
+          <view class="profile-item">添加银行卡 </view>
+          <image class="profile-arrow" src="/image/arrow.png"></image>
+        </view>
+      </block>
+      <block wx:if="{{haveCard}}">
+        <view class="item2">
+          <view class="item-left">
+            <image src="{{bankIcon}}" class="image" />
+          </view>
+          <view class="item-middle">
+            <view>
+              <text class="title">{{bankName}}</text>
+            </view>
+            <view class="myad-li">
+              <view class="message">尾号{{digits}}
+
+              </view>
+            </view>
+          </view>
+          <view class="item_right" bindtap="changeCard">
+            <view>
+              <text class="time">更换</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="page-section">
+      <view>提现金额</view>
+      <view class='lintcon'>
+        <view class="price"></view>
+        <input type="digit" value="{{money}}" bindinput='searchMoney'  auto-focus/>
+      </view>
+      <view class="desc">可提现金额 ¥{{maxMoney}}
+        <view class='qbtxtext' bindtap="allWithdraw">全部提现</view>
+      </view>
+    </view>
+    <view>
+      <view class="tipcon">
+        <view class="tiptext">提现金额：</view>
+        <view class='ptm-text'>最小提现金额为1元</view>
+      </view>
+         <view class="tipcon tipcon2">
+        <view class="tiptext">到账时间：</view>
+        <view class='ptm-text'>预计3个工作日内到账,实际到账时间可能会受银行影响</view>
+      </view>
+    </view>
+    <button  class='btn-quit' bindtap="submitWithdraw">提现</button>
+  </view>
+
+</view>

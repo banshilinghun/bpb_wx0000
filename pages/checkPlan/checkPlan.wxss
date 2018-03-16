@@ -1,0 +1,163 @@
+page{
+  padding-bottom: 40rpx;
+}
+.cuntall {
+  display: block;
+  height: auto;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.total-con {
+  display: block;
+}
+
+.total-con-num {
+  display: block;
+  margin-top: 10px;
+}
+
+.total-desc {
+  font-size: 14px;
+  color: #fff;
+}
+
+.total-num {
+  font-size: 48px;
+  color: #fff;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 30rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  margin: 20rpx;
+  color: #300e0e;
+}
+
+.userinfo-dig {
+  margin: 15rpx auto;
+  padding: 20rpx 25rpx;
+  border-radius: 10rpx;
+  background-color: #f85f48;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.userinfo-desc {
+  color: #bbb;
+  font-size: 14rpx;
+  margin-bottom: 20rpx;
+}
+
+.profile-wrapper, .account-wrapper {
+  background-color: #fff;
+  margin-bottom: 20rpx;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 40rpx;
+  box-shadow:0 2rpx 6rpx rgba(26,26,26,.2);
+  border-radius: 12rpx;
+}
+
+.profile, .account {
+  display: flex;
+  padding: 20rpx;
+  align-items: center;
+  flex-direction: row;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.item-text {
+  color: #666;
+  font-size: 28rpx;
+  width: 200rpx;
+}
+
+.profile-item, .account-item {
+  flex: 1;
+  font-size: 28rpx;
+  color:#333;
+}
+
+.profile-arrow, .account-arrow {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.btn-quit {
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border: none;
+  background-color: #ff555c;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.nav {
+  margin-bottom: 20px;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  color: #fff;
+}
+
+.boxView {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boxView image {
+  margin-top: 7px;
+  width: 36px;
+  height: 36px;
+}
+
+.boxView text {
+  font-size: 14px;
+  margin-top: 7px;
+}
+
+.boxView .nav-num {
+  font-size: 20px;
+}
+
+.itemicon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 20rpx;
+}
+
+.deposit-text {
+  color: #999;
+  font-size: 28rpx;
+}
+
+.tips {
+  font-size: 24rpx;
+  text-align: center;
+  color: #ff555c;
+  margin-top: 40rpx;
+}
+.nobd{
+  border-bottom: none;
+}
+.pltext1{
+  color: #999;
+}
+.pltext2{
+  color: #FF555C;
+}
+.pltext3{
+  color:#03d0b7;
+}

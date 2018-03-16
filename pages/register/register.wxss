@@ -1,0 +1,117 @@
+.content {
+  text-align: center;
+}
+
+.userinfo {
+  margin-top: 100rpx;
+  margin-bottom: 100rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 150rpx;
+  height: 150rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-logIcon{
+  width: 60rpx;
+  height: 60rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-verifiIcon{
+  width: 60rpx;
+  height: 60rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.input-log{
+  display: flex;
+  border-bottom: 0.5px solid #D8D8D8 ;
+  flex-direction: row;
+}
+
+.input-area {
+  background-color: #fff;
+  text-align: left;
+  width: 90%;
+  margin:0 auto;
+}
+
+.input-area input {
+  height: 100rpx;
+  line-height: 100rpx;
+}
+
+.btn-area {
+  width: 90%;
+  margin: 0 auto;
+ 
+}
+
+.btn-area button {
+  margin-top: 60rpx;
+  color: #fff;
+   border-radius:25px
+   
+}
+
+.txt-area {
+  margin-top: 30rpx;
+  justify-content: space-between;
+  font-size: 36rpx;
+  text-align:right;
+
+}
+
+.forgot-password {
+  color: #888;
+}
+
+.register {
+  color: #ff5539;
+}
+
+.smsCode {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding-right:5%;
+}
+
+.smsCode input {
+  width: 336rpx;
+}
+
+.smsCode .getSmsCodeBtn {
+  font-size: 30rpx;
+  color: #ff5539 ;
+  width: 216rpx;
+  box-sizing: border-box;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-top: 10rpx;
+  margin-right: 0;
+  background: transparent;
+  padding-right: 0;
+
+}
+.smsCode .getSmsCodeBtn::after{
+  content: none;
+}
+
+.logo {
+  margin-top: 80rpx;
+  margin-bottom: 120rpx;
+}
+
+.logo image {
+  width: 202rpx;
+  height: 240rpx;
+}
