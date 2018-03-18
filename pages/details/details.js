@@ -23,12 +23,16 @@ Page({
     isNeedKey: false,
     showMenu: true,
     checkPlan: false,
-    istrue:true
+    istrue:true,
+    inviteId: '我是shareInviteId',
+    //分享后传递的邀请人的id，为空则表示不是从分享页面进入
+    shareInviteId: '',
   },
 
   onLoad: function (options) {
     this.setData({
-      adId: options.adId
+      adId: options.adId,
+      shareInviteId: options.inviteId,
     })
   },
   onShow: function () {
@@ -416,5 +420,21 @@ Page({
     wx.navigateTo({
       url: '../checkPlan/checkPlan?adId=' + e.currentTarget.dataset.adid
     })
-  }
+  },
+
+  //分享
+  onShareAppMessage: function(){
+    var that = this
+    return {
+      title: '奔跑宝',
+      desc: '奔跑宝广告详情',
+      path: 'pages/details/details?adId=' + that.data.adId + '&inviteId=' + that.data.inviteId,
+    }
+  },
+
+  testClick: res=>{
+    wx.redirectTo({
+      url: '../test/tesst',
+    })
+  },
 })

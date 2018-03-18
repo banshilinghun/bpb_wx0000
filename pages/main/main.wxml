@@ -1,52 +1,59 @@
 <!--index.wxml-->
 <view>
   <view class="message__list">
+    <block>
+      <swiper class='notify_swiper' vertical='true' circular='true' autoplay='true' interval='3000'>
+        <swiper-item class='swiper_item' wx:for='{{userList}}' wx:key='index'>
+          <text class='swiper_content'>{{item}}</text>
+        </swiper-item>
+      </swiper>
+    </block>
     <block wx:if="{{haveMyAd}}">
-    <view class="axstw">
-      <view class="item2" bindtap="go" data-name="{{myAd.id}}">
-        <view class="item-left">
-          <image src="{{myAd.logo}}" class="image" />
-        </view>
-        <view class="item-middle">
-          <view>
-            <text class="title">{{myAd.name}}</text>
+      <view class="axstw">
+        <view class="item2" bindtap="go" data-name="{{myAd.id}}">
+          <view class="item-left">
+            <image src="{{myAd.logo}}" class="image" />
           </view>
-          <view class="myad-li">
-            <!-- <view class="message">广告类型：
+          <view class="item-middle">
+            <view>
+              <text class="title">{{myAd.name}}</text>
+            </view>
+            <view class="myad-li">
+              <!-- <view class="message">广告类型：
               <label class="data-text" wx:if="{{myAd.type==0}}">车尾</label>
               <label class="data-text" wx:if="{{myAd.type==1}}">车内</label>
               <label class="data-text" wx:if="{{myAd.type==2}}">车尾+车内</label>
             </view> -->
-            <view class="message">实际收益：
-              <label class="data-text">{{myAd.amount}}元</label>
+              <view class="message">实际收益：
+                <label class="data-text">{{myAd.amount}}元</label>
+              </view>
+              <view class="message">投放时间：
+                <label class="data-text">{{myAd.begin_date}}
+                  <label class="data-blt">~</label>{{myAd.end_date}}</label>
+              </view>
             </view>
-            <view class="message">投放时间：
-              <label class="data-text">{{myAd.begin_date}}
-                <label class="data-blt">~</label>{{myAd.end_date}}</label>
+          </view>
+          <view class="item_right">
+            <view class='texst'>
+              <text class="time">剩余{{myAd.current_count}}</text>
+            </view>
+            <view>
+
+              <label class="province-text" wx:if="{{shippingStatus==0}}">[未派送]</label>
+              <label class="province-text" wx:if="{{shippingStatus==1}}">[派送中]</label>
+              <label class="province-text" wx:if="{{shippingStatus==2}}">[已签收]</label>
+
             </view>
           </view>
         </view>
-        <view class="item_right">
-          <view class='texst'>
-            <text class="time">剩余{{myAd.current_count}}</text>
-          </view>
-          <view>
-         
-           <label class="province-text" wx:if="{{shippingStatus==0}}">[未派送]</label>
-          <label class="province-text" wx:if="{{shippingStatus==1}}">[派送中]</label>
-          <label class="province-text" wx:if="{{shippingStatus==2}}">[已签收]</label>
-        
-          </view>
-        </view>
+        <button class="btn-gray" wx:if="{{canCheck==4}}"> 登记审核中</button>
+        <button class="btn-red" bindtap="regist" data-adId="{{myAd.id}}" data-type="{{myAd.type}}" wx:if="{{canCheck==6}}"> 登记</button>
+        <button class="btn-red" bindtap="regist" data-adId="{{myAd.id}}" data-type="{{myAd.type}}" wx:if="{{canCheck==5}}"> 审核失败，请重新登记 </button>
+        <button class="btn-red" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 开始检测 </button>
+        <button class="btn-red" bindtap="check" wx:if="{{canCheck==3}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 审核失败，请重新检测 </button>
+        <button class="btn-gray" wx:if="{{canCheck==0}}"> {{myAd.check.date}}开始检测 </button>
+        <button class="btn-gray" wx:if="{{canCheck==2}}"> 检测审核中</button>
       </view>
-      <button class="btn-gray" wx:if="{{canCheck==4}}"> 登记审核中</button>
-       <button class="btn-red" bindtap="regist" data-adId="{{myAd.id}}" data-type="{{myAd.type}}" wx:if="{{canCheck==6}}"> 登记</button>
-      <button class="btn-red" bindtap="regist" data-adId="{{myAd.id}}" data-type="{{myAd.type}}" wx:if="{{canCheck==5}}"> 审核失败，请重新登记 </button>
-      <button class="btn-red" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 开始检测 </button>
-      <button class="btn-red" bindtap="check" wx:if="{{canCheck==3}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 审核失败，请重新检测 </button>
-      <button class="btn-gray" wx:if="{{canCheck==0}}"> {{myAd.check.date}}开始检测 </button>
-      <button class="btn-gray" wx:if="{{canCheck==2}}"> 检测审核中</button>
-       </view>
     </block>
     <block wx:for="{{adList}}" wx:key="item.id">
       <view class="item2" bindtap="go" data-name="{{item.id}}">
@@ -74,10 +81,10 @@
           <view wx:if="{{item.state==0}}">
             <text class="time">剩余{{item.current_count}}</text>
           </view>
-            <view wx:if="{{item.state==1}}">
+          <view wx:if="{{item.state==1}}">
             <text class="time timetxt">已投完</text>
           </view>
-            <view wx:if="{{item.state==2}}">
+          <view wx:if="{{item.state==2}}">
             <text class="time timetxt">已结束</text>
           </view>
         </view>

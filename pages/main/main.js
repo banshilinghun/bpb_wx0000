@@ -7,7 +7,9 @@ Page({
 		myAd: '',
 		adList: '',
 		focus: false,
-		isShowView: true
+    isShowView: true,
+    //测试数据
+    userList: ['张三', '李四', '王二', '麻子', 'hahhdjfdhjfdj', 'ndfmdnfmdnmd', 'dfkdfk', 'mdkmfdk,', 'dmfkdmf', 'mdmfkdmfdk'],
 	},
 
 	onLoad: function() {
