@@ -10,7 +10,7 @@
   </view>
   <view class="profile-wrapper">
     <block>
-      <view class="profile frpro" bindtap='testClick'>
+      <view class="profile frpro">
         <view class="profile-item cwsfts">{{adInfo.name}}</view>
       </view>
     </block>

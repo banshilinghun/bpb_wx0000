@@ -28,6 +28,8 @@ App({
 		header:{
 			'Cookie':'',
 			'content-type': 'application/json'
-		}
+		},
+    //分享传入的邀请人的id
+    shareInviteId: '',
 	}
 })
