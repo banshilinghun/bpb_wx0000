@@ -37,13 +37,31 @@
                 </block>
               </view>
             </view>
+                <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
+              <view class="weui-cell__hd">
+                <view class="weui-label">车辆类型</view>
+              </view>
+              <view class="weui-cell__bd">
+                <radio-group class='wtstw' bindchange="radioChange">
+                  <label class="radio">
+                    <radio value="r1" checked="true" />网约车
+                  </label>
+                  <label class="radio">
+                    <radio value="r2" />私家车
+                  </label>
+                  <label class="radio">
+                    <radio value="r3" />其他
+                  </label>
+                </radio-group>
+              </view>
+            </view>
             <view class="weui-cell weui-cell_input">
               <view class="weui-cell__hd">
                 <view class="weui-label">租赁公司</view>
               </view>
               <view class="weui-cell__bd">
                 <picker range="{{nameList}}" bindchange="sourceTypeChange" value="{{sourceTypeIndex}}" mode="selector">
-                  <input class="weui-input" wx:if='{{sourceTypeIndex==""}}' id="city" name="city" maxlength='20' type="text" placeholder="请租赁公司" disabled='disabled' />
+                  <input class="weui-input" wx:if='{{sourceTypeIndex==""}}' id="city" name="city" maxlength='20' type="text" placeholder="请选择租赁公司" disabled='disabled' />
                   <view class="weui-input" wx:if='{{sourceTypeIndex!=""}}'>{{nameList[sourceTypeIndex]}}</view>
                 </picker>
               </view>
@@ -53,7 +71,7 @@
                 <view class="weui-label">车型</view>
               </view>
               <view class="weui-cell__bd" bindtap="selectDistrict">
-                <input class="weui-input" id="city" name="city" maxlength='20' type="text" placeholder="请选择城市" value="{{areaInfo}}" disabled='disabled' />
+                <input class="weui-input" id="city" name="city" maxlength='20' type="text" placeholder="请选择车辆品牌/车型" value="{{areaInfo}}" disabled='disabled' />
               </view>
             </view>
             <view class="weui-cell weui-cell_input">
@@ -62,7 +80,8 @@
               </view>
               <view class="weui-cell__bd">
                 <picker range="{{nameList}}" bindchange="sourceTypeChange" value="{{sourceTypeIndex}}" mode="selector">
-                  <view class="weui-input">{{nameList[sourceTypeIndex]}}</view>
+                  <input class="weui-input" wx:if='{{sourceTypeIndex==""}}' id="city" name="city" maxlength='20' type="text" placeholder="请选择车身颜色" disabled='disabled' />
+                  <view class="weui-input" wx:if='{{sourceTypeIndex!=""}}'>{{nameList[sourceTypeIndex]}}</view>
                 </picker>
               </view>
             </view>
@@ -71,14 +90,7 @@
                 <view class="weui-label">是否掉漆</view>
               </view>
               <view class="weui-cell__bd">
-                <radio-group class='wtstw' bindchange="radioChange">
-                  <label class="radio">
-                    <radio value="r1" checked="true" />是
-                  </label>
-                  <label class="radio">
-                    <radio value="r2" />否
-                  </label>
-                </radio-group>
+               <switch class='txattw' bindchange="switchChange"/>
               </view>
             </view>
           </view>

@@ -173,3 +173,6 @@ color:#999;
   color: white;
   margin-left: 20rpx;
 }
+.ywxst{
+  font-size: 19rpx;
+}
