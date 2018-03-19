@@ -16,18 +16,6 @@ Page({
 			'url': 'withdraw/withdraw',
 			"icon": '../../image/money.png',
 			'deposit': 0
-		}, {
-			"desc": "地址管理",
-			"id": "address",
-			'url': 'address/address',
-			"icon": '../../image/adders.png',
-			'deposit': 0
-		}, {
-			"desc": "押金",
-			"id": "deposit",
-			'url': 'deposit/deposit',
-			"icon": '../../image/deposit.png',
-			'deposit': 1
 		}],
 		total: "0.00",
 		navs: [{

@@ -27,5 +27,4 @@
       </view>
     </block>
   </view>
-  <button class="btn-quit" bindtap="exit"> 退出当前账户 </button>
 </view>

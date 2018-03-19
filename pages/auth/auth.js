@@ -88,47 +88,47 @@ Page({
 		})
 		this.animation = animation;
 
-		// wx.request({
-		// 	url: 'https://wxapi.benpaobao.com/app/get/lease_company',
-		// 	data: {},
-		// 	header: app.globalData.header,
-		// 	success: res => {
-		// 		if(res.data.code == 1000) {
-		// 			//					console.log(res.data.data)
-		// 			var sourceType = [];
-		// 			var idList = [];
-		// 			var nameList = [];
-		// 			for(var i = 0; i < res.data.data.length; i++) {
-		// 				sourceType.push(res.data.data[i].name);
-		// 				idList.push(res.data.data[i].id);
-		// 				nameList.push(res.data.data[i].company_name);
-		// 			}
-		// 			//	console.log(sourceType)
-		// 			sourceType.push("无租赁公司");
-		// 			idList.push(0);
-		// 			nameList.push("无租赁公司");
-		// 			this.setData({
-		// 				sourceType: sourceType,
-		// 				idList: idList,
-		// 				nameList: nameList
-		// 			})
-		// 		} else {
-		// 			//					console.log(res.data)
-		// 			wx.showModal({
-		// 				title: '提示',
-		// 				showCancel: false,
-		// 				content: res.data.msg
-		// 			});
-		// 		}
-		// 	},
-		// 	fail: res => {
-		// 		wx.showModal({
-		// 			title: '提示',
-		// 			showCancel: false,
-		// 			content: '网络错误'
-		// 		});
-		// 	}
-		// })
+		wx.request({
+			url: 'https://wxapi.benpaobao.com/app/get/lease_company',
+			data: {},
+			header: app.globalData.header,
+			success: res => {
+				if(res.data.code == 1000) {
+					//					console.log(res.data.data)
+					var sourceType = [];
+					var idList = [];
+					var nameList = [];
+					for(var i = 0; i < res.data.data.length; i++) {
+						sourceType.push(res.data.data[i].name);
+						idList.push(res.data.data[i].id);
+						nameList.push(res.data.data[i].company_name);
+					}
+					//	console.log(sourceType)
+					// sourceType.push("无租赁公司");
+					// idList.push(0);
+					// nameList.push("无租赁公司");
+					this.setData({
+						sourceType: sourceType,
+						idList: idList,
+						nameList: nameList
+					})
+				} else {
+					//					console.log(res.data)
+					wx.showModal({
+						title: '提示',
+						showCancel: false,
+						content: res.data.msg
+					});
+				}
+			},
+			fail: res => {
+				wx.showModal({
+					title: '提示',
+					showCancel: false,
+					content: '网络错误'
+				});
+			}
+		})
 
 	},
 	// 执行动画

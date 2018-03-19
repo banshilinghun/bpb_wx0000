@@ -1574,3 +1574,15 @@ picker-view {
   height: 22rpx;
   margin: 0 10rpx;
 }
+.radio {
+  margin-right: 40rpx;
+}
+.wtstw{
+  height:2.58823529em;
+min-height:2.58823529em;
+line-height:2.58823529em;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+
+}
