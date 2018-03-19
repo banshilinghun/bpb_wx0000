@@ -88,6 +88,24 @@ page {
   height: 32rpx;
 }
 
+.share-button{
+  display: flex;
+  padding: 20rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  align-items: center;
+  text-align: left;
+  flex-direction: row;
+  border-bottom: 1rpx solid #f0f0f0;
+  background: none;
+}
+
+.share-button::after{
+  border: none;
+}
+
 .btn-quit {
   width: 95%;
   margin: 0 auto;
@@ -128,11 +146,13 @@ page {
 .boxView .nav-num {
   font-size: 20px;
 }
+
 .itemicon{
-width:64rpx;
-height:64rpx;
-margin-right:20rpx;
+  width:64rpx;
+  height:64rpx;
+  margin-right:20rpx;
 }
+
 .deposit-text{
   color: #999;
   font-size: 28rpx;

@@ -2,7 +2,8 @@
 var util = require("../../utils/util.js");
 const app = getApp()
 Page({
-	data: {
+  data: {
+    inviteId: '我是邀请人id',
 		userInfo: {},
 		myProfile: [{
 			"desc": "身份认证",
@@ -303,5 +304,35 @@ Page({
 		wx.redirectTo({
 			url: '../login/login'
 		})
-	}
+	},
+
+  onShareAppMessage: function(res){
+    console.log(this)
+    var that = this
+    return {
+      title: '奔跑宝',
+      desc: '邀请好友',
+      path: 'pages/register/register?inviteId=' + that.data.inviteId,
+      imageUrl: '../../image/pwdIcon.png',
+      success: function(res){
+        console.log('share------success')
+        wx.showToast({
+          title: '分享成功',
+          icon: '',
+          image: '',
+          duration: 0,
+          mask: true,
+        })
+      },
+      fail: function(){
+        wx.showToast({
+          title: '分享取消',
+          icon: '',
+          image: '',
+          duration: 0,
+          mask: true,
+        })
+      }
+    }
+  },
 })

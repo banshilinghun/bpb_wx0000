@@ -8,23 +8,34 @@
         <text class="total-num">{{total}}</text>
       </view>
     </view>
-     <view class="nav">
-        <block wx:for-items="{{navs}}" wx:key="item.desc">
-          <view class="boxView" data-type="{{item.desc}}">
-            <text>{{item.desc}}</text>
-            <text class='nav-num'>{{item.num}}</text>
-          </view>
-        </block>
-      </view>
+    <view class="nav">
+      <block wx:for-items="{{navs}}" wx:key="item.desc">
+        <view class="boxView" data-type="{{item.desc}}">
+          <text>{{item.desc}}</text>
+          <text class='nav-num'>{{item.num}}</text>
+        </view>
+      </block>
+    </view>
   </view>
   <view class="profile-wrapper" catchtap="loadProfile">
     <block wx:for="{{myProfile}}" wx:key="item.id">
       <view class="profile" id="{{item.id}}" bindtap="kindToggle">
-      <image class="itemicon" src="{{item.icon}}"></image>
+        <image class="itemicon" src="{{item.icon}}"></image>
         <view class="profile-item"> {{item.desc}} </view>
-        <view class="deposit-text" wx:if="{{item.deposit==1}}"> <text wx:if="{{haveDeposit==1}}">已缴纳</text><text wx:if="{{haveDeposit==0}}">未缴纳</text></view>
+        <view class="deposit-text" wx:if="{{item.deposit==1}}">
+          <text wx:if="{{haveDeposit==1}}">已缴纳</text>
+          <text wx:if="{{haveDeposit==0}}">未缴纳</text>
+        </view>
         <image wx:if="{{item.deposit==0}}" class="profile-arrow" src="/image/arrow.png"></image>
       </view>
+    </block>
+    <block>
+      <button open-type='share' class='share-button'>
+        <image class='itemicon' src='../../image/money.png'></image>
+        <text class='profile-item'>推荐好友</text>
+        <image class='profile-arrow' src='/image/arrow.png'>
+        </image>
+      </button>
     </block>
   </view>
 </view>
