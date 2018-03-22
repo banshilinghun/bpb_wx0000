@@ -65,11 +65,11 @@
             <text class="title">{{item.name}}</text>
           </view>
           <view class="myad-li">
-            <view class="message" wx:if="{{status==3}}">预计收益：
+            <view class="message" wx:if="{{status==3}}">实际收益：
               <label class="data-text">{{item.amount}}元</label>
             </view>
-            <view class="message" wx:if="{{status!=3}}">预计收益：
-              <label class="data-text">***</label>
+            <view class="message" wx:if="{{status!=3}}">实际收益：
+              <label class="data-text ywxst">***<text class=''>（身份认证后可查看收益）</text></label>
             </view>
             <view class="message">投放时间：
               <label class="data-text">{{item.begin_date}}

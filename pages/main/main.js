@@ -183,49 +183,10 @@ Page({
 		//		console.log(adId);
 		var status = this.data.status;
 		//				console.log(status);
-		if(status == 3) {
-			wx.navigateTo({
-				url: '../details/details?adId=' + adId
-			})
-		}
-		if(status == 0) {
-			wx.showModal({
-				title: "提示",
-				content: "你尚未进行车主身份认证",
-				confirmText: "去认证",
-				cancelText: "取消",
-				success: function(res) {
-					if(res.confirm) {
-						wx.navigateTo({
-							url: '../auth/auth'
-						})
-					}
-				}
-			})
-		}
-		if(status == 1) {
-			wx.showModal({
-				title: "提示",
-				content: "你提交的身份认证信息正在审核",
-				showCancel: false,
-				confirmText: "确定"
-			})
-		}
-		if(status == 2) {
-			wx.showModal({
-				title: "提示",
-				content: "你提交的身份认证信息审核未通过",
-				confirmText: "重新认证",
-				cancelText: "取消",
-				success: function(res) {
-					if(res.confirm) {
-						wx.navigateTo({
-							url: '../auth/auth'
-						})
-					}
-				}
-			})
-		}
+    wx.navigateTo({
+      url: '../details/details?adId=' + adId
+    })
+
 	},
 	onPullDownRefresh: function() {
 		wx.showToast({

@@ -1,5 +1,7 @@
 const util = require("../../utils/util.js");
-const app = getApp()
+var formatLocation = util.formatLocation;
+var getDistance = util.getDistance;
+const app = getApp();
 Page({
   data: {
     banners: [],
@@ -37,178 +39,148 @@ Page({
     var that = this
     var reqData = {};
     reqData.ad_id = that.data.adId;
-    wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/ad_info',
-      data: reqData,
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          if (res.data.data.logistics.ad_logistics) {
-            if (res.data.data.logistics.ad_logistics.info) {
-              //console.log(res.data.data.logistics.ad_logistics.info);
-              var exp = JSON.parse(res.data.data.logistics.ad_logistics.info);
-              //console.log(exp);
-              for (var i = 0; i < exp.data.length; i++) {
-                exp.data[i].ymdate = (exp.data[i].time.split(" ")[0]).replace(/(.+?)\-(.+?)\-(.+)/, "$2-$3");
-                exp.data[i].hmtime = (exp.data[i].time.split(" ")[1]).replace(/(.+?)\:(.+?)\:(.+)/, "$1:$2");
-              }
-              var expdata = exp.data.slice(0, 1);
-              this.setData({
-                haveExp: true,
-                expList: expdata,
-                allExpList: exp.data,
-                newExpList: expdata
-              })
-            }
-            this.setData({
-              receive: 1,
-              shippingStatus: res.data.data.logistics.ad_logistics.status,
-              recipients: res.data.data.logistics.ad_logistics.name,
-              rePhone: res.data.data.logistics.ad_logistics.phone,
-              reProvince: res.data.data.logistics.ad_logistics.province,
-              reCity: res.data.data.logistics.ad_logistics.city,
-              reCounty: res.data.data.logistics.ad_logistics.county,
-              reDetail: res.data.data.logistics.ad_logistics.detail
-            })
-          } else {
-            this.setData({
-              receive: 0
-            })
-          }
-          var enddate = res.data.data.info.end_date;
-          var nowdate = util.dateToString(new Date());
-          res.data.data.info.begin_date = res.data.data.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-          res.data.data.info.end_date = res.data.data.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+    	wx.getLocation({
+			type: 'gcj02',
+			success: function(res) {
+				var latitude = res.latitude
+				var longitude = res.longitude
+//				console.log(res.longitude)
+				that.setData({
+					latitude: latitude,
+					longitude: longitude
+				})
+				if(that.data.service!=undefined){
+						if(that.data.service.length > 0) {
+						//var dis = [];
+						for(var j = 0; j < that.data.service.length; j++) {
+							 that.data.service[j].distance = getDistance(that.data.latitude, that.data.longitude,  that.data.service[j].lat,  that.data.service[j].lng).toFixed(2);
+						}
 
-          if (res.data.data.myad == null) { //登记
+					}
+				}
+				that.setData({
+					service:that.data.service
+				})
+				
+			}
+		})
+ 	wx.request({
+			url: 'https://wxapi.benpaobao.com/app/get/ad_info',
+			data: reqData,
+			header:app.globalData.header,
+			success: res => {
+				if(res.data.code == 1000) {
+					//					console.log(res.data)
+					var enddate = res.data.data.info.end_date;
+					res.data.data.info.begin_date = res.data.data.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+					res.data.data.info.end_date = res.data.data.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+					var serviceList = res.data.data.service;
+					if(serviceList.length > 0) {
+						//var dis = [];
+						for(var j = 0; j < serviceList.length; j++) {
+							//						console.log(serviceList[i])
+//                          console.log(that.data.latitude)
+							serviceList[j].distance = getDistance(that.data.latitude, that.data.longitude, serviceList[j].lat, serviceList[j].lng).toFixed(2);
 
-            if (nowdate < enddate) {
-              if (res.data.data.info.current_count == 0) {
-                this.setData({
-                  sta: 9
-                })
-              } else {
-                if (res.data.data.logistics.now_logistics) {
-                  if (res.data.data.logistics.now_logistics.ad_id == res.data.data.info.id) {
-                    if (res.data.data.logistics.ad_logistics.status > 0) {
-                      this.setData({
-                        sta: 0
-                      })
-                    } else {
-                      this.setData({
-                        sta: 11
-                      })
-                    }
-                  } else {
-                    this.setData({
-                      sta: 7
-                    })
-                  }
-                } else {
-                  this.setData({
-                    sta: 10
-                  })
-                }
 
-              }
+						}
 
-            } else {
-              this.setData({
-                sta: 8
-              })
-            }
+					}
+					that.setData({
+						service: serviceList
+					})
+//                console.log(that.data.service)
+					if(res.data.data.myad == null) { //登记
+						var nowdate = util.dateToString(new Date());
 
-          } else {
-            if (res.data.data.info.id == res.data.data.myad.id) {
-              if (res.data.data.myad.regist.status == 1) { //登记审核中
-                this.setData({
-                  sta: 1
-                })
-              }
-              if (res.data.data.myad.regist.status == 2) { //登记审核没通过
-                this.setData({
-                  sta: 2
-                })
-              }
-              if (res.data.data.myad.check != null) {
-                this.setData({
-                  ckid: res.data.data.myad.check.id
-                })
-                var ckdate = res.data.data.myad.check.date;
-                var nowdate = util.dateToString(new Date());
-                if (res.data.data.myad.check.status == 0 && nowdate < ckdate) { //检测没开始
-                  this.setData({
-                    sta: 3
-                  })
-                }
-                if (res.data.data.myad.check.status == 0 && nowdate >= ckdate) { //开始检测了
-                  this.setData({
-                    sta: 4
-                  })
-                }
-                if (res.data.data.myad.check.status == 1) { //检测中
-                  this.setData({
-                    sta: 5
-                  })
-                }
-                if (res.data.data.myad.check.status == 2) { //检测未通过
-                  this.setData({
-                    sta: 6
-                  })
-                }
-                this.setData({
-                  ckdate: res.data.data.myad.check.date.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日")
+						if(nowdate < enddate) {
+							this.setData({
+								sta: 0
+							})
+						} else {
+							this.setData({
+								sta: 8
+							})
+						}
+					} else {
 
-                })
-              }
+						if(res.data.data.info.id == res.data.data.myad.id) {
+							if(res.data.data.myad.regist.status == 1) { //登记审核中
+								this.setData({
+									sta: 1
+								})
+							}
+							if(res.data.data.myad.regist.status == 2) { //登记审核没通过
+								this.setData({
+									sta: 2
+								})
+							}
+							if(res.data.data.myad.check != null) {
+								this.setData({
+									ckid: res.data.data.myad.check.id
+								})
+								var ckdate = res.data.data.myad.check.date;
+								var nowdate = util.dateToString(new Date());
+								if(res.data.data.myad.check.status == 0 && nowdate < ckdate) { //检测没开始
+									this.setData({
+										sta: 3
+									})
+								}
+								if(res.data.data.myad.check.status == 0 && nowdate >= ckdate) { //开始检测了
+									this.setData({
+										sta: 4
+									})
+								}
+								if(res.data.data.myad.check.status == 1) { //检测中
+									this.setData({
+										sta: 5
+									})
+								}
+								if(res.data.data.myad.check.status == 2) { //检测未通过
+									this.setData({
+										sta: 6
+									})
+								}
+								this.setData({
+									ckdate: res.data.data.myad.check.date.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日")
 
-            } else {
-              if (nowdate < enddate) {
-                if (res.data.data.info.current_count == 0) {
-                  this.setData({
-                    sta: 9
-                  })
-                } else {
-                  this.setData({
-                    sta: 7
-                  })
-                }
-              } else {
-                this.setData({
-                  sta: 8
-                })
-              }
+								})
+							}
 
-            }
-          }
-          if (res.data.data.imgs.length == 0) {
-            that.setData({
-              adInfo: res.data.data.info,
-              banners: ['../../image/bpb.png']
-            })
-          } else {
-            that.setData({
-              adInfo: res.data.data.info,
-              banners: res.data.data.imgs
-            })
-          }
+						} else {
+							this.setData({
+								sta: 7
+							})
+						}
+					}
+					if(res.data.data.imgs.length == 0) {
+						that.setData({
+							adInfo: res.data.data.info,
+							banners: ['../../image/bpb.png']
+						})
+					} else {
+						that.setData({
+							adInfo: res.data.data.info,
+							banners: res.data.data.imgs
+						})
+					}
 
-        } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
+				} else {
+					wx.showModal({
+						title: '提示',
+						showCancel: false,
+						content: res.data.msg
+					});
+				}
+			},
+			fail: res => {
+				wx.showModal({
+					title: '提示',
+					showCancel: false,
+					content: '网络错误'
+				});
+			}
+		})
 
     wx.request({
       url: 'https://wxapi.benpaobao.com/app/find/ad_check_plans',
@@ -297,121 +269,6 @@ Page({
       });
     }
 
-  },
-  receiveAd: function () {
-    var that = this;
-    wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/user_deposit_ispaid',
-      data: {},
-      header: app.globalData.header,
-      success: res2 => {
-        if (res2.data.code == 1000) {
-          if (res2.data.data == 0) {
-            wx.navigateTo({
-              url: '../deposit/deposit'
-            })
-          } else {
-            wx.showModal({
-              title: "提示",
-              content: "广告将以快递形式寄送"+"\r\n前往选择收货地址",
-              confirmText: "是",
-              cancelText: "否",
-              success: function (sure) {
-                if (sure.confirm) {
-                  if (wx.chooseAddress) {
-                    wx.chooseAddress({
-                      success: function (res) {
-                        wx.showModal({
-                          title: "提示",
-                          content: "确认将广告寄送到\r\n" + res.provinceName + res.cityName + res.countyName + res.detailInfo + '\r\n收件人:' + res.userName + '(' + res.telNumber + ')',
-                          confirmText: "确认",
-                          cancelText: "取消",
-                          success: function (sure) {
-                            if (sure.confirm) {
-                              var reqData = {};
-                              reqData.ad_id = that.data.adId;
-                              reqData.name = res.userName;
-                              reqData.phone = res.telNumber;
-                              reqData.province = res.provinceName;
-                              reqData.city = res.cityName;
-                              reqData.county = res.countyName;
-                              reqData.detail = res.detailInfo;
-                              reqData.form_id=that.data.formId;
-                              wx.request({
-                                url: 'https://wxapi.benpaobao.com/app/commit/shipping_address',
-                                data: reqData,
-                                header: app.globalData.header,
-                                success: res => {
-                                  if (res.data.code == 1000) {
-                                    that.onShow()
-                                  } else {
-                                    wx.showModal({
-                                      title: '提示',
-                                      showCancel: false,
-                                      content: res.data.msg
-                                    });
-                                  }
-                                },
-                                fail: res => {
-                                  wx.showModal({
-                                    title: '提示',
-                                    showCancel: false,
-                                    content: '网络错误'
-                                  });
-                                }
-                              })
-                            }
-                          }
-                        })
-                      },
-                      fail: function (res) {
-                        // fail
-                      },
-                      complete: function (res) {
-                        // complete
-                      }
-                    })
-                  } else {
-                    // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
-                    wx.showModal({
-                      title: '提示',
-                      content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
-                    })
-                  }
-                }
-              }
-            })
-
-          }
-        } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res2.data.msg
-          });
-        }
-      },
-      fail: res2 => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
-
-  },
-  expmenu: function () {
-    this.setData({
-      expList: this.data.allExpList,
-      showMenu: false
-    })
-  },
-  expmenuUp:function(){
-    this.setData({
-      expList: this.data.newExpList,
-      showMenu: true
-    })
   },
   checkPlan: function (e) {
   	//console.log(e.currentTarget.dataset)

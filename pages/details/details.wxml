@@ -45,65 +45,46 @@
     </block>
   </view>
   <block wx:if="{{checkPlan}}">
-     <view class="profile-wrapper" bindtap="checkPlan" data-adId="{{adInfo.id}}">
+    <view class="profile-wrapper" bindtap="checkPlan" data-adId="{{adInfo.id}}">
       <view class="profile frpro">
         <view class="profile-item cwsfts">检测计划</view>
         <image class="profile-arrow" src="/image/arrow.png"></image>
       </view>
     </view>
   </block>
-  <block wx:if="{{receive==1}}">
-    <view class="profile-wrapper">
+    <view class="profile-wrapper protwo">
+    <block wx:if="{{service.length>0}}">
       <view class="profile frpro">
-        <view class="profile-item cwsfts">快递寄送</view>
+        <view class="profile-item cwsfts">预约前往下列服务站</view>
       </view>
-      <view class="item item2">
-        <view class="myad-li myad-li2">
-          <view class="message message2">
-            {{reCity}}{{reCounty}}{{reDetail}}
-          </view>
-        </view>
-      </view>
-      <view class="item item3">
+    </block>
+    <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id">
+      <view class="item">
         <view class="item-middle">
           <view>
-            <text class="title title2">{{recipients}}</text>
-            <text class="ponetext">{{rePhone}}</text>
+            <text class="title">{{item.name}}</text>
+          </view>
+          <view class="myad-li">
+            <view class="message">
+              <image src='../../image/dw.png'></image>{{item.address}}</view>
+            <view class="mmtext">剩余车辆
+              <label class="province-text">{{item.ad_count-item.regist_count}}辆</label>
+            </view>
           </view>
         </view>
         <view class="item_right">
           <view>
-            <label class="province-text" wx:if="{{shippingStatus==0}}">[未派送]</label>
-            <label class="province-text" wx:if="{{shippingStatus==1}}">[派送中]</label>
-            <label class="province-text" wx:if="{{shippingStatus==2}}">[已签收]</label>
+            <text class="time">{{item.distance}}km</text>
+          </view>
+          <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
+            <image src='../../image/dh.png'></image>导航
           </view>
         </view>
       </view>
-      <block wx:if="{{haveExp}}">
-        <view class="items-list">
-          <view class="lists">
-            <view class="list" wx:for="{{expList}}" wx:key="{{item.time}}" wx:for-item="item" wx:for-index="index">
-              <view class="time">
-                <text class='ymdate'>{{item.ymdate}}</text>
-                <text>{{item.hmtime}}</text>
-              </view>
-              <view class="{{(index === 0) ? 'bg text' : 'text'}}">
-                <text>  {{item.context}}</text>
-              </view>
-            </view>
-            <view class='expmenu' bindtap="expmenu" wx:if="{{showMenu}}">查看物流详情
-              <image src='../../image/expdown.png'></image>
-            </view>
-             <view class='expmenu' bindtap="expmenuUp" wx:if="{{!showMenu}}">收起物流详情
-              <image src='../../image/expup.png'></image>
-            </view>
-          </view>
-        </view>
-      </block>
-    </view>
-  </block>
+    </block>
+  </view>
   <form bindsubmit="formSubmit" report-submit="{{istrue}}">
-  <button class="btn-quit"  formType="submit" wx:if="{{sta==10}}"> 领取广告 </button>
+    <button class="btn-quit" formType="submit" wx:if="{{sta==10}}"> 领取广告 </button>
   </form>
   <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==0}}"> 登记 </button>
   <button class="btn-gray" wx:if="{{sta==11}}"> 登记 </button>
