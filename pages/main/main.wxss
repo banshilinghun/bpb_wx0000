@@ -116,7 +116,7 @@ page {
   border-radius: 0 !important;
   background: #fb523e;
   color: #fff;
-  font-size: 15px;
+  font-size: 26rpx;
 }
 
 .btn-gray {
@@ -124,7 +124,7 @@ page {
   border-radius: 0 !important;
   background: #ccc;
   color: #fff;
-  font-size: 15px;
+  font-size: 26rpx;
 }
 
 button::after {

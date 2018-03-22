@@ -2,7 +2,7 @@ var util = require("../../utils/util.js");
 const app = getApp()
 Page({
   data: {
-    registBtnTxt: "注册",
+    registBtnTxt: "下一步",
     registBtnBgBgColor: "#ff5539",
     getSmsCodeBtnTxt: "获取验证码",
     getSmsCodeBtnColor: "transparent",
@@ -16,7 +16,7 @@ Page({
     pwdIcon: "../../image/pwdIcon.png",
     verifiIcon: "../../image/verifiIcon.png",
     istrue: true,
-    wx_code: '',
+    wx_code: app.globalData.code,
   },
 
   onLoad: function(options){
@@ -44,14 +44,15 @@ Page({
   },
 
   mysubmit: function (param) {
+    var that = this;
     //console.log(param)
     var registData = {};
     registData.phone_no = param.username.trim();
     registData.verify_code = param.smsCode.trim();
-    registData.password = param.password.trim();
-    registData.wx_code = app.globalData.code.trim();
-    var flag = this.checkUserName(param) && this.checkPassword(param)
-    var that = this;
+    //registData.password = param.password.trim();
+    registData.wx_code = that.data.wx_code.trim();
+    var flag = this.checkUserName(param)
+    
     if (flag) {
       this.setregistData1();
       wx.request({
@@ -66,11 +67,17 @@ Page({
             app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
             app.globalData.session_id = res.data.data.session_id;
             wx.showToast({
-              title: "注册成功"
+              title: "手机号验证成功"
             })
-            setTimeout(function () {
+            if (res.data.data.status==0){
               that.redirectTo(res.data.data);
-            }, 1000);
+            }else{
+              wx.switchTab({
+                url: '../main/main'
+              })
+            }
+           
+            app.globalData.login = 1;
           } else {
             console.log(res.data)
             wx.showModal({
@@ -95,7 +102,7 @@ Page({
 
   setregistData1: function () {
     this.setData({
-      registBtnTxt: "注册中",
+      registBtnTxt: "验证中",
       registDisabled: !this.data.registDisabled,
       registBtnBgBgColor: "#999",
       btnLoading: !this.data.btnLoading
@@ -104,7 +111,7 @@ Page({
 
   setregistData2: function () {
     this.setData({
-      registBtnTxt: "注册",
+      registBtnTxt: "下一步",
       registDisabled: !this.data.registDisabled,
       registBtnBgBgColor: "#ff5539",
       btnLoading: !this.data.btnLoading
@@ -126,27 +133,27 @@ Page({
     }
   },
 
-  checkPassword: function (param) {
-    var userName = param.username.trim();
-    var password = param.password.trim();
-    if (password.length <= 0) {
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '请设置密码'
-      });
-      return false;
-    } else if (password.length < 6 || password.length > 20) {
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '密码长度为6-20位字符'
-      });
-      return false;
-    } else {
-      return true;
-    }
-  },
+  // checkPassword: function (param) {
+  //   var userName = param.username.trim();
+  //   var password = param.password.trim();
+  //   if (password.length <= 0) {
+  //     wx.showModal({
+  //       title: '提示',
+  //       showCancel: false,
+  //       content: '请设置密码'
+  //     });
+  //     return false;
+  //   } else if (password.length < 6 || password.length > 20) {
+  //     wx.showModal({
+  //       title: '提示',
+  //       showCancel: false,
+  //       content: '密码长度为6-20位字符'
+  //     });
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // },
 
   mobileInputEvent: function (e) {
     this.setData({
@@ -157,12 +164,13 @@ Page({
   getSmsCode: function () {
     //		console.log(e)
     var that = this;
+    that.getWxCode();
     // var phoneNo = that.data.phone;
     //var wxcode = app.globalData.code.trim()
     var count = 60;
     var rqData = {
       phone_no: that.data.phone,
-      wx_code: app.globalData.code.trim()
+      wx_code: that.data.wx_code.trim()
     }
     var si = setInterval(function () {
       if (count > 0) {
@@ -199,14 +207,11 @@ Page({
             title: "验证码已发送"
           })
         } else {
-          if (res.data.code != 2002) {
-            wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: res.data.msg
-            });
-          }
-
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
           clearInterval(si);
         }
       },
@@ -224,8 +229,8 @@ Page({
   redirectTo: function (param) {
     //需要将param转换为字符串
     //		param = JSON.stringify(param);
-    wx.switchTab({
-      url: '../main/main' //参数只能是字符串形式，不能为json对象
+    wx.redirectTo({
+      url: '../auth/auth' //参数只能是字符串形式，不能为json对象
     })
   }
 

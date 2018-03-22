@@ -1,6 +1,4 @@
 <view class='contain'>
-
-
   <!--2.列表View-->
   <view class="swiper">
 
@@ -18,7 +16,7 @@
             </view>
             <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
               <view class="weui-cell__hd">
-                <view class="weui-label">城市</view>
+                <view class="weui-label">选择城市</view>
               </view>
               <view class="weui-cell__bd" bindtap="selectDistrict">
                 <input class="weui-input" id="city" name="city" maxlength='20' type="text" placeholder="请选择城市" value="{{areaInfo}}" disabled='disabled' />
@@ -37,20 +35,20 @@
                 </block>
               </view>
             </view>
-                <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
+            <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
               <view class="weui-cell__hd">
                 <view class="weui-label">车辆类型</view>
               </view>
               <view class="weui-cell__bd">
                 <radio-group class='wtstw' bindchange="radioChange">
                   <label class="radio">
-                    <radio value="r1" checked="true" />网约车
+                    <radio value="1" checked="true" />网约车
                   </label>
                   <label class="radio">
-                    <radio value="r2" />私家车
+                    <radio value="2" />私家车
                   </label>
                   <label class="radio">
-                    <radio value="r3" />其他
+                    <radio value="0" />其他
                   </label>
                 </radio-group>
               </view>
@@ -61,17 +59,17 @@
               </view>
               <view class="weui-cell__bd">
                 <picker range="{{nameList}}" bindchange="sourceTypeChange" value="{{sourceTypeIndex}}" mode="selector">
-                  <input class="weui-input" wx:if='{{sourceTypeIndex==""}}' id="city" name="city" maxlength='20' type="text" placeholder="请选择租赁公司" disabled='disabled' />
+                  <input class="weui-input" wx:if='{{sourceTypeIndex==""}}' id="city" name="lease" maxlength='20' type="text" placeholder="请选择租赁公司" disabled='disabled' />
                   <view class="weui-input" wx:if='{{sourceTypeIndex!=""}}'>{{nameList[sourceTypeIndex]}}</view>
                 </picker>
               </view>
             </view>
             <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
               <view class="weui-cell__hd">
-                <view class="weui-label">车型</view>
+                <view class="weui-label">选择车型</view>
               </view>
-              <view class="weui-cell__bd" bindtap="selectDistrict">
-                <input class="weui-input" id="city" name="city" maxlength='20' type="text" placeholder="请选择车辆品牌/车型" value="{{areaInfo}}" disabled='disabled' />
+              <view class="weui-cell__bd" bindtap="selectBrand">
+                <input class="weui-input" id="brand" name="brand" maxlength='20' type="text" placeholder="请选择车辆品牌/车型" value="{{areaInfo2}}" disabled='disabled' />
               </view>
             </view>
             <view class="weui-cell weui-cell_input">
@@ -79,9 +77,9 @@
                 <view class="weui-label">车身颜色</view>
               </view>
               <view class="weui-cell__bd">
-                <picker range="{{nameList}}" bindchange="sourceTypeChange" value="{{sourceTypeIndex}}" mode="selector">
-                  <input class="weui-input" wx:if='{{sourceTypeIndex==""}}' id="city" name="city" maxlength='20' type="text" placeholder="请选择车身颜色" disabled='disabled' />
-                  <view class="weui-input" wx:if='{{sourceTypeIndex!=""}}'>{{nameList[sourceTypeIndex]}}</view>
+                <picker range="{{colorName}}" bindchange="sourceTypeChange2" value="{{sourceTypeIndex2}}" mode="selector">
+                  <input class="weui-input" wx:if='{{sourceTypeIndex2==""}}' maxlength='20' name='color' type="text" placeholder="请选择车身颜色" disabled='disabled' />
+                  <view class="weui-input" wx:if='{{sourceTypeIndex2!=""}}'>{{color[sourceTypeIndex2].name}}</view>
                 </picker>
               </view>
             </view>
@@ -90,7 +88,14 @@
                 <view class="weui-label">是否掉漆</view>
               </view>
               <view class="weui-cell__bd">
-               <switch class='txattw' bindchange="switchChange"/>
+                <radio-group class='wtstw' bindchange="switchChange">
+                  <label class="radio radio2">
+                    <radio value="2" checked="true" />否
+                  </label>
+                  <label class="radio">
+                    <radio value="1" />是
+                  </label>
+                </radio-group>
               </view>
             </view>
           </view>
@@ -120,7 +125,7 @@
               </view>
             </view>
           </view>
-          <view class="weui-cells my-cells martnone">
+          <!-- <view class="weui-cells my-cells martnone">
             <view class="weui-cell">
               <view class="weui-cell__bd">
                 <view class="weui-uploader">
@@ -142,13 +147,10 @@
                 </view>
               </view>
             </view>
-          </view>
+          </view> -->
         </view>
         <button formType="submit" class='btn-quit'> 提交</button>
-
       </form>
-
-
     </block>
   </view>
 </view>
@@ -206,6 +208,28 @@
     </picker-view-column>
     <picker-view-column>
       <view wx:for="{{citys}}" class="picker-item" wx:key="item.id">
+        {{item.name}}</view>
+    </picker-view-column>
+  </picker-view>
+</view>
+
+
+<view class="dialog-mask " style="z-index:11;visibility:{{addressMenuIsShow2 ? 'visible': 'hidden'}}" bindtap="hideCitySelected" />
+<!--城市三级联动-->
+<!--使用动画时不能wx:if="{{city.length>0&&isVisible}}" ，不能hidden=''属性否则无动画效果-->
+<view class="picker-view" animation="{{animationAddressMenu2}}" style="visibility:{{addressMenuIsShow2 ? 'visible':'hidden'}}">
+  <view class='veisxa'>
+    <text catchtap="cityCancel" style="float:left;color:#4A4A4A">取消</text>
+    <text style="float: right;color:green" catchtap="barndSure">确定</text>
+  </view>
+  <!--"可以显示默认的城市，使用后级联选择城市反应很慢就不使用了-->
+  <picker-view style="width: 100%;height:600rpx" bindchange="brandChange" value="{{value2}}">
+    <picker-view-column>
+      <view wx:for="{{brands}}" class="picker-item" wx:key="item.id">
+        {{item.name}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{models}}" class="picker-item" wx:key="item.id">
         {{item.name}}</view>
     </picker-view-column>
   </picker-view>

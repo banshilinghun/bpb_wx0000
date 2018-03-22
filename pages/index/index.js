@@ -33,16 +33,14 @@ Page({
 								//app.globalData.session_id = res.data.data.session_id;
 								app.globalData.header.Cookie = 'sessionid='+res.data.data.session_id;
 								//								console.log(res.data.data);	 ·
-								wx.switchTab({
-									url: '../main/main'
-								})
-							} else {
-								wx.redirectTo({
-									url: '../login/login'
-								})
-
-							}
-
+                app.globalData.login=1;
+              } else if (res.data.code == 20001) {
+                app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
+                app.globalData.login = 0;
+              }
+              wx.switchTab({
+                url: '../main/main'
+              })
 						},
 						fail: res => {
 							//console.log(2222);

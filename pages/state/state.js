@@ -55,7 +55,7 @@ Page({
 					})
 					if(res.data.data.status == 3) {
 						wx.redirectTo({
-							url: '../main/main' //
+							url: '../main/main' 
 						})
 					}
 				} else {
@@ -76,7 +76,7 @@ Page({
 		})
 	},
 	bookTap: function() {
-		wx.navigateTo({
+    wx.redirectTo({
 			url: '../auth/auth'
 		})
 	},

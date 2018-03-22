@@ -1,0 +1,22 @@
+<view class='twwg'>
+<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" scroll-left="{{scrollLeft}}" style="width: 95%">
+  <radio-group class="radio-group" bindchange="moneyChange">
+    <label wx:for="{{dateList}}" wx:for-index="idx" wx:key="item.value" class="radio {{ idx == index ? 'active' : ''}}">
+      <radio class="radio-item" value="{{item.value}}" checked="{{idx==0}}"  />{{item.name}}
+    </label>
+  </radio-group>
+</scroll-view>
+ <view class="profile-wrapper">
+    <block wx:for="{{myProfile}}" wx:key="item.id">
+      <view class="profile" id="{{item.id}}">
+        <image class="itemicon" src="../../image/time.png"></image>
+        <view class="profile-item"> {{item.begin_time}}-{{item.end_time}} </view>
+        <view class='ammeit-con'>{{item.sub_count}}/{{item.total_count}}</view>
+       <view class='ammeit'>
+       <view wx:if="{{item.sub_count-item.total_count<0}}" class='ammitbt' bindtap="arrangement" data-date="{{item.date}}" data-btime="{{item.begin_time}}" data-etime="{{item.end_time}}" data-id="{{item.id}}">预约</view>
+       <view wx:if="{{item.sub_count-item.total_count>=0}}" class='ammitbt2' >已约满</view>
+       </view>
+      </view>
+    </block>
+  </view>
+</view>

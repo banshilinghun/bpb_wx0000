@@ -568,7 +568,14 @@ icon {
   background: url(https://wxapi.benpaobao.com/static/app_img/carn.png) no-repeat;
   background-size: 100% 100%;
 }
-
+.carleftimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/car_left.png) no-repeat;
+  background-size: 100% 100%;
+}
+.carrightimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/car_right.png) no-repeat;
+  background-size: 100% 100%;
+}
 .weui-uploader__input-box:active {
   border-color: #999;
 }
@@ -1575,7 +1582,7 @@ picker-view {
   margin: 0 10rpx;
 }
 .radio {
-  margin-right: 16rpx;
+  margin-right: 12rpx;
 }
 .radio2 {
   margin-right: 82rpx;
