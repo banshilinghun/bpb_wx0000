@@ -13,7 +13,8 @@
     "pages/withdraw/withdraw",
     "pages/addBankCard/addBankCard",
     "pages/deposit/deposit",
-    "pages/checkPlan/checkPlan"
+    "pages/checkPlan/checkPlan",
+    "pages/arrangement/arrangement"
   ],
   "window": {
     "backgroundTextStyle": "light",

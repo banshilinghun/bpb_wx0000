@@ -1,13 +1,13 @@
 <!--index.wxml-->
 <view>
   <view class="message__list">
-    <block>
+    <!-- <block>
       <swiper class='notify_swiper' vertical='true' circular='true' autoplay='true' interval='3000'>
         <swiper-item class='swiper_item' wx:for='{{userList}}' wx:key='index'>
           <text class='swiper_content'>{{item}}</text>
         </swiper-item>
       </swiper>
-    </block>
+    </block> -->
     <block wx:if="{{haveMyAd}}">
       <view class="axstw">
         <view class="item2" bindtap="go" data-name="{{myAd.id}}">
@@ -37,22 +37,14 @@
             <view class='texst'>
               <text class="time">剩余{{myAd.current_count}}</text>
             </view>
-            <view>
-
-              <label class="province-text" wx:if="{{shippingStatus==0}}">[未派送]</label>
-              <label class="province-text" wx:if="{{shippingStatus==1}}">[派送中]</label>
-              <label class="province-text" wx:if="{{shippingStatus==2}}">[已签收]</label>
-
-            </view>
           </view>
         </view>
-        <button class="btn-gray" wx:if="{{canCheck==4}}"> 登记审核中</button>
-        <button class="btn-red" bindtap="regist" data-adId="{{myAd.id}}" data-type="{{myAd.type}}" wx:if="{{canCheck==6}}"> 登记</button>
-        <button class="btn-red" bindtap="regist" data-adId="{{myAd.id}}" data-type="{{myAd.type}}" wx:if="{{canCheck==5}}"> 审核失败，请重新登记 </button>
-        <button class="btn-red" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 开始检测 </button>
-        <button class="btn-red" bindtap="check" wx:if="{{canCheck==3}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 审核失败，请重新检测 </button>
-        <button class="btn-gray" wx:if="{{canCheck==0}}"> {{myAd.check.date}}开始检测 </button>
-        <button class="btn-gray" wx:if="{{canCheck==2}}"> 检测审核中</button>
+        <button class="btn-red" wx:if="{{canCheck==4}}" bindtap="goMap" data-longitude="{{myAd.subscribe.lng}}" data-latitude="{{myAd.subscribe.lat}}" data-name="{{myAd.subscribe.serviceName}}" data-address="{{myAd.subscribe.address}}"> 已预约{{myAd.subscribe.date}} 安装广告，导航前往网点安装</button>
+        <button class="btn-red" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 立即检测 </button>
+        <button class="btn-gray" wx:if="{{canCheck==0}}"> {{myAd.check.checkDate}}开始期中检测 </button>
+        <button class="btn-gray" wx:if="{{canCheck==2}}"> {{myAd.check.checkDate}}开始网点检测 </button>
+        <button class="btn-red" wx:if="{{canCheck==3}}"  bindtap="goMap" data-longitude="{{myAd.check.lng}}" data-latitude="{{myAd.check.lat}}" data-name="{{myAd.check.serviceName}}" data-address="{{myAd.check.address}}">网点检测，导航前往服务网点检测 </button>
+         <button class="btn-gray" wx:if="{{canCheck==5}}">检测审核中，通过后可提取收益</button>
       </view>
     </block>
     <block wx:for="{{adList}}" wx:key="item.id">

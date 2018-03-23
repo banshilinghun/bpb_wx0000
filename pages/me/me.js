@@ -43,101 +43,81 @@ Page({
 		//
 		//		var uidData = {};
 		//		uidData.user_id = app.globalData.uid;
-		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_account',
-			data: {},
-			header: app.globalData.header,
-			success: res => {
-				if(res.data.code == 1000) {
-					this.setData({
-						navs: [{
-								desc: '可提现(元)',
-								num: util.toDecimal2(res.data.data.activityable_amount)
-							},
+    var loginFlag = app.globalData.login;
+    this.setData({
+      loginFlag: loginFlag
+    })
+    if (loginFlag==1){
+      wx.request({
+        url: 'https://wxapi.benpaobao.com/app/get/user_account',
+        data: {},
+        header: app.globalData.header,
+        success: res => {
+          if (res.data.code == 1000) {
+            this.setData({
+              navs: [{
+                desc: '可提现(元)',
+                num: util.toDecimal2(res.data.data.activityable_amount)
+              },
 
-							{
-								desc: '提现中(元)',
-								num: util.toDecimal2(res.data.data.withdraw_amount)
-							},
+              {
+                desc: '提现中(元)',
+                num: util.toDecimal2(res.data.data.withdraw_amount)
+              },
 
-							{
-								desc: '冻结(元)',
-								num: util.toDecimal2(res.data.data.lock_amount)
-							}
-						],
-						total: util.toDecimal2(res.data.data.activityable_amount + res.data.data.withdraw_amount + res.data.data.lock_amount)
-					});
-					//					console.log(res.data);
-				} else {
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: res.data.msg
-					});
-				}
-			},
-			fail: res => {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '网络错误'
-				});
-			}
-		})
+              {
+                desc: '冻结(元)',
+                num: util.toDecimal2(res.data.data.lock_amount)
+              }
+              ],
+              total: util.toDecimal2(res.data.data.activityable_amount + res.data.data.withdraw_amount + res.data.data.lock_amount)
+            });
+            //					console.log(res.data);
+          } else {
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: res.data.msg
+            });
+          }
+        },
+        fail: res => {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: '网络错误'
+          });
+        }
+      })
 
-		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
-			data: {},
-			header: app.globalData.header,
-			success: res => {
-				if(res.data.code == 1000) {
-					//					console.log(res.data)
-					this.setData({
-						status: res.data.data.status
-					})
-				} else {
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: res.data.msg
-					});
-				}
-			},
-			fail: res => {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '网络错误'
-				});
-			}
-		})
+      wx.request({
+        url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+        data: {},
+        header: app.globalData.header,
+        success: res => {
+          if (res.data.code == 1000) {
+            //					console.log(res.data)
+            this.setData({
+              status: res.data.data.status
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: res.data.msg
+            });
+          }
+        },
+        fail: res => {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: '网络错误'
+          });
+        }
+      })
 
-		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_deposit_ispaid',
-			data: {},
-			header: app.globalData.header,
-			success: res => {
-				if(res.data.code == 1000) {
-					//console.log(res.data.data)
-					this.setData({
-						haveDeposit: res.data.data
-					})
-				} else {
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: res.data.msg
-					});
-				}
-			},
-			fail: res => {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '网络错误'
-				});
-			}
-		})
+    }
 
 	},
 	loadProfile: function(e) {
@@ -145,20 +125,37 @@ Page({
 	},
 	kindToggle: function(e) {
 		//		console.log(e);
+    var that=this;
 		var id = e.currentTarget.id,
 			myProfile = this.data.myProfile;
 		for(var i = 0, len = myProfile.length; i < len; ++i) {
 			if(myProfile[i].id == id) {
 				if(i == 0) {
-					if(this.data.status == 0) {
-						wx.navigateTo({
-							url: '../auth/auth'
-						})
-					} else {
-						wx.navigateTo({
-							url: '../state/state'
-						})
-					}
+          if (that.data.loginFlag == 1) {
+            if (this.data.status == 0) {
+              wx.navigateTo({
+                url: '../auth/auth'
+              })
+            } else {
+              wx.navigateTo({
+                url: '../state/state'
+              })
+            }
+          } else {
+            wx.showModal({
+              title: "提示",
+              content: "你还没有登录",
+              confirmText: "立即登录",
+              cancelText: "取消",
+              success: function (sure) {
+                if (sure.confirm) {
+                  wx.navigateTo({
+                    url: '../register/register'
+                  })
+                }
+              }
+            })
+          }
 				} else {
 					if(myProfile[i].id == 'address') {
 						if(wx.chooseAddress) {
@@ -183,9 +180,27 @@ Page({
 							})
 						}
 					} else {
-						wx.navigateTo({
-							url: '../' + myProfile[i].url
-						})
+            
+            if (that.data.loginFlag == 1) {
+              wx.navigateTo({
+                url: '../' + myProfile[i].url
+              })
+            }else{
+              wx.showModal({
+                title: "提示",
+                content: "你还没有登录",
+                confirmText: "立即登录",
+                cancelText: "取消",
+                success: function (sure) {
+                  if (sure.confirm) {
+                    wx.navigateTo({
+                      url: '../register/register'
+                    })
+                  }
+                }
+              })
+            }
+     
 					}
 
 				}
@@ -202,107 +217,12 @@ Page({
 			title: '奔跑中...',
 			icon: 'loading'
 		})
-		//		var uidData = {};
-		//		uidData.user_id = app.globalData.uid;
-		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_account',
-			data: {},
-			header: app.globalData.header,
-			success: res => {
-				wx.stopPullDownRefresh();
-				if(res.data.code == 1000) {
-					this.setData({
-						navs: [{
-								desc: '可提现(元)',
-								num: util.toDecimal2(res.data.data.activityable_amount)
-							},
-
-							{
-								desc: '提现中(元)',
-								num: util.toDecimal2(res.data.data.withdraw_amount)
-							},
-
-							{
-								desc: '冻结(元)',
-								num: util.toDecimal2(res.data.data.lock_amount)
-							}
-						],
-						total: util.toDecimal2(res.data.data.activityable_amount + res.data.data.withdraw_amount + res.data.data.lock_amount)
-					});
-					//					console.log(res.data);
-				} else {
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: res.data.msg
-					});
-				}
-			},
-			fail: res => {
-				wx.stopPullDownRefresh();
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '网络错误'
-				});
-			}
-		})
-		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
-			data: {},
-			header: app.globalData.header,
-			success: res => {
-				if(res.data.code == 1000) {
-					//					console.log(res.data)
-					this.setData({
-						status: res.data.data.status
-					})
-				} else {
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: res.data.msg
-					});
-				}
-			},
-			fail: res => {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '网络错误'
-				});
-			}
-		})
-		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_deposit_ispaid',
-			data: {},
-			header: app.globalData.header,
-			success: res => {
-				if(res.data.code == 1000) {
-					//					console.log(res.data)
-					this.setData({
-						haveDeposit: res.data.data
-					})
-				} else {
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: res.data.msg
-					});
-				}
-			},
-			fail: res => {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '网络错误'
-				});
-			}
-		})
+    this.onShow();
+		
 	},
 	exit: function() {
 		wx.redirectTo({
-			url: '../login/login'
+      url: '../register/register'
 		})
 	},
 
@@ -311,9 +231,9 @@ Page({
     var that = this
     return {
       title: '奔跑宝',
-      desc: '邀请好友',
-      path: 'pages/register/register?inviteId=' + that.data.inviteId,
-      imageUrl: '../../image/pwdIcon.png',
+      desc: '私家车广告平台',
+      path: 'pages/index/index?inviteId=' + that.data.inviteId,
+      imageUrl: '../../image/index.png',
       success: function(res){
         console.log('share------success')
         wx.showToast({

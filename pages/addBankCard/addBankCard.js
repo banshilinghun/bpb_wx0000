@@ -109,9 +109,11 @@ Page({
 							success: res2 => {
 								if(res2.data.code == 1000) {
 									//					console.log(res.data)
-									this.setData({
-										bank_name: res2.data.data.bank_name
-									})
+                  if (res2.data.data!=null){
+                    this.setData({
+                      bank_name: res2.data.data.bank_name
+                    })
+                  }
 								} else {
 									wx.showModal({
 										title: '提示',

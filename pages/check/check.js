@@ -33,9 +33,7 @@ Page({
 		show1: true,
 		show2: true,
 		show3: true,
-		carw: false,
-		cart: false,
-		carn: false
+    show4: true
 	},
 	onLoad: function(options) {
 		var adData = JSON.parse(options.ckData);
@@ -44,201 +42,119 @@ Page({
 			ckId: adData.checkid,
 			type: adData.type
 		})
-		if(adData.type == 0) {
-			this.setData({
-				carw: true
-			})
-		}
-		if(adData.type == 1) {
-			this.setData({
-				cart: true,
-				carn: true
-			})
-		}
-		if(adData.type == 2) {
-			this.setData({
-				carw: true,
-				carn: true
-			})
-		}
+		// if(adData.type == 0) {
+		// 	this.setData({
+		// 		carw: true
+		// 	})
+		// }
+		// if(adData.type == 1) {
+		// 	this.setData({
+		// 		cart: true,
+		// 		carn: true
+		// 	})
+		// }
+		// if(adData.type == 2) {
+		// 	this.setData({
+		// 		carw: true,
+		// 		carn: true
+		// 	})
+		// }
 
 	},
 
 	formSubmit: function(e) {
 		var param = e.detail.value;
-    var formId = e.detail.formId;
-    this.mysubmit(param,formId);
+    //var formId = e.detail.formId;
+    this.mysubmit(param);
 	},
-  mysubmit: function (param, formId) {
+  mysubmit: function (param) {
 
 		///var uid = app.globalData.uid;
 		var ckId = this.data.ckId;
 		//		console.log(ckId);
 		//		console.log(param)
 		var formData = {
-			check_id: ckId,
-      form_id: formId
+			check_id: ckId
 		}
-		var carwPhoto = this.data.carwPhoto;
+    var carleftPhoto = this.data.carleftPhoto;
+    var carrightPhoto = this.data.carrightPhoto;
 		var carnPhoto = this.data.carnPhoto;
 		var cartPhoto = this.data.cartPhoto;
 		//		console.log(formData);
-		if(this.data.type == 0) {
-			if(carwPhoto == undefined) {
+    if (carleftPhoto == undefined) {
 				wx.showModal({
 					title: '提示',
 					showCancel: false,
-					content: '请上传车尾照片'
+					content: '请上传车身左侧照片'
 				});
-			} else {
-				wx.request({
-					url: 'https://wxapi.benpaobao.com/app/check/user_ad',
-					data: formData,
-					header: app.globalData.header,
-					success: res => {
-						if(res.data.code == 1000) {
-							wx.showToast({
-								title: "提交成功"
-							})
-							setTimeout(function() {
-								wx.switchTab({
-									url: '../main/main'
-								})
-							}, 1000);
-						} else {
-							//					console.log(res.data)
-							wx.showModal({
-								title: '提示',
-								showCancel: false,
-								content: res.data.msg
-							});
-						}
-					},
-					fail: res => {
-						wx.showModal({
-							title: '提示',
-							showCancel: false,
-							content: '网络错误'
-						});
-					}
-				})
-			}
-		}
-
-		if(this.data.type == 1) {
-			if(cartPhoto == undefined) {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '请上传车头照片'
-				});
-			}
-			if(carnPhoto == undefined) {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '请上传车内照片'
-				});
-			}
-			if(cartPhoto != undefined && carnPhoto != undefined) {
-				wx.request({
-					url: 'https://wxapi.benpaobao.com/app/check/user_ad',
-					data: formData,
-					header: app.globalData.header,
-					success: res => {
-						if(res.data.code == 1000) {
-							wx.showToast({
-								title: "提交成功"
-							})
-							setTimeout(function() {
-								wx.switchTab({
-									url: '../main/main'
-								})
-							}, 1000);
-						} else {
-							//					console.log(res.data)
-							wx.showModal({
-								title: '提示',
-								showCancel: false,
-								content: res.data.msg
-							});
-						}
-					},
-					fail: res => {
-						wx.showModal({
-							title: '提示',
-							showCancel: false,
-							content: '网络错误'
-						});
-					}
-				})
-			}
-		}
-		if(this.data.type == 2) {
-			if(carnPhoto == undefined) {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '请上传车内照片'
-				});
-			}
-			if(carwPhoto == undefined) {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '请上传车尾照片'
-				});
-			}
-			if(carnPhoto != undefined && carwPhoto != undefined) {
-				wx.request({
-					url: 'https://wxapi.benpaobao.com/app/check/user_ad',
-					data: formData,
-					header: app.globalData.header,
-					success: res => {
-						if(res.data.code == 1000) {
-							wx.showToast({
-								title: "提交成功"
-							})
-							setTimeout(function() {
-								wx.switchTab({
-									url: '../main/main'
-								})
-							}, 1000);
-						} else {
-							//					console.log(res.data)
-							wx.showModal({
-								title: '提示',
-								showCancel: false,
-								content: res.data.msg
-							});
-						}
-					},
-					fail: res => {
-						wx.showModal({
-							title: '提示',
-							showCancel: false,
-							content: '网络错误'
-						});
-					}
-				})
-			}
-		}
+    } else if (carrightPhoto==undefined){
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '请上传车身右侧照片'
+      });
+    } else if (cartPhoto == undefined){
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '请上传车头照片'
+      });
+    }else if (carnPhoto == undefined) {
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '请上传车内照片'
+      });
+    }else{
+      wx.request({
+        url: 'https://wxapi.benpaobao.com/app/commit/mid_check',
+        data: formData,
+        header: app.globalData.header,
+        success: res => {
+          if (res.data.code == 1000) {
+            wx.showToast({
+              title: "提交成功"
+            })
+            setTimeout(function () {
+              wx.switchTab({
+                url: '../main/main'
+              })
+            }, 1000);
+          } else {
+            //					console.log(res.data)
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: res.data.msg
+            });
+          }
+        },
+        fail: res => {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: '网络错误'
+          });
+        }
+      })
+    }
+		
 	},
 
-	chooseImage: function() { //车尾
+	chooseImage: function() { //车身左侧
 		var that = this;
 		//		console.log(that.data.ckId);
 		wx.chooseImage({
 			sourceType: sourceType[0],
-			sizeType: sizeType[2],
+			sizeType: sizeType[0],
 			count: 1,
 			success: function(res) {
 				//				console.log(res)
 				var wxres = res;
 				wx.uploadFile({
-					url: 'https://wxapi.benpaobao.com/app/check/upload_img',
+          url: 'https://wxapi.benpaobao.com/app/upload/mid_check_img',
 					filePath: res.tempFilePaths[0],
-					name: 'behind_car',
+          name: 'left_img',
 					header: {
 						"Cookie": app.globalData.header.Cookie,
 					},
@@ -250,7 +166,7 @@ Page({
 						if(resdata.code == 1000) {
 							that.setData({
 								imageList: wxres.tempFilePaths,
-								carwPhoto: wxres.tempFilePaths[0],
+								carleftPhoto: wxres.tempFilePaths[0],
 								show1: false
 							})
 						} else {
@@ -276,26 +192,82 @@ Page({
 	},
 	previewImage: function(e) {
 		var current = e.target.dataset.src
-
 		wx.previewImage({
 			current: current,
 			urls: this.data.imageList
 		})
 	},
+  chooseImage4: function () { //车身右侧
+    var that = this;
+    //		console.log(that.data.ckId);
+    wx.chooseImage({
+      sourceType: sourceType[0],
+      sizeType: sizeType[0],
+      count: 1,
+      success: function (res) {
+        //				console.log(res)
+        var wxres = res;
+        wx.uploadFile({
+          url: 'https://wxapi.benpaobao.com/app/upload/mid_check_img',
+          filePath: res.tempFilePaths[0],
+          name: 'right_img',
+          header: {
+            "Cookie": app.globalData.header.Cookie,
+          },
+          formData: {
+            check_id: that.data.ckId
+          },
+          success: function (res) {
+            var resdata = JSON.parse(res.data);
+            if (resdata.code == 1000) {
+              that.setData({
+                imageList4: wxres.tempFilePaths,
+                carrightPhoto: wxres.tempFilePaths[0],
+                show4: false
+              })
+            } else {
+              wx.showModal({
+                title: '提示',
+                showCancel: false,
+                content: resdata.msg
+              });
+            }
+          },
+          fail: res => {
+            console.log(res.data)
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: '网络错误'
+            });
+          }
+        })
+      }
+    })
+
+  },
+  previewImage4: function (e) {
+    var current = e.target.dataset.src
+
+    wx.previewImage({
+      current: current,
+      urls: this.data.imageList4
+    })
+  },
 	chooseImage2: function() { //车内
 		var that = this
 		wx.chooseImage({
 			sourceType: sourceType[0],
-			sizeType: sizeType[2],
+			sizeType: sizeType[0],
 			count: 1,
 			success: function(res) {
 				//				console.log(res)
 				var wxres = res;
 
 				wx.uploadFile({
-					url: 'https://wxapi.benpaobao.com/app/check/upload_img',
+          url: 'https://wxapi.benpaobao.com/app/upload/mid_check_img',
 					filePath: res.tempFilePaths[0],
-					name: 'inside_car',
+          name: 'in_img',
 					header: {
 						"Cookie": app.globalData.header.Cookie,
 					},
@@ -342,16 +314,16 @@ Page({
 		var that = this
 		wx.chooseImage({
 			sourceType: sourceType[0],
-			sizeType: sizeType[2],
+			sizeType: sizeType[0],
 			count: 1,
 			success: function(res) {
 				//				console.log(res)
 				var wxres = res;
-
+        console.log(wxres);
 				wx.uploadFile({
-					url: 'https://wxapi.benpaobao.com/app/check/upload_img',
+          url: 'https://wxapi.benpaobao.com/app/upload/mid_check_img',
 					filePath: res.tempFilePaths[0],
-					name: 'front_car',
+          name: 'front_img',
 					header: {
 						"Cookie": app.globalData.header.Cookie,
 					},
@@ -359,6 +331,7 @@ Page({
 						check_id: that.data.ckId
 					},
 					success: function(res) {
+            //console.log(res)
 						var resdata = JSON.parse(res.data);
 						if(resdata.code == 1000) {
 							that.setData({

@@ -25,6 +25,7 @@ App({
 	},
 	globalData: {
 		userInfo: null,
+    login:0,
 		header:{
 			'Cookie':'',
 			'content-type': 'application/json'
