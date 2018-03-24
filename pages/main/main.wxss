@@ -176,3 +176,16 @@ color:#999;
 .ywxst{
   font-size: 19rpx;
 }
+.wtwabt{
+  margin-top: 16rpx;
+  background: none;
+  line-height: 1.2;
+}
+.wtwabt image{
+  height: 40rpx;
+  width: 40rpx;
+}
+.sharetext{
+  font-size: 20rpx;
+  color: #ff555c;
+}

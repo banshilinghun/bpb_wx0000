@@ -261,13 +261,26 @@ Page({
 
   //分享
   onShareAppMessage: function (res) {
+    if (res.from =='button'){
+      var shareTitle = res.target.dataset.adname;
+      var adid = res.target.dataset.adid;
+      var adimg = res.target.dataset.adimg;
+      var desc ='全新广告，躺着赚钱，速速来抢～';
+    }
+    if (res.from == 'menu') {
+      var shareTitle = '奔跑宝，私家车广告平台';
+      var adid = -1;
+      var adimg = '../../image/bpbimg.jpg';
+      var desc = '拉上好友一起赚钱～';
+    }
+    console.log(res);
     //console.log(this)
     var that = this
     return {
-      title: '奔跑宝',
-      desc: '私家车广告平台',
-      path: 'pages/index/index?inviteId=' + that.data.inviteId,
-      imageUrl: 'https://wxapi.benpaobao.com/static/app_img/logo.png',
+      title: shareTitle,
+      desc: desc,
+      path: 'pages/index/index?adId=' + adid,
+      imageUrl: adimg,
       success: function (res) {
         console.log('share------success')
         wx.showToast({

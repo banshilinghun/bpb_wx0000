@@ -6,23 +6,11 @@ Page({
     scrollLeft: 0,
     index: 0,
     dateList: [],
-    myProfile: [{
-      "desc": "身份认证",
-      "id": "identity",
-      'url': 'auth/auth',
-      "icon": '../../image/time.png',
-      'deposit': 0
-    }, {
-      "desc": "提现",
-      "id": "withdraw",
-      'url': 'withdraw/withdraw',
-      "icon": '../../image/time.png',
-      'deposit': 0
-    }]
+    myProfile: []
   },
   onLoad: function (options) {
     var adData = JSON.parse(options.arrangementData);
-    console.log(adData)
+    // console.log(adData)
     var ad_id = adData.adid;
     var server_id = adData.serverid;
     this.getSubscribeDates(ad_id, server_id);
@@ -97,13 +85,13 @@ Page({
 
     var key = that.data.selDateList[e.detail.value];
     var itemList = that.data.allData[key];
-    console.log(itemList)
+    //console.log(itemList)
     that.setData({
       myProfile: itemList
     })
   },
   arrangement: function (e) {
-    console.log(e.currentTarget.dataset)
+    // console.log(e.currentTarget.dataset)
     var reqData = {};
     reqData.time_id = e.currentTarget.dataset.id;
     wx.showModal({
@@ -121,6 +109,12 @@ Page({
               if (res.data.code == 1000) {
                 wx.showToast({
                   title: "预约成功"
+                })
+                var pages = getCurrentPages();
+                var prevPage = pages[pages.length - 2]; //上一个页面
+                //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+                prevPage.setData({
+                  mydata: {share: 1 }
                 })
                 setTimeout(function(){
                   wx.navigateBack({

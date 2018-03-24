@@ -32,5 +32,6 @@ App({
 		},
     //分享传入的邀请人的id
     shareInviteId: '',
+    checkStaus:''
 	}
 })

@@ -10,20 +10,15 @@
     </block> -->
     <block wx:if="{{haveMyAd}}">
       <view class="axstw">
-        <view class="item2" bindtap="go" data-name="{{myAd.id}}">
-          <view class="item-left">
+        <view class="item2">
+          <view class="item-left"  bindtap="go" data-name="{{myAd.id}}">
             <image src="{{myAd.logo}}" class="image" />
           </view>
-          <view class="item-middle">
+          <view class="item-middle"  bindtap="go" data-name="{{myAd.id}}">
             <view>
               <text class="title">{{myAd.name}}</text>
             </view>
             <view class="myad-li">
-              <!-- <view class="message">广告类型：
-              <label class="data-text" wx:if="{{myAd.type==0}}">车尾</label>
-              <label class="data-text" wx:if="{{myAd.type==1}}">车内</label>
-              <label class="data-text" wx:if="{{myAd.type==2}}">车尾+车内</label>
-            </view> -->
               <view class="message">实际收益：
                 <label class="data-text">{{myAd.amount}}元</label>
               </view>
@@ -35,8 +30,14 @@
           </view>
           <view class="item_right">
             <view class='texst'>
+            <view bindtap="go" data-name="{{myAd.id}}">
               <text class="time">剩余{{myAd.current_count}}</text>
+              </view>
+               <button data-adName="{{myAd.name}}" data-adId="{{myAd.id}}" data-adImg="{{myAd.img_url}}" class='wtwabt' open-type="share"><image src='../../image/shareicon.png'></image>
+          <view class='sharetext'>分享</view>
+          </button>
             </view>
+           
           </view>
         </view>
         <button class="btn-red" wx:if="{{canCheck==4}}" bindtap="goMap" data-longitude="{{myAd.subscribe.lng}}" data-latitude="{{myAd.subscribe.lat}}" data-name="{{myAd.subscribe.serviceName}}" data-address="{{myAd.subscribe.address}}"> 已预约{{myAd.subscribe.date}} 安装广告，导航前往网点安装</button>
@@ -48,11 +49,11 @@
       </view>
     </block>
     <block wx:for="{{adList}}" wx:key="item.id">
-      <view class="item2" bindtap="go" data-name="{{item.id}}">
-        <view class="item-left">
+      <view class="item2" >
+        <view class="item-left" bindtap="go" data-name="{{item.id}}">
           <image src="{{item.logo}}" class="image" />
         </view>
-        <view class="item-middle">
+        <view class="item-middle" bindtap="go" data-name="{{item.id}}">
           <view>
             <text class="title">{{item.name}}</text>
           </view>
@@ -70,15 +71,18 @@
           </view>
         </view>
         <view class="item_right">
-          <view wx:if="{{item.state==0}}">
+          <view wx:if="{{item.state==0}}" bindtap="go" data-name="{{item.id}}">
             <text class="time">剩余{{item.current_count}}</text>
           </view>
-          <view wx:if="{{item.state==1}}">
+          <view wx:if="{{item.state==1}}" bindtap="go" data-name="{{item.id}}">
             <text class="time timetxt">已投完</text>
           </view>
-          <view wx:if="{{item.state==2}}">
+          <view wx:if="{{item.state==2}}" bindtap="go" data-name="{{item.id}}">
             <text class="time timetxt">已结束</text>
           </view>
+          <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.img_url}}" class='wtwabt' open-type="share"><image src='../../image/shareicon.png'></image>
+          <view class='sharetext'>分享</view>
+          </button>
         </view>
       </view>
       <view class="line"></view>
