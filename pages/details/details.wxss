@@ -370,10 +370,24 @@ button::after {
   padding-left: 0;
   padding-right: 0;
 }
+.title0{
+  text-align: center;
+  font-size:40rpx;
+  color: #FF555C;
+  padding-top:20rpx;
 
+}
+.title1{
+  text-align: right;
+}
+.title1 image{
+  width: 48rpx;
+  height: 48rpx;
+}
 .title2 {
-  font-size: 28rpx;
-  color: #888;
+  font-size: 32rpx;
+  color: #333;
+  margin-top: 20rpx;
 }
 
 .item3 {
@@ -666,4 +680,149 @@ button::after {
 .txtstx{
   padding-left: 20rpx;
   font-size: 20rpx;
+}
+.wtwabt{
+  margin-top: 16rpx;
+  background: none;
+  line-height: 1.2;
+}
+.wtwabt image{
+  height: 40rpx;
+  width: 40rpx;
+}
+.sharetext{
+  font-size: 20rpx;
+  color: #ff555c;
+}
+/*弹窗*/
+
+.goods-detail .mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+}
+
+.goods-detail .mask {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.goodsdetail {
+  position: fixed;
+  top: 50%;
+  width: 80%;
+  height: 320rpx;
+  left: 10%;
+  margin-top: -160rpx;
+  background: #fff;
+  z-index: 99999999999;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.banner {
+  height: 500rpx;
+  border-radius: 10px;
+}
+
+.banner image {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+.goodsdetail .title1 {
+  padding: 10rpx 20rpx;
+  color: #3c3c3c;
+  font-size: 36rpx;
+}
+
+.goodsdetail .title2 {
+  padding: 5rpx 60rpx;
+  color: #333;
+  font-size: 32rpx;
+}
+
+.goodsdetail .title3 {
+  padding: 0rpx 68rpx;
+  color: #3c3c3c;
+  font-size: 24rpx;
+}
+
+.goodsdetail .title3 image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.goodsdetail .title4 {
+  width: 100%;
+  position: absolute;
+  bottom: 20rpx;
+  color: #3c3c3c;
+}
+
+.goodsdetail .title5 {
+  width: 50%;
+  float: left;
+  font-size: 36rpx;
+  margin-left: 20rpx;
+}
+
+.goodsdetail .title6 {
+  width: 200rpx;
+  height: 80rpx;
+  font-size: 24rpx;
+  line-height: 80rpx;
+  float: right;
+  background: #393939;
+  color: #fff;
+  text-align: center;
+  margin-right: 20rpx;
+  border-radius: 5px;
+}
+
+.goodsdetail .title7 {
+  height: 80rpx;
+  font-size: 24rpx;
+  float: right;
+  color: #4a4a4a;
+  text-align: center;
+  margin-right: 30rpx;
+  border-radius: 5px;
+}
+
+.goodsdetail .title7 .reduce, .goodsdetail .title7 .add {
+  font-size: 50rpx;
+  background: #feb70f;
+  width: 50rpx;
+  height: 50rpx;
+  text-align: center;
+  border-radius: 50%;
+  float: left;
+  line-height: 50rpx;
+}
+
+.goodsdetail .title7 .num {
+  float: left;
+  width: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  margin: 0 10rpx;
+}
+.wtwabt2{
+  background: #ff555c;
+  color: #fff;
+  width: 88%;
+  margin: 0 auto;
+}
+.taewtw{
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  background: #FDFFE8;
+  font-size: 24rpx;
+  color: #FF555C;
+  text-align: center
 }

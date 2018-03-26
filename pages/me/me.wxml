@@ -29,14 +29,14 @@
         <image wx:if="{{item.deposit==0}}" class="profile-arrow" src="/image/arrow.png"></image>
       </view>
     </block>
-    <!-- <block>
+     <block>
       <button open-type='share' class='share-button'>
-        <image class='itemicon' src='../../image/money.png'></image>
+        <image class='itemicon' src='../../image/shmgc.png'></image>
         <text class='profile-item'>推荐好友</text>
         <image class='profile-arrow' src='/image/arrow.png'>
         </image>
       </button>
-    </block> -->
+    </block> 
   </view>
     <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">退出当前账户</text></button>
 </view>

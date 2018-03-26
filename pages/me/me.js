@@ -226,15 +226,19 @@ Page({
 		})
 	},
 
-  onShareAppMessage: function(res){
-    console.log(this)
+  //分享
+  onShareAppMessage: function (res) {
+    var shareTitle = '奔跑宝，私家车广告平台';
+    var adid = -1;
+    var adimg = '../../image/bpbimg.jpg';
+    var desc = '拉上好友一起赚钱～';
     var that = this
     return {
-      title: '奔跑宝',
-      desc: '私家车广告平台',
-      path: 'pages/index/index?inviteId=' + that.data.inviteId,
-      imageUrl: '../../image/index.png',
-      success: function(res){
+      title: shareTitle,
+      desc: desc,
+      path: 'pages/index/index',
+      imageUrl: adimg,
+      success: function (res) {
         console.log('share------success')
         wx.showToast({
           title: '分享成功',
@@ -244,7 +248,7 @@ Page({
           mask: true,
         })
       },
-      fail: function(){
+      fail: function () {
         wx.showToast({
           title: '分享取消',
           icon: '',

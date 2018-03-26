@@ -27,6 +27,7 @@ Page({
     checkPlan: false,
     istrue: true,
     inviteId: '我是shareInviteId',
+    showGoodsDetail:false
   },
 
   onLoad: function (options) {
@@ -35,8 +36,61 @@ Page({
     })
     app.globalData.shareInviteId = options.inviteId
   },
-  onShow: function () {
-    var that = this
+  onShow: function (n) {
+    var that = this;
+    wx.request({
+      url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          if (res.data.data.status!=0){
+            that.setData({
+              loginStaus: 2
+            })
+          }
+        } 
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+    var loginFlag = app.globalData.login;
+    var checkStaus = app.globalData.checkStaus;
+    if (loginFlag!=1){//没有登录
+        that.setData({
+          loginStaus:0
+        })
+    }else{//已登录
+      if (checkStaus==0){//未认证
+        that.setData({
+          loginStaus: 1
+        })
+      }else{//登录了且认证了
+        that.setData({
+          loginStaus: 2
+        })
+      }
+    }
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1]; //当前页面
+    //console.log(currPage.data.mydata) //就可以看到data里mydata的值了
+    if (currPage.data.mydata!=undefined){
+      if (currPage.data.mydata.share == 1 && n != 0){
+       that.setData({
+         showGoodsDetail: true
+       })
+      }else{
+        that.setData({
+          showGoodsDetail: false
+        })
+      }
+    }
+ 
     var reqData = {};
     reqData.ad_id = that.data.adId;
     wx.getLocation({
@@ -177,7 +231,7 @@ Page({
           wx.showToast({
             title: "取消成功"
           })
-          that.onShow();
+          that.onShow(0);
         } else {
           wx.showModal({
             title: '提示',
@@ -195,8 +249,6 @@ Page({
       }
     })
   },
-
-
   arrangement: function (e) {
     if(app.globalData.login==1){
       wx.request({
@@ -280,11 +332,7 @@ Page({
       })
     }
     //console.log(e)
-    
-
   },
-
-
   goMap: function (e) {
     //		console.log(e.currentTarget.dataset);
     wx.openLocation({
@@ -297,15 +345,34 @@ Page({
 
   //分享
   onShareAppMessage: function (res) {
+    //console.log(res)
+    var that=this;
+    if (res.from == 'button') {
+      var shareTitle = res.target.dataset.adname;
+      var adid = res.target.dataset.adid;
+      var adimg = that.data.banners[0];
+      var desc = '全新广告，躺着赚钱，速速来抢～';
+    }
+    if (res.from == 'menu') {
+      var shareTitle = '奔跑宝，私家车广告平台';
+      var adid = -1;
+      var adimg = '../../image/bpbimg.jpg';
+      var desc = '拉上好友一起赚钱～';
+    }
+    //console.log(res);
     //console.log(this)
     var that = this
     return {
-      title: '奔跑宝',
-      desc: '私家车广告平台',
-      path: 'pages/index/index?inviteId=' + that.data.inviteId,
-      imageUrl: '../../image/index.png',
+      title: shareTitle,
+      desc: desc,
+      path: 'pages/index/index?adId=' + adid,
+      imageUrl: adimg,
       success: function (res) {
-        console.log('share------success')
+        setTimeout(function(){
+          that.setData({
+            showGoodsDetail: false
+          })
+        },1000)
         wx.showToast({
           title: '分享成功',
           icon: '',
@@ -315,6 +382,11 @@ Page({
         })
       },
       fail: function () {
+        setTimeout(function () {
+          that.setData({
+            showGoodsDetail: false
+          })
+        }, 1000)
         wx.showToast({
           title: '分享取消',
           icon: '',
@@ -325,4 +397,25 @@ Page({
       }
     }
   },
+
+  showGoodsDetail: function () {
+    this.setData({
+      showGoodsDetail: !this.data.showGoodsDetail
+    });
+  },
+  hideGoodsDetail: function () {
+    this.setData({
+      showGoodsDetail: false
+    });
+  },
+  goRegister:function(){
+    wx.navigateTo({
+      url: '../register/register'
+    })
+  },
+  goAuth:function(){
+    wx.navigateTo({
+      url: '../auth/auth'
+    })
+  }
 })

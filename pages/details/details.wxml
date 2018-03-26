@@ -1,3 +1,5 @@
+<view class='taewtw' wx:if='{{loginStaus==0}}' bindtap="goRegister">您尚未注册，点击前往注册</view>
+<view class='taewtw' wx:if='{{loginStaus==1}}' bindtap="goAuth">您尚未认证，点击前往认证</view>
 <view>
   <view class="page-section page-section-spacing swiper">
     <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white">
@@ -12,6 +14,9 @@
     <block>
       <view class="profile frpro">
         <view class="profile-item cwsfts">{{adInfo.name}}</view>
+         <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}"  class='wtwabt' open-type="share"><image src='../../image/shareicon.png'></image>
+           <view class='sharetext'>分享</view> 
+          </button>
       </view>
     </block>
     <block>
@@ -104,4 +109,19 @@
   <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==6}}"> 审核失败，请重新检测</button>
   <button class="btn-gray" wx:if="{{sta==7}}"> 已领取其它广告</button>
   <button class="btn-gray" wx:if="{{sta==8}}"> 广告已结束</button> -->
+</view>
+
+<!--goodsdetail start-->
+<view class="goods-detail" hidden="{{!showGoodsDetail}}">
+  <view class="mask" bindtap="hideGoodsDetail"></view>
+  <view class="goodsdetail">
+    <!-- <view class="title1" bindtap="hideGoodsDetail"><image src='../../image/close.png'></image></view> -->
+    <view class='title0'>预约成功</view>
+    <view class="title2">分享给微信好友，让你的朋友们 一起赚钱吧!</view>
+    <view class="title4">
+      <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}"  class='wtwabt2' open-type="share">
+      分享微信好友
+          </button>
+    </view>
+  </view>
 </view>
