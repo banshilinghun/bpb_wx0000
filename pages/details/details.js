@@ -27,12 +27,19 @@ Page({
     checkPlan: false,
     istrue: true,
     inviteId: '我是shareInviteId',
-    showGoodsDetail:false
+    showGoodsDetail:false,
+    goHome:false
   },
 
   onLoad: function (options) {
+    //console.log(options.share);
+    if (options.share!=undefined){
+      this.setData({
+       goHome: true
+      })
+    }
     this.setData({
-      adId: options.adId,
+      adId: options.adId
     })
     app.globalData.shareInviteId = options.inviteId
   },
@@ -416,6 +423,11 @@ Page({
   goAuth:function(){
     wx.navigateTo({
       url: '../auth/auth'
+    })
+  },
+  backHome:function(){
+    wx.switchTab({
+      url: '../main/main'
     })
   }
 })

@@ -20,7 +20,7 @@ page {
 }
 
 .item-left {
-  margin-top: 15rpx;
+  margin-top: 12rpx;
   display: table-cell;
   text-align: center;
 }
@@ -28,14 +28,14 @@ page {
 .image {
   width: 128rpx;
   height: 128rpx;
-  border-radius: 64rpx;
+  /* border-radius: 64rpx; */
   background-color: #eee;
 }
 
 .item-middle {
   flex: 1;
-  margin-left: 15rpx;
-  padding-top: 13rpx;
+  margin-left: 16rpx;
+  padding-top: 10rpx;
   overflow: hidden;
 }
 
