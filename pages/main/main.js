@@ -190,15 +190,20 @@ Page({
           if (res.data.data.length > 0) {
             //						console.log(res.data.data);
             for (var i = 0; i < res.data.data.length; i++) {
-              if (nowdate < res.data.data[i].end_date) {
-                if (res.data.data[i].current_count > 0) {
-                  res.data.data[i].state = 0;
+              if (res.data.data[i].run_status==1){
+                if (nowdate < res.data.data[i].end_date) {
+                  if (res.data.data[i].current_count > 0) {
+                    res.data.data[i].state = 0;
+                  } else {
+                    res.data.data[i].state = 1;
+                  }
                 } else {
-                  res.data.data[i].state = 1;
+                  res.data.data[i].state = 2;
                 }
-              } else {
-                res.data.data[i].state = 2;
+              }else{
+                res.data.data[i].state = 3;
               }
+           
               res.data.data[i].begin_date = res.data.data[i].begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
               res.data.data[i].end_date = res.data.data[i].end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
             }

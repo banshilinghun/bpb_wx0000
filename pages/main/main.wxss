@@ -155,6 +155,9 @@ button::after {
 .timetxt{
 color:#999;
 }
+.timetxt2{
+color:#ff555c;
+}
 
 .notify_swiper{
   width: 100%;
