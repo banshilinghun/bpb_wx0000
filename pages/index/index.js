@@ -22,6 +22,7 @@ Page({
 			// 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
 			// 所以此处加入 callback 以防止这种情况
 			app.userInfoReadyCallback = res => {
+        //console.log(res.userInfo)
 				this.setData({
 					userInfo: res.userInfo,
 					hasUserInfo: true
@@ -48,12 +49,25 @@ Page({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         if (res.code) {
           app.globalData.code = res.code
+          //console.log(app.globalData.userInfo)
+          if (app.globalData.userInfo){
+            var avatarUrl = app.globalData.userInfo.avatarUrl;
+            var nickname = app.globalData.userInfo.nickName;
+            var gender = app.globalData.userInfo.gender
+          }else{
+            var avatarUrl = '';
+            var nickname = '';
+            var gender = '';
+          }
           //console.log(res.code)
           //发起网络请求
           wx.request({
             url: 'https://wxapi.benpaobao.com/app/user/wx_login',
             data: {
-              wx_code: res.code
+              wx_code: res.code,
+              avatar: avatarUrl,
+              nickname: nickname,
+              gender: gender
             },
             header: {
               'content-type': 'application/json'

@@ -130,6 +130,7 @@ Page({
       data: reqData,
       header: app.globalData.header,
       success: res => {
+        console.log(res.data.data)
         if (res.data.code == 1000) {
           //console.log(res.data)
           var enddate = res.data.data.info.end_date;
@@ -182,6 +183,7 @@ Page({
             }
 
           }
+          console.log(serviceList)
           that.setData({
             service: serviceList
           })

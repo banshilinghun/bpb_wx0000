@@ -19,14 +19,14 @@ Page({
     wx_code: app.globalData.code,
   },
 
-  onLoad: function(options){
+  onLoad: function (options) {
     app.globalData.shareInviteId = options.inviteId
-    console.log('shareInviteId----------->' + app.globalData.shareInviteId)
+    //console.log('shareInviteId----------->' + app.globalData.shareInviteId)
     this.getWxCode()
   },
 
   //获取wx_code
-  getWxCode: function(){
+  getWxCode: function () {
     var that = this
     wx.login({
       success: res => {
@@ -39,7 +39,7 @@ Page({
 
   formSubmit: function (e) {
     var param = e.detail.value;
-    console.log(e)
+    //console.log(e)
     this.mysubmit(param);
   },
 
@@ -51,8 +51,17 @@ Page({
     registData.verify_code = param.smsCode.trim();
     //registData.password = param.password.trim();
     registData.wx_code = that.data.wx_code.trim();
+    if (app.globalData.userInfo) {
+      registData.avata = app.globalData.userInfo.avatarUrl;
+      registData.nickname = app.globalData.userInfo.nickName;
+      registData.gender = app.globalData.userInfo.gender
+    } else {
+      registData.avata = '';
+      registData.nickname = '';
+      registData.gender = '';
+    }
     var flag = this.checkUserName(param)
-    
+
     if (flag) {
       this.setregistData1();
       wx.request({
@@ -69,17 +78,17 @@ Page({
             wx.showToast({
               title: "手机号验证成功"
             })
-            if (res.data.data.status==0){
+            if (res.data.data.status == 0) {
               that.redirectTo(res.data.data);
-            }else{
+            } else {
               wx.switchTab({
                 url: '../main/main'
               })
             }
-           
+
             app.globalData.login = 1;
           } else {
-            console.log(res.data)
+            //console.log(res.data)
             wx.showModal({
               title: '提示',
               showCancel: false,

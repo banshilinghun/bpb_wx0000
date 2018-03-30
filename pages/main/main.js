@@ -10,7 +10,7 @@ Page({
     isShowView: true,
     haveMyAd: false,
     //测试数据
-    userList: ['张三', '李四', '王二', '麻子', 'hahhdjfdhjfdj', 'ndfmdnfmdnmd', 'dfkdfk', 'mdkmfdk,', 'dmfkdmf', 'mdmfkdmfdk'],
+    userList: [],
   },
 
   onLoad: function () {
@@ -193,15 +193,15 @@ Page({
               if (res.data.data[i].run_status==1){
                 if (nowdate < res.data.data[i].end_date) {
                   if (res.data.data[i].current_count > 0) {
-                    res.data.data[i].state = 0;
+                    res.data.data[i].state = 0;//开始的
                   } else {
-                    res.data.data[i].state = 1;
+                    res.data.data[i].state = 2;//已经投完
                   }
                 } else {
-                  res.data.data[i].state = 2;
+                  res.data.data[i].state = 3;//已经结束
                 }
               }else{
-                res.data.data[i].state = 3;
+                res.data.data[i].state = 1;//即将开始
               }
            
               res.data.data[i].begin_date = res.data.data[i].begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
@@ -209,6 +209,7 @@ Page({
             }
 
             var adList = res.data.data;
+
             //console.log(adList)
             this.setData({
               adList: adList
@@ -317,5 +318,12 @@ Page({
       address: e.currentTarget.dataset.address
     })
   }
+  // compare: function (property){
+  //   return function (a, b) {
+  //     var value1 = a[property];
+  //     var value2 = b[property];
+  //     return value1 - value2;
+  //   }
+  // }
 
 })

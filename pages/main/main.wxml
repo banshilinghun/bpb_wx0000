@@ -74,13 +74,13 @@
           <view wx:if="{{item.state==0}}" bindtap="go" data-name="{{item.id}}">
             <text class="time">剩余{{item.current_count}}</text>
           </view>
-          <view wx:if="{{item.state==1}}" bindtap="go" data-name="{{item.id}}">
+          <view wx:if="{{item.state==2}}" bindtap="go" data-name="{{item.id}}">
             <text class="time timetxt">已投完</text>
           </view>
-          <view wx:if="{{item.state==2}}" bindtap="go" data-name="{{item.id}}">
+          <view wx:if="{{item.state==3}}" bindtap="go" data-name="{{item.id}}">
             <text class="time timetxt">已结束</text>
           </view>
-           <view wx:if="{{item.state==3}}" bindtap="go" data-name="{{item.id}}">
+           <view wx:if="{{item.state==1}}" bindtap="go" data-name="{{item.id}}">
             <text class="time timetxt2">即将开始</text>
           </view>
           <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.img_url}}" class='wtwabt' open-type="share"><image src='../../image/shareicon.png'></image>
