@@ -860,3 +860,7 @@ button::after {
   margin-top: 10rpx;
   font-size: 26rpx;
 }
+.tasts{
+  color: #FF555C;
+  font-size: 12px;
+}

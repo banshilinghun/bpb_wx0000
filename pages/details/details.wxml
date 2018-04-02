@@ -35,7 +35,7 @@
       <view class="profile">
         <view class="profile-item">实际收益:</view>
         <view class="right-text" wx:if='{{adInfo.amount!=null}}'>{{adInfo.amount}}元</view>
-        <view class="right-text" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
+        <view class="right-text tasts" wx:if='{{adInfo.amount==null}}' bindtap="goRegister">身份认证后可查看收益</view>
       </view>
     </block>
     <block>

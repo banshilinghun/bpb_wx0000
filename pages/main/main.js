@@ -15,21 +15,21 @@ Page({
 
   onLoad: function () {
     var loginFlag = app.globalData.login;
-    if (loginFlag != 1) {
-      wx.showModal({
-        title: "提示",
-        content: "你还没有登录",
-        confirmText: "立即登录",
-        cancelText: "取消",
-        success: function (sure) {
-          if (sure.confirm) {
-            wx.navigateTo({
-              url: '../register/register'
-            })
-          }
-        }
-      })
-    }
+    // if (loginFlag != 1) {
+    //   wx.showModal({
+    //     title: "提示",
+    //     content: "你还没有登录",
+    //     confirmText: "立即登录",
+    //     cancelText: "取消",
+    //     success: function (sure) {
+    //       if (sure.confirm) {
+    //         wx.navigateTo({
+    //           url: '../register/register'
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
 
   },
   onShow: function () {
