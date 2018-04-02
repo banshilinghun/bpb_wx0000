@@ -14,9 +14,10 @@
     <block>
       <view class="profile frpro">
         <view class="profile-item cwsfts">{{adInfo.name}}</view>
-         <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}"  class='wtwabt' open-type="share"><image src='../../image/shareicon.png'></image>
-           <view class='sharetext'>分享</view> 
-          </button>
+        <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}" class='wtwabt' open-type="share">
+          <image src='../../image/shareicon.png'></image>
+          <view class='sharetext'>分享</view>
+        </button>
       </view>
     </block>
     <block>
@@ -60,7 +61,21 @@
       </view>
     </view>
   </block>
-    <view class="profile-wrapper protwo">
+  <view class='join-list-wrapper'>
+    <view class='join-left-layout'>
+      <text class='already-join-text'>已参与</text>
+      <text class='already-join-number'>50人</text>
+    </view>
+    <view class='join-center-line'></view>
+    <view class='join-avatar-root'>
+      <view class='join-avatar-wrapper'>
+        <view class='join-avatar-item'>
+          <image class='join-avatar'></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="profile-wrapper protwo">
     <block wx:if="{{service.length>0}}">
       <view class="profile frpro">
         <view class="profile-item cwsfts">预约前往下列服务站</view>
@@ -77,7 +92,7 @@
               <image src='../../image/dw.png'></image>{{item.address}}</view>
             <view class="mmtext">剩余车辆
               <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
-               <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> 
+              <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label>
             </view>
           </view>
         </view>
@@ -90,7 +105,7 @@
           </view>
           <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
           <view class="fastwx" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
-          <view class="fastwx2" wx:if='{{item.lista==0}}' > 预约</view>
+          <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
         </view>
       </view>
     </block>
@@ -119,13 +134,13 @@
     <view class='title0'>预约成功</view>
     <view class="title2">分享给微信好友，让你的朋友们 一起赚钱吧!</view>
     <view class="title4">
-      <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}"  class='wtwabt2' open-type="share">
-      分享微信好友
-          </button>
+      <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}" class='wtwabt2' open-type="share">
+        分享微信好友
+      </button>
     </view>
   </view>
 </view>
-  <view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
-    <view class="count">
-    </view>
+<view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
+  <view class="count">
   </view>
+</view>

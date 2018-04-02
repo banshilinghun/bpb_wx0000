@@ -43,6 +43,7 @@ Page({
     })
     app.globalData.shareInviteId = options.inviteId
   },
+  
   onShow: function (n) {
     var that = this;
     wx.request({
@@ -178,10 +179,7 @@ Page({
                   serviceList[j].lista = 0;
                 }
               }
-             
-
             }
-
           }
           console.log(serviceList)
           that.setData({
@@ -216,10 +214,8 @@ Page({
         });
       }
     })
-
-
-
   },
+
   formSubmit: function (e) {
     var param = e.detail.value;
     this.setData({
