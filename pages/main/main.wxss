@@ -183,6 +183,8 @@ color:#ff555c;
   margin-top: 16rpx;
   background: none;
   line-height: 1.2;
+  padding: 0;
+  text-align: right
 }
 .wtwabt image{
   height: 40rpx;
