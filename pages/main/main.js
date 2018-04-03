@@ -30,8 +30,51 @@ Page({
     //     }
     //   })
     // }
-
+    this.judgeCanIUse();
   },
+
+  /**
+   * 判断 微信版本 兼容性
+   */
+  judgeCanIUse: function () {
+    var that = this;
+    //组件不兼容
+    //微信版本过低
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log('brand------------->' + res.brand);
+        console.log('model------------->' + res.model);
+        console.log('version------------->' + res.version);
+        console.log('system------------->' + res.system);
+        var system = res.system;
+        var version = res.version;
+        version = '6.5.12';
+        //如果为ios
+        if (system.indexOf("iOS") != -1) {
+          //6.5.18
+          if (version <= '6.5.18' || !wx.canIUse('picker.mode.selector')) {
+            that.showLowVersionTips();
+          }
+          //如果为Android
+        } else if (system.indexOf("Android") != -1) {
+          //6.5.13
+          if (version <= '6.5.13' || !wx.canIUse('picker.mode.selector')) {
+            that.showLowVersionTips();
+          }
+        }
+      },
+    })
+  },
+
+  showLowVersionTips: function () {
+    wx.showModal({
+      title: '提示',
+      content: '您当前微信版本过低，可能导致无法使用部分功能，请升级到最新微信版本。',
+      showCancel: false,
+      success: function (res) { },
+    })
+  },
+
   onShow: function () {
     var z = this;
     var loginFlag = app.globalData.login;

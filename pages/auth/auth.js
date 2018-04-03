@@ -196,6 +196,7 @@ Page({
     })
 
   },
+
   // 执行动画
   startAnimation: function (isShow, offset) {
     var that = this
