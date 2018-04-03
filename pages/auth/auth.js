@@ -83,36 +83,36 @@ Page({
     this.setData({
       colorName: colorName
     })
-    wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/citys',
-      data: {},
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          //					console.log(res.data.data)
-          var id = res.data.data.provinces[0].id;
-          this.setData({
-            address: res.data.data,
-            provinces: res.data.data.provinces,
-            citys: res.data.data.citys[id]
-          })
-        } else {
-          //					console.log(res.data)
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
+    // wx.request({
+    //   url: 'https://wxapi.benpaobao.com/app/get/citys',
+    //   data: {},
+    //   header: app.globalData.header,
+    //   success: res => {
+    //     if (res.data.code == 1000) {
+    //       //					console.log(res.data.data)
+    //       var id = res.data.data.provinces[0].id;
+    //       this.setData({
+    //         address: res.data.data,
+    //         provinces: res.data.data.provinces,
+    //         citys: res.data.data.citys[id]
+    //       })
+    //     } else {
+    //       //					console.log(res.data)
+    //       wx.showModal({
+    //         title: '提示',
+    //         showCancel: false,
+    //         content: res.data.msg
+    //       });
+    //     }
+    //   },
+    //   fail: res => {
+    //     wx.showModal({
+    //       title: '提示',
+    //       showCancel: false,
+    //       content: '网络错误'
+    //     });
+    //   }
+    // })
 
     wx.request({
       url: 'https://wxapi.benpaobao.com/app/get/brands',
@@ -428,7 +428,6 @@ Page({
     //		console.log(param)
     var formData = {
       real_name: param.name,
-      city_id: cityId,
       plate_no: param.carcode,
       form_id: formId,
       car_brand: car_brand,
@@ -440,7 +439,7 @@ Page({
     }
     //console.log(formData)
     //		console.log(formData);
-    var flag = this.checkName(param) && this.checkCity(param) && this.checkCarCode(param) && this.checkLease(param) && this.checkBrand(param) && this.checkColor(param)
+    var flag = this.checkName(param) && this.checkCarCode(param) && this.checkLease(param) && this.checkBrand(param) && this.checkColor(param)
     var that = this;
     if (flag) {
       if (carPhoto == undefined) {
@@ -557,57 +556,7 @@ Page({
       urls: this.data.imageList
     })
   },
-  // chooseImage2: function () {
-  //   var that = this
-  //   wx.chooseImage({
-  //     sourceType: sourceType[2],
-  //     sizeType: sizeType[2],
-  //     count: 1,
-  //     success: function (res) {
-  //       //				console.log(res)
-  //       var wxres = res;
-  //       wx.uploadFile({
-  //         url: 'https://wxapi.benpaobao.com/app/user/upload_identity_img', //仅为示例，非真实的接口地址
-  //         filePath: res.tempFilePaths[0],
-  //         name: 'license',
-  //         header: {
-  //           "Cookie": app.globalData.header.Cookie,
-  //         },
-  //         success: function (res) {
-  //           var resdata = JSON.parse(res.data);
-  //           if (resdata.code == 1000) {
-  //             that.setData({
-  //               imageList2: wxres.tempFilePaths,
-  //               licensePhoto: wxres.tempFilePaths[0],
-  //               show2: false
-  //             })
-  //           } else {
-  //             //					console.log(res.data)
-  //             wx.showModal({
-  //               title: '提示',
-  //               showCancel: false,
-  //               content: resdata.msg
-  //             });
-  //           }
-  //         },
-  //         fail: res => {
-  //           wx.showModal({
-  //             title: '提示',
-  //             showCancel: false,
-  //             content: '网络错误'
-  //           });
-  //         }
-  //       })
-  //     }
-  //   })
-  // },
-  // previewImage2: function (e) {
-  //   var current = e.target.dataset.src
-  //   wx.previewImage({
-  //     current: current,
-  //     urls: this.data.imageList2
-  //   })
-  // },
+  
   checkName: function (param) {
     var name = param.name;
     if (name != '') {
