@@ -41,6 +41,7 @@ Page({
 			})
 		}
 	},
+
   onShow:function(){
     var shareAd = this.data.shareAd;
     wx.login({
@@ -113,6 +114,7 @@ Page({
 
     })
   },
+
 	getUserInfo: function(e) {
 		console.log(e)
 		app.globalData.userInfo = e.detail.userInfo
@@ -120,5 +122,5 @@ Page({
 			userInfo: e.detail.userInfo,
 			hasUserInfo: true
 		})
-	}
+	},
 })

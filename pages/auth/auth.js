@@ -54,16 +54,16 @@ Page({
     istrue: true,
     value: [0, 0],
     value2: [0, 0],
-    car_type:1,
-    is_bad:2,
+    car_type: 1,
+    is_bad: 2,
     show1: true,
     show2: true,
     color: [
-      { 'carColor': '#ffffff', 'name': '白色', id:1},
-      { 'carColor': '#323232', 'name': '黑色' ,id:2},
-      { 'carColor': '#e7e7e7', 'name': '银色' ,id:3},
-      { 'carColor': '#f00a0a', 'name': '红色', id:4 },
-      { 'carColor': '#d8bc3c', 'name': '金色', id:5 },
+      { 'carColor': '#ffffff', 'name': '白色', id: 1 },
+      { 'carColor': '#323232', 'name': '黑色', id: 2 },
+      { 'carColor': '#e7e7e7', 'name': '银色', id: 3 },
+      { 'carColor': '#f00a0a', 'name': '红色', id: 4 },
+      { 'carColor': '#d8bc3c', 'name': '金色', id: 5 },
       { 'carColor': '#3275e4', 'name': '蓝色', id: 6 },
       { 'carColor': '#804318', 'name': '棕色', id: 7 },
       { 'carColor': '#991abe', 'name': '紫色', id: 8 },
@@ -73,7 +73,8 @@ Page({
     ]
   },
   onLoad: function (options) {
-    var that=this;
+    var that = this;
+    that.judgeCanIUse();
     //var sourceType2 = [];
     var colorName = [];
     for (var i = 0; i < that.data.color.length; i++) {
@@ -83,36 +84,36 @@ Page({
     this.setData({
       colorName: colorName
     })
-    wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/citys',
-      data: {},
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          //					console.log(res.data.data)
-          var id = res.data.data.provinces[0].id;
-          this.setData({
-            address: res.data.data,
-            provinces: res.data.data.provinces,
-            citys: res.data.data.citys[id]
-          })
-        } else {
-          //					console.log(res.data)
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
+    // wx.request({
+    //   url: 'https://wxapi.benpaobao.com/app/get/citys',
+    //   data: {},
+    //   header: app.globalData.header,
+    //   success: res => {
+    //     if (res.data.code == 1000) {
+    //       //					console.log(res.data.data)
+    //       var id = res.data.data.provinces[0].id;
+    //       this.setData({
+    //         address: res.data.data,
+    //         provinces: res.data.data.provinces,
+    //         citys: res.data.data.citys[id]
+    //       })
+    //     } else {
+    //       //					console.log(res.data)
+    //       wx.showModal({
+    //         title: '提示',
+    //         showCancel: false,
+    //         content: res.data.msg
+    //       });
+    //     }
+    //   },
+    //   fail: res => {
+    //     wx.showModal({
+    //       title: '提示',
+    //       showCancel: false,
+    //       content: '网络错误'
+    //     });
+    //   }
+    // })
 
     wx.request({
       url: 'https://wxapi.benpaobao.com/app/get/brands',
@@ -196,6 +197,28 @@ Page({
     })
 
   },
+
+  /**
+   * 判断 微信版本 兼容性
+   */
+  judgeCanIUse: function () {
+    var that = this;
+    //组件不兼容
+    //微信版本过低
+    if (!wx.canIUse('picker.mode.selector')) {
+      that.showLowVersionTips();
+    }
+  },
+
+  showLowVersionTips: function () {
+    wx.showModal({
+      title: '提示',
+      content: '您当前微信版本过低，将导致无法正常使用奔跑宝小程序，请升级到微信最新版本。',
+      showCancel: false,
+      success: function (res) { },
+    })
+  },
+
   // 执行动画
   startAnimation: function (isShow, offset) {
     var that = this
@@ -413,9 +436,9 @@ Page({
     var carPhoto = this.data.carPhoto;
     //var licensePhoto = this.data.licensePhoto;
     var sourceTypeIndex2 = this.data.sourceTypeIndex2;
-     var sourceTypeIndex = this.data.sourceTypeIndex;
-     var leaseId = this.data.idList[sourceTypeIndex];
-     var leaseName = this.data.nameList[sourceTypeIndex];
+    var sourceTypeIndex = this.data.sourceTypeIndex;
+    var leaseId = this.data.idList[sourceTypeIndex];
+    var leaseName = this.data.nameList[sourceTypeIndex];
     var cityId = this.data.cityId;
     var car_brand = this.data.modelId;
     var car_color = this.data.colorName[sourceTypeIndex2];
@@ -427,7 +450,6 @@ Page({
     //		console.log(param)
     var formData = {
       real_name: param.name,
-      city_id: cityId,
       plate_no: param.carcode,
       form_id: formId,
       car_brand: car_brand,
@@ -439,7 +461,7 @@ Page({
     }
     //console.log(formData)
     //		console.log(formData);
-    var flag = this.checkName(param) && this.checkCity(param) && this.checkCarCode(param) && this.checkLease(param) && this.checkBrand(param) && this.checkColor(param)
+    var flag = this.checkName(param) && this.checkCarCode(param) && this.checkLease(param) && this.checkBrand(param) && this.checkColor(param)
     var that = this;
     if (flag) {
       if (carPhoto == undefined) {
@@ -449,7 +471,7 @@ Page({
           content: '请上传车辆照片'
         });
       }
-  
+
       if (carPhoto != undefined) {
         wx.request({
           url: 'https://wxapi.benpaobao.com/app/user/auth_identity_info',
@@ -485,14 +507,14 @@ Page({
       }
     }
   },
-  radioChange:function(e){
+  radioChange: function (e) {
     //console.log(e.detail.value);
     this.setData({
       car_type: e.detail.value
     })
   },
-  switchChange:function(e){
-   // console.log(e.detail.value);
+  switchChange: function (e) {
+    // console.log(e.detail.value);
     this.setData({
       is_bad: e.detail.value
     })
@@ -510,7 +532,7 @@ Page({
       sizeType: sizeType[0],
       count: 1,
       success: function (res) {
-        	console.log(res)
+        console.log(res)
         var wxres = res;
         wx.uploadFile({
           url: 'https://wxapi.benpaobao.com/app/user/upload_identity_img', //仅为示例，非真实的接口地址
@@ -556,57 +578,7 @@ Page({
       urls: this.data.imageList
     })
   },
-  // chooseImage2: function () {
-  //   var that = this
-  //   wx.chooseImage({
-  //     sourceType: sourceType[2],
-  //     sizeType: sizeType[2],
-  //     count: 1,
-  //     success: function (res) {
-  //       //				console.log(res)
-  //       var wxres = res;
-  //       wx.uploadFile({
-  //         url: 'https://wxapi.benpaobao.com/app/user/upload_identity_img', //仅为示例，非真实的接口地址
-  //         filePath: res.tempFilePaths[0],
-  //         name: 'license',
-  //         header: {
-  //           "Cookie": app.globalData.header.Cookie,
-  //         },
-  //         success: function (res) {
-  //           var resdata = JSON.parse(res.data);
-  //           if (resdata.code == 1000) {
-  //             that.setData({
-  //               imageList2: wxres.tempFilePaths,
-  //               licensePhoto: wxres.tempFilePaths[0],
-  //               show2: false
-  //             })
-  //           } else {
-  //             //					console.log(res.data)
-  //             wx.showModal({
-  //               title: '提示',
-  //               showCancel: false,
-  //               content: resdata.msg
-  //             });
-  //           }
-  //         },
-  //         fail: res => {
-  //           wx.showModal({
-  //             title: '提示',
-  //             showCancel: false,
-  //             content: '网络错误'
-  //           });
-  //         }
-  //       })
-  //     }
-  //   })
-  // },
-  // previewImage2: function (e) {
-  //   var current = e.target.dataset.src
-  //   wx.previewImage({
-  //     current: current,
-  //     urls: this.data.imageList2
-  //   })
-  // },
+
   checkName: function (param) {
     var name = param.name;
     if (name != '') {
@@ -636,7 +608,7 @@ Page({
   checkCarCode: function (param) {
     var carcode = param.carcode;
     console.log(carcode)
-    if (carcode != undefined){
+    if (carcode != undefined) {
       if (util.isVehicleNumber(carcode)) {
         return true;
       } else {
@@ -647,14 +619,14 @@ Page({
         });
         return false;
       }
-    }else{
+    } else {
       wx.showModal({
         title: '提示',
         showCancel: false,
         content: '请输入的车牌号'
       });
     }
-   
+
   },
   checkLease: function (param) {
     var lease = param.lease;

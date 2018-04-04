@@ -860,7 +860,6 @@ button::after {
   margin-top: 10rpx;
   font-size: 26rpx;
 }
-
 .join-list-wrapper{
   width: 100%;
   height: 150rpx;
@@ -876,4 +875,7 @@ button::after {
   
 }
 
-
+.tasts{
+  color: #FF555C;
+  font-size: 12px;
+}
