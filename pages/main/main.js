@@ -46,21 +46,12 @@ Page({
         console.log('model------------->' + res.model);
         console.log('version------------->' + res.version);
         console.log('system------------->' + res.system);
+        console.log('SDKVersion------------->' + res.SDKVersion);
+
         var system = res.system;
         var version = res.version;
-        version = '6.5.12';
-        //如果为ios
-        if (system.indexOf("iOS") != -1) {
-          //6.5.18
-          if (version <= '6.5.18' || !wx.canIUse('picker.mode.selector')) {
-            that.showLowVersionTips();
-          }
-          //如果为Android
-        } else if (system.indexOf("Android") != -1) {
-          //6.5.13
-          if (version <= '6.5.13' || !wx.canIUse('picker.mode.selector')) {
-            that.showLowVersionTips();
-          }
+        if (!wx.canIUse('picker.mode.selector')) {
+          that.showLowVersionTips();
         }
       },
     })
@@ -69,7 +60,7 @@ Page({
   showLowVersionTips: function () {
     wx.showModal({
       title: '提示',
-      content: '您当前微信版本过低，可能导致无法使用部分功能，请升级到最新微信版本。',
+      content: '您当前微信版本过低，将导致无法使用部分重要功能，请升级到最新微信版本。',
       showCancel: false,
       success: function (res) { },
     })
@@ -139,7 +130,7 @@ Page({
                     })
                   }
                 }
-                if (res.data.data.check.checkType == 'SERVER_CHECK' ) {//期末检测
+                if (res.data.data.check.checkType == 'SERVER_CHECK') {//期末检测
                   if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
                     this.setData({
                       canCheck: 2
@@ -150,7 +141,7 @@ Page({
                       canCheck: 3
                     })
                   }
-                  if (res.data.data.check.status == 1){//期末检测审核中
+                  if (res.data.data.check.status == 1) {//期末检测审核中
                     this.setData({
                       canCheck: 5
                     })
@@ -233,7 +224,7 @@ Page({
           if (res.data.data.length > 0) {
             //						console.log(res.data.data);
             for (var i = 0; i < res.data.data.length; i++) {
-              if (res.data.data[i].run_status==1){
+              if (res.data.data[i].run_status == 1) {
                 if (nowdate < res.data.data[i].end_date) {
                   if (res.data.data[i].current_count > 0) {
                     res.data.data[i].state = 0;//开始的
@@ -243,10 +234,10 @@ Page({
                 } else {
                   res.data.data[i].state = 3;//已经结束
                 }
-              }else{
+              } else {
                 res.data.data[i].state = 1;//即将开始
               }
-           
+
               res.data.data[i].begin_date = res.data.data[i].begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
               res.data.data[i].end_date = res.data.data[i].end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
             }
@@ -257,12 +248,12 @@ Page({
             this.setData({
               adList: adList
             })
-          }else{
+          } else {
             this.setData({
               adList: []
             })
           }
-       
+
 
         } else {
           wx.showModal({
@@ -310,11 +301,11 @@ Page({
 
   //分享
   onShareAppMessage: function (res) {
-    if (res.from =='button'){
+    if (res.from == 'button') {
       var shareTitle = res.target.dataset.adname;
       var adid = res.target.dataset.adid;
       var adimg = res.target.dataset.adimg;
-      var desc ='全新广告，躺着赚钱，速速来抢～';
+      var desc = '全新广告，躺着赚钱，速速来抢～';
     }
     if (res.from == 'menu') {
       var shareTitle = '奔跑宝，私家车广告平台';

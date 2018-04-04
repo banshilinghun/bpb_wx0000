@@ -54,16 +54,16 @@ Page({
     istrue: true,
     value: [0, 0],
     value2: [0, 0],
-    car_type:1,
-    is_bad:2,
+    car_type: 1,
+    is_bad: 2,
     show1: true,
     show2: true,
     color: [
-      { 'carColor': '#ffffff', 'name': '白色', id:1},
-      { 'carColor': '#323232', 'name': '黑色' ,id:2},
-      { 'carColor': '#e7e7e7', 'name': '银色' ,id:3},
-      { 'carColor': '#f00a0a', 'name': '红色', id:4 },
-      { 'carColor': '#d8bc3c', 'name': '金色', id:5 },
+      { 'carColor': '#ffffff', 'name': '白色', id: 1 },
+      { 'carColor': '#323232', 'name': '黑色', id: 2 },
+      { 'carColor': '#e7e7e7', 'name': '银色', id: 3 },
+      { 'carColor': '#f00a0a', 'name': '红色', id: 4 },
+      { 'carColor': '#d8bc3c', 'name': '金色', id: 5 },
       { 'carColor': '#3275e4', 'name': '蓝色', id: 6 },
       { 'carColor': '#804318', 'name': '棕色', id: 7 },
       { 'carColor': '#991abe', 'name': '紫色', id: 8 },
@@ -73,7 +73,8 @@ Page({
     ]
   },
   onLoad: function (options) {
-    var that=this;
+    var that = this;
+    that.judgeCanIUse();
     //var sourceType2 = [];
     var colorName = [];
     for (var i = 0; i < that.data.color.length; i++) {
@@ -195,6 +196,33 @@ Page({
       }
     })
 
+  },
+
+  /**
+   * 判断 微信版本 兼容性
+   */
+  judgeCanIUse: function () {
+    var that = this;
+    //组件不兼容
+    //微信版本过低
+    wx.getSystemInfo({
+      success: function (res) {
+        var system = res.system;
+        var version = res.version;
+        if (!wx.canIUse('picker.mode.selector')) {
+          that.showLowVersionTips();
+        }
+      },
+    })
+  },
+
+  showLowVersionTips: function () {
+    wx.showModal({
+      title: '提示',
+      content: '您当前微信版本过低，将导致无法正常使用奔跑宝小程序，请升级到最新微信版本。',
+      showCancel: false,
+      success: function (res) { },
+    })
   },
 
   // 执行动画
@@ -414,9 +442,9 @@ Page({
     var carPhoto = this.data.carPhoto;
     //var licensePhoto = this.data.licensePhoto;
     var sourceTypeIndex2 = this.data.sourceTypeIndex2;
-     var sourceTypeIndex = this.data.sourceTypeIndex;
-     var leaseId = this.data.idList[sourceTypeIndex];
-     var leaseName = this.data.nameList[sourceTypeIndex];
+    var sourceTypeIndex = this.data.sourceTypeIndex;
+    var leaseId = this.data.idList[sourceTypeIndex];
+    var leaseName = this.data.nameList[sourceTypeIndex];
     var cityId = this.data.cityId;
     var car_brand = this.data.modelId;
     var car_color = this.data.colorName[sourceTypeIndex2];
@@ -449,7 +477,7 @@ Page({
           content: '请上传车辆照片'
         });
       }
-  
+
       if (carPhoto != undefined) {
         wx.request({
           url: 'https://wxapi.benpaobao.com/app/user/auth_identity_info',
@@ -485,14 +513,14 @@ Page({
       }
     }
   },
-  radioChange:function(e){
+  radioChange: function (e) {
     //console.log(e.detail.value);
     this.setData({
       car_type: e.detail.value
     })
   },
-  switchChange:function(e){
-   // console.log(e.detail.value);
+  switchChange: function (e) {
+    // console.log(e.detail.value);
     this.setData({
       is_bad: e.detail.value
     })
@@ -510,7 +538,7 @@ Page({
       sizeType: sizeType[0],
       count: 1,
       success: function (res) {
-        	console.log(res)
+        console.log(res)
         var wxres = res;
         wx.uploadFile({
           url: 'https://wxapi.benpaobao.com/app/user/upload_identity_img', //仅为示例，非真实的接口地址
@@ -556,7 +584,7 @@ Page({
       urls: this.data.imageList
     })
   },
-  
+
   checkName: function (param) {
     var name = param.name;
     if (name != '') {
@@ -586,7 +614,7 @@ Page({
   checkCarCode: function (param) {
     var carcode = param.carcode;
     console.log(carcode)
-    if (carcode != undefined){
+    if (carcode != undefined) {
       if (util.isVehicleNumber(carcode)) {
         return true;
       } else {
@@ -597,14 +625,14 @@ Page({
         });
         return false;
       }
-    }else{
+    } else {
       wx.showModal({
         title: '提示',
         showCancel: false,
         content: '请输入的车牌号'
       });
     }
-   
+
   },
   checkLease: function (param) {
     var lease = param.lease;
