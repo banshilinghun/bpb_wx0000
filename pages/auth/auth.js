@@ -205,21 +205,15 @@ Page({
     var that = this;
     //组件不兼容
     //微信版本过低
-    wx.getSystemInfo({
-      success: function (res) {
-        var system = res.system;
-        var version = res.version;
-        if (!wx.canIUse('picker.mode.selector')) {
-          that.showLowVersionTips();
-        }
-      },
-    })
+    if (!wx.canIUse('picker.mode.selector')) {
+      that.showLowVersionTips();
+    }
   },
 
   showLowVersionTips: function () {
     wx.showModal({
       title: '提示',
-      content: '您当前微信版本过低，将导致无法正常使用奔跑宝小程序，请升级到最新微信版本。',
+      content: '您当前微信版本过低，将导致无法正常使用奔跑宝小程序，请升级到微信最新版本。',
       showCancel: false,
       success: function (res) { },
     })

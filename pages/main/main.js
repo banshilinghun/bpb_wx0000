@@ -47,20 +47,17 @@ Page({
         console.log('version------------->' + res.version);
         console.log('system------------->' + res.system);
         console.log('SDKVersion------------->' + res.SDKVersion);
-
-        var system = res.system;
-        var version = res.version;
-        if (!wx.canIUse('picker.mode.selector')) {
-          that.showLowVersionTips();
-        }
       },
     })
+    if (!wx.canIUse('picker.mode.selector')) {
+      that.showLowVersionTips();
+    }
   },
 
   showLowVersionTips: function () {
     wx.showModal({
       title: '提示',
-      content: '您当前微信版本过低，将导致无法使用部分重要功能，请升级到最新微信版本。',
+      content: '您当前微信版本过低，将导致无法使用部分重要功能，请升级到微信最新版本。',
       showCancel: false,
       success: function (res) { },
     })
