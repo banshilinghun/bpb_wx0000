@@ -58,12 +58,12 @@ Page({
           }else{
             var avatarUrl = '';
             var nickname = '';
-            var gender = '';
+            var gender = 0;
           }
           //console.log(res.code)
           //发起网络请求
           wx.request({
-            url: 'https://wxapi.benpaobao.com/app/user/wx_login',
+            url: app.globalData.baseUrl + 'app/user/wx_login',
             data: {
               wx_code: res.code,
               avatar: avatarUrl,

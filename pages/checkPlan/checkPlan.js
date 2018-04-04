@@ -41,7 +41,7 @@ Page({
     var reqData = {};
     reqData.ad_id = that.data.adId;
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/find/ad_check_plans',
+      url: app.globalData.baseUrl + 'app/find/ad_check_plans',
       data: reqData,
       header: app.globalData.header,
       success: res => {

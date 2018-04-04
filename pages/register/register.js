@@ -65,7 +65,7 @@ Page({
     if (flag) {
       this.setregistData1();
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/user/regist',
+        url: app.globalData.baseUrl + 'app/user/regist',
         data: registData,
         header: {
           'content-type': 'application/json'
@@ -203,7 +203,7 @@ Page({
     }, 1000);
 
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/regist_verify_wx',
+      url: app.globalData.baseUrl + 'app/get/regist_verify_wx',
       data: rqData,
       header: {
         'content-type': 'application/json'

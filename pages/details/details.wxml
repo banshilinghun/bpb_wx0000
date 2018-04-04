@@ -61,19 +61,19 @@
       </view>
     </view>
   </block>
-  <view class='join-list-wrapper'>
+  <view class='join-list-wrapper' wx:if='{{showJoining}}' bindtap='joinClick'>
     <view class='join-left-layout'>
       <text class='already-join-text'>已参与</text>
-      <text class='already-join-number'>50人</text>
+      <text class='already-join-number'>{{ joinCount + '人'}}</text>
     </view>
     <view class='join-center-line'></view>
-    <view class='join-avatar-root'>
-      <view class='join-avatar-wrapper'>
+    <scroll-view class='join-avatar-scroll' scroll-x='true'>
+      <view class='join-avatar-wrapper' wx:for='{{avatarList}}' wx:for-item='item' wx:key='index'>
         <view class='join-avatar-item'>
-          <image class='join-avatar'></image>
+          <image class='join-avatar' src='{{item.wx_avatar}}'></image>
         </view>
       </view>
-    </view>
+    </scroll-view>
   </view>
   <view class="profile-wrapper protwo">
     <block wx:if="{{service.length>0}}">

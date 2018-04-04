@@ -49,7 +49,7 @@ Page({
     })
     if (loginFlag==1){
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/get/user_account',
+        url: app.globalData.baseUrl + 'app/get/user_account',
         data: {},
         header: app.globalData.header,
         success: res => {
@@ -91,7 +91,7 @@ Page({
       })
 
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+        url: app.globalData.baseUrl + 'app/get/user_auth_status',
         data: {},
         header: app.globalData.header,
         success: res => {

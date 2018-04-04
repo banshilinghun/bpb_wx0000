@@ -35,6 +35,8 @@ App({
     },
     //分享传入的邀请人的id
     shareInviteId: '',
-    checkStaus: ''
+    checkStaus: '',
+    baseUrl: 'https://wxapi.benpaobao.com/',
+    //baseUrl: 'http://192.168.1.198:8000/',
   }
 })

@@ -23,7 +23,7 @@ Page({
       server_id: server_id
     }
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/subscribe_dates',
+      url: app.globalData.baseUrl + 'app/get/subscribe_dates',
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -102,7 +102,7 @@ Page({
       success: function (sure) {
         if (sure.confirm) {
           wx.request({
-            url: 'https://wxapi.benpaobao.com/app/save/ad_subscribe',
+            url: app.globalData.baseUrl + 'app/save/ad_subscribe',
             data: reqData,
             header: app.globalData.header,
             success: res => {

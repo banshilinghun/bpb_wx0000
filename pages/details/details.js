@@ -4,6 +4,7 @@ var getDistance = util.getDistance;
 const app = getApp();
 Page({
   data: {
+    joinListUrl: app.globalData.baseUrl + 'app/get/ad_joined_users',
     banners: [],
     receive: 0,
     expressList: [],
@@ -28,7 +29,10 @@ Page({
     istrue: true,
     inviteId: '我是shareInviteId',
     showGoodsDetail:false,
-    goHome:false
+    goHome:false,
+    avatarList: [],
+    showJoining: false,
+    joinCount: 0,
   },
 
   onLoad: function (options) {
@@ -47,7 +51,7 @@ Page({
   onShow: function (n) {
     var that = this;
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+      url: app.globalData.baseUrl + 'app/get/user_auth_status',
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -127,7 +131,7 @@ Page({
       }
     })
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/ad_info',
+      url: app.globalData.baseUrl + 'app/get/ad_info',
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -214,6 +218,51 @@ Page({
         });
       }
     })
+    that.requestJoinList();
+  },
+
+  /** 请求已参与车主列表 */
+  requestJoinList: function(){
+    var that = this;
+    wx.request({
+      url: that.data.joinListUrl,
+      data: {
+        ad_id: that.data.adId,
+        page_no: 1,
+        page_size: 20,
+      },
+      success: function(res){
+        console.log(res);
+        if(res.data.code == 1000){
+          var dataBean = res.data.data;
+          that.setData({
+            avatarList: dataBean.info,
+            showJoining: dataBean.info.length == 0 ? false : true,
+            joinCount: dataBean.count,
+          });
+        }else{
+          wx.showModal({
+            title: '提示',
+            content: res.data.msg,
+            showCancel: false,
+          })
+        }
+      },
+      fail: function(res){
+        wx.showModal({
+          title: '提示',
+          content: '网络错误',
+          showCancel: false,
+        })
+      }
+    })
+  },
+
+  joinClick: function(){
+    var that = this;
+    wx.navigateTo({
+      url: '../joinList/joinList?adId=' + that.data.adId,
+    })
   },
 
   formSubmit: function (e) {
@@ -228,7 +277,7 @@ Page({
     var subscribe_id = this.data.selId;
     var reqData = { subscribe_id: subscribe_id }
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/cancel/ad_subscribe',
+      url: app.globalData.baseUrl + 'app/cancel/ad_subscribe',
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -257,7 +306,7 @@ Page({
   arrangement: function (e) {
     if(app.globalData.login==1){
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+        url: app.globalData.baseUrl + 'app/get/user_auth_status',
         data: {},
         header: app.globalData.header,
         success: res => {

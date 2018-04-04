@@ -68,7 +68,7 @@ Page({
     var loginFlag = app.globalData.login;
     if (loginFlag == 1) {
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+        url: app.globalData.baseUrl + 'app/get/user_auth_status',
         data: {},
         header: app.globalData.header,
         success: res => {
@@ -99,7 +99,7 @@ Page({
       })
 
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/get/my_ad',
+        url: app.globalData.baseUrl + 'app/get/my_ad',
         data: {},
         header: app.globalData.header,
         success: res => {
@@ -211,7 +211,7 @@ Page({
       })
     }
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/ad_list',
+      url: app.globalData.baseUrl + 'app/get/ad_list',
       data: {},
       header: app.globalData.header,
       success: res => {

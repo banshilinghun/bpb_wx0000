@@ -107,7 +107,7 @@ Page({
       });
     }else{
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/commit/mid_check',
+        url: app.globalData.baseUrl + 'app/commit/mid_check',
         data: formData,
         header: app.globalData.header,
         success: res => {
@@ -152,7 +152,7 @@ Page({
 				//				console.log(res)
 				var wxres = res;
 				wx.uploadFile({
-          url: 'https://wxapi.benpaobao.com/app/upload/mid_check_img',
+          url: app.globalData.baseUrl + 'app/upload/mid_check_img',
 					filePath: res.tempFilePaths[0],
           name: 'left_img',
 					header: {
@@ -208,7 +208,7 @@ Page({
         //				console.log(res)
         var wxres = res;
         wx.uploadFile({
-          url: 'https://wxapi.benpaobao.com/app/upload/mid_check_img',
+          url: app.globalData.baseUrl + 'app/upload/mid_check_img',
           filePath: res.tempFilePaths[0],
           name: 'right_img',
           header: {
@@ -265,7 +265,7 @@ Page({
 				var wxres = res;
 
 				wx.uploadFile({
-          url: 'https://wxapi.benpaobao.com/app/upload/mid_check_img',
+          url: app.globalData.baseUrl + 'app/upload/mid_check_img',
 					filePath: res.tempFilePaths[0],
           name: 'in_img',
 					header: {
@@ -321,7 +321,7 @@ Page({
 				var wxres = res;
         console.log(wxres);
 				wx.uploadFile({
-          url: 'https://wxapi.benpaobao.com/app/upload/mid_check_img',
+          url: app.globalData.baseUrl + 'app/upload/mid_check_img',
 					filePath: res.tempFilePaths[0],
           name: 'front_img',
 					header: {

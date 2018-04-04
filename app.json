@@ -14,10 +14,11 @@
     "pages/addBankCard/addBankCard",
     "pages/deposit/deposit",
     "pages/checkPlan/checkPlan",
-    "pages/arrangement/arrangement"
+    "pages/arrangement/arrangement",
+    "pages/joinList/joinList"
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#FB653D",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "white",

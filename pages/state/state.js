@@ -39,7 +39,7 @@ Page({
 //		uidData.user_id = app.globalData.uid;
 
 		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+			url: app.globalData.baseUrl + 'app/get/user_auth_status',
 			data: {},
 			header:app.globalData.header,
 			success: res => {
@@ -90,7 +90,7 @@ Page({
 //		uidData.user_id = app.globalData.uid;
 
 		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+			url: app.globalData.baseUrl + 'app/get/user_auth_status',
 			data: {},
 			header:app.globalData.header,
 			success: res => {

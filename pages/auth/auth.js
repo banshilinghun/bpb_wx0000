@@ -85,7 +85,7 @@ Page({
       colorName: colorName
     })
     // wx.request({
-    //   url: 'https://wxapi.benpaobao.com/app/get/citys',
+    //   url: app.globalData.baseUrl + 'app/get/citys',
     //   data: {},
     //   header: app.globalData.header,
     //   success: res => {
@@ -116,7 +116,7 @@ Page({
     // })
 
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/brands',
+      url: app.globalData.baseUrl + 'app/get/brands',
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -155,7 +155,7 @@ Page({
     this.animation = animation;
 
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/lease_company',
+      url: app.globalData.baseUrl + 'app/get/lease_company',
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -474,7 +474,7 @@ Page({
 
       if (carPhoto != undefined) {
         wx.request({
-          url: 'https://wxapi.benpaobao.com/app/user/auth_identity_info',
+          url: app.globalData.baseUrl + 'app/user/auth_identity_info',
           data: formData,
           header: app.globalData.header,
           success: res => {
@@ -535,7 +535,7 @@ Page({
         console.log(res)
         var wxres = res;
         wx.uploadFile({
-          url: 'https://wxapi.benpaobao.com/app/user/upload_identity_img', //仅为示例，非真实的接口地址
+          url: app.globalData.baseUrl + 'app/user/upload_identity_img', //仅为示例，非真实的接口地址
           filePath: res.tempFilePaths[0],
           name: 'car',
           header: {
