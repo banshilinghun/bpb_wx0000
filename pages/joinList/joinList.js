@@ -13,6 +13,7 @@ Page({
     count: 20,
     hasmore: false,
     showNomore: false,
+    isShowLoadingMore: false,
   },
 
   /**
@@ -28,7 +29,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
@@ -64,11 +65,11 @@ Page({
             dataBean.time = timeArray[0];
           }
           //判断是上拉加载还是下拉刷新
-          if (currentPageIndex == 1){
+          if (currentPageIndex == 1) {
             that.setData({
               userInfo: dataList
             });
-          }else{
+          } else {
             dataList = that.data.userInfo.concat(dataList);
             that.setData({
               userInfo: dataList
@@ -93,8 +94,11 @@ Page({
           showCancel: false,
         })
       },
-      complete: function(){
+      complete: function () {
         wx.stopPullDownRefresh();
+        that.setData({
+          isShowLoadingMore: false
+        });
       }
     })
   },
@@ -115,14 +119,21 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if(!this.data.hasmore){
+    var that = this;
+    if (!that.data.hasmore) {
       return;
     }
-    this.showLoadingToast();
-    this.requestJoinList(this.data.pageIndex + 1);
+    //this.showLoadingToast();
+    console.log('onReachBottom----------->')
+    that.setData({
+      isShowLoadingMore: true
+    });
+    setTimeout(function(){
+      that.requestJoinList(that.data.pageIndex + 1);
+    }, 1000);
   },
 
-  showLoadingToast: function(){
+  showLoadingToast: function () {
     wx.showToast({
       title: '奔跑中...',
       icon: 'loading'
@@ -133,6 +144,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })

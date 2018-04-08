@@ -8,10 +8,17 @@
       <view class='join-divider'></view>
     </view>
   </view>
-  <view class='no-more' wx:if='{{showNomore}}'>
-  <view class='no-more-line'></view>
-  <view class='no-more-wrapper'>
-    <text class='no-more-text'>我可是是有底线的~</text>
+  <!--正在加载-->
+  <view class='load-more' hidden='{{!isShowLoadingMore}}'>
+    <view class="weui-loadmore">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips" style='color:#999999'>正在识别</view>
+    </view>
   </view>
+  <view class='no-more' wx:if='{{showNomore}}'>
+    <view class='no-more-line'></view>
+    <view class='no-more-wrapper'>
+      <text class='no-more-text'>我可是是有底线的~</text>
+    </view>
   </view>
 </view>
