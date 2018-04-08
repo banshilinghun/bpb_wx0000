@@ -52,11 +52,11 @@ Page({
     //registData.password = param.password.trim();
     registData.wx_code = that.data.wx_code.trim();
     if (app.globalData.userInfo) {
-      registData.avata = app.globalData.userInfo.avatarUrl;
+      registData.avatar = app.globalData.userInfo.avatarUrl;
       registData.nickname = app.globalData.userInfo.nickName;
       registData.gender = app.globalData.userInfo.gender
     } else {
-      registData.avata = '';
+      registData.avatar = '';
       registData.nickname = '';
       registData.gender = '';
     }
