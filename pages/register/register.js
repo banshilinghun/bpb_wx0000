@@ -58,7 +58,7 @@ Page({
     } else {
       registData.avatar = '';
       registData.nickname = '';
-      registData.gender = '';
+      registData.gender = 0;
     }
     var flag = this.checkUserName(param)
 

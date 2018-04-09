@@ -137,7 +137,7 @@ Page({
       success: res => {
         // console.log(res.data.data)
         if (res.data.code == 1000) {
-          //console.log(res.data)
+          console.log(res.data)
           var enddate = res.data.data.info.end_date;
           res.data.data.info.begin_date = res.data.data.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
           res.data.data.info.end_date = res.data.data.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
@@ -187,7 +187,8 @@ Page({
           }
           //console.log(serviceList)
           that.setData({
-            service: serviceList
+            service: serviceList,
+            joinCount: res.data.data.info.total_count - res.data.data.info.current_count
           })
           //                console.log(that.data.service)
 
@@ -238,7 +239,6 @@ Page({
           that.setData({
             avatarList: dataBean.info,
             showJoining: dataBean.info.length == 0 ? false : true,
-            joinCount: dataBean.count,
           });
         }else{
           wx.showModal({

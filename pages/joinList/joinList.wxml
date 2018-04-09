@@ -12,7 +12,7 @@
   <view class='load-more' hidden='{{!isShowLoadingMore}}'>
     <view class="weui-loadmore">
       <view class="weui-loading"></view>
-      <view class="weui-loadmore__tips" style='color:#999999'>正在识别</view>
+      <view class="weui-loadmore__tips" style='color:#999999'>加载中...</view>
     </view>
   </view>
   <view class='no-more' wx:if='{{showNomore}}'>
