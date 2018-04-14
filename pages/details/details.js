@@ -235,10 +235,18 @@ Page({
       success: function(res){
         console.log(res);
         if(res.data.code == 1000){
-          var dataBean = res.data.data;
+          var dataList = res.data.data.info;
+          for (var key in dataList) {
+            var dataBean = dataList[key];
+            //过滤没有头像用户
+            if (dataBean.wx_avatar == '' || dataBean.wx_avatar == null || dataBean.wx_avatar == " ") {
+              console.log('index------------>' + key);
+              dataList.splice(key, 1);
+            }
+          }
           that.setData({
-            avatarList: dataBean.info,
-            showJoining: dataBean.info.length == 0 ? false : true,
+            avatarList: dataList,
+            showJoining: dataList.length == 0 ? false : true,
           });
         }else{
           wx.showModal({
