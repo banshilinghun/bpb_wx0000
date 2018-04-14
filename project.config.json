@@ -3,12 +3,12 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
-		"postcss": true,
+		"postcss": false,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.6.0",
+	"libVersion": "1.4.4",
 	"appid": "wx3e6177ae9634cc11",
 	"projectname": "bpb_wechat",
 	"condition": {

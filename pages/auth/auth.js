@@ -437,8 +437,8 @@ Page({
     //var licensePhoto = this.data.licensePhoto;
     var sourceTypeIndex2 = this.data.sourceTypeIndex2;
     var sourceTypeIndex = this.data.sourceTypeIndex;
-    var leaseId = this.data.idList[sourceTypeIndex];
-    var leaseName = this.data.nameList[sourceTypeIndex];
+    // var leaseId = this.data.idList[sourceTypeIndex];
+    // var leaseName = this.data.nameList[sourceTypeIndex];
     var cityId = this.data.cityId;
     var car_brand = this.data.modelId;
     var car_color = this.data.colorName[sourceTypeIndex2];
@@ -455,13 +455,13 @@ Page({
       car_brand: car_brand,
       car_color: car_color,
       car_type: car_type,
-      is_bad: is_bad,
-      lease_company: leaseName,
-      lease_id: leaseId
+      is_bad: is_bad
+      // lease_company: leaseName,
+      // lease_id: leaseId
     }
     //console.log(formData)
     //		console.log(formData);
-    var flag = this.checkName(param) && this.checkCarCode(param) && this.checkLease(param) && this.checkBrand(param) && this.checkColor(param)
+    var flag = this.checkName(param) && this.checkCarCode(param) && this.checkBrand(param) && this.checkColor(param)
     var that = this;
     if (flag) {
       if (carPhoto == undefined) {
@@ -628,19 +628,19 @@ Page({
     }
 
   },
-  checkLease: function (param) {
-    var lease = param.lease;
-    if (lease != '') {
-      return true;
-    } else {
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '请选择租赁公司'
-      });
-      return false;
-    }
-  },
+  // checkLease: function (param) {
+  //   var lease = param.lease;
+  //   if (lease != '') {
+  //     return true;
+  //   } else {
+  //     wx.showModal({
+  //       title: '提示',
+  //       showCancel: false,
+  //       content: '请选择租赁公司'
+  //     });
+  //     return false;
+  //   }
+  // },
   checkBrand: function (param) {
     var brand = param.brand;
     if (brand != '') {
