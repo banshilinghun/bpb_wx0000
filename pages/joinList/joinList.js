@@ -45,13 +45,13 @@ Page({
     let that = this;
     wx.request({
       url: that.data.joinListUrl,
+      header: app.globalData.header,
       data: {
         ad_id: that.data.adId,
         page_no: currentPageIndex,
         page_size: that.data.count,
       },
       success: function (res) {
-        console.log(res);
         if (res.data.code == 1000) {
           //更新pageIndex
           that.setData({
@@ -64,6 +64,16 @@ Page({
             var timeArray = dataBean.update_date.split(' ');
             dataBean.time = timeArray[0];
           }
+
+          for (var key in dataList) {
+            var dataBean = dataList[key];
+            //过滤没有头像用户
+            if (dataBean.wx_avatar == '' || dataBean.wx_avatar == null || dataBean.wx_avatar == " ") {
+              console.log('index------------>' + key);
+              dataList.splice(key, 1);
+            }
+          }
+          
           //判断是上拉加载还是下拉刷新
           if (currentPageIndex == 1) {
             that.setData({
@@ -124,7 +134,6 @@ Page({
       return;
     }
     //this.showLoadingToast();
-    console.log('onReachBottom----------->')
     that.setData({
       isShowLoadingMore: true
     });
