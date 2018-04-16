@@ -239,8 +239,7 @@ Page({
           for (var key in dataList) {
             var dataBean = dataList[key];
             //过滤没有头像用户
-            if (dataBean.wx_avatar == '' || dataBean.wx_avatar == null || dataBean.wx_avatar == " ") {
-              console.log('index------------>' + key);
+            if (!dataBean.wx_avatar.trim()) {
               dataList.splice(key, 1);
             }
           }

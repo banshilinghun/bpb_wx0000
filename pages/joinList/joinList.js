@@ -64,32 +64,30 @@ Page({
             var timeArray = dataBean.update_date.split(' ');
             dataBean.time = timeArray[0];
           }
-
           for (var key in dataList) {
             var dataBean = dataList[key];
             //过滤没有头像用户
-            if (dataBean.wx_avatar == '' || dataBean.wx_avatar == null || dataBean.wx_avatar == " dataBean.wx_avatar") {
-              console.log('index------------>' + key);
+            if (!dataBean.wx_avatar.trim()) {
               dataList.splice(key, 1);
             }
           }
-          
-          //判断是上拉加载还是下拉刷新
-          if (currentPageIndex == 1) {
+
+            //判断是上拉加载还是下拉刷新
+            if (currentPageIndex == 1) {
+              that.setData({
+                userInfo: dataList
+              });
+            } else {
+              dataList = that.data.userInfo.concat(dataList);
+              that.setData({
+                userInfo: dataList
+              })
+            }
             that.setData({
-              userInfo: dataList
-            });
-          } else {
-            dataList = that.data.userInfo.concat(dataList);
-            that.setData({
-              userInfo: dataList
+              hasmore: res.data.data.more_data == 0 ? false : true,
+              showNomore: res.data.data.more_data == 0 ? true : false
             })
-          }
-          that.setData({
-            hasmore: res.data.data.more_data == 0 ? false : true,
-            showNomore: res.data.data.more_data == 0 ? true : false
-          })
-        } else {
+          } else {
           wx.showModal({
             title: '提示',
             content: res.data.msg,
@@ -137,7 +135,7 @@ Page({
     that.setData({
       isShowLoadingMore: true
     });
-    setTimeout(function(){
+    setTimeout(function () {
       that.requestJoinList(that.data.pageIndex + 1);
     }, 1000);
   },
