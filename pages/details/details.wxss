@@ -6,7 +6,7 @@ page {
 }
 
 .swiper-banner {
-  height: 446rpx;
+  height: 465.75rpx;
 }
 
 .profile-wrapper, .account-wrapper {

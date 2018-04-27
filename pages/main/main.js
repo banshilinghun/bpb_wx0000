@@ -189,7 +189,7 @@ Page({
           } else {
             if (res.data.code == 3000) {
               wx.redirectTo({
-                url: '../login/login'
+                url: '../register/register'
               })
             } else {
               wx.showModal({
@@ -275,7 +275,7 @@ Page({
     //		console.log(event)
     var adId = event.currentTarget.dataset.name;
     //		console.log(adId);
-    var status = this.data.status;
+    //var status = this.data.status;
     //				console.log(status);
     wx.navigateTo({
       url: '../details/details?adId=' + adId

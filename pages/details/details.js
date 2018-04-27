@@ -37,6 +37,7 @@ Page({
 
   onLoad: function (options) {
     //console.log(options.share);
+    var that=this;
     if (options.share!=undefined){
       this.setData({
        goHome: true
@@ -45,7 +46,17 @@ Page({
     this.setData({
       adId: options.adId
     })
-    app.globalData.shareInviteId = options.inviteId
+    app.globalData.shareInviteId = options.inviteId;
+    wx.getSystemInfo({
+      success: function (res) {
+        // console.log(res.windowWidth)  屏幕宽度
+        console.log(res)
+        that.setData({
+          windowWidth: res.windowWidth,
+          bannerHeight: res.windowWidth*0.5625
+        })
+      }
+    }) 
   },
   
   onShow: function (n) {

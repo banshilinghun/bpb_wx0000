@@ -82,7 +82,7 @@ Page({
                 //								console.log(res.data.data);	 ·
                 app.globalData.login = 1;
                 app.globalData.checkStaus = res.data.data.status;
-              } else if (res.data.code == 20001) {
+              } else if (res.data.code == 2001) {
                 app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
                 app.globalData.login = 0;
               }

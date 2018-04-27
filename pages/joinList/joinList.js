@@ -72,22 +72,22 @@ Page({
             }
           }
 
-            //判断是上拉加载还是下拉刷新
-            if (currentPageIndex == 1) {
-              that.setData({
-                userInfo: dataList
-              });
-            } else {
-              dataList = that.data.userInfo.concat(dataList);
-              that.setData({
-                userInfo: dataList
-              })
-            }
+          //判断是上拉加载还是下拉刷新
+          if (currentPageIndex == 1) {
             that.setData({
-              hasmore: res.data.data.more_data == 0 ? false : true,
-              showNomore: res.data.data.more_data == 0 ? true : false
-            })
+              userInfo: dataList
+            });
           } else {
+            dataList = that.data.userInfo.concat(dataList);
+            that.setData({
+              userInfo: dataList
+            })
+          }
+          that.setData({
+            hasmore: res.data.data.more_data == 0 ? false : true,
+            showNomore: res.data.data.more_data == 0 ? true : false
+          })
+        } else {
           wx.showModal({
             title: '提示',
             content: res.data.msg,

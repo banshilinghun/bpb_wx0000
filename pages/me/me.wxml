@@ -38,5 +38,5 @@
       </button>
     </block> 
   </view>
-    <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">退出当前账户</text></button>
+    <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">登录</text></button>
 </view>
