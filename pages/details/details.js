@@ -50,7 +50,7 @@ Page({
     wx.getSystemInfo({
       success: function (res) {
         // console.log(res.windowWidth)  屏幕宽度
-        console.log(res)
+        //console.log(res)
         that.setData({
           windowWidth: res.windowWidth,
           bannerHeight: res.windowWidth*0.5625
