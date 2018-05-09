@@ -24,6 +24,10 @@
   color: #666;
 }
 
+.text-block{
+  margin-top: 10rpx;
+}
+
 .high-light-text {
   font-size: 26rpx;
   color: #ff555c;
@@ -100,4 +104,35 @@ button::after {
   width: 160rpx;
   height: 45rpx;
   line-height: 45rpx;
+}
+
+.recommend-list-item{
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.recommend-friend-title{
+  color: black;
+}
+
+.avatar{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+  border-radius: 20rpx;
+}
+
+.nickname{
+  font-size: 24rpx;
+  color: #333;
+  margin-left: 20rpx;
+  max-width: 200rpx;
+}
+
+.install-ad{
+  font-size: 24rpx;
+  color: #666;
 }

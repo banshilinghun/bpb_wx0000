@@ -122,8 +122,11 @@ Page({
                   }
                   //console.log(shareAd)
                   if (shareAd.adId == -1 || shareAd.adId == undefined) {
-                    wx.switchTab({
-                      url: '../main/main'
+                    // wx.switchTab({
+                    //   url: '../main/main'
+                    // })
+                    wx.redirectTo({
+                      url: '../recommend/recommend',
                     })
                   } else {
                     wx.redirectTo({
