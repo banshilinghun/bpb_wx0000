@@ -203,3 +203,25 @@ color:#ff555c;
   color: #FF555C;
   text-align: center
 }
+.swiper-item{
+  display: block;
+  height: 300rpx;
+}
+.demo-text-1 {
+position:relative;
+align-items:center;
+justify-content:center;
+background-color:#1AAD19;
+color:#FFFFFF;
+font-size:36rpx;
+
+}
+.demo-text-2 {
+position:relative;
+align-items:center;
+justify-content:center;
+background-color:#FBBD19;
+color:#FFFFFF;
+font-size:36rpx;
+
+}

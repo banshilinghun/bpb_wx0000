@@ -71,7 +71,7 @@ Page({
     var shareAd = this.data.shareAd;
     wx.getUserInfo({
       success: function (infoRes) {
-        console.log(infoRes)
+        //console.log(infoRes)
         app.globalData.userInfo = infoRes.userInfo
         that.setData({
           userInfo: infoRes.userInfo,

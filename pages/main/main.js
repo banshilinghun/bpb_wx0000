@@ -11,6 +11,12 @@ Page({
     haveMyAd: false,
     //测试数据
     userList: [],
+    background: ['demo-text-1', 'demo-text-2'],
+    indicatorDots: true,
+    vertical: false,
+    autoplay: true,
+    interval: 2000,
+    duration: 500
   },
 
   onLoad: function () {
@@ -348,6 +354,12 @@ Page({
       name: e.currentTarget.dataset.name,
       address: e.currentTarget.dataset.address
     })
+  },
+  tapName: function (event) {
+    console.log(event.currentTarget.dataset)
+    if (event.currentTarget.dataset.hi == 'demo - text - 1'){
+      
+    }
   }
   // compare: function (property){
   //   return function (a, b) {
