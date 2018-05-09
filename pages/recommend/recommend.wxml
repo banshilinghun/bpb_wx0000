@@ -1,0 +1,48 @@
+<!--pages/recommend/recommend.wxml-->
+<view class='recommend-container'>
+  <banner bannerWidth="{{375}}" bannerHeight="{{200}}" banners="{{banner.bannerList}}" showBanner="{{banner.showBanner}}" />
+
+  <!-- <swiper indicator-dots="true" autoplay="{{true}}" interval="{{3000}}" duration="{{800}}"  style='height:{{banner.bannerHeight}}px;width:{{banner.bannerWidth}}px' wx:if='{{banner.showBanner}}'>
+  <block wx:for="{{banner.bannerList}}" wx:key="item.id">
+    <swiper-item>
+      <image src="{{item}}" mode="{{scaleToFill}}" style='height:{{banner.bannerHeight+"px"}};width:{{banner.bannerWidth+"px"}}' bindtap='bannerClick'></image>
+    </swiper-item>
+  </block>
+</swiper> -->
+
+  <view class='recommend-rule'>
+    <text class='rule-title'>活动规则：</text>
+    <view class='rule-one'>
+      <text class='rule-one-text'>1、</text>
+      <view class='rule-one-text'>分享奔跑宝给好友或朋友圈<text>\n</text>
+        好友<text class='high-light-text'>从分享链接进入</text>奔跑宝
+        <text>\n</text> 好友首次完成广告安装
+        <text>\n</text> 双方立即获得50元奖励；
+      </view>
+    </view>
+    <text class='rule-one-text'>2、推荐奖励发放后，请到页面“我的”-“红包奖励”里领取。</text>
+    <text class='rule-one-text'>3、关注“奔跑宝”服务号，可实时收到红包领取提醒。</text>
+  </view>
+  <view class='share-container'>
+    <view class='share-wrapper'>
+      <image class='share-icon' src='../../image/share-friend.png'></image>
+    </view>
+    <view class='share-wrapper'>
+      <image class='share-icon' src='../../image/moment.png'></image>
+    </view>
+  </view>
+
+  <view class='recommend-result'>
+    <text class='rule-one-text'>我成功推荐了{{recommendNumber}}名好友，累计领取奖励{{totalAword}}元</text>
+    <view class='get-award-wrapper'>未领取奖励
+      <text class='high-light-text'>{{}}元</text>
+      <button class='get-aword btn-common'>领取</button>
+    </view>
+    <view class='remind-friend'>
+      <view class='remind-text' style='width:{{remindWidth}}px'>25名好友未完成，完成后奖励可达到
+        <text class='high-light-text'>{{}}元</text>
+      </view>
+      <button class='btn-remind-friend btn-common'>一键提醒好友</button>
+    </view>
+  </view>
+</view>
