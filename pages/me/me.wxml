@@ -39,4 +39,5 @@
     </block> 
   </view>
     <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">登录</text></button>
+    <!-- <button open-type='contact' session-from='{"type": "image", "title": "点此进入", "url": "https://mp.weixin.qq.com/s/W120-Djg8DKMSyCIof2UiA", "desc": "关注奔跑宝", "img": "22"}'> 图文消息，关注我们</button> -->
 </view>

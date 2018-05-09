@@ -32,6 +32,7 @@ Page({
 			// 在没有 open-type=getUserInfo 版本的兼容处理
 			wx.getUserInfo({
 				success: res => {
+          console.log(res)
 					app.globalData.userInfo = res.userInfo
 					this.setData({
 						userInfo: res.userInfo,
@@ -48,6 +49,7 @@ Page({
       success: res => {
         //var that = this;
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res)
         if (res.code) {
           app.globalData.code = res.code
           //console.log(app.globalData.userInfo)
@@ -100,10 +102,11 @@ Page({
             },
             fail: res => {
               //console.log(2222);
+              
               wx.showModal({
                 title: '提示',
                 showCancel: false,
-                content: '网络错误'
+                content: res.errMsg
               });
             }
           })
