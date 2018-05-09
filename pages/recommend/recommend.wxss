@@ -1,0 +1,103 @@
+/* pages/recommend/recommend.wxss */
+
+.recommend-container {
+  width: 100%;
+}
+
+.recommend-rule {
+  margin-left: 30rpx;
+}
+
+.rule-title {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.rule-one {
+  display: flex;
+  flex-direction: row;
+}
+
+.rule-one-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.high-light-text {
+  font-size: 26rpx;
+  color: #ff555c;
+}
+
+.share-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 160rpx;
+}
+
+.share-wrapper {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.share-icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.recommend-result {
+  padding-left: 30rpx;
+}
+
+.get-award-wrapper {
+  font-size: 26rpx;
+  color: #666;
+  display: flex;
+  margin-top: 20rpx;
+  flex-direction: row;
+  align-items: center;
+}
+
+.get-aword {
+  width: 70rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+
+.btn-common {
+  font-size: 22rpx;
+  color: #333;
+  padding: 0rpx;
+  background-color: #fff;
+  border: 1rpx solid #666;
+  border-radius: 6rpx;
+  display: inline-block;
+  margin-left: 40rpx;
+}
+
+button::after {
+  border: none;
+}
+
+.remind-friend {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 30rpx;
+}
+
+.remind-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.btn-remind-friend {
+  width: 160rpx;
+  height: 45rpx;
+  line-height: 45rpx;
+}
