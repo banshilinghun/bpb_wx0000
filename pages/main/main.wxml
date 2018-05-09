@@ -1,5 +1,7 @@
 <!--index.wxml-->
 <view>
+<!-- <view class='taewtw'  bindtap="goRegister">立马注册，获取新手奖励</view> -->
+
   <view class="message__list">
     <!-- <block>
       <swiper class='notify_swiper' vertical='true' circular='true' autoplay='true' interval='3000'>
