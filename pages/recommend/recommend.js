@@ -53,9 +53,11 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    console.log('flag------------>' + options.flag);
     that.setData({
       pageFlag: options.flag == FLAG_ARRAY[0]
     })
+    console.log('pageFlag------------>' + that.data.pageFlag);
     wx.getSystemInfo({
       success: function(res) {
         console.log(res);
