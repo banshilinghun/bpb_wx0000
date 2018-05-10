@@ -11,12 +11,13 @@ Page({
     haveMyAd: false,
     //测试数据
     userList: [],
-    background: ['demo-text-1', 'demo-text-2'],
+    background: ['banner1', 'banner2'],
     indicatorDots: true,
     vertical: false,
     autoplay: true,
     interval: 2000,
-    duration: 500
+    duration: 500,
+    shareit:false
   },
 
   onLoad: function () {
@@ -356,10 +357,19 @@ Page({
     })
   },
   tapName: function (event) {
-    console.log(event.currentTarget.dataset)
-    if (event.currentTarget.dataset.hi == 'demo - text - 1'){
-      
+    var that=this;
+    console.log(event.currentTarget.dataset.hi)
+    if (event.currentTarget.dataset.hi == 'banner1'){
+      that.setData({
+        shareit:true
+      })
     }
+  },
+  hideShare:function(){
+    var that = this;
+    that.setData({
+      shareit: false
+    })
   }
   // compare: function (property){
   //   return function (a, b) {
