@@ -10,14 +10,24 @@
   </block>
 </swiper> -->
 
+  <!-- 活动规则 -->
   <view class='recommend-rule'>
     <text class='rule-title'>活动规则：</text>
     <view class='rule-one'>
       <text class='rule-one-text'>1、</text>
-      <view class='rule-one-text'>分享奔跑宝给好友或朋友圈<text>\n</text>
-        好友<text class='high-light-text'>从分享链接进入</text>奔跑宝
-        <text>\n</text> 好友首次完成广告安装
-        <text>\n</text> 双方立即获得50元奖励；
+      <view class='rule-one-text'>
+        <view>
+          <text class='rule-one-text'>分享奔跑宝给好友或朋友圈</text>
+        </view>
+        <view class='text-block'>
+          <text class='rule-one-text'>好友<text class='high-light-text'>从分享链接进入</text>奔跑宝</text>
+        </view>
+        <view class='text-block'>
+          <text class='rule-one-text '>好友首次完成广告安装</text>
+        </view>
+        <view class='text-block'>
+          <text class='rule-one-text'>双方立即获得50元奖励；</text>
+        </view>
       </view>
     </view>
     <text class='rule-one-text'>2、推荐奖励发放后，请到页面“我的”-“红包奖励”里领取。</text>
@@ -32,6 +42,7 @@
     </view>
   </view>
 
+  <!-- 推荐结果 -->
   <view class='recommend-result'>
     <text class='rule-one-text'>我成功推荐了{{recommendNumber}}名好友，累计领取奖励{{totalAword}}元</text>
     <view class='get-award-wrapper'>未领取奖励
@@ -43,6 +54,19 @@
         <text class='high-light-text'>{{}}元</text>
       </view>
       <button class='btn-remind-friend btn-common'>一键提醒好友</button>
+    </view>
+  </view>
+
+  <!-- 已推荐好友 -->
+  <view class='recommend-friend-list' wx:if='{{showRecommendList}}'>
+    <text class='rule-title' style='margin-left:30rpx;'>已推荐的好友（{{recommendNumber}}）：</text>
+    <view wx:for='{{recommendList}}' wx:key='item.id'>
+      <view class='recommend-list-item'>
+        <image class='avatar' src='https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132'></image>
+        <text class='nickname'>微信昵称</text>
+        <text class='install-ad'>已安装广告</text>
+        <text>两天前</text>
+      </view>
     </view>
   </view>
 </view>

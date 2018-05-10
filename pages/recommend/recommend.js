@@ -12,7 +12,8 @@ Page({
       showBanner: true
     },
     remindWidth: 0,
-    
+    showRecommendList: true,
+    recommendList: [1,2,1,1]
   },
 
   /**
