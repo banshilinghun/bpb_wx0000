@@ -10,7 +10,7 @@ Page({
    */
   data: {
     //页面状态标识
-    pageFlag: FLAG_ARRAY[1],
+    pageFlag: true,
     banner:{
       bannerHeight: 200,
       bannerWidth: 375,
@@ -22,6 +22,7 @@ Page({
       imageHeight: 200,
       imageSrc: 'https://images.unsplash.com/photo-1447829172150-e5deb8972256?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7c59a29e62ac65aa6e7f7aefaf296265&auto=format&fit=crop&w=2110&q=80'
     },
+    //一键提醒 view 宽度
     remindWidth: 0,
     showRecommendList: true,
     recommendList: [{
@@ -52,6 +53,9 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    that.setData({
+      pageFlag: options.flag == FLAG_ARRAY[0]
+    })
     wx.getSystemInfo({
       success: function(res) {
         console.log(res);

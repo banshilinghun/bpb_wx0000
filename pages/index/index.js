@@ -125,9 +125,6 @@ Page({
                     wx.switchTab({
                       url: '../main/main'
                     })
-                    // wx.redirectTo({
-                    //   url: '../recommend/recommend',
-                    // })
                   } else {
                     wx.redirectTo({
                       url: '../details/details?adId=' + shareAd.adId + "&share=1"

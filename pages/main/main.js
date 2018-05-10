@@ -363,6 +363,11 @@ Page({
       that.setData({
         shareit:true
       })
+    } else if (event.currentTarget.dataset.hi == 'banner2'){
+      //活动详情页
+      wx.navigateTo({
+        url: '../recommend/recommend?flag=active',
+      })
     }
   },
   hideShare:function(){

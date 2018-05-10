@@ -4,7 +4,7 @@
   <image style='width:100%;height:{{ topImage.imageHeight }}px' src='{{ topImage.imageSrc }}' bindtap='previewImage' mode='aspectFill'></image>
 
   <!-- 活动规则 -->
-  <view class="flex-container {{ pageFlag == 'active' ? 'flex-column' : 'flex-column-reverse' }}">
+  <view class="flex-container {{ showActive ? 'flex-column' : 'flex-column-reverse' }}">
     <view class='recommend-rule-wrapper'>
       <view class='recommend-rule'>
         <view class='rule-title black-color'>活动规则：</view>
