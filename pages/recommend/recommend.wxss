@@ -2,16 +2,32 @@
 
 .recommend-container {
   width: 100%;
+  margin-bottom: 20rpx;
+}
+
+.flex-container{
+  width: 100%;
+  display: flex;
+}
+
+.flex-column{
+  flex-direction: column;
+}
+
+.flex-column-reverse{
+  flex-direction: column-reverse;
 }
 
 .recommend-rule {
-  margin-left: 30rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
 }
 
 .rule-title {
-  font-size: 28rpx;
-  color: #333;
-  margin-bottom: 20rpx;
+  font-size: 32rpx;
+  font-weight: 500;
 }
 
 .rule-one {
@@ -20,24 +36,22 @@
 }
 
 .rule-one-text {
-  font-size: 26rpx;
+  font-size: 30rpx;
   color: #666;
 }
 
-.text-block{
-  margin-top: 10rpx;
+.text-block {
+  margin-top: 15rpx;
 }
 
 .high-light-text {
-  font-size: 26rpx;
-  color: #ff555c;
+  font-size: 28rpx;
 }
 
 .share-container {
   width: 100%;
   display: flex;
   flex-direction: row;
-  height: 160rpx;
 }
 
 .share-wrapper {
@@ -46,41 +60,70 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20rpx;
+}
+
+.share-layout{
+  height: 100%;
+  line-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .share-icon {
-  width: 100rpx;
-  height: 100rpx;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.share-text{
+  font-size: 24rpx;
+  margin-top: 15rpx;
+}
+
+.recommend-split-line{
+  width: 95%;
+  height: 4rpx;
+  margin-left: 5%;
 }
 
 .recommend-result {
   padding-left: 30rpx;
 }
 
-.get-award-wrapper {
-  font-size: 26rpx;
-  color: #666;
+.recommend-success{
+  height: 70rpx;
   display: flex;
-  margin-top: 20rpx;
-  flex-direction: row;
   align-items: center;
 }
 
-.get-aword {
-  width: 70rpx;
-  height: 40rpx;
-  line-height: 40rpx;
+.get-award-wrapper {
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.get-award-text{
+  font-size: 30rpx;
 }
 
 .btn-common {
-  font-size: 22rpx;
-  color: #333;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 28rpx;
+  color: white;
   padding: 0rpx;
-  background-color: #fff;
-  border: 1rpx solid #666;
+  background-color: #ff555c;
   border-radius: 6rpx;
   display: inline-block;
   margin-left: 40rpx;
+  box-shadow:0px 0px 6rpx #ff555c;
+  width: 200rpx;
+  position: absolute;
+  right: 30rpx;
 }
 
 button::after {
@@ -89,50 +132,100 @@ button::after {
 
 .remind-friend {
   width: 100%;
+  height: 100rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 30rpx;
+  position: relative;
 }
 
 .remind-text {
-  font-size: 26rpx;
-  color: #666;
+  font-size: 30rpx;
 }
 
-.btn-remind-friend {
-  width: 160rpx;
-  height: 45rpx;
-  line-height: 45rpx;
+.list-wrapper{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
 }
 
-.recommend-list-item{
+.recommend-list-item {
   margin-left: 30rpx;
   margin-right: 30rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 80rpx;
+  position: relative;
+  border-radius: 10rpx;
+  box-shadow:0px 0px 3px #999;
+  margin-top: 20rpx;
 }
 
-.recommend-friend-title{
+.recommend-friend-title {
   color: black;
 }
 
-.avatar{
-  width: 40rpx;
-  height: 40rpx;
+.avatar {
+  width: 60rpx;
+  height: 60rpx;
   margin-left: 20rpx;
-  border-radius: 20rpx;
+  border-radius: 30rpx;
 }
 
-.nickname{
-  font-size: 24rpx;
+.nickname {
+  font-size: 28rpx;
   color: #333;
   margin-left: 20rpx;
-  max-width: 200rpx;
+  width: 250rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.install-ad{
-  font-size: 24rpx;
+.install-ad {
+  font-size: 28rpx;
   color: #666;
+  margin-left: 30rpx;
+}
+
+.time {
+  font-size: 24rpx;
+  color: #999;
+  position: absolute;
+  right: 20rpx;
+}
+
+.divider{
+  width: 100%;
+  height: 15rpx;
+  background-color: #f2f2f2;
+}
+
+.split-line{
+  width: 96%;
+  height: 1px;
+  background-color: #e5e5e5;
+}
+
+.recommend-people{
+  margin-left:30rpx;
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+}
+
+.dark-color{
+  color: #333;
+}
+
+.black-color{
+  color: black;
+}
+
+.gray-color{
+  color: #666;
+}
+
+.theme-color{
+  color: #ff555c;
 }

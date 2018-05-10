@@ -1,0 +1,14 @@
+<!--components/dialog/bpb-dialog.wxml-->
+<view class="goods-detail" hidden="{{!showGoodsDetail}}">
+  <view class="mask" bindtap="hideGoodsDetail"></view>
+  <view class="goodsdetail">
+    <!-- <view class="title1" bindtap="hideGoodsDetail"><image src='../../image/close.png'></image></view> -->
+    <view class='title0'>预约成功</view>
+    <view class="title2">分享给微信好友，让你的朋友们 一起赚钱吧!</view>
+    <view class="title4">
+      <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}" class='wtwabt2' open-type="share">
+        分享微信好友
+      </button>
+    </view>
+  </view>
+</view>
