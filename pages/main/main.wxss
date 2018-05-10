@@ -207,7 +207,7 @@ color:#ff555c;
   display: block;
   height: 300rpx;
 }
-.demo-text-1 {
+.banner1 {
 position:relative;
 align-items:center;
 justify-content:center;
@@ -216,7 +216,7 @@ color:#FFFFFF;
 font-size:36rpx;
 
 }
-.demo-text-2 {
+.banner2 {
 position:relative;
 align-items:center;
 justify-content:center;

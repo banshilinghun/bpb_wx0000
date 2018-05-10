@@ -128,7 +128,6 @@ icon {
   border-style: solid;
   -webkit-transform: matrix(0.71, 0.71, -.71, 0.71, 0, 0);
   transform: matrix(0.71, 0.71, -.71, 0.71, 0, 0);
-  position: relative;
   top: -2px;
   position: absolute;
   top: 50%;
@@ -269,7 +268,6 @@ icon {
 .weui-form-preview__hd:after {
   content: " ";
   position: absolute;
-  left: 0;
   bottom: 0;
   right: 0;
   height: 1px;
