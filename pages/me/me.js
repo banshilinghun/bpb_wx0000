@@ -11,12 +11,6 @@ Page({
 			'url': 'auth/auth',
 			"icon": '../../image/card.png',
 			'deposit': 0
-		}, {
-			"desc": "提现",
-			"id": "withdraw",
-			'url': 'withdraw/withdraw',
-			"icon": '../../image/money.png',
-			'deposit': 0
 		}],
 		total: "0.00",
 		navs: [{
@@ -225,7 +219,29 @@ Page({
       url: '../register/register'
 		})
 	},
-
+  withdraw:function(){
+    var that=this;
+    if (that.data.loginFlag == 1) {
+      wx.navigateTo({
+        url: '../withdraw/withdraw'
+      })
+    } else {
+      wx.showModal({
+        title: "提示",
+        content: "你还没有登录",
+        confirmText: "立即登录",
+        cancelText: "取消",
+        success: function (sure) {
+          if (sure.confirm) {
+            wx.navigateTo({
+              url: '../register/register'
+            })
+          }
+        }
+      })
+    }
+  
+  },
   //分享
   onShareAppMessage: function (res) {
     var shareTitle = '奔跑宝，私家车广告平台';

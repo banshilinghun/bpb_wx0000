@@ -11,13 +11,6 @@
     </swiper>
   </view>
   <view class="message__list">
-    <!-- <block>
-      <swiper class='notify_swiper' vertical='true' circular='true' autoplay='true' interval='3000'>
-        <swiper-item class='swiper_item' wx:for='{{userList}}' wx:key='index'>
-          <text class='swiper_content'>{{item}}</text>
-        </swiper-item>
-      </swiper>
-    </block> -->
     <block wx:if="{{haveMyAd}}">
       <view class="axstw">
         <view class="item2">
@@ -107,8 +100,8 @@
   </view>
 </view>
 <view class='shareit' wx:if="{{shareit}}" bindtap="hideShare">
-    <image class="arrow" src="../../image/share-it.png"></image> 
-    <view class='follow'>
-       <image class="arrow" src="../../image/share.png"></image>
-    </view>
+  <image class="arrow" src="../../image/share-it.png"></image>
+  <view class='follow'>
+    <image class="arrow" src="../../image/share.png"></image>
+  </view>
 </view>

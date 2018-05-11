@@ -158,4 +158,264 @@ page {
   font-size: 28rpx;
 }
 
+.message_list {
+  background-color: #f2f2f2;
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+}
 
+.item2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16rpx;
+  background-color: #fff;
+  /**  border: 1rpx solid #eaeaea;
+  border-bottom: 1rpx solid #d0d0d0;
+  border-radius: 5rpx;*/
+}
+.item3{
+  padding-left: 0;
+}
+.item4{
+  padding-bottom: 0;
+}
+.item5{
+  padding-top: 0;
+  padding-bottom:0;
+  height: 80rpx;
+  align-items: center;
+}
+.item5 .message{
+  margin-top: 0;
+}
+/* .item5 .item-middle{
+  margin-left: 48rpx;
+} */
+.item5 .message{
+  font-size: 28rpx;
+  color: #333;
+  margin: 0;
+}
+.item5 .data-text{
+  padding-left: 10rpx;
+  font-size: 32rpx;
+
+}
+.item5 .item-middle{
+  padding-top: 0;
+}
+.item5 .myad-li{
+  margin-top: 0;
+}
+.item-left {
+  margin-top: 12rpx;
+  display: table-cell;
+  text-align: center;
+}
+
+.image {
+  width: 128rpx;
+  height: 128rpx;
+  /* border-radius: 64rpx; */
+  background-color: #eee;
+}
+
+.item-middle {
+  flex: 1;
+  margin-left: 30rpx;
+  padding-top: 10rpx;
+  overflow: hidden;
+}
+
+.title {
+  color: #444;
+  font-family: "微软雅黑";
+  font-weight: bold;
+  line-height: 20rpx;
+  padding: 32rpx 16rpx, 0, 16rpx;
+  font-size: 32rpx;
+  margin-top: 60rpx;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+}
+
+.message {
+  font-family: "微软雅黑";
+  color: #888;
+  line-height: 40rpx;
+  font-size: 40rpx;
+  padding: 0 16rpx, 0, 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.item_right1 {
+  overflow: hidden;
+  padding-right: 30rpx;
+  text-align: right;
+  display:flex;
+  align-items:flex-end;
+}
+.item_right2{
+  align-items: flex-end;
+  margin-bottom: 10rpx;
+}
+.item_right3{
+  font-size: 28rpx;
+  color: #999;
+}
+.item_right2 text{
+  font-size: 28rpx;
+  color: #666;
+}
+.time {
+  color: #03d0b7;
+  font-size: 24rpx;
+}
+
+.mark {
+  position: relative;
+  left: 5rpx;
+  margin-top: 10rpx;
+  padding-top: 8rpx;
+  padding-bottom: 2px;
+  background-color: #f74c31;
+  text-align: center;
+  font-size: 18rpx;
+  width: 40rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  display: table-cell;
+}
+
+.line {
+  height: 2rpx;
+  width: 100%;
+  background-color: #e0e1e2;
+}
+
+.data-blt {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.data-text {
+  color: #ff555c;
+}
+
+.myad-li {
+  margin-top: 20rpx;
+}
+
+.btn-red {
+  border: none;
+  border-radius: 0 !important;
+  background: #fb523e;
+  color: #fff;
+  font-size: 26rpx;
+}
+
+.btn-gray {
+  border: none;
+  border-radius: 0 !important;
+  background: #ccc;
+  color: #fff;
+  font-size: 26rpx;
+}
+
+button::after {
+  content: none;
+}
+
+.watwx {
+  padding-left: 6rpx;
+}
+
+.mesge2 {
+  width: 50%;
+  display: inline-block;
+}
+
+.axstw {
+  margin-bottom: 20rpx;
+}
+
+.texst {
+  height: 88rpx;
+}
+
+.province-text {
+  font-size: 24rpx;
+  color: #ff5a39;
+}
+.timetxt{
+color:#999;
+}
+.timetxt2{
+color:#ff555c;
+}
+
+.notify_swiper{
+  width: 100%;
+  height: 60rpx;
+  background-color: gray;
+}
+
+.swiper_item{
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.swiper_content{
+  font-size: 28rpx;
+  color: white;
+  margin-left: 20rpx;
+}
+.ywxst{
+  font-size: 19rpx;
+}
+.wtwabt2{
+  background:none;
+line-height:1.6;
+padding:0;
+text-align:right;
+border:2rpx solid #ff555c;
+padding-left:24rpx;
+padding-right:24rpx;
+color:#ff555c;
+font-size: 32rpx;
+margin-bottom: 10rpx;
+}
+.wtwabt image{
+  height: 40rpx;
+  width: 40rpx;
+}
+.sharetext{
+  font-size: 20rpx;
+  color: #ff555c;
+}
+.taewtw{
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  background: #FDFFE8;
+  font-size: 24rpx;
+  color: #FF555C;
+  text-align: center
+}
+.amount{
+  margin-bottom: 20rpx;
+}
+.twxtawd{
+  margin-bottom: 20rpx
+}
+.message__list{
+  background: #fff;
+}

@@ -1,5 +1,5 @@
 <view>
-   <view class="userinfo">
+  <view class="amount">
     <!-- <view class="cuntall">
       <view class="total-con">
         <text class="total-desc">余额(元)</text>
@@ -16,7 +16,121 @@
         </view>
       </block>
     </view> -->
-  </view> 
+
+    <view class="message__list">
+      <block>
+        <view class="item2 item3 item4">
+          <!-- <view class="item-left" >
+          <image src="{{item.logo}}" class="image" />
+        </view> -->
+          <view class="item-middle">
+            <view>
+              <text class="title">待收收益</text>
+            </view>
+            <!-- <view class="myad-li">
+              <view class="message">
+                <label class="data-text">¥{{total}}</label>
+              </view>
+            </view> -->
+          </view>
+          <!-- <view class="item_right1 item_right2">
+            <text>超过了59.34%的同行</text>
+          </view> -->
+        </view>
+      </block>
+      <view class="twxtawd">
+      <block>
+        <view class="item2 item3 item5">
+          <!-- <view class="item-left" >
+          <image src="{{item.logo}}" class="image" />
+        </view> -->
+          <view class="item-middle">
+            <!-- <view>
+              <text class="title">累计收益</text>
+            </view> -->
+            <view class="myad-li">
+              <view class="message">
+                新手奖励
+                <label class="data-text">¥50.00</label>
+              </view>
+            </view>
+          </view>
+          <view class="item_right1 item_right3">
+            <text>安装广告后领取</text>
+          </view>
+        </view>
+      </block>
+        <block>
+        <view class="item2 item3 item5">
+          <!-- <view class="item-left" >
+          <image src="{{item.logo}}" class="image" />
+        </view> -->
+          <view class="item-middle">
+            <!-- <view>
+              <text class="title">累计收益</text>
+            </view> -->
+            <view class="myad-li">
+              <view class="message">
+                推荐奖励
+                <label class="data-text">¥0.00</label>
+              </view>
+            </view>
+          </view>
+          <view class="item_right1 item_right3">
+            <button class='wtwabt wtwabt2'>
+              邀请好友
+            </button>
+          </view>
+        </view>
+      </block>
+      </view>
+      <view class="line"></view>
+      <block>
+        <view class="item2 item3">
+          <!-- <view class="item-left" >
+          <image src="{{item.logo}}" class="image" />
+        </view> -->
+          <view class="item-middle">
+            <view>
+              <text class="title">余额</text>
+            </view>
+            <view class="myad-li">
+              <view class="message">
+                <label class="data-text">¥{{total}}</label>
+              </view>
+            </view>
+          </view>
+          <view class="item_right item_right1">
+            <button class='wtwabt wtwabt2' bindtap="withdraw">
+            <text > 提 现</text>
+            </button>
+          </view>
+        </view>
+        <view class="line"></view>
+      </block>
+      <block>
+        <view class="item2 item3">
+          <!-- <view class="item-left" >
+          <image src="{{item.logo}}" class="image" />
+        </view> -->
+          <view class="item-middle">
+            <view>
+              <text class="title">累计收益</text>
+            </view>
+            <view class="myad-li">
+              <view class="message">
+                <label class="data-text">¥{{total}}</label>
+              </view>
+            </view>
+          </view>
+          <view class="item_right1 item_right2">
+            <text>超过了59.34%的同行</text>
+          </view>
+        </view>
+        <view class="line"></view>
+      </block>
+    </view>
+  </view>
   <view class="profile-wrapper" catchtap="loadProfile">
     <block wx:for="{{myProfile}}" wx:key="item.id">
       <view class="profile" id="{{item.id}}" bindtap="kindToggle">
@@ -29,15 +143,14 @@
         <image wx:if="{{item.deposit==0}}" class="profile-arrow" src="/image/arrow.png"></image>
       </view>
     </block>
-     <block>
+    <block>
       <button open-type='share' class='share-button'>
         <image class='itemicon' src='../../image/shmgc.png'></image>
         <text class='profile-item'>推荐好友</text>
         <image class='profile-arrow' src='/image/arrow.png'>
         </image>
       </button>
-    </block> 
+    </block>
   </view>
-    <!-- <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">登录</text></button> -->
-    <!-- <button open-type='contact' session-from='{"type": "image", "title": "点此进入", "url": "https://mp.weixin.qq.com/s/W120-Djg8DKMSyCIof2UiA", "desc": "关注奔跑宝", "img": "22"}'> 图文消息，关注我们</button> -->
+  <!-- <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">登录</text></button> -->
 </view>
