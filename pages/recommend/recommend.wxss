@@ -1,5 +1,7 @@
 /* pages/recommend/recommend.wxss */
 
+@import '../../components/dialog/bpb-dialog.wxss';
+
 .recommend-container {
   width: 100%;
   margin-bottom: 20rpx;
