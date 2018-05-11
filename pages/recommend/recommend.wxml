@@ -1,6 +1,5 @@
 <!--pages/recommend/recommend.wxml-->
 <view class='recommend-container'>
-  <banner bannerWidth="{{375}}" bannerHeight="{{200}}" banners="{{ banner.bannerList }}" showBanner="{{banner.showBanner}}" />
   <image style='width:100%;height:{{ topImage.imageHeight }}px' src='{{ topImage.imageSrc }}' bindtap='previewImage' mode='aspectFill'></image>
 
   <!-- 活动规则 -->

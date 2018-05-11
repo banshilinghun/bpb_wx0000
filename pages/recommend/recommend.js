@@ -21,7 +21,7 @@ Page({
       bannerHeight: 200,
       bannerWidth: 375,
       bannerList: [],
-      showBanner: false
+      showBanner: true
     },
     //顶部图片
     topImage: {
