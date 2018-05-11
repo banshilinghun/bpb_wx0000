@@ -151,7 +151,6 @@ page {
   width:64rpx;
   height:64rpx;
   margin-right:20rpx;
-  margin-left: 16rpx;
 }
 
 .deposit-text{
@@ -175,7 +174,29 @@ page {
   border-bottom: 1rpx solid #d0d0d0;
   border-radius: 5rpx;*/
 }
-
+.item3{
+  padding-left: 0;
+}
+.item4{
+  padding-bottom: 0;
+}
+.item5{
+  padding-top: 0;
+  padding-bottom:0;
+}
+.item5 .message{
+  margin-top: 0;
+}
+.item5 .item-middle{
+  margin-left: 48rpx;
+}
+.item5 .message{
+  font-size: 28rpx;
+  color: #333;
+}
+.item5 .data-text{
+  padding-left: 10rpx;
+}
 .item-left {
   margin-top: 12rpx;
   display: table-cell;
@@ -221,7 +242,7 @@ page {
   margin-bottom: 16rpx;
 }
 
-.item_right {
+.item_right1 {
   overflow: hidden;
   padding-right: 30rpx;
   text-align: right;
@@ -231,6 +252,10 @@ page {
 .item_right2{
   align-items: flex-end;
   margin-bottom: 10rpx;
+}
+.item_right3{
+  font-size: 28rpx;
+  color: #999;
 }
 .item_right2 text{
   font-size: 28rpx;
@@ -259,7 +284,7 @@ page {
 }
 
 .line {
-  height: 1px;
+  height: 2rpx;
   width: 100%;
   background-color: #e0e1e2;
 }
@@ -345,7 +370,7 @@ color:#ff555c;
 .ywxst{
   font-size: 19rpx;
 }
-.wtwabt{
+.wtwabt2{
   background:none;
 line-height:1.2;
 padding:0;
@@ -356,7 +381,6 @@ padding-bottom:12rpx;
 padding-left:24rpx;
 padding-right:20rpx;
 color:#ff555c;
-
 }
 .wtwabt image{
   height: 40rpx;
