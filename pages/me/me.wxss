@@ -183,19 +183,30 @@ page {
 .item5{
   padding-top: 0;
   padding-bottom:0;
+  height: 80rpx;
+  align-items: center;
 }
 .item5 .message{
   margin-top: 0;
 }
-.item5 .item-middle{
+/* .item5 .item-middle{
   margin-left: 48rpx;
-}
+} */
 .item5 .message{
   font-size: 28rpx;
   color: #333;
+  margin: 0;
 }
 .item5 .data-text{
   padding-left: 10rpx;
+  font-size: 32rpx;
+
+}
+.item5 .item-middle{
+  padding-top: 0;
+}
+.item5 .myad-li{
+  margin-top: 0;
 }
 .item-left {
   margin-top: 12rpx;
@@ -247,7 +258,7 @@ page {
   padding-right: 30rpx;
   text-align: right;
   display:flex;
-  align-items:center;
+  align-items:flex-end;
 }
 .item_right2{
   align-items: flex-end;
@@ -299,7 +310,7 @@ page {
 }
 
 .myad-li {
-  margin-top: 10rpx;
+  margin-top: 20rpx;
 }
 
 .btn-red {
@@ -372,15 +383,15 @@ color:#ff555c;
 }
 .wtwabt2{
   background:none;
-line-height:1.2;
+line-height:1.6;
 padding:0;
 text-align:right;
 border:2rpx solid #ff555c;
-padding-top:12rpx;
-padding-bottom:12rpx;
 padding-left:24rpx;
-padding-right:20rpx;
+padding-right:24rpx;
 color:#ff555c;
+font-size: 32rpx;
+margin-bottom: 10rpx;
 }
 .wtwabt image{
   height: 40rpx;
@@ -401,4 +412,10 @@ color:#ff555c;
 }
 .amount{
   margin-bottom: 20rpx;
+}
+.twxtawd{
+  margin-bottom: 20rpx
+}
+.message__list{
+  background: #fff;
 }

@@ -25,7 +25,7 @@
         </view> -->
           <view class="item-middle">
             <view>
-              <text class="title">累计收益</text>
+              <text class="title">待收收益</text>
             </view>
             <!-- <view class="myad-li">
               <view class="message">
@@ -38,6 +38,7 @@
           </view> -->
         </view>
       </block>
+      <view class="twxtawd">
       <block>
         <view class="item2 item3 item5">
           <!-- <view class="item-left" >
@@ -55,7 +56,7 @@
             </view>
           </view>
           <view class="item_right1 item_right3">
-            <text>还有一个广告未安装</text>
+            <text>安装广告后领取</text>
           </view>
         </view>
       </block>
@@ -71,17 +72,18 @@
             <view class="myad-li">
               <view class="message">
                 推荐奖励
-                <label class="data-text">¥50</label>
+                <label class="data-text">¥0.00</label>
               </view>
             </view>
           </view>
           <view class="item_right1 item_right3">
             <button class='wtwabt wtwabt2'>
-              提现
+              邀请好友
             </button>
           </view>
         </view>
       </block>
+      </view>
       <view class="line"></view>
       <block>
         <view class="item2 item3">
@@ -99,8 +101,8 @@
             </view>
           </view>
           <view class="item_right item_right1">
-            <button class='wtwabt wtwabt2'>
-              提现
+            <button class='wtwabt wtwabt2' bindtap="withdraw">
+            <text > 提 现</text>
             </button>
           </view>
         </view>
