@@ -1,7 +1,13 @@
 // pages/recommend/recommend.js
+const app =  getApp();
+const timeUtil = require('../../utils/timeUtil.js');
 
 //活动或者推荐 推荐和活动的页面布局有变化
 const FLAG_ARRAY = ['active', 'recommend'];
+//二维码地址
+const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
+//推荐地址
+const RECOMMEND_URL = app.globalData.baseUrl + 'app/get/recommendation_user'
 
 Page({
 
@@ -14,7 +20,7 @@ Page({
     banner:{
       bannerHeight: 200,
       bannerWidth: 375,
-      bannerList: ['https://images.unsplash.com/photo-1447829172150-e5deb8972256?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7c59a29e62ac65aa6e7f7aefaf296265&auto=format&fit=crop&w=2110&q=80', 'https://images.unsplash.com/photo-1482005253821-5d6a2c685879?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ddad2e18d75348098633d2016efe1f0d&auto=format&fit=crop&w=800&q=60', 'https://images.unsplash.com/photo-1509773896068-7fd415d91e2e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ac9f81b3be20ea13b1524b622b713476&auto=format&fit=crop&w=800&q=60'],
+      bannerList: [],
       showBanner: false
     },
     //顶部图片
@@ -38,14 +44,17 @@ Page({
         adStatus: '已安装广告',
         time: '两天前'
       }],
-    //成功推荐人数
-    recommendNumber: 0,
     //累计领取奖励
     totalAword: 0,
     //待领取奖励
-    delayAward: 0,
+    GoatAward: 0,
     //好友全部完成可达奖励
     remainAward: 0,
+    //未完成人数
+    unfinishedNumber: 0,
+    //二维码 path
+    qrPath: null,
+    showDialog: false,
   },
 
   /**
@@ -71,6 +80,56 @@ Page({
       },
     })
     that.setTitle();
+    that.getRecommendInfo();
+  },
+
+  getRecommendInfo: function(){
+    var that = this; 
+    console.log('recommendInfo------------->');
+    wx.request({
+      url: RECOMMEND_URL,
+      header: app.globalData.header,
+      success: function(res){
+        var dataBean = res.data;
+        if (dataBean.code == 1000){
+          var recommendInfo = dataBean.data.recommended_info;
+          console.log(recommendInfo);
+          var tempList = [];
+          var totalAward = 0;
+          var reachableAward = 0;
+          var GoatAward = 0;
+          var unFinishNumber = 0;
+          for(let recommendBean of recommendInfo){
+            //如果有登记时间，则表示已安装广告
+            if (recommendBean.register_date) {
+              recommendBean.register_date = timeUtil.friendly_time(recommendBean.register_date);
+              tempList.push(recommendBean);
+            }
+            //累计领取奖励
+            if (recommendBean.status == 3){
+              totalAward += recommendBean.amount;
+            } else if(recommendBean.status == 2){
+              GoatAward += recommendBean.amount;
+            } else if (recommendBean.status == 1){
+              reachableAward += recommendBean.amount;
+              unFinishNumber += 1;
+            }
+          }
+          that.setData({
+            recommendList: tempList,
+            totalAword: totalAward,
+            GoatAward: GoatAward,
+            remainAward: reachableAward,
+            unfinishedNumber: unFinishNumber
+          })
+        }else{
+          that.showModel(res.data.msg);
+        }
+      },
+      fail: function(res){
+        that.showModel(res.data.msg);
+      }
+    })
   },
 
   setTitle: function(){
@@ -100,6 +159,46 @@ Page({
   shareMoments: function(){
     wx.showToast({
       title: '✌️分享成功',
+    });
+    this.getQrCode();
+  },
+
+  /**
+   * 请求二维码图片
+   */
+  getQrCode: function(){
+    var that = this;
+    wx.request({
+      url: QR_CODE_URL,
+      header: app.globalData.header,
+      data: {
+        scene: 'id=1',
+        page: 'pages/index/index'
+      },
+      success: function(res){
+        console.log(res);
+        that.downloadQrCode(res.data.data.img_url);
+      },
+      fail: function(res){
+        that.showModel(res.data.msg);
+      }
+    })
+  },
+
+  /**
+   * 下载二维码到本地
+   */
+  downloadQrCode: function(imageUrl){
+    console.log(imageUrl);
+    var that = this;
+    wx.downloadFile({
+      url: imageUrl,
+      success: function(res){
+        console.log(res.tempFilePath);
+        that.setData({
+          qrPath: res.tempFilePath
+        })
+      }
     })
   },
 
@@ -123,9 +222,24 @@ Page({
    * 提醒好友
    */
   remindFriendClick: function(){
-    wx.showToast({
-      title: '✌️提醒成功',
+    // wx.showToast({
+    //   title: '✌️提醒成功',
+    // })
+    console.log('remindFriendClick------------>')
+    this.setData({
+      showDialog: true
     })
+  },
+
+  showModel: function(tip){
+    wx.showModal({
+      title: '提示',
+      content: tip,
+    })
+  },
+
+  dialogClickListener: function(){
+    
   },
 
   /**
