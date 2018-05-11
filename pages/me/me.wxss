@@ -151,6 +151,7 @@ page {
   width:64rpx;
   height:64rpx;
   margin-right:20rpx;
+  margin-left: 16rpx;
 }
 
 .deposit-text{
@@ -158,4 +159,222 @@ page {
   font-size: 28rpx;
 }
 
+.message_list {
+  background-color: #f2f2f2;
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+}
 
+.item2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16rpx;
+  background-color: #fff;
+  /**  border: 1rpx solid #eaeaea;
+  border-bottom: 1rpx solid #d0d0d0;
+  border-radius: 5rpx;*/
+}
+
+.item-left {
+  margin-top: 12rpx;
+  display: table-cell;
+  text-align: center;
+}
+
+.image {
+  width: 128rpx;
+  height: 128rpx;
+  /* border-radius: 64rpx; */
+  background-color: #eee;
+}
+
+.item-middle {
+  flex: 1;
+  margin-left: 30rpx;
+  padding-top: 10rpx;
+  overflow: hidden;
+}
+
+.title {
+  color: #444;
+  font-family: "微软雅黑";
+  font-weight: bold;
+  line-height: 20rpx;
+  padding: 32rpx 16rpx, 0, 16rpx;
+  font-size: 32rpx;
+  margin-top: 60rpx;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+}
+
+.message {
+  font-family: "微软雅黑";
+  color: #888;
+  line-height: 40rpx;
+  font-size: 40rpx;
+  padding: 0 16rpx, 0, 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.item_right {
+  overflow: hidden;
+  padding-right: 30rpx;
+  text-align: right;
+  display:flex;
+  align-items:center;
+}
+.item_right2{
+  align-items: flex-end;
+  margin-bottom: 10rpx;
+}
+.item_right2 text{
+  font-size: 28rpx;
+  color: #666;
+}
+.time {
+  color: #03d0b7;
+  font-size: 24rpx;
+}
+
+.mark {
+  position: relative;
+  left: 5rpx;
+  margin-top: 10rpx;
+  padding-top: 8rpx;
+  padding-bottom: 2px;
+  background-color: #f74c31;
+  text-align: center;
+  font-size: 18rpx;
+  width: 40rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  display: table-cell;
+}
+
+.line {
+  height: 1px;
+  width: 100%;
+  background-color: #e0e1e2;
+}
+
+.data-blt {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.data-text {
+  color: #ff555c;
+}
+
+.myad-li {
+  margin-top: 10rpx;
+}
+
+.btn-red {
+  border: none;
+  border-radius: 0 !important;
+  background: #fb523e;
+  color: #fff;
+  font-size: 26rpx;
+}
+
+.btn-gray {
+  border: none;
+  border-radius: 0 !important;
+  background: #ccc;
+  color: #fff;
+  font-size: 26rpx;
+}
+
+button::after {
+  content: none;
+}
+
+.watwx {
+  padding-left: 6rpx;
+}
+
+.mesge2 {
+  width: 50%;
+  display: inline-block;
+}
+
+.axstw {
+  margin-bottom: 20rpx;
+}
+
+.texst {
+  height: 88rpx;
+}
+
+.province-text {
+  font-size: 24rpx;
+  color: #ff5a39;
+}
+.timetxt{
+color:#999;
+}
+.timetxt2{
+color:#ff555c;
+}
+
+.notify_swiper{
+  width: 100%;
+  height: 60rpx;
+  background-color: gray;
+}
+
+.swiper_item{
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.swiper_content{
+  font-size: 28rpx;
+  color: white;
+  margin-left: 20rpx;
+}
+.ywxst{
+  font-size: 19rpx;
+}
+.wtwabt{
+  background:none;
+line-height:1.2;
+padding:0;
+text-align:right;
+border:2rpx solid #ff555c;
+padding-top:12rpx;
+padding-bottom:12rpx;
+padding-left:24rpx;
+padding-right:20rpx;
+color:#ff555c;
+
+}
+.wtwabt image{
+  height: 40rpx;
+  width: 40rpx;
+}
+.sharetext{
+  font-size: 20rpx;
+  color: #ff555c;
+}
+.taewtw{
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  background: #FDFFE8;
+  font-size: 24rpx;
+  color: #FF555C;
+  text-align: center
+}
+.amount{
+  margin-bottom: 20rpx;
+}
