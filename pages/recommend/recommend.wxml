@@ -94,3 +94,8 @@
   description='分享给好友吧分享给好友吧分享给好'
   btnText='分享'
 />
+
+<share-popup 
+  showPop='{{showSharePop}}'
+  bind:shareMoment='shareMomentListener'
+></share-popup>

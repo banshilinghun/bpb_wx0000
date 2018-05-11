@@ -2,6 +2,7 @@
   "navigationBarTitleText": "活动详情",
   "usingComponents": {
     "banner": "../../components/banner/banner",
-    "dialog": "../../components/dialog/bpb-dialog"
+    "dialog": "../../components/dialog/bpb-dialog",
+    "share-popup": "../../components/share-popup/index"
   }
 }

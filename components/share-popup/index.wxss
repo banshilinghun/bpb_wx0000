@@ -1,0 +1,71 @@
+/* components/share-popup/index.wxss */
+
+/*分享sheet  */
+
+
+button::after{
+  border: none;
+}
+
+.moment{
+  width: 85rpx;
+  height: 85rpx;
+  margin-left: 30rpx;
+}
+
+.share-content{
+  flex: 1;
+  font-size: 32rpx;
+  color: #333;
+  text-align: left;
+  margin-left: 30rpx;
+}
+
+.arrow{
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.split-line{
+  width: 90%;
+  margin-left: 5%;
+  height: 1rpx;
+  background-color: #e5e5e5;
+}
+
+.divider{
+  width: 100%;
+  height: 15rpx;
+  background-color: #eeeeee;
+}
+
+.cancel{
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 0;
+  border-radius: 0;
+  background-color: #fff;
+}
+
+.pop-example__container {
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.pop-example__container--bottom {
+  width: 100vw;
+}
+
+.bpb-btn{
+  width: 100%;
+  height: 130rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  line-height: 130rpx;
+  padding: 0;
+  border-radius: 0;
+  background-color: #fff;
+}

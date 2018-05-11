@@ -55,6 +55,7 @@ Page({
     //二维码 path
     qrPath: null,
     showDialog: false,
+    showSharePop: false,
   },
 
   /**
@@ -239,7 +240,13 @@ Page({
   },
 
   dialogClickListener: function(){
-    
+    this.setData({
+      showSharePop: true
+    })
+  },
+
+  shareMomentListener: function(){
+    console.log('shareMomentListener------->')
   },
 
   /**
