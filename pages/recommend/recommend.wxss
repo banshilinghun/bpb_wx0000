@@ -6,7 +6,6 @@
 }
 
 .flex-container{
-  width: 100%;
   display: flex;
 }
 
@@ -18,16 +17,33 @@
   flex-direction: column-reverse;
 }
 
+.image-wrapper{
+  margin: 20rpx;
+}
+
+.topImage{
+  width: 100%;
+  border-radius: 10rpx;
+}
+
 .recommend-rule {
-  padding-top: 20rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
   padding-bottom: 20rpx;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
+}
+
+.rule-detail{
+  padding-left: 20rpx;
+  padding-right: 20rpx;
 }
 
 .rule-title {
   font-size: 32rpx;
   font-weight: 500;
+}
+
+.margin-top-step{
+  margin-top: 18rpx;
 }
 
 .rule-one {
@@ -36,7 +52,7 @@
 }
 
 .rule-one-text {
-  font-size: 30rpx;
+  font-size: 28rpx;
   color: #666;
 }
 
@@ -50,6 +66,7 @@
 
 .share-container {
   width: 100%;
+  height: 210rpx;
   display: flex;
   flex-direction: row;
 }
@@ -60,7 +77,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20rpx;
 }
 
 .share-layout{
@@ -73,12 +89,12 @@
 }
 
 .share-icon {
-  width: 60rpx;
-  height: 60rpx;
+  width: 116rpx;
+  height: 116rpx;
 }
 
 .share-text{
-  font-size: 24rpx;
+  font-size: 26rpx;
   margin-top: 15rpx;
 }
 
@@ -88,8 +104,9 @@
   margin-left: 5%;
 }
 
-.recommend-result {
-  padding-left: 30rpx;
+.recommend-result{
+  padding-left: 40rpx;
+  padding-right: 40rpx;
 }
 
 .recommend-success{
@@ -111,19 +128,19 @@
 }
 
 .btn-common {
-  height: 70rpx;
-  line-height: 70rpx;
-  font-size: 28rpx;
-  color: white;
-  padding: 0rpx;
-  background-color: #ff555c;
+  line-height: 65rpx;
+  height: 65rpx;
+  font-size: 32rpx;
+  color: #ff555c;
+  background-color: #fff;
   border-radius: 6rpx;
   display: inline-block;
   margin-left: 40rpx;
-  box-shadow:0px 0px 6rpx #ff555c;
-  width: 200rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
   position: absolute;
-  right: 30rpx;
+  right: 0rpx;
+  border: 1rpx solid #ff555c;
 }
 
 button::after {
@@ -154,11 +171,8 @@ button::after {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 80rpx;
+  height: 75rpx;
   position: relative;
-  border-radius: 10rpx;
-  box-shadow:0px 0px 3px #999;
-  margin-top: 20rpx;
 }
 
 .recommend-friend-title {
@@ -166,10 +180,10 @@ button::after {
 }
 
 .avatar {
-  width: 60rpx;
-  height: 60rpx;
+  width: 50rpx;
+  height: 50rpx;
   margin-left: 20rpx;
-  border-radius: 30rpx;
+  border-radius: 50%;
 }
 
 .nickname {
@@ -184,13 +198,13 @@ button::after {
 
 .install-ad {
   font-size: 28rpx;
-  color: #666;
+  color: #333;
   margin-left: 30rpx;
 }
 
 .time {
-  font-size: 24rpx;
-  color: #999;
+  font-size: 26rpx;
+  color: #666;
   position: absolute;
   right: 20rpx;
 }
@@ -201,8 +215,17 @@ button::after {
   background-color: #f2f2f2;
 }
 
+.recommendList-line{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 87%;
+  height: 2rpx;
+  background-color: #e5e5e5;
+}
+
 .split-line{
-  width: 96%;
+  width: 100%;
   height: 1px;
   background-color: #e5e5e5;
 }
@@ -228,4 +251,8 @@ button::after {
 
 .theme-color{
   color: #ff555c;
+}
+
+.share-color{
+  color: #7F7F7F;
 }

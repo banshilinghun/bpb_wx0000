@@ -1,34 +1,39 @@
 <!--pages/recommend/recommend.wxml-->
 <view class='recommend-container'>
-  <image style='width:100%;height:{{ topImage.imageHeight }}px' src='{{ topImage.imageSrc }}' bindtap='previewImage' mode='aspectFill'></image>
+  <view class='image-wrapper'>
+    <image class='topImage' style='height:{{ topImage.imageHeight }}px' src='{{ topImage.imageSrc }}' bindtap='previewImage' mode='aspectFill'></image>
+  </view>
 
   <!-- 活动规则 -->
   <view class="flex-container {{ pageFlag ? 'flex-column' : 'flex-column-reverse' }}">
     <view class='recommend-rule-wrapper'>
       <view class='recommend-rule'>
         <view class='rule-title black-color'>活动规则：</view>
-        <view class='rule-one' style='margin-top: 15rpx'>
-          <text class='rule-one-text gray-color'>1、</text>
-          <view class='rule-one-text gray-color'>
-            <view>
-              <text class='rule-one-text gray-color'>分享奔跑宝给好友或朋友圈</text>
-            </view>
-            <view class='text-block'>
-              <text class='rule-one-text gray-color'>好友<text class='high-light-text theme-color'>从分享链接进入</text>奔跑宝</text>
-            </view>
-            <view class='text-block'>
-              <text class='rule-one-text gray-color'>好友首次完成广告安装</text>
-            </view>
-            <view class='text-block'>
-              <text class='rule-one-text gray-color'>双方立即获得50元奖励；</text>
-            </view>
+        <view class='rule-detail'>
+          <view class='rule-one'>
+            <text class='rule-one-text dark-color margin-top-step' decode='{{true}}'>1.&ensp;&ensp;</text>
+            <bpb-steps type="vertical" steps="{{stepsList}}"></bpb-steps>
+            <!-- <view class='rule-one-text gray-color'>
+              <view>
+                <text class='rule-one-text gray-color'>分享奔跑宝给好友或朋友圈</text>
+              </view>
+              <view class='text-block'>
+                <text class='rule-one-text gray-color'>好友<text class='high-light-text theme-color'>从分享链接进入</text>奔跑宝</text>
+              </view>
+              <view class='text-block'>
+                <text class='rule-one-text gray-color'>好友首次完成广告安装</text>
+              </view>
+              <view class='text-block'>
+                <text class='rule-one-text gray-color'>双方立即获得50元奖励；</text>
+              </view>
+            </view> -->
           </view>
-        </view>
-        <view class='text-block'>
-          <text class='rule-one-text gray-color'>2、推荐奖励发放后，请到页面“我的”-“红包奖励”里领取。</text>
-        </view>
-        <view class='text-block'>
-          <text class='rule-one-text gray-color'>3、关注“奔跑宝”服务号，可实时收到红包领取提醒。</text>
+          <view class='text-block'>
+            <text class='rule-one-text dark-color' decode='{{true}}'>2.&ensp;&ensp;推荐奖励发放后，请到页面“我的”-“红包奖励”里领取。</text>
+          </view>
+          <view class='text-block'>
+            <text class='rule-one-text dark-color' decode='{{true}}'>3.&ensp;&ensp;关注“奔跑宝”服务号，可实时收到红包领取提醒。</text>
+          </view>
         </view>
       </view>
       <view class='divider'></view>
@@ -36,13 +41,13 @@
         <view class='share-wrapper'>
           <button class='share-layout' open-type='share' style='background-color: #fff'>
             <image class='share-icon' src='../../image/share-friend.png'></image>
-            <text class='share-text dark-color'>转发给好友或群聊</text>
+            <text class='share-text share-color'>转发给好友或群聊</text>
           </button>
         </view>
         <view class='share-wrapper' bindtap='shareMoments'>
           <view class='share-layout'>
             <image class='share-icon' src='../../image/moment.png'></image>
-            <text class='share-text dark-color'>分享到朋友圈</text>
+            <text class='share-text share-color'>分享到朋友圈</text>
           </view>
         </view>
       </view>
@@ -72,13 +77,15 @@
 
       <!-- 已推荐好友 -->
       <view class='recommend-friend-list' wx:if='{{ recommendList.length != 0 && recommendList }}'>
-        <view class='rule-title recommend-people'>已推荐的好友（{{ recommendNumber }}人）：</view>
+        <view class='rule-title recommend-people'>已推荐的好友(共{{ recommendList ? recommendList.length : 0 }}人)：</view>
         <view wx:for='{{ recommendList }}' wx:key='item.id'>
           <view class='recommend-list-item'>
-            <image class='avatar' src='{{item.wx_avatar}}'></image>
+          <!-- {{item.wx_avatar}} -->
+            <image class='avatar' src='https://wx.qlogo.cn/mmopen/vi_32/gcs9nfrPIjZSfZvMmVCK81MpPbWqDspNfc2lRLqllfrpYT61RQWNMHXCfzSia7OiapOfXTjYFR6EF7JQZib5MRCdA/132'></image>
             <text class='nickname'>{{ item.nickname }}</text>
             <text class='install-ad'>已安装广告</text>
             <text class='time'>{{ item.register_date }}</text>
+            <view class='recommendList-line' wx:if='{{index != (recommendList.length - 1)}}'></view>
           </view>
         </view>
         <view class='divider' style='background-color: #fff'></view>
@@ -87,15 +94,6 @@
   </view>
 </view>
 
- <dialog 
-  showDialog='{{showDialog}}'
-  bind:btnclick='dialogClickListener'
-  title='提示'
-  description='分享给好友吧分享给好友吧分享给好'
-  btnText='分享'
-/>
+<dialog showDialog='{{showDialog}}' bind:btnclick='dialogClickListener' title='提示' description='分享给好友吧分享给好友吧分享给好' btnText='分享' />
 
-<share-popup 
-  showPop='{{showSharePop}}'
-  bind:shareMoment='shareMomentListener'
-></share-popup>
+<share-popup showPop='{{showSharePop}}' bind:shareMoment='shareMomentListener'></share-popup>
