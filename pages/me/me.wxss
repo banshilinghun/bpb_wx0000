@@ -418,7 +418,8 @@ font-weight: 500;
   margin-bottom: 20rpx;
 }
 .twxtawd{
-  margin-bottom: 20rpx
+  margin-bottom: 20rpx;
+  padding: 30rpx
 }
 .message__list{
   background: #fff;

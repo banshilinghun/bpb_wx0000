@@ -1,5 +1,0 @@
-/* pages/step/step.wxss */
-
-.step-container{
-  margin: 40rpx;
-}
