@@ -122,19 +122,20 @@
 }
 
 .btn-common {
-  line-height: 65rpx;
-  height: 65rpx;
+  line-height: 70rpx;
+  height: 70rpx;
   font-size: 32rpx;
   color: #ff555c;
+  padding: 0;
   background-color: #fff;
   border-radius: 6rpx;
   display: inline-block;
   margin-left: 40rpx;
-  padding-left: 10rpx;
-  padding-right: 10rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
   position: absolute;
   right: 0rpx;
-  border: 1rpx solid #ff555c;
+  border: 2rpx solid #ff555c;
 }
 
 button::after {

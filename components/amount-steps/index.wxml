@@ -1,10 +1,15 @@
 <view class="zan-steps zan-steps--{{ type == 'vertical' ? 'vsteps' : 'steps' }} zan-steps--{{ steps.length }} {{ className }}">
   <view
     wx:for="{{ steps }}" wx:for-item="step" wx:key="unique" wx:for-index="index"
-    class="zan-steps__step {{ hasDesc ? 'zan-steps__step--db-title' : '' }} {{ index == 0 ? 'zan-steps__step--first-child' : '' }} {{ index == steps.length - 1 ? 'zan-steps__step--last-child' : '' }} {{ step.done ? 'zan-steps__step--done' : '' }} {{ step.current ? 'zan-steps__step--cur' : '' }}"
+    class="zan-steps__step {{ hasDesc ? 'zan-steps__step--db-title' : '' }} {{ index == 0 ? 'zan-steps__step--first-child' : '' }} {{ index == steps.length - 1 ? 'zan-steps__step--last-child' : '' }} {{ step.hasAward ? 'zan-steps__step--done' : '' }} {{ step.current ? 'zan-steps__step--cur' : '' }}"
   >
     <view class="zan-steps__title">{{ step.text }}</view>
-    <view wx:if="{{ hasDesc && step.desc }}" class="zan-steps__title zan-steps__title--desc">{{ step.desc }}</view>
+    <view wx:if="{{ hasDesc && step.desc }}" class="zan-steps__title zan-steps__title--desc bpb-award">{{ step.desc }}</view>
+    <view class='step-right-wrapper'>
+      <!-- hasAward 是否可以领取奖励，不可领取则显示提示文字 -->
+      <button class='step-action' bindtap='handleTap' wx:if='{{step.hasAward && step.action}}' data-step='{{step}}' data-index='{{index}}'>{{step.action}}</button>
+      <text class='step-tip' wx:if='{{!step.hasAward && step.tip}}'>{{ step.tip }}</text>
+    </view>
     <view class="zan-steps__icons">
       <view class="zan-steps__circle"></view>
     </view>

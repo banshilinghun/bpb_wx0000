@@ -6,7 +6,7 @@
     <view class='title0'>{{title}}</view>
     <view class="title2">{{description}}</view>
     <view class="title4">
-      <button class='wtwabt2' bindtap='handleTap'>{{btnText}}</button>
+      <button class='wtwabt2' bindtap='handleTap' open-type='{{openType}}'>{{btnText}}</button>
     </view>
   </view>
 </view>

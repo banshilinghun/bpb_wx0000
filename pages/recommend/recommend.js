@@ -237,8 +237,8 @@ Page({
    * 领取奖励
    */
   receiveAwardClick: function () {
-    wx.showToast({
-      title: '✌️领取成功',
+    wx.navigateTo({
+      url: '../step/step',
     })
   },
 

@@ -22,6 +22,11 @@ Component({
     btnText: {
       type: String,
       value: '确定'
+    },
+    //参照微信open-type
+    openType: {
+      type: String,
+      value: ''
     }
   },
 
@@ -29,7 +34,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    showDialog: false
+    showDialog: false,
+    openType: ''
   },
 
   /**
@@ -39,7 +45,10 @@ Component({
     handleTap: function(){
       var myEventDetail = {};// detail对象，提供给事件监听函数
       var myEventOption = {} // 触发事件的选项
-      this.triggerEvent('btnclick', myEventDetail, myEventOption);
+      console.log('openType-------->' + this.data.openType);
+      if (!this.data.openType){
+        this.triggerEvent('btnclick', myEventDetail, myEventOption);
+      }
     },
 
     hideDialog: function(){

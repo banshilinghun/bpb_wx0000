@@ -1,0 +1,4 @@
+<!--pages/step/step.wxml-->
+<view class='step-container'>
+  <amount-steps type="vertical" hasDesc steps="{{stepsList}}" bind:action='actionClickListener'></amount-steps>
+</view>
