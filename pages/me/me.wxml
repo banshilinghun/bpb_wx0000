@@ -23,7 +23,7 @@
             </view>
             <view class="item_right1 item_right3">
               <!-- <text>安装广告后领取</text> -->
-              <button class='wtwabt wtwabt2' bindtap="kindToggle">
+              <button class='wtwabt wtwabt2' bindtap="animate">
                 领取
               </button>
             </view>

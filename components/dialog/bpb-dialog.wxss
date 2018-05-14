@@ -48,6 +48,12 @@
   margin-top: 20rpx;
   text-align: center;
 }
+.goodsdetail .title2 {
+padding:5rpx 60rpx;
+color:#333;
+font-size:32rpx;
+
+}
 
 .goodsdetail .title4 {
   width: 100%;

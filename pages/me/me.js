@@ -218,7 +218,7 @@ Page({
 		
 	},
   animate: function () {//余额增加动画
-
+    var that=this;
     // this.setData({
     //   num1: '68',
     //   num2: '80',
@@ -228,15 +228,15 @@ Page({
     //   num3Complete: ''
     // });
 
-    let num1 = 18362.856;
+    let num1 = Number(that.data.total) +50;
     let n1 = new NumberAnimate({
       from: num1,
       speed: 1000,
       refreshTime: 100,
       decimals: 3,
       onUpdate: () => {
-        this.setData({
-          num1: n1.tempValue
+        that.setData({
+          total: n1.tempValue
         });
       },
       onComplete: () => {
