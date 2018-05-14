@@ -259,10 +259,10 @@ page {
   padding-right: 30rpx;
   text-align: right;
   display:flex;
-  align-items:flex-end;
+  align-items:center;
 }
 .item_right2{
-  align-items: center;
+  align-items: flex-end;
   margin-bottom: 10rpx;
 }
 .item_right3{
