@@ -1,5 +1,6 @@
 // me.js
 var util = require("../../utils/util.js");
+import NumberAnimate from "../../utils/NumberAnimate";
 const app = getApp()
 Page({
   data: {
@@ -49,11 +50,13 @@ Page({
         success: res => {
           if (res.data.code == 1000) {
             this.setData({
-              navs: [{
+              amount: res.data.data.activityable_amount,
+              navs: [
+                {
                 desc: '可提现(元)',
                 num: util.toDecimal2(res.data.data.activityable_amount)
               },
-
+              
               {
                 desc: '提现中(元)',
                 num: util.toDecimal2(res.data.data.withdraw_amount)
@@ -214,11 +217,35 @@ Page({
     this.onShow();
 		
 	},
-	exit: function() {
-		wx.redirectTo({
-      url: '../register/register'
-		})
-	},
+  animate: function () {//余额增加动画
+
+    // this.setData({
+    //   num1: '68',
+    //   num2: '80',
+    //   num3: '99',
+    //   num1Complete: '',
+    //   num2Complete: '',
+    //   num3Complete: ''
+    // });
+
+    let num1 = 18362.856;
+    let n1 = new NumberAnimate({
+      from: num1,
+      speed: 1000,
+      refreshTime: 100,
+      decimals: 3,
+      onUpdate: () => {
+        this.setData({
+          num1: n1.tempValue
+        });
+      },
+      onComplete: () => {
+        this.setData({
+          num1Complete: " 完成了"
+        });
+      }
+    });
+  },
   withdraw:function(){
     var that=this;
     if (that.data.loginFlag == 1) {
