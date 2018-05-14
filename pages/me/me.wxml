@@ -119,7 +119,7 @@
       </view>
     </block>
     <block>
-      <button open-type='share' class='share-button'>
+      <button bindtap='recommendFriendListener' class='share-button'>
         <image class='itemicon' src='../../image/shmgc.png'></image>
         <text class='profile-item'>推荐好友</text>
         <image class='profile-arrow' src='/image/arrow.png'>
