@@ -106,7 +106,7 @@ Page({
 
   getRecommendInfo: function () {
     var that = this;
-    console.log('recommendInfo------------->');
+    that.showLoadingToast();
     wx.request({
       url: RECOMMEND_URL,
       header: app.globalData.header,
@@ -149,6 +149,9 @@ Page({
       },
       fail: function (res) {
         that.showModel(res.data.msg);
+      },
+      complete: function(){
+        wx.stopPullDownRefresh();
       }
     })
   },
@@ -267,6 +270,18 @@ Page({
 
   shareMomentListener: function () {
     console.log('shareMomentListener------->')
+  },
+
+  showLoadingToast: function(){
+    wx.showToast({
+      title: '奔跑中...',
+      icon: 'loading'
+    })
+
+  },
+
+  onPullDownRefresh: function () {
+    this.getRecommendInfo();
   },
 
   /**

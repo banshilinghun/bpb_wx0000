@@ -13,24 +13,10 @@
           <view class='rule-item'>
             <text class='rule-one-text dark-color margin-top-step' decode='{{true}}'>1.&ensp;&ensp;</text>
             <bpb-steps type="vertical" steps="{{stepsList}}"></bpb-steps>
-            <!-- <view class='rule-one-text gray-color'>
-              <view>
-                <text class='rule-one-text gray-color'>分享奔跑宝给好友或朋友圈</text>
-              </view>
-              <view class='text-block'>
-                <text class='rule-one-text gray-color'>好友<text class='high-light-text theme-color'>从分享链接进入</text>奔跑宝</text>
-              </view>
-              <view class='text-block'>
-                <text class='rule-one-text gray-color'>好友首次完成广告安装</text>
-              </view>
-              <view class='text-block'>
-                <text class='rule-one-text gray-color'>双方立即获得50元奖励；</text>
-              </view>
-            </view> -->
           </view>
           <view class='text-block rule-item'>
             <text class='rule-one-text dark-color' decode='{{true}}'>2.&ensp;&ensp;</text>
-            <text class='rule-one-text dark-color'>推荐奖励发放后，请到页面“我的”-“代收收益”里领取。</text>
+            <text class='rule-one-text dark-color'>推荐奖励发放后，请到页面“我的”-“待收收益”里领取。</text>
           </view>
           <view class='text-block rule-item'>
             <text class='rule-one-text dark-color' decode='{{true}}'>3.&ensp;&ensp;</text>
@@ -59,7 +45,7 @@
     <view>
       <view class='recommend-result'>
         <view class='recommend-success'>
-          <text class='rule-title dark-color bold-font'>我成功推荐了{{ recommendList ? recommendList.length : 0 }}名好友，累计领取奖励{{ totalAword }}元</text>
+          <text class='rule-title dark-color bold-font'>我成功推荐了{{ recommendList ? recommendList.length : 0 }}个好友，累计领取奖励{{ totalAword }}元</text>
         </view>
         <view class='split-line'></view>
         <view class='get-award-wrapper'>
@@ -70,7 +56,7 @@
         <view class='split-line'></view>
         <view class='remind-friend'>
           <view style='width:{{ remindWidth }}px'>
-            <text class='remind-text dark-color'>{{unfinishedNumber}}名好友未完成，完成后奖励可达到</text>
+            <text class='remind-text dark-color'>{{unfinishedNumber}}个好友未完成，完成后奖励可达到</text>
             <text class='high-light-text theme-color bold-font' decode='{{true}}'>&ensp;{{ remainAward }}元</text>
           </view>
           <button class='btn-common bold-font' bindtap='remindFriendClick'>一键提醒好友</button>
