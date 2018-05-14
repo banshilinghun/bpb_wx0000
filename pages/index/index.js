@@ -114,22 +114,31 @@ Page({
                     //app.globalData.session_id = res.data.data.session_id;
                     app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
                     //								console.log(res.data.data);	 ·
-                    app.globalData.login = 1;
                     app.globalData.checkStaus = res.data.data.status;
-                  } else if (res.data.code == 2001) {
-                    app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
-                    app.globalData.login = 0;
+                    if (res.data.data.phone) {
+                      app.globalData.login = 1;
+                    } else {
+                      app.globalData.login = 0;
+                    }
+                    if (shareAd.adId == -1 || shareAd.adId == undefined) {
+                      wx.switchTab({
+                        url: '../main/main'
+                      })
+                    } else {
+                      wx.redirectTo({
+                        url: '../details/details?adId=' + shareAd.adId + "&share=1"
+                      })
+                    }
+                   
+                  } else {
+                    wx.showModal({
+                      title: '提示',
+                      showCancel: false,
+                      content: res.data.msg
+                    });
                   }
                   //console.log(shareAd)
-                  if (shareAd.adId == -1 || shareAd.adId == undefined) {
-                    wx.switchTab({
-                      url: '../main/main'
-                    })
-                  } else {
-                    wx.redirectTo({
-                      url: '../details/details?adId=' + shareAd.adId + "&share=1"
-                    })
-                  }
+              
 
                 },
                 fail: res => {

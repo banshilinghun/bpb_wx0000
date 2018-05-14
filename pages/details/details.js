@@ -135,10 +135,12 @@ Page({
 
           }
         }
-        that.setData({
-          service: that.data.service
-        })
-
+        console.log(that.data.service)
+        if (that.data.service!=undefined){
+          that.setData({
+            service: that.data.service
+          })
+        }
       }
     })
     wx.request({
@@ -196,7 +198,7 @@ Page({
               }
             }
           }
-          //console.log(serviceList)
+          console.log(serviceList)
           that.setData({
             service: serviceList,
             joinCount: res.data.data.info.total_count - res.data.data.info.current_count

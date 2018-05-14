@@ -1,4 +1,7 @@
 {
    "navigationBarTitleText": "广告详情",
-    "enablePullDownRefresh": false
+    "enablePullDownRefresh": false,
+      "usingComponents": {
+        "dialog": "../../components/dialog/bpb-dialog"
+      }
 }

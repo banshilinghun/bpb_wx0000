@@ -81,6 +81,7 @@ page {
 .profile-item, .account-item {
   flex: 1;
   font-size: 32rpx;
+  font-weight: 500;
 }
 
 .profile-arrow, .account-arrow {
@@ -271,7 +272,7 @@ page {
 }
 .item_right2 text{
   font-size: 28rpx;
-  color: #666;
+  color: #999;
 }
 .time {
   color: #03d0b7;
