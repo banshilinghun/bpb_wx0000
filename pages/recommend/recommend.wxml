@@ -51,7 +51,7 @@
         <view class='get-award-wrapper'>
           <text class='get-award-text dark-color'>未领取奖励</text>
           <text class='high-light-text theme-color bold-font' decode='{{true}}'>&ensp;{{ GoatAward }}元</text>
-          <button class='btn-common bold-font' bindtap='receiveAwardClick'>领取</button>
+          <button class='btn-recommend btn-common' bindtap='receiveAwardClick'>领取</button>
         </view>
         <view class='split-line'></view>
         <view class='remind-friend'>
@@ -59,7 +59,7 @@
             <text class='remind-text dark-color'>{{unfinishedNumber}}个好友未完成，完成后奖励可达到</text>
             <text class='high-light-text theme-color bold-font' decode='{{true}}'>&ensp;{{ remainAward }}元</text>
           </view>
-          <button class='btn-common bold-font' bindtap='remindFriendClick'>一键提醒好友</button>
+          <button class='btn-recommend btn-common' bindtap='remindFriendClick'>一键提醒好友</button>
         </view>
       </view>
       <view class='divider'></view>

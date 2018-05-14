@@ -110,7 +110,7 @@
 }
 
 .get-award-wrapper {
-  min-height: 94rpx;
+  min-height: 110rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -121,21 +121,9 @@
   font-size: 30rpx;
 }
 
-.btn-common {
-  line-height: 70rpx;
-  height: 70rpx;
-  font-size: 32rpx;
-  color: #ff555c;
-  padding: 0;
-  background-color: #fff;
-  border-radius: 6rpx;
+.btn-recommend {
   display: inline-block;
   margin-left: 40rpx;
-  padding-left: 20rpx;
-  padding-right: 20rpx;
-  position: absolute;
-  right: 0rpx;
-  border: 2rpx solid #ff555c;
 }
 
 button::after {

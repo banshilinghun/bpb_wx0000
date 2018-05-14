@@ -65,7 +65,9 @@ Page({
       {
         done: false,
         current: false,
-        text: '好友从分享链接进入奔跑宝'
+        text: '好友',
+        secondText: '从分享链接进入',
+        thirdText: '奔跑宝'
       }, 
       {
         done: false,
@@ -246,9 +248,6 @@ Page({
    * 提醒好友
    */
   remindFriendClick: function () {
-    // wx.showToast({
-    //   title: '✌️提醒成功',
-    // })
     console.log('remindFriendClick------------>')
     this.setData({
       showDialog: true

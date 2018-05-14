@@ -1,5 +1,4 @@
 /**app.wxss**/
-
 @import 'components/index.wxss';
 
 .container {
@@ -10,26 +9,49 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}
+
 .shareit {
-    -webkit-user-select: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    text-align: center;
-    top: 0;
-    left: 0;
-    z-index: 6666;
+  -webkit-user-select: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  top: 0;
+  left: 0;
+  z-index: 6666;
 }
+
 .arrow {
-    position: absolute;
-    right: 5%;
-    top: 1%;
+  position: absolute;
+  right: 5%;
+  top: 1%;
 }
-.shareit image{
-    max-width: 100%;
+
+.shareit image {
+  max-width: 100%;
 }
+
 .share-text {
-    margin-top: 300px;
+  margin-top: 300px;
+}
+
+/*统一的按钮样式  */
+
+.btn-common {
+  background: none;
+  line-height: 60rpx;
+  height: 60rpx;
+  font-size: 32rpx;
+  color: #ff555c;
+  padding: 0;
+  background-color: #fff;
+  border-radius: 6rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  position: absolute;
+  right: 0rpx;
+  border: 2rpx solid #ff555c;
+  font-weight: 500;
 }
