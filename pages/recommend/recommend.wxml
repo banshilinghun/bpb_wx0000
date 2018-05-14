@@ -8,9 +8,9 @@
   <view class="flex-container {{ pageFlag ? 'flex-column' : 'flex-column-reverse' }}">
     <view class='recommend-rule-wrapper'>
       <view class='recommend-rule'>
-        <view class='rule-title black-color'>活动规则：</view>
+        <view class='rule-title dark-color bold-font'>活动规则：</view>
         <view class='rule-detail'>
-          <view class='rule-one'>
+          <view class='rule-item'>
             <text class='rule-one-text dark-color margin-top-step' decode='{{true}}'>1.&ensp;&ensp;</text>
             <bpb-steps type="vertical" steps="{{stepsList}}"></bpb-steps>
             <!-- <view class='rule-one-text gray-color'>
@@ -28,11 +28,13 @@
               </view>
             </view> -->
           </view>
-          <view class='text-block'>
-            <text class='rule-one-text dark-color' decode='{{true}}'>2.&ensp;&ensp;推荐奖励发放后，请到页面“我的”-“红包奖励”里领取。</text>
+          <view class='text-block rule-item'>
+            <text class='rule-one-text dark-color' decode='{{true}}'>2.&ensp;&ensp;</text>
+            <text class='rule-one-text dark-color'>推荐奖励发放后，请到页面“我的”-“代收收益”里领取。</text>
           </view>
-          <view class='text-block'>
-            <text class='rule-one-text dark-color' decode='{{true}}'>3.&ensp;&ensp;关注“奔跑宝”服务号，可实时收到红包领取提醒。</text>
+          <view class='text-block rule-item'>
+            <text class='rule-one-text dark-color' decode='{{true}}'>3.&ensp;&ensp;</text>
+            <text class='rule-one-text dark-color'>关注“奔跑宝”服务号，可实时收到奖励领取提醒。</text>
           </view>
         </view>
       </view>
@@ -41,13 +43,13 @@
         <view class='share-wrapper'>
           <button class='share-layout' open-type='share' style='background-color: #fff'>
             <image class='share-icon' src='../../image/share-friend.png'></image>
-            <text class='share-text share-color'>转发给好友或群聊</text>
+            <text class='share-text share-color'>微信好友</text>
           </button>
         </view>
         <view class='share-wrapper' bindtap='shareMoments'>
           <view class='share-layout'>
             <image class='share-icon' src='../../image/moment.png'></image>
-            <text class='share-text share-color'>分享到朋友圈</text>
+            <text class='share-text share-color'>微信朋友圈</text>
           </view>
         </view>
       </view>
@@ -57,30 +59,31 @@
     <view>
       <view class='recommend-result'>
         <view class='recommend-success'>
-          <text class='rule-one-text dark-color'>我成功推荐了{{ recommendList ? recommendList.length : 0 }}名好友，累计领取奖励{{ totalAword }}元</text>
+          <text class='rule-title dark-color bold-font'>我成功推荐了{{ recommendList ? recommendList.length : 0 }}名好友，累计领取奖励{{ totalAword }}元</text>
         </view>
         <view class='split-line'></view>
         <view class='get-award-wrapper'>
           <text class='get-award-text dark-color'>未领取奖励</text>
-          <text class='high-light-text theme-color' style='margin-left: 10rpx'>{{ GoatAward }}元</text>
-          <button class='btn-common' bindtap='receiveAwardClick'>领取</button>
+          <text class='high-light-text theme-color bold-font' decode='{{true}}'>&ensp;{{ GoatAward }}元</text>
+          <button class='btn-common bold-font' bindtap='receiveAwardClick'>领取</button>
         </view>
         <view class='split-line'></view>
         <view class='remind-friend'>
-          <view class='remind-text dark-color' style='width:{{ remindWidth }}px'>{{unfinishedNumber}}名好友未完成，完成后奖励可达到
-            <text class='high-light-text theme-color' style='margin-left: 10rpx'>{{ remainAward }}元</text>
+          <view style='width:{{ remindWidth }}px'>
+            <text class='remind-text dark-color'>{{unfinishedNumber}}名好友未完成，完成后奖励可达到</text>
+            <text class='high-light-text theme-color bold-font' decode='{{true}}'>&ensp;{{ remainAward }}元</text>
           </view>
-          <button class='btn-common' bindtap='remindFriendClick'>一键提醒好友</button>
+          <button class='btn-common bold-font' bindtap='remindFriendClick'>一键提醒好友</button>
         </view>
       </view>
       <view class='divider'></view>
 
       <!-- 已推荐好友 -->
       <view class='recommend-friend-list' wx:if='{{ recommendList.length != 0 && recommendList }}'>
-        <view class='rule-title recommend-people'>已推荐的好友(共{{ recommendList ? recommendList.length : 0 }}人)：</view>
+        <view class='rule-title dark-color bold-font recommend-people'>已推荐的好友(共{{ recommendList ? recommendList.length : 0 }}人)：</view>
         <view wx:for='{{ recommendList }}' wx:key='item.id'>
           <view class='recommend-list-item'>
-          <!-- {{item.wx_avatar}} -->
+            <!-- {{item.wx_avatar}} -->
             <image class='avatar' src='https://wx.qlogo.cn/mmopen/vi_32/gcs9nfrPIjZSfZvMmVCK81MpPbWqDspNfc2lRLqllfrpYT61RQWNMHXCfzSia7OiapOfXTjYFR6EF7JQZib5MRCdA/132'></image>
             <text class='nickname'>{{ item.nickname }}</text>
             <text class='install-ad'>已安装广告</text>
