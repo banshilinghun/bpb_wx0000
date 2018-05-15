@@ -49,11 +49,11 @@ Page({
     //微信版本过低
     wx.getSystemInfo({
       success: function (res) {
-        console.log('brand------------->' + res.brand);
-        console.log('model------------->' + res.model);
-        console.log('version------------->' + res.version);
-        console.log('system------------->' + res.system);
-        console.log('SDKVersion------------->' + res.SDKVersion);
+        // console.log('brand------------->' + res.brand);
+        // console.log('model------------->' + res.model);
+        // console.log('version------------->' + res.version);
+        // console.log('system------------->' + res.system);
+        // console.log('SDKVersion------------->' + res.SDKVersion);
       },
     })
     if (!wx.canIUse('picker.mode.selector')) {
@@ -383,7 +383,7 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-             console.log(res.data)
+             //console.log(res.data)
         } else {
           //					console.log(res.data)
           wx.showModal({
