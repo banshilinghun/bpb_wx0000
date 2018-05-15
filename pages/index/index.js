@@ -124,6 +124,9 @@ Page({
                       wx.switchTab({
                         url: '../main/main'
                       })
+                      // wx.redirectTo({
+                      //   url: '../moment/moment',
+                      // })
                     } else {
                       wx.redirectTo({
                         url: '../details/details?adId=' + shareAd.adId + "&share=1"
