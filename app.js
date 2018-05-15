@@ -19,7 +19,9 @@ App({
     shareInviteId: '',
     checkStaus: '',
     //baseUrl: 'https://wxapi.benpaobao.com/',
-    baseUrl: 'http://192.168.1.141:8000/',
+    //baseUrl: 'http://192.168.1.141:8000/',
     //baseUrl: 'http://192.168.1.114:8000/',
+    baseUrl: 'https://wxapi.benpaobao.com/',
+    //baseUrl: 'http://192.168.1.141:8000/'
   }
 })
