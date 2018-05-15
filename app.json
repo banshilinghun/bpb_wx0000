@@ -16,8 +16,7 @@
     "pages/checkPlan/checkPlan",
     "pages/arrangement/arrangement",
     "pages/joinList/joinList",
-    "pages/recommend/recommend",
-    "pages/step/step"
+    "pages/recommend/recommend"
   ],
   "window": {
     "backgroundTextStyle": "dark",

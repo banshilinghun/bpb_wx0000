@@ -29,6 +29,36 @@ Page({
 				num: '0.00'
 			}
 		],
+    stepsList: [
+      {
+        current: false,
+        text: '新手奖励',
+        desc: '￥50.00',
+        hasAward: true,
+        action: '领取'
+      },
+      {
+        current: false,
+        text: '推荐奖励',
+        desc: '￥300.00',
+        hasAward: false,
+        tip: '还有2个好友未安装广告'
+      },
+      {
+        current: false,
+        text: '广告任务2期奖励',
+        desc: '￥100.00',
+        hasAward: false,
+        tip: '还有1个广告未安装'
+      },
+      {
+        current: false,
+        text: '双方立即获得50元奖励',
+        desc: '￥100.00',
+        hasAward: true,
+        action: '领取'
+      }
+    ]
 	},
 	onLoad: function() {
 		//		console.log(app.globalData.uid);

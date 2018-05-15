@@ -17,7 +17,7 @@ Page({
     autoplay: true,
     interval: 2000,
     duration: 500,
-    shareit:false
+    shareit: false
   },
 
   onLoad: function () {
@@ -73,6 +73,7 @@ Page({
   onShow: function () {
     var z = this;
     var loginFlag = app.globalData.login;
+    z.followFlag()
     if (loginFlag == 1) {
       wx.request({
         url: app.globalData.baseUrl + 'app/get/user_auth_status',
@@ -357,31 +358,49 @@ Page({
     })
   },
   tapName: function (event) {
-    var that=this;
+    var that = this;
     console.log(event.currentTarget.dataset.hi)
-    if (event.currentTarget.dataset.hi == 'banner1'){
+    if (event.currentTarget.dataset.hi == 'banner1') {
       that.setData({
-        shareit:true
+        shareit: true
       })
-    } else if (event.currentTarget.dataset.hi == 'banner2'){
+    } else if (event.currentTarget.dataset.hi == 'banner2') {
       //活动详情页
       wx.navigateTo({
         url: '../recommend/recommend?flag=active',
       })
     }
   },
-  hideShare:function(){
+  hideShare: function () {
     var that = this;
     that.setData({
       shareit: false
     })
+  },
+  followFlag: function () {//查询是否关注公众号
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/user_has_subscribe',
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+             console.log(res.data)
+        } else {
+          //					console.log(res.data)
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
   }
-  // compare: function (property){
-  //   return function (a, b) {
-  //     var value1 = a[property];
-  //     var value2 = b[property];
-  //     return value1 - value2;
-  //   }
-  // }
 
 })
