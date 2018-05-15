@@ -169,7 +169,7 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 16rpx;
+  padding: 10rpx;
   background-color: #fff;
   /**  border: 1rpx solid #eaeaea;
   border-bottom: 1rpx solid #d0d0d0;
@@ -257,7 +257,7 @@ page {
 
 .item_right1 {
   overflow: hidden;
-  padding-right: 30rpx;
+  padding-right: 20rpx;
   text-align: right;
   display:flex;
   align-items:center;
