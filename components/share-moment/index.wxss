@@ -1,13 +1,11 @@
-/* pages/moment/moment.wxss */
+/* components/share-moment/index.wxss */
 
 .moment-root{
   width: 100%;
-}
-
-/*
   position: fixed;
   top: 9999rpx;
-  left: 0;  */
+  left: 0;
+}
 
 .canvas {
   width: 100%;
@@ -41,7 +39,7 @@
 }
 
 .share-image{
-  border-radius: 8rpx;
+  border-radius: 10rpx;
   margin: 0 auto;
 }
 

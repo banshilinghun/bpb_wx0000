@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "share-moment": "../../components/share-moment/index"
+  }
+}

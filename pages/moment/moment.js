@@ -7,33 +7,40 @@ const TEXT_COLOR = '#000000';
 const WHITE = '#FFFFFF';
 const THEME_COLOR = '#FF555C';
 const GRAY_COLOR = '#333333';
+const NORMAL_COLOR = '#666666';
 const TINT_COLOR = '#747474';
+const GOLD_COLOR = '#ffdb12';
 
 const temp = 0.01;
 //图片长宽比
 const scale = 1.78;
 //背景图高度
-const bgScale = 0.5;
+const bgScale = 0.6506;
 //头像和宽的比
-const avatarWidthScale = 0.368;
-const avatarHeightScale = 0.117;
+const avatarWidthScale = 0.213;
+const avatarHeightScale = 0.45;
 //头像白色圆形背景
-const avatarBgWidthScale = 0.38;
-const avatarStrokeWidth = 4;
+const avatarStrokeWidth = 2;
 //昵称高度比
-const nicknameHeightScale = 0.34 + 5 * temp;
-//第一行文字高度
-const topTextScale = 0.515 + 3 * temp;
+const nicknameHeightScale = 0.615;
+
+//邀请加入
+const inviteTextScale = 0.187;
+const inviteTextHeightScale = 0.27;
 //分享内容
-const contentScale = 0.585 + 3 * temp;
+const adAwardHeightScale = 0.338;
+const adAwardWidthScale = 0.187;
+const contentHeightScale = 0.38;
+const awardScale = 0.34;
+const awardWidthScale = 0.51;
 //二维码直径
 const qrCodeWidthScale = 0.341;
 //二维码高度
 const qrCodeHeightScale = 0.69;
 //奔跑宝文字
-const bpbScale = 0.90 + temp * 2;
+const bpbScale = 0.92 + temp * 2;
 //识别文字
-const decodeScale = 0.935 + temp * 2;
+const decodeScale = 0.95 + temp * 2;
 //二维码地址
 const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
 
@@ -46,10 +53,11 @@ Page({
    */
   data: {
     detailStr: {
-      tip: '贴上广告，边跑边赚',
-      content: '在奔跑宝能赚广告费的好事\n别说我没告诉你!',
+      invite: '你的好友邀请你加入',
       bpbMini: '奔跑宝小程序',
-      clickToMini: '(长按进入赚钱)'
+      clickToMini: '(长按进入赚钱)',
+      awardTitle: '我刚领取广告奖励',
+      awardContent: '开车不顺手赚广告费是你的损失!'
     },
     targetSharePath: null,
     avatar: 'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132',
@@ -58,7 +66,9 @@ Page({
     canvasHeight: 0,
     imageWidth: 0,
     imageHeight: 0,
-    showShareModel: true
+    showShareModel: false,
+    awardMoney: '350元',
+    nickname: '狗腿🌲狗腿'
   },
 
   /**
@@ -102,10 +112,14 @@ Page({
     var that = this;
     //没有分享图先用 canvas 生成，否则直接预览
     if (that.data.targetSharePath) {
-      that.previewImage();
+      that.setData({
+        showShareModel: true,        
+      })
     } else {
-      //that.getQRCode();
-      that.downloadAvatar();
+      wx.showLoading({
+        title: '奔跑中🏃...'
+      })
+      that.getQRCode();
     }
   },
 
@@ -168,7 +182,7 @@ Page({
   drawImage: function () {
     var that = this;
     const ctx = wx.createCanvasContext('myCanvas', this);
-    var bgPath = '../../image/share-bg.png';
+    var bgPath = '../../image/share-award-bg.png';
     ctx.setFillStyle(WHITE);
     ctx.fillRect(0, 0, windowWidth, windowHeight);
 
@@ -177,7 +191,7 @@ Page({
 
     //头像背景圆
     ctx.arc(windowWidth / 2, avatarWidthScale / 2 * windowWidth + avatarHeightScale * windowHeight, (avatarWidthScale / 2) * windowWidth + avatarStrokeWidth, 0, 2 * Math.PI);
-    ctx.setFillStyle(WHITE);
+    ctx.setFillStyle(GOLD_COLOR);
     ctx.fill();
 
     //先绘制圆，裁剪成圆形图片
@@ -185,7 +199,7 @@ Page({
     ctx.beginPath();
     //圆的原点x坐标，y坐标，半径，起始弧度，终止弧度
     ctx.arc(windowWidth / 2, avatarWidthScale / 2 * windowWidth + avatarHeightScale * windowHeight, (avatarWidthScale / 2) * windowWidth, 0, 2 * Math.PI);
-    ctx.setStrokeStyle(WHITE);
+    ctx.setStrokeStyle(GOLD_COLOR);
     ctx.stroke();
     ctx.clip();
     //绘制头像
@@ -194,51 +208,69 @@ Page({
     ctx.drawImage(that.data.avatarPath, windowWidth * (0.5 - avatarWidthScale / 2), avatarHeightScale * windowHeight, avatarWidth, avatarWidth);
     ctx.restore();
 
-    //绘制昵称
-    ctx.setFillStyle(WHITE);
-    ctx.setFontSize(20);
-    ctx.setTextAlign('center');
-    ctx.fillText('狗腿🌲', windowWidth / 2, nicknameHeightScale * windowHeight);
-
-    //绘制文字一起赚
-    ctx.setFillStyle(THEME_COLOR);
-    ctx.setFontSize(24);
-    ctx.setTextAlign('center');
-    ctx.fillText(that.data.detailStr.tip, windowWidth / 2, topTextScale * windowHeight);
-
-    //绘制 content
-    ctx.setFillStyle(GRAY_COLOR);
-    ctx.setFontSize(18);
-    ctx.setTextAlign('center');
-    ctx.fillText(that.data.detailStr.content, windowWidth / 2, contentScale * windowHeight);
-
-    //绘制二维码
-    ctx.drawImage(that.data.avatarPath, windowWidth * (0.5 - qrCodeWidthScale / 2), qrCodeHeightScale * windowHeight, qrCodeWidthScale * windowWidth, qrCodeWidthScale * windowWidth);
-
-    //绘制 奔跑宝小程序
-    ctx.setFillStyle(TINT_COLOR);
-    ctx.setFontSize(16);
-    ctx.setTextAlign('center');
-    if (wx.canIUse('canvasContext.font')) {
-      ctx.font = 'bold';
-    }
-    ctx.fillText(that.data.detailStr.bpbMini, windowWidth / 2, bpbScale * windowHeight);
-    console.log('font------------>' + wx.canIUse('canvasContext.font'));
-
+    //-----------------------------------------先绘制不加粗文字
     //绘制 按压提示文字
     ctx.setFillStyle(TINT_COLOR);
     ctx.setFontSize(14);
     ctx.setTextAlign('center');
-    if (wx.canIUse('canvasContext.font')) {
-      ctx.font = 'normal';
-    }
     ctx.fillText(that.data.detailStr.clickToMini, windowWidth / 2, decodeScale * windowHeight);
+
+    //-----------------------------------------绘制加粗文字
+    //绘制邀请加入
+    that.setFontStyle(ctx, 'bold', '16px');
+    ctx.setFillStyle(GRAY_COLOR);
+    ctx.setFontSize(16);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.detailStr.invite, inviteTextScale * windowWidth, inviteTextHeightScale * windowHeight);
+
+    //绘制昵称
+    ctx.setFillStyle(WHITE);
+    ctx.setFontSize(20);
+    ctx.setTextAlign('center');
+    ctx.fillText(that.data.nickname, 0.5 * windowWidth, nicknameHeightScale * windowHeight);
+
+    //绘制广告奖励
+    ctx.setFillStyle(NORMAL_COLOR);
+    ctx.setFontSize(14);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.detailStr.awardTitle, adAwardWidthScale * windowWidth, adAwardHeightScale * windowHeight);
+
+    //绘制金额
+    ctx.setFillStyle(THEME_COLOR);
+    ctx.setFontSize(36);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.awardMoney, awardWidthScale * windowWidth, awardScale * windowHeight);
+
+    //绘制描述 
+    ctx.setFillStyle(NORMAL_COLOR);
+    ctx.setFontSize(16);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.detailStr.awardContent, adAwardWidthScale * windowWidth, contentHeightScale * windowHeight);
+
+    //绘制二维码
+    ctx.drawImage(that.data.QRPath, windowWidth * (0.5 - qrCodeWidthScale / 2), qrCodeHeightScale * windowHeight, qrCodeWidthScale * windowWidth, qrCodeWidthScale * windowWidth);
+
+    //绘制 奔跑宝小程序
+    ctx.setFillStyle(GRAY_COLOR);
+    ctx.setFontSize(16);
+    ctx.setTextAlign('center');
+    ctx.fillText(that.data.detailStr.bpbMini, windowWidth / 2, bpbScale * windowHeight);
+    console.log('font------------>' + wx.canIUse('canvasContext.font'));
 
     //绘制到 canvas 上
     ctx.draw(false, function () {
       console.log('callback--------------->');
       that.saveCanvasImage();
     });
+  },
+
+  /**
+   * 改变字体样式
+   */
+  setFontStyle: function(ctx, fontWeight, fontSize){
+    if (wx.canIUse('canvasContext.font')) {
+      ctx.font = 'normal ' + fontWeight + ' ' + fontSize + ' sans-serif';
+    }
   },
 
   //转化为图片
@@ -249,8 +281,12 @@ Page({
       success: function (res) {
         console.log(res.tempFilePath);
         that.setData({
-          targetSharePath: res.tempFilePath
+          targetSharePath: res.tempFilePath,
+          showShareModel: true,          
         })
+      },
+      complete: function(){
+        wx.hideLoading();
       }
     }, this)
   },
@@ -262,6 +298,14 @@ Page({
     var that = this;
     wx.saveImageToPhotosAlbum({
       filePath: that.data.targetSharePath,
+      success: function(){
+        wx.showModal({
+          title: '提示',
+          content: '✌️图片保存成功，\n快去分享到朋友圈吧',
+          showCancel: false
+        })
+        that.hideDialog();
+      }
     })
   },
 
@@ -273,5 +317,5 @@ Page({
     this.setData({
       showShareModel: false
     })
-  }
+  },
 })
