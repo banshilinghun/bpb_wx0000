@@ -1,6 +1,6 @@
 // me.js
 var util = require("../../utils/util.js");
-import NumberAnimate from "../../utils/NumberAnimate";
+const Toast = require('../../components/toast/toast');
 const app = getApp()
 Page({
   data: {
@@ -17,7 +17,9 @@ Page({
     amount: '0.00',
     total: '0.00',
     rate: 0,
-    stepsList: []
+    stepsList: [],
+    showGoodsDetail: false,
+    isShowToast: false  
   },
   onLoad: function () {
     //		console.log(app.globalData.uid);
@@ -55,6 +57,7 @@ Page({
           var recommendHasAward = false;
           //var recommendShow = 1;
           var recommendIdList = [];
+          var claimAmoun=0;
           var stepList = [];
           for (var i = 0; i < arr.length; i++) {
             if (arr[i].type == 2) {//推荐奖励
@@ -64,9 +67,10 @@ Page({
               if (arr[i].status == 2) {
                 recommendHasAward = true;
                 recommendIdList.push(arr[i].coupon_id)
+                claimAmoun +=  Number (arr[i].amount)
               }
             } else if (arr[i].type == 1) {//新手礼包
-              if(arr[i].status==1){
+              if (arr[i].status == 1) {
                 stepList.push({
                   current: false,
                   text: '新手奖励',
@@ -74,9 +78,10 @@ Page({
                   hasAward: false,
                   tip: '安装广告后可领取',
                   type: arr[i].type,
-                  status: 5
+                  status: 5,
+                  amount: arr[i].amount
                 })
-              } else if (arr[i].status == 2){
+              } else if (arr[i].status == 2) {
                 stepList.push({
                   current: false,
                   text: '新手奖励',
@@ -86,22 +91,24 @@ Page({
                   btnType: 1,
                   action: '领 取',
                   type: arr[i].type,
-                  status: 6
+                  status: 6,
+                  amount: arr[i].amount
                 })
               }
             } else if (arr[i].type == 3) {//广告收益
-              if (arr[i].phase >0){
-                if (arr[i].status==1){
+              if (arr[i].phase > 0) {
+                if (arr[i].status == 1) {
                   stepList.push({
                     current: false,
-                    text: '广告任务' + arr[i].phase+'期奖励',
+                    text: '广告任务' + arr[i].phase + '期奖励',
                     desc: '¥ ' + util.toDecimal2(arr[i].amount),
                     hasAward: false,
                     tip: '检测广告后可领取',
                     type: arr[i].type,
-                    status: arr[i].status
+                    status: arr[i].status,
+                    amount: arr[i].amount
                   })
-                } else if (arr[i].status == 2){
+                } else if (arr[i].status == 2) {
                   stepList.push({
                     current: false,
                     text: '广告任务' + arr[i].phase + '期奖励',
@@ -111,19 +118,21 @@ Page({
                     btnType: 1,
                     action: '领 取',
                     type: arr[i].type,
-                    status: arr[i].status
+                    status: arr[i].status,
+                    amount: arr[i].amount
                   })
                 }
-              }else{
+              } else {
                 if (arr[i].status == 1) {
                   stepList.push({
                     current: false,
-                    text: '广告任务奖励' ,
+                    text: '广告任务奖励',
                     desc: '¥ ' + util.toDecimal2(arr[i].amount),
                     hasAward: false,
                     tip: '检测广告后可领取',
                     type: arr[i].type,
-                    status: arr[i].status
+                    status: arr[i].status,
+                    amount: arr[i].amount
                   })
                 } else if (arr[i].status == 2) {
                   stepList.push({
@@ -135,15 +144,16 @@ Page({
                     btnType: 1,
                     action: '领 取',
                     type: arr[i].type,
-                    status: arr[i].status
+                    status: arr[i].status,
+                    amount: arr[i].amount
                   })
                 }
               }
             }
           }
-          console.log(recommendAmount)
+          //console.log(recommendAmount)
           //console.log(stepList)
-          console.log(recommendList)
+        
           if (recommendList.length == 0) {
             stepList.push({
               current: false,
@@ -165,26 +175,28 @@ Page({
                 btnType: 1,
                 action: '领 取',
                 type: '2',
-                status: 4
+                status: 4,
+                amount: claimAmoun
               })
-            }else{
+            } else {
               stepList.push({
                 current: false,
                 text: '推荐奖励',
                 desc: '¥ ' + util.toDecimal2(recommendAmount),
                 hasAward: recommendHasAward,
-                tip: '还有' + (recommendList.length - recommendIdList.length)+'好友未安装广告',
+                tip: '还有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
                 type: '2',
-                status: 3
+                status: 3,
+                amount: claimAmoun
               })
             }
 
           }
           //console.log(recommendHasAward)
           //console.log(recommendIdList)
-          console.log(stepList)
+          //console.log(stepList)
           this.setData({
-            stepsList:stepList.sort(compare('status'))
+            stepsList: stepList.sort(compare('status'))
           });
           //					console.log(res.data);
         } else {
@@ -368,35 +380,6 @@ Page({
     this.onShow();
 
   },
-  animate: function () {//余额增加动画
-    var that = this;
-    // this.setData({
-    //   num1: '68',
-    //   num2: '80',
-    //   num3: '99',
-    //   num1Complete: '',
-    //   num2Complete: '',
-    //   num3Complete: ''
-    // });
-
-    let num1 = Number(that.data.total) + 50;
-    let n1 = new NumberAnimate({
-      from: num1,
-      speed: 1000,
-      refreshTime: 100,
-      decimals: 3,
-      onUpdate: () => {
-        that.setData({
-          total: n1.tempValue
-        });
-      },
-      onComplete: () => {
-        this.setData({
-          num1Complete: " 完成了"
-        });
-      }
-    });
-  },
   withdraw: function () {
     var that = this;
     if (that.data.loginFlag == 1) {
@@ -461,5 +444,64 @@ Page({
     wx.navigateTo({
       url: '../recommend/recommend?flag=recommend'
     })
+  },
+  actionClickListener: function (e) {//待收收益里面的按钮
+    var that = this;
+    //console.log(e.detail.step)
+    if (e.detail.step.btnType == 1) {
+      that.coupon(e.detail.step)
+    } else {
+      wx.navigateTo({
+        url: '../recommend/recommend'
+      })
+    }
+  },
+  coupon: function (data) {//领取现金劵
+    var that = this;
+    console.log(data)
+    var couponData = {};
+    couponData.coupon_id_list = data.idList;
+    // that.setData({
+    //   count: 2000,
+    //   toastText: '恭喜！你的奖励150元已放入余额账户里'
+    // });
+    
+    var text = "恭喜！你的奖励" + data.amount +"元已放入余额账户里";
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/collect_account_coupon',
+      data: couponData,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          that.onShow();
+          that.showToast(text)
+          setTimeout(function () {
+            that.setData({
+              showGoodsDetail: true
+            })
+          }, 1500)
+        } else {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+  },
+  showToast(text) {
+    console.log(text)
+    Toast.setDefaultOptions({
+      selector: '#zan-toast-test'
+    });
+    Toast(text);
   },
 })
