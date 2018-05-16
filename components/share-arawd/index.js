@@ -1,6 +1,7 @@
 // components/share-arawd/index.js
 
 const app = getApp();
+const stringUtil = require('../../utils/stringUtil.js');
 
 var windowWidth;
 var windowHeight;
@@ -149,9 +150,7 @@ Component({
      */
     shareMoments: function () {
       var that = this;
-      wx.showLoading({
-        title: '奔跑中🏃...'
-      })
+      that.showLoading();
       that.getQRCode();
     },
 
@@ -172,7 +171,7 @@ Component({
           that.downloadQrCode(res.data.data.img_url);
         },
         fail: function (res) {
-          that.showModel(res.data.msg);
+          that.showErrorModel(res.data.msg);
         }
       })
     },
@@ -191,8 +190,32 @@ Component({
             QRPath: res.tempFilePath
           })
           that.downloadAvatar();
+        },
+        fail: function(){
+          that.showErrorModel('网络错误');
         }
       })
+    },
+
+    showErrorModel: function(content){
+      this.hideLoading();
+      if(!content){
+        content = '网络错误';
+      }
+      wx.showModal({
+        title: '提示',
+        content: content,
+      })
+    },
+
+    showLoading: function(){
+      wx.showLoading({
+        title: '奔跑中🏃...',
+      })
+    },
+
+    hideLoading: function(){
+      wx.hideLoading();
     },
 
     /**
@@ -207,6 +230,9 @@ Component({
             avatarPath: res.tempFilePath
           })
           that.drawImage();
+        },
+        fail: function(){
+          that.showErrorModel('网络错误');
         }
       })
     },
@@ -249,7 +275,7 @@ Component({
 
       //-----------------------------------------绘制加粗文字
       //绘制邀请加入
-      that.setFontStyle(ctx, 'bold', '16px');
+      that.setFontStyle(ctx, 'bold');
       ctx.setFillStyle(GRAY_COLOR);
       ctx.setFontSize(16);
       ctx.setTextAlign('left');
@@ -259,7 +285,7 @@ Component({
       ctx.setFillStyle(WHITE);
       ctx.setFontSize(20);
       ctx.setTextAlign('center');
-      ctx.fillText(that.data.nickname, 0.5 * windowWidth, nicknameHeightScale * windowHeight);
+      ctx.fillText(stringUtil.substringStr(that.data.nickname), 0.5 * windowWidth, nicknameHeightScale * windowHeight);
 
       //绘制广告奖励
       ctx.setFillStyle(NORMAL_COLOR);
@@ -299,9 +325,9 @@ Component({
     /**
      * 改变字体样式
      */
-    setFontStyle: function (ctx, fontWeight, fontSize) {
+    setFontStyle: function (ctx, fontWeight) {
       if (wx.canIUse('canvasContext.font')) {
-        ctx.font = 'normal ' + fontWeight + ' ' + fontSize + ' sans-serif';
+        ctx.font = 'normal ' + fontWeight + ' ' + '14px' + ' sans-serif';
       }
     },
 
@@ -318,7 +344,7 @@ Component({
           })
         },
         complete: function () {
-          wx.hideLoading();
+          this.hideLoading();
         }
       }, this)
     },

@@ -1,5 +1,6 @@
 // pages/moment/moment.js
 const app = getApp();
+const stringUtil = require('../../utils/stringUtil.js');
 
 var windowWidth;
 var windowHeight;
@@ -68,7 +69,7 @@ Page({
     imageHeight: 0,
     showShareModel: false,
     awardMoney: '350元',
-    nickname: '狗腿🌲狗腿'
+    nickname: '狗腿🌲狗腿狗腿🌲狗腿狗腿🌲狗腿'
   },
 
   /**
@@ -227,7 +228,7 @@ Page({
     ctx.setFillStyle(WHITE);
     ctx.setFontSize(20);
     ctx.setTextAlign('center');
-    ctx.fillText(that.data.nickname, 0.5 * windowWidth, nicknameHeightScale * windowHeight);
+    ctx.fillText(stringUtil.substringStr(that.data.nickname), 0.5 * windowWidth, nicknameHeightScale * windowHeight);
 
     //绘制广告奖励
     ctx.setFillStyle(NORMAL_COLOR);
