@@ -326,7 +326,7 @@ Component({
 
     drawCanvas: function () {
       var that = this;
-      const ctx = wx.createCanvasContext('myCanvas');
+      const ctx = wx.createCanvasContext('myCanvas', this);
       ctx.setFillStyle(WHITE);
       ctx.fillRect(0, 0, windowWidth, windowHeight);
 
@@ -411,7 +411,7 @@ Component({
       ctx.setFillStyle(THEME_COLOR);
       ctx.setFontSize(24);
       ctx.setTextAlign('left');
-      ctx.fillText(that.data.incomeMoney, incomeMoneyWidthScale * windowWidth, incomeMoneyHeightScale * windowHeight);
+      ctx.fillText(that.data.incomeMoney + '元', incomeMoneyWidthScale * windowWidth, incomeMoneyHeightScale * windowHeight);
 
       //绘制间隔
       ctx.setFillStyle(DIVIDER_COLOR);
@@ -431,8 +431,8 @@ Component({
 
       //参与用户头像列表
       for (let key in that.data.joinPathList) {
-        let avatarPath = that.data.joinPathList[key];
-        console.log('avatarPath--------->' + avatarPath);
+        let avatarTempPath = that.data.joinPathList[key];
+        console.log('avatarTempPath--------->' + avatarTempPath);
         let x = windowWidth * joinAvatarWidthBaseScale + joinAvatarRadiusScale * windowWidth * 0.5 + joinAvatarRadiusScale * windowWidth * key + joinAvatarDividerScale * windowWidth * key;
         let y = joinAvatarRadiusScale * 0.5 * windowWidth + joinAvatarHeightBaseScale * windowHeight;
         let radius = joinAvatarRadiusScale * 0.5 * windowWidth;
@@ -448,7 +448,7 @@ Component({
         //绘制头像 图片路径，左上角x坐标，左上角y坐标，宽，高
         let imageX = windowWidth * joinAvatarWidthBaseScale + joinAvatarRadiusScale * windowWidth * key + joinAvatarDividerScale * windowWidth * key;
         let imageY = joinAvatarHeightBaseScale * windowHeight;
-        ctx.drawImage(avatarPath, imageX, imageY, 2 * radius, 2 * radius);
+        ctx.drawImage(avatarTempPath, imageX, imageY, 2 * radius, 2 * radius);
         ctx.restore();
       }
 
