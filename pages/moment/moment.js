@@ -11,29 +11,57 @@ const GRAY_COLOR = '#333333';
 const NORMAL_COLOR = '#666666';
 const TINT_COLOR = '#747474';
 const GOLD_COLOR = '#ffdb12';
+const LINE_COLOR = '#DDDDDD';
+const DIVIDER_COLOR = '#F7F7F7';
 
 const temp = 0.01;
 //图片长宽比
 const scale = 1.78;
-//背景图高度
-const bgScale = 0.6506;
 //头像和宽的比
-const avatarWidthScale = 0.213;
-const avatarHeightScale = 0.45;
+const avatarWidthScale = 0.085;
+const avatarHeightScale = 0.006;
+const avatarLeftMarginScale = 0.0533;
 //头像白色圆形背景
 const avatarStrokeWidth = 2;
 //昵称高度比
-const nicknameHeightScale = 0.615;
-
+const nicknameHeightScale = 0.04;
+const nicknameWidthScale = 0.165;
 //邀请加入
-const inviteTextScale = 0.187;
-const inviteTextHeightScale = 0.27;
-//分享内容
-const adAwardHeightScale = 0.338;
-const adAwardWidthScale = 0.187;
-const contentHeightScale = 0.38;
-const awardScale = 0.34;
-const awardWidthScale = 0.51;
+const inviteWidthScale = 0.7;
+const inviteHeightScale = 0.04;
+
+//广告图高度
+const adScale = 0.315;
+const adTopMargin = 0.06;
+//广告名称
+const adNameHeightScale = 0.42;
+const adLineHeightScale = 0.451;
+const adLineWidthScale = 0.533;
+//收益
+const incomeTitleScale = 0.5;
+const incomeMoneyWidthScale = 0.28;
+const incomeMoneyHeightScale = 0.502;
+//时间
+const timeTitleHeightScale = 0.54;
+const timeDetailWidthScale = 0.28;
+//间隔
+const dividerHeightTopScale = 0.571;
+const dividerHeightBottomScale = 0.661;
+const dividerHeight = 0.015;
+//已参与
+const joinTitleHeightScale = 0.62;
+const joinNumberHeightScale = 0.645;
+const joinNumberWidthScale = 0.08;
+//分割线
+const joinLineWidthScale = 0.21;
+const joinLineHeightTopScale = 0.60;
+const joinLineHeightBottomScale = 0.65;
+//参与用户头像
+const joinAvatarRadiusScale = 0.08;
+const joinAvatarWidthBaseScale = 0.25;
+const joinAvatarHeightBaseScale = 0.602;
+const joinAvatarDividerScale = 0.013;
+
 //二维码直径
 const qrCodeWidthScale = 0.341;
 //二维码高度
@@ -46,7 +74,6 @@ const decodeScale = 0.95 + temp * 2;
 const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
 
 
-
 Page({
 
   /**
@@ -54,22 +81,32 @@ Page({
    */
   data: {
     detailStr: {
-      invite: '你的好友邀请你加入',
+      invite: '邀请你赚钱',
       bpbMini: '奔跑宝小程序',
       clickToMini: '(长按进入赚钱)',
-      awardTitle: '我刚领取广告奖励',
-      awardContent: '开车不顺手赚广告费是你的损失!'
+      incomeTitle: '赚取收益：',
+      timeTitle: '投放时间：',
+      joinTitle: '已参与'
     },
     targetSharePath: null,
     avatar: 'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132',
     QRPath: null,
     avatarPath: null,
+    adPath: null,
+    joinPathList: [],
     canvasHeight: 0,
     imageWidth: 0,
     imageHeight: 0,
     showShareModel: false,
-    awardMoney: '350元',
-    nickname: '狗腿🌲狗腿狗腿🌲狗腿狗腿🌲狗腿'
+    incomeMoney: '350元',
+    nickname: '狗腿🌲狗腿狗腿🌲',
+    adImageUrl: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/kkone_banner1.jpg',
+    joinAvatarList: [
+      'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132', 'https://wx.qlogo.cn/mmopen/vi_32/Is9WGKAc9WE8lVyUNBWeGaEHgLg889UPQ2xxsicdu6y01ArKXyyxWEdT68iaEG7nMAib4lPKUVX2HW5icRp9PfhNuw/132'
+    ],
+    adName: 'KK ONE 大吉大利2周年(深圳)',
+    adTime: '05/17 ~ 06/16',
+    joinNumber: '100'
   },
 
   /**
@@ -84,7 +121,7 @@ Page({
         that.setData({
           canvasHeight: windowHeight,
           imageWidth: windowWidth * 0.7,
-          imageHeight: windowHeight *  0.7
+          imageHeight: windowHeight * 0.7
         })
         console.log('imageHeight---------->' + that.data.imageHeight);
       },
@@ -114,7 +151,7 @@ Page({
     //没有分享图先用 canvas 生成，否则直接预览
     if (that.data.targetSharePath) {
       that.setData({
-        showShareModel: true,        
+        showShareModel: true,
       })
     } else {
       wx.showLoading({
@@ -141,7 +178,7 @@ Page({
         that.downloadQrCode(res.data.data.img_url);
       },
       fail: function (res) {
-        that.showModel(res.data.msg);
+        that.showErrorModel(res.data.msg);
       }
     })
   },
@@ -168,45 +205,110 @@ Page({
    * 下载头像
    */
   downloadAvatar: function () {
-    var that = this;
+    let that = this;
     wx.downloadFile({
       url: that.data.avatar,
       success: function (res) {
         that.setData({
           avatarPath: res.tempFilePath
         })
-        that.drawImage();
+        that.downloadAdImage();
       }
     })
   },
 
-  drawImage: function () {
+  /**
+   * 下载广告图
+   */
+  downloadAdImage: function () {
+    let that = this;
+    wx.downloadFile({
+      url: that.data.adImageUrl,
+      success: function (res) {
+        that.setData({
+          adPath: res.tempFilePath
+        })
+        that.downloadJoinAvatarList();
+      },
+      fail: function () {
+        that.showErrorModel();
+      }
+    })
+  },
+
+  /**
+   * 下载加入列表用户头像
+   */
+  downloadJoinAvatarList: function () {
+    let count = 0;
+    let that = this;
+    let tempPathList = [];
+    for (let avatar of that.data.joinAvatarList) {
+      wx.downloadFile({
+        url: that.data.avatar,
+        success: function (res) {
+          tempPathList.push(res.tempFilePath);
+          count++;
+          console.log('count------------->>' + count);
+        },
+        fail: function () {
+          count++;
+          that.showErrorModel();
+        },
+        complete: function(){
+          if (count == that.data.joinAvatarList.length) {
+            that.setData({
+              joinPathList: tempPathList
+            })
+            that.drawCanvas();
+          }
+        }
+
+      })
+    }
+  },
+
+  showErrorModel: function (content) {
+    this.hideLoading();
+    if (!content) {
+      content = '网络错误';
+    }
+    wx.showModal({
+      title: '提示',
+      content: content,
+    })
+  },
+
+  showLoading: function () {
+    wx.showLoading({
+      title: '奔跑中🏃...',
+    })
+  },
+
+  hideLoading: function () {
+    wx.hideLoading();
+  },
+
+  drawCanvas: function () {
     var that = this;
-    const ctx = wx.createCanvasContext('myCanvas', this);
-    var bgPath = '../../image/share-award-bg.png';
+    const ctx = wx.createCanvasContext('myCanvas');
     ctx.setFillStyle(WHITE);
     ctx.fillRect(0, 0, windowWidth, windowHeight);
 
-    //绘制背景图片
-    ctx.drawImage(bgPath, 0, 0, windowWidth, windowHeight * bgScale);
-
-    //头像背景圆
-    ctx.arc(windowWidth / 2, avatarWidthScale / 2 * windowWidth + avatarHeightScale * windowHeight, (avatarWidthScale / 2) * windowWidth + avatarStrokeWidth, 0, 2 * Math.PI);
-    ctx.setFillStyle(GOLD_COLOR);
-    ctx.fill();
+    //绘制广告图片
+    ctx.drawImage(that.data.adPath, 0, adTopMargin * windowHeight, windowWidth, windowHeight * adScale);
 
     //先绘制圆，裁剪成圆形图片
     ctx.save();
     ctx.beginPath();
     //圆的原点x坐标，y坐标，半径，起始弧度，终止弧度
-    ctx.arc(windowWidth / 2, avatarWidthScale / 2 * windowWidth + avatarHeightScale * windowHeight, (avatarWidthScale / 2) * windowWidth, 0, 2 * Math.PI);
-    ctx.setStrokeStyle(GOLD_COLOR);
+    ctx.arc(windowWidth * avatarLeftMarginScale + avatarWidthScale * windowWidth * 0.5, avatarWidthScale / 2 * windowWidth + avatarHeightScale * windowHeight, (avatarWidthScale / 2) * windowWidth, 0, 2 * Math.PI);
+    ctx.setStrokeStyle(WHITE);
     ctx.stroke();
     ctx.clip();
-    //绘制头像
-    //图片路径，左上角x坐标，左上角y坐标，宽，高
+    //绘制头像 图片路径，左上角x坐标，左上角y坐标，宽，高
     var avatarWidth = avatarWidthScale * windowWidth;//头像半径
-    ctx.drawImage(that.data.avatarPath, windowWidth * (0.5 - avatarWidthScale / 2), avatarHeightScale * windowHeight, avatarWidth, avatarWidth);
+    ctx.drawImage(that.data.avatarPath, windowWidth * avatarLeftMarginScale, avatarHeightScale * windowHeight, avatarWidth, avatarWidth);
     ctx.restore();
 
     //-----------------------------------------先绘制不加粗文字
@@ -216,37 +318,71 @@ Page({
     ctx.setTextAlign('center');
     ctx.fillText(that.data.detailStr.clickToMini, windowWidth / 2, decodeScale * windowHeight);
 
-    //-----------------------------------------绘制加粗文字
-    //绘制邀请加入
-    that.setFontStyle(ctx, 'bold', '16px');
-    ctx.setFillStyle(GRAY_COLOR);
+    //绘制收益
+    ctx.setFillStyle(NORMAL_COLOR);
     ctx.setFontSize(16);
     ctx.setTextAlign('left');
-    ctx.fillText(that.data.detailStr.invite, inviteTextScale * windowWidth, inviteTextHeightScale * windowHeight);
+    ctx.fillText(that.data.detailStr.incomeTitle, adTopMargin * windowWidth, incomeTitleScale * windowHeight);
+
+    //绘制时间
+    ctx.setFillStyle(NORMAL_COLOR);
+    ctx.setFontSize(16);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.detailStr.timeTitle, adTopMargin * windowWidth, timeTitleHeightScale * windowHeight);
+
+    //具体时间
+    ctx.setFillStyle(NORMAL_COLOR);
+    ctx.setFontSize(16);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.adTime, timeDetailWidthScale * windowWidth, timeTitleHeightScale * windowHeight);
+
+    //已参与绘制
+    ctx.setFillStyle(NORMAL_COLOR);
+    ctx.setFontSize(16);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.detailStr.joinTitle, adTopMargin * windowWidth, joinTitleHeightScale * windowHeight);
+    //已参与人数
+    ctx.setFillStyle(NORMAL_COLOR);
+    ctx.setFontSize(12);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.joinNumber + '人', joinNumberWidthScale * windowWidth, joinNumberHeightScale * windowHeight);
+    //邀请
+    ctx.setFillStyle(NORMAL_COLOR);
+    ctx.setFontSize(16);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.detailStr.invite, inviteWidthScale * windowWidth, inviteHeightScale * windowHeight);
+
+    //-----------------------------------------绘制加粗文字
+    //绘制广告名称
+    that.setFontStyle(ctx, 'bold', '16px');
+    ctx.setFillStyle(GRAY_COLOR);
+    ctx.setFontSize(20);
+    ctx.setTextAlign('left');
+    ctx.fillText(that.data.adName, adTopMargin * windowWidth, adNameHeightScale * windowHeight);
+
+    //绘制线
+    ctx.setStrokeStyle(LINE_COLOR);
+    ctx.moveTo(adTopMargin * windowWidth, adLineHeightScale * windowHeight);
+    ctx.lineTo((adLineWidthScale + adTopMargin) * windowWidth, adLineHeightScale * windowHeight);
+    ctx.stroke();
 
     //绘制昵称
-    ctx.setFillStyle(WHITE);
-    ctx.setFontSize(20);
-    ctx.setTextAlign('center');
-    ctx.fillText(stringUtil.substringStr(that.data.nickname), 0.5 * windowWidth, nicknameHeightScale * windowHeight);
-
-    //绘制广告奖励
-    ctx.setFillStyle(NORMAL_COLOR);
-    ctx.setFontSize(14);
+    ctx.setFillStyle(THEME_COLOR);
+    ctx.setFontSize(16);
     ctx.setTextAlign('left');
-    ctx.fillText(that.data.detailStr.awardTitle, adAwardWidthScale * windowWidth, adAwardHeightScale * windowHeight);
+    ctx.fillText(stringUtil.substringStr(that.data.nickname), nicknameWidthScale * windowWidth, nicknameHeightScale * windowHeight);
 
     //绘制金额
     ctx.setFillStyle(THEME_COLOR);
-    ctx.setFontSize(36);
+    ctx.setFontSize(24);
     ctx.setTextAlign('left');
-    ctx.fillText(that.data.awardMoney, awardWidthScale * windowWidth, awardScale * windowHeight);
+    ctx.fillText(that.data.incomeMoney, incomeMoneyWidthScale * windowWidth, incomeMoneyHeightScale * windowHeight);
 
-    //绘制描述 
-    ctx.setFillStyle(NORMAL_COLOR);
-    ctx.setFontSize(16);
-    ctx.setTextAlign('left');
-    ctx.fillText(that.data.detailStr.awardContent, adAwardWidthScale * windowWidth, contentHeightScale * windowHeight);
+    //绘制间隔
+    ctx.setFillStyle(DIVIDER_COLOR);
+    ctx.fillRect(0, dividerHeightTopScale * windowHeight, windowWidth, dividerHeight * windowHeight);
+    ctx.setFillStyle(DIVIDER_COLOR);
+    ctx.fillRect(0, dividerHeightBottomScale * windowHeight, windowWidth, dividerHeight * windowHeight);
 
     //绘制二维码
     ctx.drawImage(that.data.QRPath, windowWidth * (0.5 - qrCodeWidthScale / 2), qrCodeHeightScale * windowHeight, qrCodeWidthScale * windowWidth, qrCodeWidthScale * windowWidth);
@@ -258,6 +394,29 @@ Page({
     ctx.fillText(that.data.detailStr.bpbMini, windowWidth / 2, bpbScale * windowHeight);
     console.log('font------------>' + wx.canIUse('canvasContext.font'));
 
+    //参与用户头像列表
+    for (let key in that.data.joinPathList) {
+      let avatarPath = that.data.joinPathList[key];
+      console.log('avatarPath--------->' + avatarPath);
+      let x = windowWidth * joinAvatarWidthBaseScale + joinAvatarRadiusScale * windowWidth * 0.5 + joinAvatarRadiusScale * windowWidth * key + joinAvatarDividerScale * windowWidth * key;
+      let y = joinAvatarRadiusScale * 0.5 * windowWidth + joinAvatarHeightBaseScale * windowHeight;
+      let radius = joinAvatarRadiusScale * 0.5 * windowWidth;
+
+      //先绘制圆，裁剪成圆形图片
+      ctx.save();
+      ctx.beginPath();
+      //圆的原点x坐标，y坐标，半径，起始弧度，终止弧度
+      ctx.arc(x, y, radius, 0, 2 * Math.PI);
+      ctx.setStrokeStyle(WHITE);
+      ctx.stroke();
+      ctx.clip();
+      //绘制头像 图片路径，左上角x坐标，左上角y坐标，宽，高
+      let imageX = windowWidth * joinAvatarWidthBaseScale + joinAvatarRadiusScale * windowWidth * key + joinAvatarDividerScale * windowWidth * key;
+      let imageY = joinAvatarHeightBaseScale * windowHeight;
+      ctx.drawImage(avatarPath, imageX, imageY, 2 * radius, 2 * radius);
+      ctx.restore();
+    }
+
     //绘制到 canvas 上
     ctx.draw(false, function () {
       console.log('callback--------------->');
@@ -268,7 +427,7 @@ Page({
   /**
    * 改变字体样式
    */
-  setFontStyle: function(ctx, fontWeight, fontSize){
+  setFontStyle: function (ctx, fontWeight, fontSize) {
     if (wx.canIUse('canvasContext.font')) {
       ctx.font = 'normal ' + fontWeight + ' ' + fontSize + ' sans-serif';
     }
@@ -283,10 +442,10 @@ Page({
         console.log(res.tempFilePath);
         that.setData({
           targetSharePath: res.tempFilePath,
-          showShareModel: true,          
+          showShareModel: true,
         })
       },
-      complete: function(){
+      complete: function () {
         wx.hideLoading();
       }
     }, this)
@@ -295,11 +454,11 @@ Page({
   /**
    * 保存到相册
    */
-  saveImageTap: function(){
+  saveImageTap: function () {
     var that = this;
     wx.saveImageToPhotosAlbum({
       filePath: that.data.targetSharePath,
-      success: function(){
+      success: function () {
         wx.showModal({
           title: '提示',
           content: '✌️图片保存成功，\n快去分享到朋友圈吧',
@@ -310,11 +469,11 @@ Page({
     })
   },
 
-  closeModel: function(){
+  closeModel: function () {
     this.hideDialog();
   },
 
-  hideDialog: function(){
+  hideDialog: function () {
     this.setData({
       showShareModel: false
     })
