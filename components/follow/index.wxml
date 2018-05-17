@@ -1,0 +1,3 @@
+<view class='shareit' wx:if="{{shareit}}" bindtap="hideShare">
+  <image class="arrow" src="../../image/wechatFl.png" style="width: {{imageWidth}}px; height: {{imageHeight}}px;"></image>
+</view>

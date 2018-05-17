@@ -47,9 +47,9 @@
                   <label class="radio">
                     <radio value="2" />私家车
                   </label>
-                  <label class="radio">
+                  <!-- <label class="radio">
                     <radio value="0" />其他
-                  </label>
+                  </label> -->
                 </radio-group>
               </view>
             </view>

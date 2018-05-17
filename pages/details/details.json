@@ -2,6 +2,7 @@
    "navigationBarTitleText": "广告详情",
     "enablePullDownRefresh": false,
       "usingComponents": {
-        "dialog": "../../components/dialog/bpb-dialog"
+        "dialog": "../../components/dialog/bpb-dialog",
+        "bpb-reward": "../../components/reward/index"
       }
 }

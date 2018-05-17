@@ -33,6 +33,7 @@ Page({
     avatarList: [],
     showJoining: false,
     joinCount: 0,
+    reward:false
   },
 
   onLoad: function (options) {
@@ -47,6 +48,11 @@ Page({
       adId: options.adId
     })
     app.globalData.shareInviteId = options.inviteId;
+    if (app.globalData.isFirst){
+      that.setData({
+        reward: true
+      })
+    }
     wx.getSystemInfo({
       success: function (res) {
         // console.log(res.windowWidth)  屏幕宽度
