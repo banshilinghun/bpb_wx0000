@@ -121,12 +121,12 @@ Page({
                       app.globalData.login = 0;
                     }
                     if (shareAd.adId == -1 || shareAd.adId == undefined) {
-                      // wx.switchTab({
-                      //   url: '../main/main'
-                      // })
-                      wx.redirectTo({
-                        url: '../share/share',
+                      wx.switchTab({
+                        url: '../main/main'
                       })
+                      // wx.redirectTo({
+                      //   url: '../share/share',
+                      // })
                     } else {
                       wx.redirectTo({
                         url: '../details/details?adId=' + shareAd.adId + "&share=1"
