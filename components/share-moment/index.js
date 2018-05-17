@@ -4,6 +4,7 @@
  */
 
 const app = getApp();
+const stringUtil = require('../../utils/stringUtil.js');
 
 var windowWidth;
 var windowHeight;
@@ -164,7 +165,7 @@ Component({
           that.downloadQrCode(res.data.data.img_url);
         },
         fail: function (res) {
-          that.showModel(res.data.msg);
+          that.showErrorModel(res.data.msg);
         }
       })
     },
@@ -183,8 +184,33 @@ Component({
             QRPath: res.tempFilePath
           })
           that.downloadAvatar();
+        },
+        fail: function () {
+          that.showErrorModel();
         }
       })
+    },
+
+
+    showErrorModel: function (content) {
+      this.hideLoading();
+      if (!content) {
+        content = '网络错误';
+      }
+      wx.showModal({
+        title: '提示',
+        content: content,
+      })
+    },
+
+    showLoading: function () {
+      wx.showLoading({
+        title: '奔跑中🏃...',
+      })
+    },
+
+    hideLoading: function () {
+      wx.hideLoading();
     },
 
     /**
@@ -199,6 +225,9 @@ Component({
             avatarPath: res.tempFilePath
           })
           that.drawImage();
+        },
+        fail: function () {
+          that.showErrorModel();
         }
       })
     },
@@ -232,18 +261,6 @@ Component({
       ctx.drawImage(that.data.avatarPath, windowWidth * (0.5 - avatarWidthScale / 2), avatarHeightScale * windowHeight, avatarWidth, avatarWidth);
       ctx.restore();
 
-      //绘制昵称
-      ctx.setFillStyle(WHITE);
-      ctx.setFontSize(20);
-      ctx.setTextAlign('center');
-      ctx.fillText(that.data.nickname, windowWidth / 2, nicknameHeightScale * windowHeight);
-
-      //绘制文字一起赚
-      ctx.setFillStyle(THEME_COLOR);
-      ctx.setFontSize(24);
-      ctx.setTextAlign('center');
-      ctx.fillText(that.data.detailStr.tip, windowWidth / 2, topTextScale * windowHeight);
-
       //绘制 content
       ctx.setFillStyle(GRAY_COLOR);
       ctx.setFontSize(18);
@@ -256,31 +273,48 @@ Component({
 
       //绘制二维码
       ctx.drawImage(that.data.QRPath, windowWidth * (0.5 - qrCodeWidthScale / 2), qrCodeHeightScale * windowHeight, qrCodeWidthScale * windowWidth, qrCodeWidthScale * windowWidth);
-
-      //绘制 奔跑宝小程序
-      ctx.setFillStyle(TINT_COLOR);
-      ctx.setFontSize(16);
-      ctx.setTextAlign('center');
-      if (wx.canIUse('canvasContext.font')) {
-        ctx.font = 'bold';
-      }
-      ctx.fillText(that.data.detailStr.bpbMini, windowWidth / 2, bpbScale * windowHeight);
       console.log('font------------>' + wx.canIUse('canvasContext.font'));
 
       //绘制 按压提示文字
       ctx.setFillStyle(TINT_COLOR);
       ctx.setFontSize(14);
       ctx.setTextAlign('center');
-      if (wx.canIUse('canvasContext.font')) {
-        ctx.font = 'normal';
-      }
       ctx.fillText(that.data.detailStr.clickToMini, windowWidth / 2, decodeScale * windowHeight);
+
+      //绘制加粗文字--------------------------------------------------------------
+      //绘制昵称
+      that.setFontStyle(ctx, 'bold');
+      ctx.setFillStyle(WHITE);
+      ctx.setFontSize(20);
+      ctx.setTextAlign('center');
+      ctx.fillText(stringUtil.substringStr(that.data.nickname), windowWidth / 2, nicknameHeightScale * windowHeight);
+
+      //绘制文字一起赚
+      ctx.setFillStyle(THEME_COLOR);
+      ctx.setFontSize(24);
+      ctx.setTextAlign('center');
+      ctx.fillText(that.data.detailStr.tip, windowWidth / 2, topTextScale * windowHeight);
+
+      //绘制 奔跑宝小程序
+      ctx.setFillStyle(TINT_COLOR);
+      ctx.setFontSize(16);
+      ctx.setTextAlign('center');
+      ctx.fillText(that.data.detailStr.bpbMini, windowWidth / 2, bpbScale * windowHeight);
 
       //绘制到 canvas 上
       ctx.draw(false, function () {
         console.log('callback--------------->');
         that.saveCanvasImage();
       });
+    },
+
+    /**
+     * 改变字体样式
+     */
+    setFontStyle: function (ctx, fontWeight) {
+      if (wx.canIUse('canvasContext.font')) {
+        ctx.font = 'normal ' + fontWeight + ' ' + '14px' + ' sans-serif';
+      }
     },
 
     //转化为图片
@@ -295,8 +329,8 @@ Component({
             realShow: true
           })
         },
-        complete: function(){
-          wx.hideLoading();
+        complete: function () {
+          that.hideLoading();
         }
       }, this)
     },
