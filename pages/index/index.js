@@ -125,7 +125,7 @@ Page({
                       //   url: '../main/main'
                       // })
                       wx.redirectTo({
-                        url: '../moment/moment',
+                        url: '../share/share',
                       })
                     } else {
                       wx.redirectTo({
