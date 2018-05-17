@@ -145,3 +145,4 @@
   <view class="count">
   </view>
 </view>
+<bpb-reward reward='{{reward}}'></bpb-reward>

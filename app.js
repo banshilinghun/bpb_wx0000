@@ -4,9 +4,9 @@ const app = getApp();
 //正式域名
 const releaseDomain = 'https://wxapi.benpaobao.com/';
 //是否是发布状态，上线时改为true
-const release = true;
+const release = false;
 //true-ken测试地址，false-小彭测试地址
-const domainStatus = true;
+const domainStatus = false;
 
 App({
   onLaunch: function () {
@@ -25,6 +25,7 @@ App({
     shareInviteId: '',
     checkStaus: '',
     baseUrl: releaseDomain,
+    isFirst:false
   },
 
   /**
@@ -34,7 +35,7 @@ App({
     if(release){
       return releaseDomain;
     }else{
-      return domainStatus ? 'http://192.168.1.114:8000/' : 'http://192.168.1.141:8000/';
+      return domainStatus ? 'http://192.168.1.114:8000/' : 'http://192.168.1.142:8000/';
     }
   }
 })

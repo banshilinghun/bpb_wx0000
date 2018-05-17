@@ -84,37 +84,7 @@ Page({
     this.setData({
       colorName: colorName
     })
-    // wx.request({
-    //   url: app.globalData.baseUrl + 'app/get/citys',
-    //   data: {},
-    //   header: app.globalData.header,
-    //   success: res => {
-    //     if (res.data.code == 1000) {
-    //       //					console.log(res.data.data)
-    //       var id = res.data.data.provinces[0].id;
-    //       this.setData({
-    //         address: res.data.data,
-    //         provinces: res.data.data.provinces,
-    //         citys: res.data.data.citys[id]
-    //       })
-    //     } else {
-    //       //					console.log(res.data)
-    //       wx.showModal({
-    //         title: '提示',
-    //         showCancel: false,
-    //         content: res.data.msg
-    //       });
-    //     }
-    //   },
-    //   fail: res => {
-    //     wx.showModal({
-    //       title: '提示',
-    //       showCancel: false,
-    //       content: '网络错误'
-    //     });
-    //   }
-    // })
-
+   
     wx.request({
       url: app.globalData.baseUrl + 'app/get/brands',
       data: {},
@@ -153,49 +123,6 @@ Page({
       timingFunction: 'ease',
     })
     this.animation = animation;
-
-    // wx.request({
-    //   url: app.globalData.baseUrl + 'app/get/lease_company',
-    //   data: {},
-    //   header: app.globalData.header,
-    //   success: res => {
-    //     if (res.data.code == 1000) {
-    //       //					console.log(res.data.data)
-    //       var sourceType = [];
-    //       var idList = [];
-    //       var nameList = [];
-    //       for (var i = 0; i < res.data.data.length; i++) {
-    //         sourceType.push(res.data.data[i].name);
-    //         idList.push(res.data.data[i].id);
-    //         nameList.push(res.data.data[i].company_name);
-    //       }
-    //       //	console.log(sourceType)
-    //       // sourceType.push("无租赁公司");
-    //       // idList.push(0);
-    //       // nameList.push("无租赁公司");
-    //       this.setData({
-    //         sourceType: sourceType,
-    //         idList: idList,
-    //         nameList: nameList
-    //       })
-    //     } else {
-    //       //					console.log(res.data)
-    //       wx.showModal({
-    //         title: '提示',
-    //         showCancel: false,
-    //         content: res.data.msg
-    //       });
-    //     }
-    //   },
-    //   fail: res => {
-    //     wx.showModal({
-    //       title: '提示',
-    //       showCancel: false,
-    //       content: '网络错误'
-    //     });
-    //   }
-    // })
-
   },
 
   /**
@@ -484,7 +411,7 @@ Page({
               })
               setTimeout(function () {
                 wx.redirectTo({
-                  url: '../state/state'
+                  url: '../state/state?followFlag=1'
                 })
               }, 1000);
             } else {
@@ -628,19 +555,6 @@ Page({
     }
 
   },
-  // checkLease: function (param) {
-  //   var lease = param.lease;
-  //   if (lease != '') {
-  //     return true;
-  //   } else {
-  //     wx.showModal({
-  //       title: '提示',
-  //       showCancel: false,
-  //       content: '请选择租赁公司'
-  //     });
-  //     return false;
-  //   }
-  // },
   checkBrand: function (param) {
     var brand = param.brand;
     if (brand != '') {

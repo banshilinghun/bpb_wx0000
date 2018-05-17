@@ -11,10 +11,22 @@ Page({
 			icon: '../../image/user_jiashizheng@2x.png',
 			text: '身份认证'
 		}],
-
+    showGoodsDetail: false,
+    shareit: false
 	},
 	onLoad: function(options) {
-
+    //console.log(options.followFlag)
+     var that = this;
+     if (options.followFlag == 1) {
+       that.setData({
+         followFlag:true
+       })
+     }else{
+       that.setData({
+         followFlag: false
+       })
+     }
+     that.followFlag();
 	},
 	onShow: function() {
 		// 页面初始化 options为页面跳转所带来的参数
@@ -80,6 +92,48 @@ Page({
 			url: '../auth/auth'
 		})
 	},
+  dialogClickListener:function(){
+    var that=this;
+    that.setData({
+      showGoodsDetail:false,
+      shareit: true
+    })
+  },
+  followFlag: function () {//查询是否关注公众号
+  var that=this;
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/user_has_subscribe',
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          console.log(res.data.data)
+          that.setData({
+            isFollow: res.data.data
+          })
+          if (res.data.data==false && that.data.followFlag){
+            that.setData({
+              showGoodsDetail: true
+            })
+          }
+          
+        } else {
+          //					console.log(res.data)
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+  },
 	onPullDownRefresh: function() {
 		var z = this;
 		wx.showToast({
@@ -112,7 +166,6 @@ Page({
 						})
 					}
 				} else {
-
 					wx.showModal({
 						title: '提示',
 						showCancel: false,

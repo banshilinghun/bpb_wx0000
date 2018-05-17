@@ -1,0 +1,4 @@
+<view class='shareit' wx:if="{{reward}}" >
+  <image class="arrow" src="../../image/redbao.png" style="width: {{imageWidth}}px; height: {{imageHeight}}px;"></image>
+  <image class="colse" src="../../image/close.png" bindtap="hideReward"></image>
+</view>

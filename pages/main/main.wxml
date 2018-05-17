@@ -99,9 +99,4 @@
     </block>
   </view>
 </view>
-<view class='shareit' wx:if="{{shareit}}" bindtap="hideShare">
-  <image class="arrow" src="../../image/share-it.png"></image>
-  <view class='follow'>
-    <image class="arrow" src="../../image/share.png"></image>
-  </view>
-</view>
+<bpb-follow shareit='{{shareit}}'></bpb-follow>
