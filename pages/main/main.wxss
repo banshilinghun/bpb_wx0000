@@ -223,5 +223,7 @@ justify-content:center;
 background-color:#FBBD19;
 color:#FFFFFF;
 font-size:36rpx;
-
+}
+swiper{
+  height: 300rpx;
 }

@@ -65,6 +65,7 @@ Page({
         reward: true
       })
     }
+    app.globalData.isFirst = false;
     wx.getSystemInfo({
       success: function (res) {
         // console.log(res.windowWidth)  屏幕宽度

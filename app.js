@@ -3,8 +3,10 @@ const app = getApp();
 
 //正式域名
 const releaseDomain = 'https://wxapi.benpaobao.com/';
+const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
 //是否是发布状态，上线时改为true
-const release = true;
+const release = false;
+const release2 = true;
 //true-ken测试地址，false-小彭测试地址
 const domainStatus = true;
 
@@ -36,6 +38,9 @@ App({
       return releaseDomain;
     }else{
       return domainStatus ? 'http://192.168.1.114:8000/' : 'http://192.168.1.142:8000/';
+    }
+    if (release2){
+      return releaseDomain2;
     }
   }
 })

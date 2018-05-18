@@ -18,7 +18,8 @@
     "pages/joinList/joinList",
     "pages/recommend/recommend",
     "pages/moment/moment",
-    "pages/share/share"
+    "pages/share/share",
+    "pages/novice/novice"
   ],
   "window": {
     "backgroundTextStyle": "dark",
