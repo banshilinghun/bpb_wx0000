@@ -3,6 +3,8 @@
     "enablePullDownRefresh": false,
       "usingComponents": {
         "dialog": "../../components/dialog/bpb-dialog",
-        "bpb-reward": "../../components/reward/index"
+        "bpb-reward": "../../components/reward/index",
+        "share-popup": "../../components/share-popup/index",
+        "share-detail": "../../components/share-detail/index"
       }
 }

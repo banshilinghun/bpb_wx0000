@@ -7,6 +7,12 @@ Component({
     showPop: {
       type: Boolean,
       value: false
+    },
+
+    //广告id，有需要可以设置（可选）
+    adId: {
+      type: String,
+      value: ''
     }
   },
 
@@ -35,6 +41,9 @@ Component({
      * 分享到朋友圈
      */
     toggleShareMoments: function(){
+      this.setData({
+        showPop: false
+      })
       var myEventDetail = {};// detail对象，提供给事件监听函数
       var myEventOption = {} // 触发事件的选项
       this.triggerEvent('shareMoment', myEventDetail, myEventOption);

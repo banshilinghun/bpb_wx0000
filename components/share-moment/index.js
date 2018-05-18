@@ -53,16 +53,13 @@ Component({
       type: String,
       value: null
     },
+
     //昵称 (必须)
     nickname: {
       type: String,
       value: null
     },
-    //用户id (必须)
-    id: {
-      type: String,
-      value: ''
-    },
+    
     //隐藏显示，会触发事件
     showShareModel: {
       type: Boolean,
@@ -103,7 +100,6 @@ Component({
           imageWidth: windowWidth * 0.7,
           imageHeight: windowHeight * 0.7
         })
-        console.log('imageHeight---------->' + that.data.imageHeight);
       },
     })
   },
@@ -133,7 +129,6 @@ Component({
      * 生成分享图到朋友圈
      */
     shareMoments: function () {
-      console.log('shareMoments------------------>')
       var that = this;
       //没有分享图先用 canvas 生成，否则直接预览
       if (that.data.targetSharePath) {
@@ -157,12 +152,15 @@ Component({
         url: QR_CODE_URL,
         header: app.globalData.header,
         data: {
-          scene: 'id=1',
+          scene: 'type=1',
           page: 'pages/index/index'
         },
         success: function (res) {
-          console.log(res);
-          that.downloadQrCode(res.data.data.img_url);
+          if (res.data.code == 1000){
+            that.downloadQrCode(res.data.data.img_url);
+          }else{
+            that.showErrorModel(res.data.msg);
+          }
         },
         fail: function (res) {
           that.showErrorModel(res.data.msg);

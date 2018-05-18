@@ -7,11 +7,17 @@ Page({
     img: '../../image/index.png'
   },
   //事件处理函数
-  onLoad: function (o) {
+  onLoad: function (options) {
     var that = this;
-    that.setData({
-      shareAd: o
-    })
+    //如果是小程序码进入，处理逻辑
+    if (options.scene) {
+      console.log(options);
+      console.log(decodeURIComponent(options.scene));
+    }else{
+      that.setData({
+        shareAd: options
+      })
+    }
   },
 
   onShow: function () {

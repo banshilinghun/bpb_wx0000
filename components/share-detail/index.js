@@ -78,46 +78,61 @@ Component({
    * 组件的属性列表
    */
   properties: {
+   
     //头像 url (必须)
     avatar: {
       type: String,
       value: null
     },
+
     //收益 (必须)
     incomeMoney: {
       type: Number,
       value: 0
     },
+
     //昵称 (必须)
     nickname: {
       type: String,
       value: '',
     },
+
     //参与人数 (必须)
     joinNumber: {
       type: Number,
       value: 0
     },
+
     //参与用户头像列表 (必须)
     joinAvatarList: {
       type: Array,
       value: []
     },
+
     //广告 banner (必须)
     adImageUrl: {
       type: String,
       value: null
     },
+
     //广告名称
     adName: {
       type: String,
       value: ''
     },
+
     //广告时间
     adTime: {
       type: String,
       value: ''
     },
+
+    //广告id
+    adId: {
+      type: String,
+      value: ''
+    },
+
     //隐藏显示，会触发事件 (必须)
     showShareModel: {
       type: Boolean,
@@ -202,12 +217,15 @@ Component({
         url: QR_CODE_URL,
         header: app.globalData.header,
         data: {
-          scene: 'id=1',
+          scene: 'type=3&adId=' + that.data.adId,
           page: 'pages/index/index'
         },
         success: function (res) {
-          console.log(res);
-          that.downloadQrCode(res.data.data.img_url);
+          if (res.data.code == 1000) {
+            that.downloadQrCode(res.data.data.img_url);
+          } else {
+            that.showErrorModel(res.data.msg);
+          }
         },
         fail: function (res) {
           that.showErrorModel(res.data.msg);
@@ -260,7 +278,7 @@ Component({
           that.setData({
             adPath: res.tempFilePath
           })
-          if (that.data.joinAvatarList || that.data.joinAvatarList.length == 0){
+          if (!that.data.joinAvatarList || that.data.joinAvatarList.length == 0){
             that.drawCanvas();
           }else{
             that.downloadJoinAvatarList();
@@ -276,12 +294,17 @@ Component({
      * 下载加入列表用户头像
      */
     downloadJoinAvatarList: function () {
-      let count = 0;
       let that = this;
+      if (that.data.joinAvatarList.length > 7){
+        that.setData({
+          joinAvatarList: that.data.joinAvatarList.slice(0, 7)
+        })
+      }
+      let count = 0;
       let tempPathList = [];
       for (let avatar of that.data.joinAvatarList) {
         wx.downloadFile({
-          url: that.data.avatar,
+          url: avatar,
           success: function (res) {
             tempPathList.push(res.tempFilePath);
             count++;

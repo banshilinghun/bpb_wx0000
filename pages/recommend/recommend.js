@@ -7,7 +7,9 @@ const FLAG_ARRAY = ['active', 'recommend'];
 //二维码地址
 const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
 //推荐地址
-const RECOMMEND_URL = app.globalData.baseUrl + 'app/get/recommendation_user'
+const RECOMMEND_URL = app.globalData.baseUrl + 'app/get/recommendation_user';
+//领取奖励
+const COUPON_URL = app.globalData.baseUrl + 'app/get/collect_account_coupon';
 
 Page({
 
@@ -15,47 +17,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    //页面状态标识
-    pageFlag: true,
-    banner: {
-      bannerHeight: 200,
-      bannerWidth: 375,
-      bannerList: [],
-      showBanner: true
-    },
-    //顶部图片
-    topImage: {
-      imageHeight: 120,
-      imageSrc: 'http://img4.imgtn.bdimg.com/it/u=3075400102,2168157850&fm=27&gp=0.jpg'
-    },
-    //一键提醒 view 宽度
-    remindWidth: 0,
-    showRecommendList: true,
-    recommendList: [{
-      nickname: '正🌲',
-      adStatus: '已安装广告',
-      time: '两天前'
-    }, {
-      nickname: '粉丝',
-      adStatus: '已安装广告',
-      time: '两天前'
-    }, {
-      nickname: 'ken',
-      adStatus: '已安装广告',
-      time: '两天前'
-    }],
-    //累计领取奖励
-    totalAword: 0,
-    //待领取奖励
-    GoatAward: 0,
-    //好友全部完成可达奖励
-    remainAward: 0,
-    //未完成人数
-    unfinishedNumber: 0,
-    //二维码 path
-    qrPath: null,
-    showDialog: false,
-    showSharePop: false,
     stepsList: [
       {
         current: false,
@@ -68,7 +29,7 @@ Page({
         text: '好友',
         secondText: '从分享链接进入',
         thirdText: '奔跑宝'
-      }, 
+      },
       {
         done: false,
         current: false,
@@ -79,7 +40,47 @@ Page({
         current: false,
         text: '双方立即获得50元奖励；'
       }
-    ]
+    ],
+    //页面状态标识
+    pageFlag: true,
+    //顶部图片
+    topImage: {
+      imageHeight: 120,
+      imageSrc: 'http://img4.imgtn.bdimg.com/it/u=3075400102,2168157850&fm=27&gp=0.jpg'
+    },
+    //一键提醒 view 宽度
+    remindWidth: 0,
+    showRecommendList: true,
+    recommendList: [],
+    //已激活未领取列表
+    unReceiveList: [],
+    //累计领取奖励
+    totalAword: 0,
+    //待领取奖励
+    GoatAward: 0,
+    //好友全部完成可达奖励
+    remainAward: 0,
+    //未完成人数
+    unfinishedNumber: 0,
+    awardBtnAbled: true,
+    remindBtnAbled: true,
+    //二维码 path
+    qrPath: null,
+    showDialog: false,
+    showSharePop: false,
+    
+    //分享数据
+    shareAvatar: '',
+    shareNickname: '',
+    showNewShare: false,
+    shareId: '', 
+    shareInfo: {
+      shareAvatar: '',
+      shareNickname: '',
+      awardMoney: '',
+      awardType: ''
+    },
+    showAwardModel: false
   },
 
   /**
@@ -103,12 +104,19 @@ Page({
       },
     })
     that.setTitle();
+    that.setShareInfo();
     that.getRecommendInfo();
+  },
+
+  setShareInfo: function(){
+    this.setData({
+      shareAvatar: app.globalData.userInfo.avatarUrl,
+      shareNickname: app.globalData.userInfo.nickName
+    })
   },
 
   getRecommendInfo: function () {
     var that = this;
-    that.showLoadingToast();
     wx.request({
       url: RECOMMEND_URL,
       header: app.globalData.header,
@@ -118,6 +126,7 @@ Page({
           var recommendInfo = dataBean.data.recommended_info;
           console.log(recommendInfo);
           var tempList = [];
+          var tempGoatList= [];
           var totalAward = 0;
           var reachableAward = 0;
           var GoatAward = 0;
@@ -133,18 +142,24 @@ Page({
               totalAward += recommendBean.amount;
             } else if (recommendBean.status == 2) {
               GoatAward += recommendBean.amount;
+              tempGoatList.push(recommendBean.coupon_id);
             } else if (recommendBean.status == 1) {
               reachableAward += recommendBean.amount;
               unFinishNumber += 1;
             }
           }
+          
           that.setData({
             recommendList: tempList,
             totalAword: totalAward,
             GoatAward: GoatAward,
             remainAward: reachableAward,
-            unfinishedNumber: unFinishNumber
+            unfinishedNumber: unFinishNumber,
+            unReceiveList: tempGoatList,
+            awardBtnAbled: GoatAward == 0 ? false : true,
+            remindBtnAbled: unFinishNumber == 0 ? false : true
           })
+          console.log('awardBtnAbled----------->' + that.data.awardBtnAbled);
         } else {
           that.showModel(res.data.msg);
         }
@@ -166,72 +181,19 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
 
   },
 
+
   /**
    * 分享到朋友圈
    */
   shareMoments: function () {
-    wx.showToast({
-      title: '✌️分享成功',
-    });
-    this.getQrCode();
-  },
-
-  /**
-   * 请求二维码图片
-   */
-  getQrCode: function () {
-    var that = this;
-    wx.request({
-      url: QR_CODE_URL,
-      header: app.globalData.header,
-      data: {
-        scene: 'id=1',
-        page: 'pages/index/index'
-      },
-      success: function (res) {
-        console.log(res);
-        that.downloadQrCode(res.data.data.img_url);
-      },
-      fail: function (res) {
-        that.showModel(res.data.msg);
-      }
-    })
-  },
-
-  /**
-   * 下载二维码到本地
-   */
-  downloadQrCode: function (imageUrl) {
-    console.log(imageUrl);
-    var that = this;
-    wx.downloadFile({
-      url: imageUrl,
-      success: function (res) {
-        console.log(res.tempFilePath);
-        that.setData({
-          qrPath: res.tempFilePath
-        })
-      }
-    })
-  },
-
-  previewImage: function () {
-    var that = this;
-    wx.previewImage({
-      urls: [that.data.topImage.imageSrc]
+    this.setData({
+      showNewShare: true
     })
   },
 
@@ -239,8 +201,52 @@ Page({
    * 领取奖励
    */
   receiveAwardClick: function () {
-    wx.navigateTo({
-      url: '../step/step',
+    var that = this;
+    console.log(that.data.unReceiveList);
+    if (!that.data.awardBtnAbled){
+      return;
+    }
+    var couponData = {};
+    couponData.coupon_id_list = that.data.unReceiveList;
+    var text = "恭喜！你的奖励" + that.data.GoatAward + "元已放入余额账户里";
+    wx.request({
+      url: COUPON_URL,
+      data: couponData,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          that.setData({
+            shareInfo: {
+              shareAvatar: app.globalData.userInfo.avatarUrl,
+              shareNickname: app.globalData.userInfo.nickName,
+              awardMoney: data.amount,
+              awardType: 2
+            },
+          })
+          //重新请求接口
+          that.getRecommendInfo();
+          that.showToast(text)
+          //执行分享
+          setTimeout(function () {
+            that.setData({
+              showDialog: true
+            })
+          }, 1500)
+        } else {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
     })
   },
 
@@ -248,9 +254,8 @@ Page({
    * 提醒好友
    */
   remindFriendClick: function () {
-    console.log('remindFriendClick------------>')
-    this.setData({
-      showDialog: true
+    wx.showToast({
+      title: '✌️邀请成功',
     })
   },
 
@@ -267,8 +272,11 @@ Page({
     })
   },
 
+  /**
+   * 生成分享图片
+   */
   shareMomentListener: function () {
-    console.log('shareMomentListener------->')
+    this.shareMoments();
   },
 
   showLoadingToast: function(){
@@ -276,10 +284,10 @@ Page({
       title: '奔跑中...',
       icon: 'loading'
     })
-
   },
 
   onPullDownRefresh: function () {
+    this.showLoadingToast();
     this.getRecommendInfo();
   },
 

@@ -121,13 +121,34 @@
   font-size: 30rpx;
 }
 
+.btn-common {
+  background: none;
+  line-height: 60rpx;
+  height: 60rpx;
+  font-size: 32rpx;
+  padding: 0;
+  background-color: #fff;
+  border-radius: 6rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  position: absolute;
+  right: 0rpx;
+  font-weight: 500;
+}
+
+.btn-enable{
+  color: #ff555c;
+  border: 2rpx solid #ff555c;
+}
+
+.btn-disable{
+  border: 2rpx solid #999999;
+  color: #999999;
+}
+
 .btn-recommend {
   display: inline-block;
   margin-left: 40rpx;
-}
-
-button::after {
-  border: none;
 }
 
 .remind-friend {

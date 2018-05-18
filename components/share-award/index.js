@@ -56,26 +56,25 @@ Component({
       type: String,
       value: null
     },
+
     //昵称
     nickname: {
       type: String,
       value: null
     },
+
     //金额
     awardMoney: {
       type: Number,
       value: 0
     },
+
     //奖励类型 1-新手奖励，2-推荐奖励，3-广告奖励
     awardType: {
       type: Number,
       value: 3
     },
-    //分享的用户id
-    id: {
-      type: String,
-      value: null
-    },
+
     //隐藏显示，会触发事件
     showShareModel: {
       type: Boolean,
@@ -163,12 +162,15 @@ Component({
         url: QR_CODE_URL,
         header: app.globalData.header,
         data: {
-          scene: 'id=1',
+          scene: 'type=2',
           page: 'pages/index/index'
         },
         success: function (res) {
-          console.log(res);
-          that.downloadQrCode(res.data.data.img_url);
+          if (res.data.code == 1000) {
+            that.downloadQrCode(res.data.data.img_url);
+          } else {
+            that.showErrorModel(res.data.msg);
+          }
         },
         fail: function (res) {
           that.showErrorModel(res.data.msg);

@@ -33,7 +33,19 @@ Page({
     avatarList: [],
     showJoining: false,
     joinCount: 0,
-    reward:false
+    reward:false,
+    showSharePop: false,
+    //生成分享图片
+    shareAvatar: '',
+    shareNickname: '',
+    incomeMoney: 0,
+    joinNumber: 0,
+    joinAvatarList: [],
+    adImageUrl: '',
+    adName: '',
+    adTime: '',
+    adId: '',
+    showShareModel: false
   },
 
   onLoad: function (options) {
@@ -149,6 +161,12 @@ Page({
         }
       }
     })
+    that.requestAdInfo(reqData);
+    that.requestJoinList();
+  },
+
+  requestAdInfo: function (reqData){
+    var that = this;
     wx.request({
       url: app.globalData.baseUrl + 'app/get/ad_info',
       data: reqData,
@@ -168,9 +186,9 @@ Page({
               //                          console.log(that.data.latitude)
               serviceList[j].distance = getDistance(that.data.latitude, that.data.longitude, serviceList[j].lat, serviceList[j].lng).toFixed(2);
               serviceList[j].lista = 1;
-              if (res.data.data.isRegist){
+              if (res.data.data.isRegist) {
                 serviceList[j].lista = 0;
-              }else{
+              } else {
                 if (res.data.data.info.current_count > 0) {
                   if (serviceList[j].ad_count - serviceList[j].subscribe_count <= 0) {
                     serviceList[j].lista = 0;
@@ -209,7 +227,6 @@ Page({
             service: serviceList,
             joinCount: res.data.data.info.total_count - res.data.data.info.current_count
           })
-          //                console.log(that.data.service)
 
           if (res.data.data.imgs.length == 0) {
             that.setData({
@@ -222,6 +239,18 @@ Page({
               banners: res.data.data.imgs
             })
           }
+          //赋值分享图数据
+          let adInfoBean = res.data.data.info;
+          that.setData({
+            shareAvatar: app.globalData.userInfo.avatarUrl,
+            shareNickname: app.globalData.userInfo.nickName,
+            incomeMoney: adInfoBean.amount,
+            adImageUrl: adInfoBean.img_url,
+            adName: adInfoBean.name,
+            adTime: adInfoBean.begin_date + '-' + adInfoBean.end_date,
+            adId: adInfoBean.id,
+            joinNumber: adInfoBean.total_count - adInfoBean.current_count
+          })
         } else {
           wx.showModal({
             title: '提示',
@@ -238,7 +267,6 @@ Page({
         });
       }
     })
-    that.requestJoinList();
   },
 
   /** 请求已参与车主列表 */
@@ -255,16 +283,20 @@ Page({
         console.log(res);
         if(res.data.code == 1000){
           var dataList = res.data.data.info;
+          var tempAvatarList = [];
           for (var key in dataList) {
             var dataBean = dataList[key];
             //过滤没有头像用户
             if (!dataBean.wx_avatar.trim()) {
               dataList.splice(key, 1);
+            }else{
+              tempAvatarList.push(dataBean.wx_avatar);
             }
           }
           that.setData({
             avatarList: dataList,
             showJoining: dataList.length == 0 ? false : true,
+            joinAvatarList: tempAvatarList
           });
         }else{
           wx.showModal({
@@ -329,6 +361,7 @@ Page({
       }
     })
   },
+
   arrangement: function (e) {
     if(app.globalData.login==1){
       wx.request({
@@ -420,6 +453,30 @@ Page({
       latitude: Number(e.currentTarget.dataset.latitude),
       name: e.currentTarget.dataset.name,
       address: e.currentTarget.dataset.address
+    })
+  },
+
+  /**
+   * 分享
+   */
+  shareDetailListener: function(){
+    this.setData({
+      showSharePop: true
+    })
+  },
+
+  /**
+   * 生成图片分享朋友圈
+   */
+  shareMomentListener: function(){
+    this.setData({
+      showShareModel: true
+    })
+  },
+
+  dialogClickListener: function(){
+    this.setData({
+      showSharePop: true
     })
   },
 

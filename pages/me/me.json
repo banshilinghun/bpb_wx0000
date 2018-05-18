@@ -5,6 +5,7 @@
     "amount-steps": "../../components/amount-steps/index",
     "share-popup": "../../components/share-popup/index",
     "dialog": "../../components/dialog/bpb-dialog",
-    "zan-toast": "../../components/toast/index"
+    "zan-toast": "../../components/toast/index",
+    "share-award": "../../components/share-award/index"
   }
 }

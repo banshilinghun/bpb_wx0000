@@ -9,7 +9,7 @@
       <image class='arrow' src='../../image/right-arrow.png'></image>
     </button>
     <view class='split-line'></view>
-    <button class="bpb-btn" open-type='share'>
+    <button class="bpb-btn" open-type='share' data-adId="{{ adId }}" bindtap='toggleBottomPopup'>
       <image class='moment' style='width:95rpx;height:95rpx;' src='../../image/share-icon.png'></image>
       <text class='share-content'>转发给好友或群聊</text>
       <image class='arrow' src='../../image/right-arrow.png'></image>

@@ -19,7 +19,16 @@ Page({
     rate: 0,
     stepsList: [],
     showGoodsDetail: false,
-    isShowToast: false  
+    isShowToast: false,
+    showSharePop: false,
+    //分享朋友圈数据
+    shareInfo: {
+      shareAvatar: '',
+      shareNickname: '',
+      awardMoney: '',
+      awardType: ''
+    },
+    showShareModel: false
   },
   onLoad: function () {
     //		console.log(app.globalData.uid);
@@ -445,6 +454,7 @@ Page({
       url: '../recommend/recommend?flag=recommend'
     })
   },
+
   actionClickListener: function (e) {//待收收益里面的按钮
     var that = this;
     //console.log(e.detail.step)
@@ -456,6 +466,7 @@ Page({
       })
     }
   },
+
   coupon: function (data) {//领取现金劵
     var that = this;
     console.log(data)
@@ -473,6 +484,14 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
+          that.setData({
+            shareInfo: {
+              shareAvatar: app.globalData.userInfo.avatarUrl,
+              shareNickname: app.globalData.userInfo.nickName,
+              awardMoney: data.amount,
+              awardType: data.type
+            },
+          })
           that.onShow();
           that.showToast(text)
           setTimeout(function () {
@@ -497,6 +516,22 @@ Page({
       }
     })
   },
+
+  /**
+   * 领取奖励后分享
+   */
+  dialogClickListener: function(){
+    this.setData({
+      showSharePop: true
+    })
+  },
+
+  shareMomentListener: function(){
+    this.setData({
+      showShareModel: true
+    })
+  },
+
   showToast(text) {
     console.log(text)
     Toast.setDefaultOptions({
