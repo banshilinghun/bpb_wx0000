@@ -2,6 +2,7 @@
     "navigationBarTitleText": "奔跑宝",
     "enablePullDownRefresh": true,
       "usingComponents": {
-        "bpb-follow": "../../components/follow/index"
+        "bpb-follow": "../../components/follow/index",
+        "bpb-reward": "../../components/reward/index"
       }
 }

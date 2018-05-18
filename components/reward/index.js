@@ -23,7 +23,7 @@ Component({
         var windowWidth = res.windowWidth;
         var windowHeight = res.windowHeight;
         var windowscale = windowHeight / windowWidth;//屏幕高宽比  
-        var imageWidth = windowWidth*0.736;
+        var imageWidth = windowWidth*0.6;
         var imageHeight = imageWidth*1.311;
         that.setData({
           imageWidth: imageWidth,

@@ -17,26 +17,19 @@ Page({
     autoplay: true,
     interval: 2000,
     duration: 500,
-    shareit: false
+    shareit: false,
+    reward: false
   },
 
-  onLoad: function () {
+  onLoad: function (options) {
+    var that=this;
     var loginFlag = app.globalData.login;
-    // if (loginFlag != 1) {
-    //   wx.showModal({
-    //     title: "提示",
-    //     content: "你还没有登录",
-    //     confirmText: "立即登录",
-    //     cancelText: "取消",
-    //     success: function (sure) {
-    //       if (sure.confirm) {
-    //         wx.navigateTo({
-    //           url: '../register/register'
-    //         })
-    //       }
-    //     }
-    //   })
-    // }
+    if (app.globalData.isFirst) {
+      that.setData({
+        reward: true
+      })
+    }
+    app.globalData.isFirst=false;
     this.judgeCanIUse();
   },
 

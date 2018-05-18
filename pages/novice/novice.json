@@ -1,0 +1,8 @@
+{
+   "navigationBarTitleText": "奔跑宝",
+   "enablePullDownRefresh": false,
+   "usingComponents": {
+    "dialog": "../../components/dialog/bpb-dialog",
+    "bpb-follow": "../../components/follow/index"
+  }
+}

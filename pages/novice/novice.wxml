@@ -1,0 +1,47 @@
+<view class='pageImg' style="width: {{imageWidth}}px; height: {{imageHeight}}px;">
+  <view class='headImg' style='left:50%;position: absolute;margin-left:-50rpx;top:{{headImgTop}}px'>
+    <image src='{{wx_avatar}}'></image>
+  </view>
+  <view class='nickNameCon' style='top:{{nickNameTop}}px'>
+    {{nickname}}
+  </view>
+  <view class='linkcon' style='top:{{linkconTop}}px'>
+    邀请你赚钱
+  </view>
+  <swiper class="swiper_container" vertical="true" autoplay="true" circular="true" interval="1000" display-multiple-items='4' style=' position: absolute;top:{{swiperTop}}px'>
+    <block wx:for="{{msgList}}" wx:key="item.index">
+      <swiper-item>
+        <view class="swiper_item">
+          <view class='nick_name'>{{item.nickname}}</view>
+           <view class='dian'>·········</view> 
+          <view class='mount'>
+          获得<text wx:if="{{item.type==1}}">新手</text>
+          <text wx:if="{{item.type==3}}">广告</text>
+          <text wx:if="{{item.type==2}}">推荐</text>奖励
+          {{item.amount}}元
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class='bpbImgCon' style='top:{{ bpbImgTop}}px'><image src='../../image/bpb_ad_text.png'></image></view>
+  <view class='joinImgCon' style='bottom: {{joinImgTop}}px'> <image src='../../image/join_img.png'></image></view>
+  <view class='registerCon'>
+        <form bindsubmit="formSubmit" report-submit="istrue">
+    <view class="input-area">
+      <view class="input-log">
+        <image class="userinfo-logIcon" src="{{logIcon}}"></image>
+        <input id="username" name="username" maxlength='11' type="number" placeholder="手机号码" bindinput="mobileInputEvent" placeholder-class="phcolor"/>
+      </view>
+      <view class="smsCode">
+        <image class="userinfo-verifiIcon" src="{{verifiIcon}}"></image>
+        <input id="smsCode" name="smsCode" maxlength='6' type="number" placeholder="短信验证码" placeholder-class="phcolor"/>
+        <button bindtap="getSmsCode" disabled="{{smsCodeDisabled}}" style="background-color:{{getSmsCodeBtnColor}};color:{{color}}" class="getSmsCodeBtn">{{getSmsCodeBtnTxt}}</button>
+      </view>
+    </view>
+    <view class="btn-area">
+      <button disabled="{{registDisabled}}" style="background-color:{{registBtnBgBgColor}}" formType="submit" loading="{{btnLoading}}"> {{registBtnTxt}} </button>
+    </view>
+  </form>
+  </view>
+</view>
