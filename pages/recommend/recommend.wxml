@@ -91,4 +91,4 @@
 <!-- 奖励分享 -->
 <share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showAwardModel }}'></share-award>
 
-<share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener'></share-popup>
+<share-popup showPop='{{ showSharePop }}' shareFriendType='{{ shareFriendType }}' bind:shareMoment='shareMomentListener'></share-popup>

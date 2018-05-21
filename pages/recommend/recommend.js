@@ -2,6 +2,7 @@
 const app = getApp();
 const timeUtil = require('../../utils/timeUtil.js');
 const Constant = require("../../utils/Constant.js");
+const shareUtil = require("../../utils/shareUtil.js");
 
 //活动或者推荐 推荐和活动的页面布局有变化
 const FLAG_ARRAY = ['active', 'recommend'];
@@ -81,7 +82,8 @@ Page({
       awardMoney: '',
       awardType: ''
     },
-    showAwardModel: false
+    showAwardModel: false,
+    shareFriendType: 'award'
   },
 
   /**
@@ -220,7 +222,7 @@ Page({
             shareInfo: {
               shareAvatar: app.globalData.userInfo.avatarUrl,
               shareNickname: app.globalData.userInfo.nickName,
-              awardMoney: data.amount,
+              awardMoney: that.data.GoatAward,
               awardType: 2
             },
           })
@@ -305,16 +307,16 @@ Page({
   onShareAppMessage: function (res) {
     console.log(res);
     if (res.from == 'button' && res.target.dataset.type == 'award') {
-      var shareTitle = '奔跑宝，私家车广告平台';
+      var shareTitle = shareUtil.getShareAwardTitle(this.data.shareInfo.awardMoney);
       var adid = -1;
-      var adimg = '../../image/bpbimg.jpg';
-      var desc = '拉上好友一起赚钱～';
+      var adimg = '../../image/share-award.png';
+      var desc = "拉上好友一起赚钱～";
       var shareType = Constant.shareAward;
     } else {
-      var shareTitle = '奔跑宝，私家车广告平台';
+      var shareTitle = shareUtil.getShareNormalTitle();
       var adid = -1;
-      var adimg = '../../image/bpbimg.jpg';
-      var desc = '拉上好友一起赚钱～';
+      var adimg = '../../image/share-normal.png';
+      var desc = "拉上好友一起赚钱～";
       var shareType = Constant.shareNormal;
     }
     return {

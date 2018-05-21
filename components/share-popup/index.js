@@ -13,6 +13,12 @@ Component({
     adId: {
       type: String,
       value: ''
+    },
+
+    //分享好友类型，normal-普通拉新，award-奖励， ad-广告
+    shareFriendType: {
+      type: String,
+      value: 'normal'
     }
   },
 

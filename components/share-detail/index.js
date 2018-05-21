@@ -247,6 +247,9 @@ Component({
             QRPath: res.tempFilePath
           })
           that.downloadAvatar();
+        },
+        fail: function () {
+          that.showErrorModel();
         }
       })
     },
@@ -263,6 +266,9 @@ Component({
             avatarPath: res.tempFilePath
           })
           that.downloadAdImage();
+        },
+        fail: function () {
+          that.showErrorModel();
         }
       })
     },
@@ -303,18 +309,16 @@ Component({
       let count = 0;
       let tempPathList = [];
       for (let avatar of that.data.joinAvatarList) {
+        if (avatar.indexOf('http:') != -1){
+          avatar = avatar.replace('http:', 'https:');
+        }
         wx.downloadFile({
           url: avatar,
           success: function (res) {
             tempPathList.push(res.tempFilePath);
-            count++;
-            console.log('count------------->>' + count);
-          },
-          fail: function () {
-            count++;
-            that.showErrorModel();
           },
           complete: function () {
+            count++;
             if (count == that.data.joinAvatarList.length) {
               that.setData({
                 joinPathList: tempPathList

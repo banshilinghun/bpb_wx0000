@@ -3,6 +3,7 @@ var formatLocation = util.formatLocation;
 var getDistance = util.getDistance;
 const app = getApp();
 const Constant = require("../../utils/Constant.js");
+const shareUtil = require("../../utils/shareUtil.js");
 
 Page({
   data: {
@@ -490,14 +491,14 @@ Page({
     if (res.from == 'button') {
       var shareTitle = res.target.dataset.adname;
       var adid = res.target.dataset.adid;
-      var adimg = that.data.banners[0];
+      var adimg = that.data.adInfo.share_img;
       var desc = '全新广告，躺着赚钱，速速来抢～';
       var shareType = Constant.shareAd;
     }
     if (res.from == 'menu') {
-      var shareTitle = '奔跑宝，私家车广告平台';
+      var shareTitle = shareUtil.getShareNormalTitle();
       var adid = -1;
-      var adimg = '../../image/bpbimg.jpg';
+      var adimg = '../../image/share-normal.png';
       var desc = '拉上好友一起赚钱～';
       var shareType = Constant.shareNormal;
     }
