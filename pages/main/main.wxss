@@ -211,18 +211,18 @@ color:#ff555c;
 position:relative;
 align-items:center;
 justify-content:center;
-background-color:#1AAD19;
-color:#FFFFFF;
-font-size:36rpx;
+   background: url("https://wxapi.benpaobao.com/static/app_img/home_banner1.png") no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
 
 }
 .banner2 {
 position:relative;
 align-items:center;
 justify-content:center;
-background-color:#FBBD19;
-color:#FFFFFF;
-font-size:36rpx;
+background: url("https://wxapi.benpaobao.com/static/app_img/home_banner2.png") no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
 }
 swiper{
   height: 300rpx;

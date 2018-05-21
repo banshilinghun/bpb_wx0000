@@ -33,6 +33,16 @@ Page({
     app.globalData.isFirst=false;
     this.judgeCanIUse();
     this.checkUpdate();
+    wx.getSystemInfo({
+      success: function (res) {
+        // console.log(res.windowWidth)  屏幕宽度
+        //console.log(res)
+        that.setData({
+          windowWidth: res.windowWidth,
+          bannerHeight: res.windowWidth * 0.33867
+        })
+      }
+    })
   },
 
   /**

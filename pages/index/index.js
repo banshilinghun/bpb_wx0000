@@ -10,6 +10,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     //如果是小程序码进入，处理逻辑
+    console.log(options)
     if (options.scene) {
       console.log(options);
       console.log(decodeURIComponent(options.scene));
