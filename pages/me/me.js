@@ -422,7 +422,7 @@ Page({
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index',
+      path: 'pages/index/index?' + '&user_id=' + app.globalData.uid,
       imageUrl: adimg,
       success: function (res) {
         console.log('share------success')
