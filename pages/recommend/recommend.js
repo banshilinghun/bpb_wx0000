@@ -254,6 +254,10 @@ Page({
    * 提醒好友
    */
   remindFriendClick: function () {
+    var that = this;
+    if (!that.data.remindBtnAbled){
+      return;
+    }
     wx.showToast({
       title: '✌️邀请成功',
     })
