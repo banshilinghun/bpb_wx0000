@@ -89,7 +89,7 @@
           <view wx:if="{{item.state==1}}" bindtap="go" data-name="{{item.id}}">
             <text class="time timetxt2">即将开始</text>
           </view>
-          <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.img_url}}" class='wtwabt' open-type="share">
+          <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.share_img}}" class='wtwabt' open-type="share">
             <image src='../../image/shareicon.png'></image>
             <view class='sharetext'>分享</view>
           </button>

@@ -3,7 +3,7 @@
 <!-- 底部弹出框 -->
 <popup show="{{ showPop }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
   <view class="pop-example__container pop-example__container--bottom">
-    <button class="bpb-btn" open-type='share' data-adId="{{ adId }}" data-type='award' bindtap='toggleBottomPopup'>
+    <button class="bpb-btn" open-type='share' data-adId="{{ adId }}" data-type='{{ shareFriendType }}' bindtap='toggleBottomPopup'>
       <image class='moment' style='width:95rpx;height:95rpx;' src='../../image/share-icon.png'></image>
       <text class='share-content'>转发给好友或群聊</text>
       <image class='arrow' src='../../image/right-arrow.png'></image>

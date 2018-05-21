@@ -2,6 +2,7 @@
 //获取应用实例
 var util = require("../../utils/util.js");
 const Constant = require("../../utils/Constant.js");
+const shareUtil = require("../../utils/shareUtil.js");
 var app = getApp()
 Page({
   data: {
@@ -315,9 +316,9 @@ Page({
       var shareType = Constant.shareAd;
     }
     if (res.from == 'menu') {
-      var shareTitle = '奔跑宝，私家车广告平台';
+      var shareTitle = shareUtil.getShareNormalTitle();
       var adid = -1;
-      var adimg = '../../image/bpbimg.jpg';
+      var adimg = '../../image/share-normal.png';
       var desc = '拉上好友一起赚钱～';
       var shareType = Constant.shareNormal;
     }

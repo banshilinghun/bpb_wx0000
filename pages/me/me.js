@@ -2,6 +2,7 @@
 var util = require("../../utils/util.js");
 const Toast = require('../../components/toast/toast');
 const Constant = require("../../utils/Constant.js");
+const shareUtil = require("../../utils/shareUtil.js");
 const app = getApp()
 Page({
   data: {
@@ -29,7 +30,8 @@ Page({
       awardMoney: '',
       awardType: ''
     },
-    showShareModel: false
+    showShareModel: false,
+    shareFriendType: 'normal'
   },
   onLoad: function () {
     //		console.log(app.globalData.uid);
@@ -416,15 +418,15 @@ Page({
   //分享
   onShareAppMessage: function (res) {
     if (res.from == 'button') {
-      var shareTitle = '奔跑宝，私家车广告平台';
+      var shareTitle = shareUtil.getShareAwardTitle(shareInfo.awardMoney);
       var adid = -1;
       var adimg = '../../image/bpbimg.jpg';
       var desc = '拉上好友一起赚钱～';
       var shareType = Constant.shareAward;
     }else{
-      var shareTitle = '奔跑宝，私家车广告平台';
+      var shareTitle = shareUtil.getShareNormalTitle();
       var adid = -1;
-      var adimg = '../../image/bpbimg.jpg';
+      var adimg = '../../image/share-normal.png';
       var desc = '拉上好友一起赚钱～';
       var shareType = Constant.shareNormal;
     }
