@@ -12,21 +12,42 @@ Page({
     //如果是小程序码进入，处理逻辑
     console.log(options)
     if (options.scene) {
-      console.log(options);
       console.log(decodeURIComponent(options.scene));
+      var scene = decodeURIComponent(options.scene);
+      function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = scene.match(reg);
+        if (r != null) {
+          return unescape(r[2])
+        }
+        return null
+      }
+      that.setData({
+        user_id: getQueryString('user_id') ? getQueryString('user_id'):null,
+        type: getQueryString('type') ? getQueryString('type') : null,
+        adId: getQueryString('adId') ? getQueryString('adId') : null
+      })
     }else{
       that.setData({
-        shareAd: options
+        user_id: options.user_id ? options.user_id:null,
+        type: options.type ? options.type:null,
+        adId: options.adId ? options.adId : null
       })
     }
+    //console.log(that.data.user_id)
   },
 
   onShow: function () {
     var that = this;
-    var shareAd = this.data.shareAd;
+    var recommendId = that.data.user_id;
+    console.log(recommendId)
+    var type = that.data.type;
+    console.log(type)
+    var adId = that.data.adId;
+    console.log(adId)
     wx.getUserInfo({
       success: function (infoRes) {
-        console.log(infoRes)
+        //console.log(infoRes)
         app.globalData.userInfo = infoRes.userInfo
         that.setData({
           userInfo: infoRes.userInfo,
@@ -72,24 +93,17 @@ Page({
                     //								console.log(res.data.data);	 ·
                     app.globalData.checkStaus = res.data.data.status;
                     app.globalData.isFirst = res.data.data.isFirst;
+                    app.globalData.recomId = that.data.user_id;
+                    app.globalData.recomType = that.data.type;
+                    app.globalData.recomAdId = that.data.adId;
                     if (res.data.data.phone) {
                       app.globalData.login = 1;
                     } else {
                       app.globalData.login = 0;
                     }
-                    if (shareAd.adId == -1 || shareAd.adId == undefined) {
-                      wx.switchTab({
-                        url: '../main/main'
-                      })
-                      // wx.redirectTo({
-                      //   url: '../share/share',
-                      // })
-                    } else {
-                      wx.redirectTo({
-                        url: '../details/details?adId=' + shareAd.adId + "&share=1"
-                      })
-                    }
-                   
+                    wx.switchTab({
+                      url: '../main/main'
+                    })                        
                   } else {
                     wx.showModal({
                       title: '提示',

@@ -21,7 +21,8 @@ Page({
   },
   onLoad(options) {
     //console.log(e.title)
-    app.globalData.shareInviteId = options.inviteId;
+    //app.globalData.shareInviteId = options.inviteId;
+    console.log(options)
     this.getWxCode()
     var that=this;
     wx.getSystemInfo({
@@ -49,7 +50,7 @@ Page({
         })
       }
     })
-    that.recommend_reward_list(238)
+    that.recommend_reward_list(options.recomId)
   
   },
   getWxCode: function () {
@@ -71,6 +72,9 @@ Page({
     var that = this;
     //console.log(param)
     var registData = {};
+    if (app.globalData.recomId){
+      registData.recommender_userid = app.globalData.recomId;
+    }
     registData.phone_no = param.username.trim();
     registData.verify_code = param.smsCode.trim();
     //registData.password = param.password.trim();

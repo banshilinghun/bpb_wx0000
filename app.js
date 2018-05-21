@@ -20,6 +20,9 @@ App({
     userInfo: null,
     login: 0,
     uid:'',
+    recomId:null,
+    recomType:null,
+    recomAdId:null,
     header: {
       'Cookie': '',
       'content-type': 'application/json'

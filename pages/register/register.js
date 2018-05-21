@@ -47,6 +47,9 @@ Page({
     var that = this;
     //console.log(param)
     var registData = {};
+    if (app.globalData.recomId) {
+      registData.recommender_userid = app.globalData.recomId;
+    }
     registData.phone_no = param.username.trim();
     registData.verify_code = param.smsCode.trim();
     //registData.password = param.password.trim();

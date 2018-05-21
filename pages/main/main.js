@@ -25,6 +25,22 @@ Page({
   onLoad: function (options) {
     var that=this;
     var loginFlag = app.globalData.login;
+    var recomType = app.globalData.recomType;
+    var recomAdId = app.globalData.recomAdId;
+    var recomId = app.globalData.recomId;
+    //recomType 1:拉新 2:奖励 3:广告
+    if (recomType==3){
+      wx.navigateTo({
+        url: '../details/details?adId=' + recomAdId
+      })
+    }
+    if (recomType == 1 || recomType == 2){
+      if (loginFlag==0){
+        wx.navigateTo({
+          url: '../novice/novice?recomId=' + recomId
+        })
+      }
+    }
     if (app.globalData.isFirst) {
       that.setData({
         reward: true
@@ -159,26 +175,6 @@ Page({
 
                 }
               }
-
-              // if (res.data.data.check != null) {
-
-              //   if (nowdate >= res.data.data.check.date && res.data.data.check.status == 0) { //可以检测了
-              //     this.setData({
-              //       canCheck: 1
-              //     })
-              //   }
-              //   if (res.data.data.check.status == 1) { //检测审核中
-              //     this.setData({
-              //       canCheck: 2
-              //     })
-              //   }
-              //   if (res.data.data.check.status == 2) { //检测未通过
-              //     this.setData({
-              //       canCheck: 3
-              //     })
-              //   }
-              // }
-
               res.data.data.begin_date = res.data.data.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
               res.data.data.end_date = res.data.data.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
               if (res.data.data.check != null) {
