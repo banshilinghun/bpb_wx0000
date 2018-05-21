@@ -44,5 +44,6 @@ App({
     else {
       return domainStatus ? 'http://192.168.1.114:8000/' : 'http://192.168.1.142:8000/';
     }
+
   }
 })

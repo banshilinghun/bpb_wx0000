@@ -75,6 +75,7 @@ Page({
           if (res.data.code == 1000) {
             app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
             app.globalData.session_id = res.data.data.session_id;
+            app.globalData.uid = res.data.data.uid;
             wx.showToast({
               title: "手机号验证成功"
             })

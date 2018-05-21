@@ -67,6 +67,7 @@ Page({
                     //								var param = JSON.stringify(res.data.data);
                     //app.globalData.session_id = res.data.data.session_id;
                     app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
+                    app.globalData.uid = res.data.data.uid;
                     //								console.log(res.data.data);	 ·
                     app.globalData.checkStaus = res.data.data.status;
                     app.globalData.isFirst = res.data.data.isFirst;
