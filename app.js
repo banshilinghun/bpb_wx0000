@@ -8,7 +8,7 @@ const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
 const release = false;
 const release2 = true;
 //true-ken测试地址，false-小彭测试地址
-const domainStatus = true;
+const domainStatus = false;
 
 App({
   onLaunch: function () {
@@ -19,6 +19,7 @@ App({
   globalData: {
     userInfo: null,
     login: 0,
+    uid:'',
     header: {
       'Cookie': '',
       'content-type': 'application/json'
@@ -36,11 +37,13 @@ App({
   getApiUrl: function(){
     if(release){
       return releaseDomain;
-    }else if (release2) {
+    }
+  else if(release2){
       return releaseDomain2;
-    }else{
+    }
+    else {
       return domainStatus ? 'http://192.168.1.114:8000/' : 'http://192.168.1.142:8000/';
     }
-     
+
   }
 })
