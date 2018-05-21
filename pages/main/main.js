@@ -323,15 +323,13 @@ Page({
       var desc = '拉上好友一起赚钱～';
     }
     console.log(res);
-    //console.log(this)
     var that = this
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?adId=' + adid,
+      path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid,
       imageUrl: adimg,
       success: function (res) {
-        console.log('share------success')
         wx.showToast({
           title: '分享成功',
           icon: '',

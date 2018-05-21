@@ -254,6 +254,10 @@ Page({
    * 提醒好友
    */
   remindFriendClick: function () {
+    var that = this;
+    if (!that.data.remindBtnAbled){
+      return;
+    }
     wx.showToast({
       title: '✌️邀请成功',
     })
@@ -295,6 +299,35 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    var shareTitle = '奔跑宝，私家车广告平台';
+    var adid = -1;
+    var adimg = '../../image/bpbimg.jpg';
+    var desc = '拉上好友一起赚钱～';
+    var that = this
+    return {
+      title: shareTitle,
+      desc: desc,
+      path: 'pages/index/index?' + '&user_id=' + app.globalData.uid,
+      imageUrl: adimg,
+      success: function (res) {
+        console.log('share------success')
+        wx.showToast({
+          title: '分享成功',
+          icon: '',
+          image: '',
+          duration: 0,
+          mask: true,
+        })
+      },
+      fail: function () {
+        wx.showToast({
+          title: '分享取消',
+          icon: '',
+          image: '',
+          duration: 0,
+          mask: true,
+        })
+      }
+    }
   }
 })

@@ -3,15 +3,15 @@
 <!-- 底部弹出框 -->
 <popup show="{{ showPop }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
   <view class="pop-example__container pop-example__container--bottom">
-    <button class="bpb-btn" catchtap="toggleShareMoments">
-      <image class='moment' src='../../image/moments.png'></image>
-      <text class='share-content'>生成分享图到朋友圈邀请好友加入</text>
-      <image class='arrow' src='../../image/right-arrow.png'></image>
-    </button>
-    <view class='split-line'></view>
     <button class="bpb-btn" open-type='share' data-adId="{{ adId }}" bindtap='toggleBottomPopup'>
       <image class='moment' style='width:95rpx;height:95rpx;' src='../../image/share-icon.png'></image>
       <text class='share-content'>转发给好友或群聊</text>
+      <image class='arrow' src='../../image/right-arrow.png'></image>
+    </button>
+    <view class='split-line'></view>
+    <button class="bpb-btn" catchtap="toggleShareMoments">
+      <image class='moment' src='../../image/moments.png'></image>
+      <text class='share-content'>生成分享图到朋友圈邀请好友加入</text>
       <image class='arrow' src='../../image/right-arrow.png'></image>
     </button>
     <view class='divider'></view>

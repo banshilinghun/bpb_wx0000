@@ -434,7 +434,7 @@ Component({
       ctx.setFillStyle(THEME_COLOR);
       ctx.setFontSize(24);
       ctx.setTextAlign('left');
-      ctx.fillText(that.data.incomeMoney + '元', incomeMoneyWidthScale * windowWidth, incomeMoneyHeightScale * windowHeight);
+      ctx.fillText(that.data.incomeMoney == 0 ? '300+' : that.data.incomeMoney + '元', incomeMoneyWidthScale * windowWidth, incomeMoneyHeightScale * windowHeight);
 
       //绘制间隔
       ctx.setFillStyle(DIVIDER_COLOR);
@@ -461,18 +461,18 @@ Component({
         let radius = joinAvatarRadiusScale * 0.5 * windowWidth;
 
         //先绘制圆，裁剪成圆形图片
-        ctx.save();
-        ctx.beginPath();
-        //圆的原点x坐标，y坐标，半径，起始弧度，终止弧度
-        ctx.arc(x, y, radius, 0, 2 * Math.PI);
-        ctx.setStrokeStyle(WHITE);
-        ctx.stroke();
-        ctx.clip();
+        // ctx.save();
+        // ctx.beginPath();
+        // //圆的原点x坐标，y坐标，半径，起始弧度，终止弧度
+        // ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        // ctx.setStrokeStyle(WHITE);
+        // ctx.stroke();
+        // ctx.clip();
         //绘制头像 图片路径，左上角x坐标，左上角y坐标，宽，高
         let imageX = windowWidth * joinAvatarWidthBaseScale + joinAvatarRadiusScale * windowWidth * key + joinAvatarDividerScale * windowWidth * key;
         let imageY = joinAvatarHeightBaseScale * windowHeight;
         ctx.drawImage(avatarTempPath, imageX, imageY, 2 * radius, 2 * radius);
-        ctx.restore();
+        // ctx.restore();
       }
 
       console.log('start--------draw----->');

@@ -503,7 +503,7 @@ Page({
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?adId=' + adid,
+      path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid,
       imageUrl: adimg,
       success: function (res) {
         setTimeout(function(){
