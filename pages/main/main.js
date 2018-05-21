@@ -1,6 +1,7 @@
 //main.js
 //获取应用实例
 var util = require("../../utils/util.js");
+const Constant = require("../../utils/Constant.js");
 var app = getApp()
 Page({
   data: {
@@ -305,19 +306,21 @@ Page({
       var adid = res.target.dataset.adid;
       var adimg = res.target.dataset.adimg;
       var desc = '全新广告，躺着赚钱，速速来抢～';
+      var shareType = Constant.shareAd;
     }
     if (res.from == 'menu') {
       var shareTitle = '奔跑宝，私家车广告平台';
       var adid = -1;
       var adimg = '../../image/bpbimg.jpg';
       var desc = '拉上好友一起赚钱～';
+      var shareType = Constant.shareNormal;
     }
     console.log(res);
     var that = this
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid,
+      path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
       success: function (res) {
         wx.showToast({

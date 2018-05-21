@@ -2,6 +2,8 @@ const util = require("../../utils/util.js");
 var formatLocation = util.formatLocation;
 var getDistance = util.getDistance;
 const app = getApp();
+const Constant = require("../../utils/Constant.js");
+
 Page({
   data: {
     joinListUrl: app.globalData.baseUrl + 'app/get/ad_joined_users',
@@ -490,12 +492,14 @@ Page({
       var adid = res.target.dataset.adid;
       var adimg = that.data.banners[0];
       var desc = '全新广告，躺着赚钱，速速来抢～';
+      var shareType = Constant.shareAd;
     }
     if (res.from == 'menu') {
       var shareTitle = '奔跑宝，私家车广告平台';
       var adid = -1;
       var adimg = '../../image/bpbimg.jpg';
       var desc = '拉上好友一起赚钱～';
+      var shareType = Constant.shareNormal;
     }
     //console.log(res);
     //console.log(this)
@@ -503,7 +507,7 @@ Page({
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid,
+      path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
       success: function (res) {
         setTimeout(function(){

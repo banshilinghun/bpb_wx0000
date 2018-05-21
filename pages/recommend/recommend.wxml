@@ -27,7 +27,7 @@
       <view class='divider'></view>
       <view class='share-container'>
         <view class='share-wrapper'>
-          <button class='share-layout' open-type='share' style='background-color: #fff'>
+          <button class='share-layout' open-type='share' style='background-color: #fff' data-type='normal'>
             <image class='share-icon' src='../../image/share-friend.png'></image>
             <text class='share-text share-color'>微信好友</text>
           </button>

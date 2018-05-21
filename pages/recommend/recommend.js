@@ -1,6 +1,7 @@
 // pages/recommend/recommend.js
 const app = getApp();
 const timeUtil = require('../../utils/timeUtil.js');
+const Constant = require("../../utils/Constant.js");
 
 //活动或者推荐 推荐和活动的页面布局有变化
 const FLAG_ARRAY = ['active', 'recommend'];
@@ -258,6 +259,9 @@ Page({
     if (!that.data.remindBtnAbled){
       return;
     }
+    that.setData({
+      showSharePop: true
+    })
     wx.showToast({
       title: '✌️邀请成功',
     })
@@ -298,16 +302,25 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-    var shareTitle = '奔跑宝，私家车广告平台';
-    var adid = -1;
-    var adimg = '../../image/bpbimg.jpg';
-    var desc = '拉上好友一起赚钱～';
-    var that = this
+  onShareAppMessage: function (res) {
+    console.log(res);
+    if (res.from == 'button' && res.target.dataset.type == 'award') {
+      var shareTitle = '奔跑宝，私家车广告平台';
+      var adid = -1;
+      var adimg = '../../image/bpbimg.jpg';
+      var desc = '拉上好友一起赚钱～';
+      var shareType = Constant.shareAward;
+    } else {
+      var shareTitle = '奔跑宝，私家车广告平台';
+      var adid = -1;
+      var adimg = '../../image/bpbimg.jpg';
+      var desc = '拉上好友一起赚钱～';
+      var shareType = Constant.shareNormal;
+    }
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?' + '&user_id=' + app.globalData.uid,
+      path: 'pages/index/index?' + '&user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
       success: function (res) {
         console.log('share------success')

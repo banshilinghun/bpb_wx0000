@@ -1,6 +1,7 @@
 // me.js
 var util = require("../../utils/util.js");
 const Toast = require('../../components/toast/toast');
+const Constant = require("../../utils/Constant.js");
 const app = getApp()
 Page({
   data: {
@@ -414,11 +415,19 @@ Page({
   },
   //分享
   onShareAppMessage: function (res) {
-    var shareTitle = '奔跑宝，私家车广告平台';
-    var adid = -1;
-    var adimg = '../../image/bpbimg.jpg';
-    var desc = '拉上好友一起赚钱～';
-    var that = this
+    if (res.from == 'button') {
+      var shareTitle = '奔跑宝，私家车广告平台';
+      var adid = -1;
+      var adimg = '../../image/bpbimg.jpg';
+      var desc = '拉上好友一起赚钱～';
+      var shareType = Constant.shareAward;
+    }else{
+      var shareTitle = '奔跑宝，私家车广告平台';
+      var adid = -1;
+      var adimg = '../../image/bpbimg.jpg';
+      var desc = '拉上好友一起赚钱～';
+      var shareType = Constant.shareNormal;
+    }
     return {
       title: shareTitle,
       desc: desc,
