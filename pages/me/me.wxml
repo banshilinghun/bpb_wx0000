@@ -84,4 +84,4 @@
 
 <share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener'></share-popup>
 
-<share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showShareModel }}'></share-award>
+<share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showShareModel }}' bind:hideDialog='hideDialogListener'></share-award>

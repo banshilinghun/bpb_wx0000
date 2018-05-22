@@ -29,7 +29,7 @@ Page({
       shareNickname: '',
       awardMoney: '',
       awardType: ''
-    },
+    }, 
     showShareModel: false,
     shareFriendType: 'normal',
     shareTitle:''
@@ -44,7 +44,7 @@ Page({
     //		uidData.user_id = app.globalData.uid;
     var loginFlag = app.globalData.login;
     this.setData({
-      loginFlag: loginFlag
+      loginFlag: loginFlag,
     })
 
     function compare(property) {
@@ -422,9 +422,9 @@ Page({
   onShareAppMessage: function (res) {
     var that = this;
     if (res.from == 'button') {
-      var shareTitle = shareUtil.getShareAwardTitle(shareInfo.awardMoney);
+      var shareTitle = shareUtil.getShareAwardTitle(that.data.shareInfo.awardMoney);
       var adid = -1;
-      var adimg = '../../image/bpbimg.jpg';
+      var adimg = '../../image/share-award.png';
       var desc = '拉上好友一起赚钱～';
       var shareType = Constant.shareAward;
     } else {
@@ -558,6 +558,15 @@ Page({
   shareMomentListener: function () {
     this.setData({
       showShareModel: true
+    })
+  },
+
+  /**
+   * 隐藏奖励弹框
+   */
+  hideDialogListener: function(){
+    this.setData({
+      showGoodsDetail: false
     })
   },
 
