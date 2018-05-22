@@ -31,7 +31,8 @@ Page({
       awardType: ''
     },
     showShareModel: false,
-    shareFriendType: 'normal'
+    shareFriendType: 'normal',
+    shareTitle:''
   },
   onLoad: function () {
     //		console.log(app.globalData.uid);
@@ -58,6 +59,7 @@ Page({
       data: {},
       header: app.globalData.header,
       success: res => {
+        wx.stopPullDownRefresh();
         if (res.data.code == 1000) {
           //console.log(res)
           var arr = res.data.data.coupon_info;
@@ -220,6 +222,7 @@ Page({
         }
       },
       fail: res => {
+        wx.stopPullDownRefresh();
         wx.showModal({
           title: '提示',
           showCancel: false,
@@ -483,7 +486,7 @@ Page({
     var loginFlag = app.globalData.login;
     var couponData = {};
     couponData.coupon_id_list = data.idList;
-    var text = "恭喜！你的奖励" + data.amount + "元已放入余额账户里";
+    var text = "奖励" + data.amount + "元已放入余额里";
     if (loginFlag == 1) {
       wx.request({
         url: app.globalData.baseUrl + 'app/get/collect_account_coupon',
@@ -500,10 +503,11 @@ Page({
               },
             })
             that.onShow();
-            that.showToast(text)
+            //that.showToast(text)
             setTimeout(function () {
               that.setData({
-                showGoodsDetail: true
+                showGoodsDetail: true,
+                shareTitle:text
               })
             }, 1500)
           } else {

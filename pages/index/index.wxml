@@ -7,7 +7,7 @@
     <view class='title0'>提示</view>
     <view class="title2">微信登录需要获取您的用户信息，请允许授权</view>
     <view class="title4">
-      <button class='wtwabt2' open-type='getUserInfo' bindgetuserinfo="userInfoHandler">立即授权</button>
+      <button class='wtwabt2' open-type='getUserInfo' bindgetuserinfo="userInfoHandler">立即获取</button>
     </view>
   </view>
 </view>

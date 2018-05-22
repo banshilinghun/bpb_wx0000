@@ -153,7 +153,8 @@ Page({
     console.log(e.detail.userInfo)
     if (e.detail.userInfo==undefined){
       wx.showToast({
-        title: "请允许授权"
+        title: "请允许授权",
+        icon: 'loading'
       })
     }else{
       that.setData({

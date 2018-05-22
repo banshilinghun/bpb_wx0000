@@ -1,5 +1,5 @@
 <view class='taewtw' wx:if='{{loginStaus==0}}' bindtap="goRegister">立马注册，躺着赚钱，速速来抢</view>
-<view class='taewtw' wx:if='{{loginStaus==1}}' bindtap="goAuth">立马注册，躺着赚钱，速速来抢</view>
+<view class='taewtw' wx:if='{{loginStaus==1}}' bindtap="goAuth">立马认证，躺着赚钱，速速来抢</view>
 <view>
   <view class="page-section page-section-spacing swiper">
     <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>

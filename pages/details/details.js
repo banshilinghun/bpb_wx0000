@@ -106,6 +106,7 @@ Page({
       }
     })
     var loginFlag = app.globalData.login;
+    console.log(loginFlag)
     var checkStaus = app.globalData.checkStaus;
     if (loginFlag!=1){//没有登录
         that.setData({
