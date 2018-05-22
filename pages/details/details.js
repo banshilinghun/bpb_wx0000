@@ -474,6 +474,7 @@ Page({
    * 生成图片分享朋友圈
    */
   shareMomentListener: function(){
+    console.log('shareMomentListener------------->')
     this.setData({
       showShareModel: true
     })

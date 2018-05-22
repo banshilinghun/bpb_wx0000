@@ -417,6 +417,7 @@ Page({
   },
   //分享
   onShareAppMessage: function (res) {
+    var that = this;
     if (res.from == 'button') {
       var shareTitle = shareUtil.getShareAwardTitle(shareInfo.awardMoney);
       var adid = -1;
@@ -436,13 +437,15 @@ Page({
       path: 'pages/index/index?' + '&user_id=' + app.globalData.uid,
       imageUrl: adimg,
       success: function (res) {
-        console.log('share------success')
         wx.showToast({
           title: '分享成功',
           icon: '',
           image: '',
           duration: 0,
           mask: true,
+        })
+        that.setData({
+          showGoodsDetail: false
         })
       },
       fail: function () {

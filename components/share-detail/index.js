@@ -189,6 +189,7 @@ Component({
      */
     _propertyChange: function (newVal, oldVal) {
       console.log('_propertyChange---------->' + newVal);
+      console.log('targetSharePath------------->' + this.data.targetSharePath);
       if (newVal) {
         if (!this.data.targetSharePath) {
           this.shareMoments();
@@ -338,6 +339,9 @@ Component({
       wx.showModal({
         title: '提示',
         content: content,
+      })
+      this.setData({
+        showShareModel: false
       })
     },
 
@@ -511,7 +515,7 @@ Component({
           })
         },
         complete: function () {
-          wx.hideLoading();
+          that.hideLoading();
         }
       }, this)
     },

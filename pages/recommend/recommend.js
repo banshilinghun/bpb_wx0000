@@ -82,7 +82,7 @@ Page({
       shareNickname: '',
       awardMoney: '',
       awardType: ''
-    },
+    }, 
     showAwardModel: false,
     shareFriendType: 'award'
   },
@@ -195,9 +195,15 @@ Page({
    * 分享到朋友圈
    */
   shareMoments: function () {
-    this.setData({
-      showNewShare: true
-    })
+    if (this.data.shareFriendType == 'award'){
+      this.setData({
+        showAwardModel: true
+      })
+    } else if (this.data.shareFriendType == 'normal'){
+      this.setData({
+        showNewShare: true
+      })
+    }
   },
 
   /**
@@ -333,9 +339,20 @@ Page({
   },
 
   /**
+   * 点击生成分享图片按钮事件回调，图片保存成功隐藏奖励弹出框
+   */
+  hideDialogListener: function(){
+    console.log('hideDialogListener----------->');
+    this.setData({
+      showDialog: false
+    })
+  },
+
+  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
+    var that = this;
     console.log(res);
     if (res.from == 'button' && res.target.dataset.type == 'award') {
       var shareTitle = shareUtil.getShareAwardTitle(this.data.shareInfo.awardMoney);
@@ -363,6 +380,9 @@ Page({
           image: '',
           duration: 0,
           mask: true,
+        })
+        that.setData({
+          showDialog: false
         })
       },
       fail: function () {
