@@ -544,6 +544,14 @@ Page({
     }
   },
 
+  /**
+   * 隐藏弹框
+   */
+  hideDialogListener: function(){
+    console.log('hideDialogListener------------->')
+    this.showGoodsDetail();
+  },
+
   showGoodsDetail: function () {
     this.setData({
       showGoodsDetail: !this.data.showGoodsDetail

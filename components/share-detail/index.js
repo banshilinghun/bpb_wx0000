@@ -513,6 +513,10 @@ Component({
             targetSharePath: res.tempFilePath,
             realShow: true,
           })
+          //设置事件回调
+          var myEventDetail = {};// detail对象，提供给事件监听函数
+          var myEventOption = {} // 触发事件的选项
+          that.triggerEvent('hideDialog', myEventDetail, myEventOption);
         },
         complete: function () {
           that.hideLoading();

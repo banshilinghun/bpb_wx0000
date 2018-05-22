@@ -51,7 +51,7 @@
         <view class='get-award-wrapper'>
           <text class='get-award-text dark-color' wx:if='{{ GoatAward != 0 }}'>未领取奖励</text>
           <text class='high-light-text theme-color bold-font' decode='{{true}}' wx:if='{{ GoatAward != 0 }}'>&ensp;{{ GoatAward }}元</text>
-            <text class='remind-text dark-color' wx:if='{{ GoatAward == 0 }}'>暂无可领取的奖励</text>
+          <text class='remind-text dark-color' wx:if='{{ GoatAward == 0 }}'>暂无可领取的奖励</text>
           <button class='btn-recommend btn-common {{ awardBtnAbled ? "btn-enable" : "btn-disable" }}' bindtap='receiveAwardClick'>领取</button>
         </view>
         <view class='split-line'></view>
@@ -80,13 +80,13 @@
             <view class='recommendList-line' wx:if='{{index != (recommendList.length - 1)}}'></view>
           </view>
         </view>
-        <view class='divider' style='background-color: #fff'></view>
       </view>
+      <view class='divider'></view>
     </view>
   </view>
 </view>
 
-<dialog showDialog='{{ showDialog }}' bind:btnclick='dialogClickListener' title='提示' description='分享给好友吧分享给好友吧分享给好' btnText='分享'/>
+<dialog showDialog='{{ showDialog }}' bind:btnclick='dialogClickListener' title='提示' description='分享给好友吧分享给好友吧分享给好' btnText='分享' />
 
 <!-- 拉新分享 -->
 <share-moment avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' showShareModel='{{ showNewShare }}'></share-moment>
