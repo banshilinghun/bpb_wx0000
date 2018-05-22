@@ -67,7 +67,6 @@ Page({
     //未完成人数
     unfinishedNumber: 0,
     awardBtnAbled: true,
-    remindBtnAbled: true,
     //二维码 path
     qrPath: null,
     showDialog: false,
@@ -162,7 +161,6 @@ Page({
             unfinishedNumber: unFinishNumber,
             unReceiveList: tempGoatList,
             awardBtnAbled: GoatAward == 0 ? false : true,
-            remindBtnAbled: unFinishNumber == 0 ? false : true
           })
           console.log('awardBtnAbled----------->' + that.data.awardBtnAbled);
         } else {
@@ -276,25 +274,29 @@ Page({
    */
   remindFriendClick: function () {
     var that = this;
-    // if (!that.data.remindBtnAbled){
-    //   return;
-    // }
-    wx.request({
-      url: NOTIFY_URL,
-      header: app.globalData.header,
-      success: function(res){
-        if(res.data.code == 1000){
-          wx.showToast({
-            title: '提醒成功'
-          })
-        }else{
+    if (that.data.unfinishedNumber != 0){
+      wx.request({
+        url: NOTIFY_URL,
+        header: app.globalData.header,
+        success: function (res) {
+          if (res.data.code == 1000) {
+            wx.showToast({
+              title: '提醒成功'
+            })
+          } else {
+            that.showModel(res.data.msg);
+          }
+        },
+        fail: function (res) {
           that.showModel(res.data.msg);
         }
-      },
-      fail: function(res){
-        that.showModel(res.data.msg);
-      }
-    })
+      })
+    }else{
+      that.setData({
+        shareFriendType: 'normal',
+        showSharePop: true
+      })
+    }
   },
 
   showModel: function (tip) {
@@ -306,6 +308,7 @@ Page({
 
   dialogClickListener: function () {
     this.setData({
+      shareFriendType: 'award',
       showSharePop: true
     })
   },
