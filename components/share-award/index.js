@@ -378,6 +378,51 @@ Component({
       })
     },
 
+    /**
+     * 检测相册权限
+     */
+    requestAlbumScope: function(){
+      // 获取用户信息
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.writePhotosAlbum']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            that.requestUserInfo();
+          } else {
+            wx.authorize({
+              scope: 'scope.writePhotosAlbum',
+              success(res) {
+                that.requestUserInfo();
+              },
+              fail() {
+                wx.showModal({
+                  title: '提示',
+                  content: '获取用户信息失败',
+                  success: function (res) {
+                    if (res.confirm) {
+                      wx.openSetting({
+                        success: function (res) {
+                          if (res.authSetting['scope.userLocation']) {
+                            that.requestUserInfo();
+                          } else {
+                            consoleUtil.log('用户未同意获取用户信息权限');
+                          }
+                        }
+                      })
+                    }
+                  }
+                })
+              }
+            })
+          }
+        }
+      })
+    },
+
+    saveImageToPhotosAlbum: function(){
+
+    },
+
     closeModel: function () {
       this.hideDialog();
     },
