@@ -12,6 +12,8 @@ const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
 const RECOMMEND_URL = app.globalData.baseUrl + 'app/get/recommendation_user';
 //领取奖励
 const COUPON_URL = app.globalData.baseUrl + 'app/get/collect_account_coupon';
+//发送一键邀请通知
+const NOTIFY_URL = app.globalData.baseUrl + 'app/send/recommender_notify';
 
 Page({
 
@@ -48,7 +50,7 @@ Page({
     //顶部图片
     topImage: {
       imageHeight: 120,
-      imageSrc: 'http://img4.imgtn.bdimg.com/it/u=3075400102,2168157850&fm=27&gp=0.jpg'
+      imageSrc: 'https://wxapi.benpaobao.com/static/app_img/recommend-icon.png'
     },
     //一键提醒 view 宽度
     remindWidth: 0,
@@ -206,7 +208,23 @@ Page({
   receiveAwardClick: function () {
     var that = this;
     console.log(that.data.unReceiveList);
+    //判断领取状态
     if (!that.data.awardBtnAbled){
+      return;
+    }
+    if (app.globalData.login == 0){
+      wx.showModal({
+        title: '温馨提示',
+        content: '登录后可领取奖励',
+        confirmText: "登录",
+        success: function(res){
+          if(res.confirm){
+            wx.navigateTo({
+              url: '../register/register',
+            })
+          }
+        }
+      })
       return;
     }
     var couponData = {};
@@ -258,14 +276,24 @@ Page({
    */
   remindFriendClick: function () {
     var that = this;
-    if (!that.data.remindBtnAbled){
-      return;
-    }
-    that.setData({
-      showSharePop: true
-    })
-    wx.showToast({
-      title: '✌️邀请成功',
+    // if (!that.data.remindBtnAbled){
+    //   return;
+    // }
+    wx.request({
+      url: NOTIFY_URL,
+      header: app.globalData.header,
+      success: function(res){
+        if(res.data.code == 1000){
+          wx.showToast({
+            title: '提醒成功'
+          })
+        }else{
+          that.showModel(res.data.msg);
+        }
+      },
+      fail: function(res){
+        that.showModel(res.data.msg);
+      }
     })
   },
 

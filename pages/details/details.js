@@ -490,7 +490,7 @@ Page({
     //console.log(res)
     var that=this;
     if (res.from == 'button') {
-      var shareTitle = res.target.dataset.adname;
+      var shareTitle = that.data.adInfo.name;
       var adid = res.target.dataset.adid;
       var adimg = that.data.adInfo.share_img;
       var desc = '全新广告，躺着赚钱，速速来抢～';

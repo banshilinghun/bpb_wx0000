@@ -103,7 +103,7 @@ Page({
                     }
                     wx.switchTab({
                       url: '../main/main'
-                    })                        
+                    })                       
                   } else {
                     wx.showModal({
                       title: '提示',
