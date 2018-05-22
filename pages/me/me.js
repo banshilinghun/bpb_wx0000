@@ -69,7 +69,7 @@ Page({
           var recommendHasAward = false;
           //var recommendShow = 1;
           var recommendIdList = [];
-          var claimAmoun=0;
+          var claimAmoun = 0;
           var stepList = [];
           for (var i = 0; i < arr.length; i++) {
             if (arr[i].type == 2) {//推荐奖励
@@ -79,7 +79,7 @@ Page({
               if (arr[i].status == 2) {
                 recommendHasAward = true;
                 recommendIdList.push(arr[i].coupon_id)
-                claimAmoun +=  Number (arr[i].amount)
+                claimAmoun += Number(arr[i].amount)
               }
             } else if (arr[i].type == 1) {//新手礼包
               if (arr[i].status == 1) {
@@ -165,7 +165,7 @@ Page({
           }
           //console.log(recommendAmount)
           //console.log(stepList)
-        
+
           if (recommendList.length == 0) {
             stepList.push({
               current: false,
@@ -423,7 +423,7 @@ Page({
       var adimg = '../../image/bpbimg.jpg';
       var desc = '拉上好友一起赚钱～';
       var shareType = Constant.shareAward;
-    }else{
+    } else {
       var shareTitle = shareUtil.getShareNormalTitle();
       var adid = -1;
       var adimg = '../../image/share-normal.png';
@@ -480,64 +480,75 @@ Page({
 
   coupon: function (data) {//领取现金劵
     var that = this;
-    console.log(data)
+    var loginFlag = app.globalData.login;
     var couponData = {};
     couponData.coupon_id_list = data.idList;
-    // that.setData({
-    //   count: 2000,
-    //   toastText: '恭喜！你的奖励150元已放入余额账户里'
-    // });
-    
-    var text = "恭喜！你的奖励" + data.amount +"元已放入余额账户里";
-    wx.request({
-      url: app.globalData.baseUrl + 'app/get/collect_account_coupon',
-      data: couponData,
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          that.setData({
-            shareInfo: {
-              shareAvatar: app.globalData.userInfo.avatarUrl,
-              shareNickname: app.globalData.userInfo.nickName,
-              awardMoney: data.amount,
-              awardType: data.type
-            },
-          })
-          that.onShow();
-          that.showToast(text)
-          setTimeout(function () {
+    var text = "恭喜！你的奖励" + data.amount + "元已放入余额账户里";
+    if (loginFlag == 1) {
+      wx.request({
+        url: app.globalData.baseUrl + 'app/get/collect_account_coupon',
+        data: couponData,
+        header: app.globalData.header,
+        success: res => {
+          if (res.data.code == 1000) {
             that.setData({
-              showGoodsDetail: true
+              shareInfo: {
+                shareAvatar: app.globalData.userInfo.avatarUrl,
+                shareNickname: app.globalData.userInfo.nickName,
+                awardMoney: data.amount,
+                awardType: data.type
+              },
             })
-          }, 1500)
-        } else {
+            that.onShow();
+            that.showToast(text)
+            setTimeout(function () {
+              that.setData({
+                showGoodsDetail: true
+              })
+            }, 1500)
+          } else {
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: res.data.msg
+            });
+          }
+        },
+        fail: res => {
           wx.showModal({
             title: '提示',
             showCancel: false,
-            content: res.data.msg
+            content: '网络错误'
           });
         }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
-  },
-
+      })
+    } else {
+      wx.showModal({
+        title: "提示",
+        content: "你还没有登录",
+        confirmText: "立即登录",
+        cancelText: "取消",
+        success: function (sure) {
+          if (sure.confirm) {
+            wx.navigateTo({
+              url: '../register/register'
+            })
+          }
+        }
+      })
+    }
+    },
+ 
   /**
    * 领取奖励后分享
    */
-  dialogClickListener: function(){
+  dialogClickListener: function () {
     this.setData({
       showSharePop: true
     })
   },
 
-  shareMomentListener: function(){
+  shareMomentListener: function () {
     this.setData({
       showShareModel: true
     })
