@@ -182,7 +182,7 @@ Component({
      * 下载二维码到本地
      */
     downloadQrCode: function (imageUrl) {
-      console.log(imageUrl);
+      console.log('award------------>' + imageUrl);
       var that = this;
       wx.downloadFile({
         url: imageUrl,
@@ -208,6 +208,10 @@ Component({
         title: '提示',
         content: content,
       })
+      //改变状态
+      this.setData({
+        showShareModel: false
+      })
     },
 
     showLoading: function(){
@@ -224,6 +228,7 @@ Component({
      * 下载头像
      */
     downloadAvatar: function () {
+      console.log('award--avatar-------->' + this.data.avatar)
       var that = this;
       wx.downloadFile({
         url: that.data.avatar,
@@ -346,7 +351,7 @@ Component({
           })
         },
         complete: function () {
-          this.hideLoading();
+          that.hideLoading();
         }
       }, this)
     },
@@ -359,6 +364,10 @@ Component({
       wx.saveImageToPhotosAlbum({
         filePath: that.data.targetSharePath,
         success: function () {
+          //设置事件回调
+          var myEventDetail = {};// detail对象，提供给事件监听函数
+          var myEventOption = {} // 触发事件的选项
+          that.triggerEvent('hideDialog', myEventDetail, myEventOption);
           wx.showModal({
             title: '提示',
             content: '✌️图片保存成功，\n快去分享到朋友圈吧',

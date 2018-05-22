@@ -199,6 +199,10 @@ Component({
         title: '提示',
         content: content,
       })
+      //改变状态，不然不会触发 _propertyChange
+      this.setData({
+        showShareModel: false
+      })
     },
 
     showLoading: function () {

@@ -51,7 +51,7 @@
         <view class='get-award-wrapper'>
           <text class='get-award-text dark-color' wx:if='{{ GoatAward != 0 }}'>未领取奖励</text>
           <text class='high-light-text theme-color bold-font' decode='{{true}}' wx:if='{{ GoatAward != 0 }}'>&ensp;{{ GoatAward }}元</text>
-            <text class='remind-text dark-color' wx:if='{{ GoatAward == 0 }}'>当前没有可领取的奖励</text>
+            <text class='remind-text dark-color' wx:if='{{ GoatAward == 0 }}'>暂无可领取的奖励</text>
           <button class='btn-recommend btn-common {{ awardBtnAbled ? "btn-enable" : "btn-disable" }}' bindtap='receiveAwardClick'>领取</button>
         </view>
         <view class='split-line'></view>
@@ -59,9 +59,10 @@
           <view style='width:{{ remindWidth }}px'>
             <text class='remind-text dark-color' wx:if='{{ unfinishedNumber != 0 }}'>{{unfinishedNumber}}个好友未完成，完成后奖励可达到</text>
             <text class='high-light-text theme-color bold-font' decode='{{true}}' wx:if='{{ unfinishedNumber != 0 }}'>&ensp;{{ remainAward }}元</text>
-            <text class='remind-text dark-color' wx:if='{{ unfinishedNumber == 0 }}'>暂时还没有可提醒的好友</text>
+            <text class='remind-text dark-color' wx:if='{{ unfinishedNumber == 0 }}'>暂无可提醒的好友</text>
           </view>
-          <button class='btn-recommend btn-common {{ remindBtnAbled ? "btn-enable" : "btn-disable" }}' bindtap='remindFriendClick'>一键提醒好友</button>
+          <button class='btn-recommend btn-common {{ unfinishedNumber != 0 ? "btn-enable" : "btn-disable" }}' bindtap='remindFriendClick' wx:if='{{ unfinishedNumber != 0 }}'>一键提醒好友</button>
+          <button class='btn-recommend btn-common {{ unfinishedNumber == 0 ? "btn-enable" : "btn-disable" }}' bindtap='remindFriendClick' wx:if='{{ unfinishedNumber == 0 }}'>邀请好友加入</button>
         </view>
       </view>
       <view class='divider'></view>
@@ -91,6 +92,6 @@
 <share-moment avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' showShareModel='{{ showNewShare }}'></share-moment>
 
 <!-- 奖励分享 -->
-<share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showAwardModel }}'></share-award>
+<share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showAwardModel }}' bind:hideDialog='hideDialogListener'></share-award>
 
 <share-popup showPop='{{ showSharePop }}' shareFriendType='{{ shareFriendType }}' bind:shareMoment='shareMomentListener'></share-popup>
