@@ -507,12 +507,10 @@ Page({
             })
             that.onShow();
             //that.showToast(text)
-            setTimeout(function () {
-              that.setData({
-                showGoodsDetail: true,
-                shareTitle:text
-              })
-            }, 1500)
+            that.setData({
+              showGoodsDetail: true,
+              shareTitle: text
+            })
           } else {
             wx.showModal({
               title: '提示',
