@@ -20,7 +20,7 @@ Page({
     total: '0.00',
     rate: 0,
     stepsList: [],
-    showGoodsDetail: false,
+    showGoodsDetail: true,
     isShowToast: false,
     showSharePop: false,
     //分享朋友圈数据
@@ -36,6 +36,14 @@ Page({
   },
   onLoad: function () {
     //		console.log(app.globalData.uid);
+    that.setData({
+      shareInfo: {
+        shareAvatar: app.globalData.userInfo.avatarUrl,
+        shareNickname: app.globalData.userInfo.nickName,
+        awardMoney: data.amount,
+        awardType: data.type
+      },
+    })
   },
   onShow: function () {
     //
@@ -421,7 +429,7 @@ Page({
   onShareAppMessage: function (res) {
     var that = this;
     if (res.from == 'button') {
-      var shareTitle = shareUtil.getShareAwardTitle(that.data.shareInfo.awardMoney);
+      var shareTitle = shareUtil.getShareAwardTitle(that.data.shareInfo.awardMoney, that.data.shareInfo.awardType);
       var adid = -1;
       var adimg = '../../image/share-award.png';
       var desc = '拉上好友一起赚钱～';

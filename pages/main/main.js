@@ -309,7 +309,7 @@ Page({
   //分享
   onShareAppMessage: function (res) {
     if (res.from == 'button') {
-      var shareTitle = res.target.dataset.adname;
+      var shareTitle = shareUtil.getShareAdTitle(res.target.dataset.adname);
       var adid = res.target.dataset.adid;
       var adimg = res.target.dataset.adimg;
       var desc = '全新广告，躺着赚钱，速速来抢～';

@@ -69,7 +69,7 @@ Page({
     awardBtnAbled: true,
     //二维码 path
     qrPath: null,
-    showDialog: true,
+    showDialog: false,
     showSharePop: false,
 
     //分享数据
@@ -111,15 +111,6 @@ Page({
     that.setTitle();
     that.setShareInfo();
     that.getRecommendInfo();
-    //TODO
-    that.setData({
-      shareInfo: {
-        shareAvatar: app.globalData.userInfo.avatarUrl,
-        shareNickname: app.globalData.userInfo.nickName,
-        awardMoney: 300,
-        awardType: 2
-      },
-    })
   },
 
   setShareInfo: function () {
@@ -376,7 +367,7 @@ Page({
     var that = this;
     console.log(res);
     if (res.from == 'button' && res.target.dataset.type == 'award') {
-      var shareTitle = shareUtil.getShareAwardTitle(this.data.shareInfo.awardMoney);
+      var shareTitle = shareUtil.getShareAwardTitle(that.data.shareInfo.awardMoney, that.data.shareInfo.awardType);
       var adid = -1;
       var adimg = '../../image/share-award.png';
       var desc = "拉上好友一起赚钱～";
