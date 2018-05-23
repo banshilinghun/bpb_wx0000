@@ -349,6 +349,10 @@ Component({
             targetSharePath: res.tempFilePath,
             realShow: true,
           })
+          //设置事件回调
+          var myEventDetail = {};// detail对象，提供给事件监听函数
+          var myEventOption = {} // 触发事件的选项
+          that.triggerEvent('hideDialog', myEventDetail, myEventOption);
         },
         complete: function () {
           that.hideLoading();
@@ -360,53 +364,43 @@ Component({
      * 保存到相册
      */
     saveImageTap: function () {
-      var that = this;
-      wx.saveImageToPhotosAlbum({
-        filePath: that.data.targetSharePath,
-        success: function () {
-          //设置事件回调
-          var myEventDetail = {};// detail对象，提供给事件监听函数
-          var myEventOption = {} // 触发事件的选项
-          that.triggerEvent('hideDialog', myEventDetail, myEventOption);
-          wx.showModal({
-            title: '提示',
-            content: '✌️图片保存成功，\n快去分享到朋友圈吧',
-            showCancel: false
-          })
-          that.hideDialog();
-        }
-      })
+      var that = this; 
+      that.requestAlbumScope();
     },
 
     /**
      * 检测相册权限
      */
     requestAlbumScope: function(){
+      var that = this;
       // 获取用户信息
       wx.getSetting({
         success: res => {
           if (res.authSetting['scope.writePhotosAlbum']) {
             // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-            that.requestUserInfo();
+            that.saveImageToPhotosAlbum();
           } else {
             wx.authorize({
               scope: 'scope.writePhotosAlbum',
               success(res) {
-                that.requestUserInfo();
+                that.saveImageToPhotosAlbum();
               },
               fail() {
                 wx.showModal({
                   title: '提示',
-                  content: '获取用户信息失败',
+                  content: '你需要授权才能保存图片到相册',
                   success: function (res) {
                     if (res.confirm) {
                       wx.openSetting({
                         success: function (res) {
-                          if (res.authSetting['scope.userLocation']) {
-                            that.requestUserInfo();
+                          if (res.authSetting['scope.writePhotosAlbum']) {
+                            that.saveImageToPhotosAlbum();
                           } else {
-                            consoleUtil.log('用户未同意获取用户信息权限');
+                            consoleUtil.log('用户未同意获取用户信息权限-------->success');
                           }
+                        },
+                        fail: function(){
+                          consoleUtil.log('用户未同意获取用户信息权限-------->fail');
                         }
                       })
                     }
@@ -420,7 +414,18 @@ Component({
     },
 
     saveImageToPhotosAlbum: function(){
-
+      var that = this;
+      wx.saveImageToPhotosAlbum({
+        filePath: that.data.targetSharePath,
+        success: function () {
+          wx.showModal({
+            title: '提示',
+            content: '✌️图片保存成功，\n快去分享到朋友圈吧',
+            showCancel: false
+          })
+          that.hideDialog();
+        }
+      })
     },
 
     closeModel: function () {

@@ -36,7 +36,6 @@ Page({
   },
   onLoad: function () {
     //		console.log(app.globalData.uid);
-
   },
   onShow: function () {
     //

@@ -172,6 +172,7 @@
 .recommend-friend-list{
   margin-left: 40rpx;
   margin-right: 40rpx;
+  margin-bottom: 20rpx;
 }
 
 .recommend-list-item {

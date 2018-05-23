@@ -71,20 +71,21 @@ Page({
     qrPath: null,
     showDialog: false,
     showSharePop: false,
-    
+
     //分享数据
     shareAvatar: '',
     shareNickname: '',
     showNewShare: false,
-    shareId: '', 
+    shareId: '',
     shareInfo: {
       shareAvatar: '',
       shareNickname: '',
       awardMoney: '',
       awardType: ''
-    }, 
+    },
     showAwardModel: false,
-    shareFriendType: 'award'
+    shareFriendType: 'award',
+    shareTitle: ''
   },
 
   /**
@@ -112,7 +113,7 @@ Page({
     that.getRecommendInfo();
   },
 
-  setShareInfo: function(){
+  setShareInfo: function () {
     this.setData({
       shareAvatar: app.globalData.userInfo.avatarUrl,
       shareNickname: app.globalData.userInfo.nickName
@@ -130,7 +131,7 @@ Page({
           var recommendInfo = dataBean.data.recommended_info;
           console.log(recommendInfo);
           var tempList = [];
-          var tempGoatList= [];
+          var tempGoatList = [];
           var totalAward = 0;
           var reachableAward = 0;
           var GoatAward = 0;
@@ -152,7 +153,7 @@ Page({
               unFinishNumber += 1;
             }
           }
-          
+
           that.setData({
             recommendList: tempList,
             totalAword: totalAward,
@@ -170,7 +171,7 @@ Page({
       fail: function (res) {
         that.showModel(res.data.msg);
       },
-      complete: function(){
+      complete: function () {
         wx.stopPullDownRefresh();
       }
     })
@@ -195,11 +196,11 @@ Page({
    * 分享到朋友圈
    */
   shareMoments: function () {
-    if (this.data.shareFriendType == 'award'){
+    if (this.data.shareFriendType == 'award') {
       this.setData({
         showAwardModel: true
       })
-    } else if (this.data.shareFriendType == 'normal'){
+    } else if (this.data.shareFriendType == 'normal') {
       this.setData({
         showNewShare: true
       })
@@ -212,17 +213,18 @@ Page({
   receiveAwardClick: function () {
     var that = this;
     console.log(that.data.unReceiveList);
+
     //判断领取状态
-    if (!that.data.awardBtnAbled){
+    if (!that.data.awardBtnAbled) {
       return;
     }
-    if (app.globalData.login == 0){
+    if (app.globalData.login == 0) {
       wx.showModal({
-        title: '温馨提示',
+        title: '提示',
         content: '登录后可领取奖励',
         confirmText: "登录",
-        success: function(res){
-          if(res.confirm){
+        success: function (res) {
+          if (res.confirm) {
             wx.navigateTo({
               url: '../register/register',
             })
@@ -233,7 +235,7 @@ Page({
     }
     var couponData = {};
     couponData.coupon_id_list = that.data.unReceiveList;
-    var text = "恭喜！你的奖励" + that.data.GoatAward + "元已放入余额账户里";
+    var text = "奖励" + that.data.GoatAward + "元已放入余额里";
     wx.request({
       url: COUPON_URL,
       data: couponData,
@@ -248,15 +250,13 @@ Page({
               awardType: 2
             },
           })
+          //执行分享
+          that.setData({
+            showDialog: true,
+            shareTitle: text
+          })
           //重新请求接口
           that.getRecommendInfo();
-          that.showToast(text)
-          //执行分享
-          setTimeout(function () {
-            that.setData({
-              showDialog: true
-            })
-          }, 1500)
         } else {
           wx.showModal({
             title: '提示',
@@ -280,7 +280,7 @@ Page({
    */
   remindFriendClick: function () {
     var that = this;
-    if (that.data.unfinishedNumber != 0){
+    if (that.data.unfinishedNumber != 0) {
       wx.request({
         url: NOTIFY_URL,
         header: app.globalData.header,
@@ -297,7 +297,7 @@ Page({
           that.showModel(res.data.msg);
         }
       })
-    }else{
+    } else {
       that.setData({
         shareFriendType: 'normal',
         showSharePop: true
@@ -309,6 +309,7 @@ Page({
     wx.showModal({
       title: '提示',
       content: tip,
+      showCancel: false
     })
   },
 
@@ -326,7 +327,7 @@ Page({
     this.shareMoments();
   },
 
-  showLoadingToast: function(){
+  showLoadingToast: function () {
     wx.showToast({
       title: '奔跑中...',
       icon: 'loading'
@@ -341,7 +342,7 @@ Page({
   /**
    * 点击生成分享图片按钮事件回调，图片保存成功隐藏奖励弹出框
    */
-  hideDialogListener: function(){
+  hideDialogListener: function () {
     console.log('hideDialogListener----------->');
     this.setData({
       showDialog: false

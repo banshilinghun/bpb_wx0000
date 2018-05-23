@@ -513,6 +513,10 @@ Component({
             targetSharePath: res.tempFilePath,
             realShow: true,
           })
+          //设置事件回调
+          var myEventDetail = {};// detail对象，提供给事件监听函数
+          var myEventOption = {} // 触发事件的选项
+          that.triggerEvent('hideDialog', myEventDetail, myEventOption);
         },
         complete: function () {
           that.hideLoading();
@@ -524,6 +528,57 @@ Component({
      * 保存到相册
      */
     saveImageTap: function () {
+      var that = this;
+      that.requestAlbumScope();
+    },
+
+
+    /**
+     * 检测相册权限
+     */
+    requestAlbumScope: function () {
+      var that = this;
+      // 获取用户信息
+      wx.getSetting({
+        success: res => {
+          if (res.authSetting['scope.writePhotosAlbum']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            that.saveImageToPhotosAlbum();
+          } else {
+            wx.authorize({
+              scope: 'scope.writePhotosAlbum',
+              success(res) {
+                that.saveImageToPhotosAlbum();
+              },
+              fail() {
+                wx.showModal({
+                  title: '提示',
+                  content: '你需要授权才能保存图片到相册',
+                  success: function (res) {
+                    if (res.confirm) {
+                      wx.openSetting({
+                        success: function (res) {
+                          if (res.authSetting['scope.writePhotosAlbum']) {
+                            that.saveImageToPhotosAlbum();
+                          } else {
+                            consoleUtil.log('用户未同意获取用户信息权限-------->success');
+                          }
+                        },
+                        fail: function () {
+                          consoleUtil.log('用户未同意获取用户信息权限-------->fail');
+                        }
+                      })
+                    }
+                  }
+                })
+              }
+            })
+          }
+        }
+      })
+    },
+
+    saveImageToPhotosAlbum: function () {
       var that = this;
       wx.saveImageToPhotosAlbum({
         filePath: that.data.targetSharePath,

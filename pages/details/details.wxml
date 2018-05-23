@@ -160,4 +160,5 @@
   adTime='{{ adTime }}'
   showShareModel='{{ showShareModel }}'
   adId='{{adId}}'
+  bind:hideDialog='hideDialogListener'
 ></share-detail>
