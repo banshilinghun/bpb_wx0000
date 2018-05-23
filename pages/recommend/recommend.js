@@ -84,7 +84,8 @@ Page({
       awardType: ''
     },
     showAwardModel: false,
-    shareFriendType: 'award'
+    shareFriendType: 'award',
+    shareTitle: ''
   },
 
   /**
@@ -212,13 +213,14 @@ Page({
   receiveAwardClick: function () {
     var that = this;
     console.log(that.data.unReceiveList);
+
     //判断领取状态
     if (!that.data.awardBtnAbled) {
       return;
     }
     if (app.globalData.login == 0) {
       wx.showModal({
-        title: '温馨提示',
+        title: '提示',
         content: '登录后可领取奖励',
         confirmText: "登录",
         success: function (res) {
@@ -233,7 +235,7 @@ Page({
     }
     var couponData = {};
     couponData.coupon_id_list = that.data.unReceiveList;
-    var text = "恭喜！你的奖励" + that.data.GoatAward + "元已放入余额账户里";
+    var text = "奖励" + that.data.GoatAward + "元已放入余额里";
     wx.request({
       url: COUPON_URL,
       data: couponData,
@@ -248,13 +250,13 @@ Page({
               awardType: 2
             },
           })
-          //重新请求接口
-          that.getRecommendInfo();
-          that.showToast(text)
           //执行分享
           that.setData({
-            showDialog: true
+            showDialog: true,
+            shareTitle: text
           })
+          //重新请求接口
+          that.getRecommendInfo();
         } else {
           wx.showModal({
             title: '提示',

@@ -549,7 +549,9 @@ Page({
    */
   hideDialogListener: function(){
     console.log('hideDialogListener------------->')
-    this.showGoodsDetail();
+    this.setData({
+      showGoodsDetail: false
+    });
   },
 
   showGoodsDetail: function () {

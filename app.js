@@ -40,13 +40,10 @@ App({
   getApiUrl: function(){
     if(release){
       return releaseDomain;
-    }
-  else if(release2){
+    }else if(release2){
       return releaseDomain2;
-    }
-    else {
+    }else {
       return domainStatus ? 'http://192.168.1.114:8000/' : 'http://192.168.1.142:8000/';
     }
-
   }
 })
