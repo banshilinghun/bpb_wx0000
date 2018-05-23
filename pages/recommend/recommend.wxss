@@ -30,6 +30,7 @@
   padding-left: 40rpx;
   padding-right: 40rpx;
   padding-bottom: 20rpx;
+  margin-top: 20rpx;
 }
 
 .rule-title {
@@ -211,9 +212,11 @@
 
 .time {
   font-size: 26rpx;
+  right: 0;
   color: #666;
   position: absolute;
-  right: 20rpx;
+  min-width: 80rpx;
+  text-align: center;
 }
 
 .divider{

@@ -32,7 +32,7 @@
             <text class='share-text share-color'>微信好友</text>
           </button>
         </view>
-        <view class='share-wrapper' bindtap='shareMoments'>
+        <view class='share-wrapper' bindtap='shareMomentNormalClick'>
           <view class='share-layout'>
             <image class='share-icon' src='../../image/moment.png'></image>
             <text class='share-text share-color'>微信朋友圈</text>
@@ -75,13 +75,13 @@
             <!-- {{item.wx_avatar}} -->
             <image class='avatar' src='{{ item.wx_avatar }}'></image>
             <text class='nickname'>{{ item.nickname }}</text>
-            <text class='install-ad'>已安装广告</text>
-            <text class='time'>{{ item.register_date }}</text>
+            <text class='install-ad'>{{ item.register_date? '已安装广告' : '未安装广告'}}</text>
+            <text class='time'>{{ item.date? item.date : '- -' }}</text>
             <view class='recommendList-line' wx:if='{{index != (recommendList.length - 1)}}'></view>
           </view>
         </view>
       </view>
-      <view class='divider'></view>
+      <view class='divider' wx:if='{{ recommendList.length != 0 && recommendList }}'></view>
     </view>
   </view>
 </view>

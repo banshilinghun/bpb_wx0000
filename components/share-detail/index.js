@@ -412,11 +412,17 @@ Component({
       ctx.setFontSize(12);
       ctx.setTextAlign('left');
       ctx.fillText(that.data.joinNumber + '人', joinNumberWidthScale * windowWidth, joinNumberHeightScale * windowHeight);
+
       //邀请
       ctx.setFillStyle(NORMAL_COLOR);
       ctx.setFontSize(16);
-      ctx.setTextAlign('left');
-      ctx.fillText(that.data.detailStr.invite, inviteWidthScale * windowWidth, inviteHeightScale * windowHeight);
+      ctx.setTextAlign('left'); 
+      if (wx.canIUse('canvasContext.measureText')){
+        let metrics = ctx.measureText(stringUtil.substringStr(that.data.nickname));
+        ctx.fillText(that.data.detailStr.invite, nicknameWidthScale * windowWidth + metrics.width + 10, inviteHeightScale * windowHeight);
+      }else{
+        ctx.fillText(that.data.detailStr.invite, inviteWidthScale * windowWidth, inviteHeightScale * windowHeight);
+      }
 
       //-----------------------------------------绘制加粗文字
       //绘制广告名称
