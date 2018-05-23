@@ -19,7 +19,7 @@
   position: fixed;
   top: 50%;
   width: 80%;
-  min-height: 320rpx;
+  min-height: 350rpx;
   left: 10%;
   margin-top: -160rpx;
   background: #fff;
@@ -30,7 +30,7 @@
 
 .title0{
   text-align: center;
-  font-size:40rpx;
+  font-size:36rpx;
   color: #FF555C;
   padding-top:20rpx;
 
@@ -58,7 +58,7 @@ font-size:32rpx;
 .goodsdetail .title4 {
   width: 100%;
   position: absolute;
-  bottom: 20rpx;
+  bottom: 30rpx;
   color: #3c3c3c;
 }
 

@@ -18,11 +18,11 @@ Page({
     verifiIcon: "../../image/sz1.png",
     istrue: true,
     wx_code: app.globalData.code,
+    reward: false
   },
   onLoad(options) {
     //console.log(e.title)
     //app.globalData.shareInviteId = options.inviteId;
-    console.log(options)
     this.getWxCode()
     var that=this;
     wx.getSystemInfo({
@@ -51,6 +51,12 @@ Page({
       }
     })
     that.recommend_reward_list(options.recomId)
+    if (app.globalData.isFirst) {
+      that.setData({
+        reward: true
+      })
+    }
+    app.globalData.isFirst = false;
   
   },
   getWxCode: function () {
