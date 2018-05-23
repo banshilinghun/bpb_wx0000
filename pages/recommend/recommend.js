@@ -69,6 +69,7 @@ Page({
     awardBtnAbled: true,
     //二维码 path
     qrPath: null,
+    //领奖弹框
     showDialog: false,
     showSharePop: false,
 

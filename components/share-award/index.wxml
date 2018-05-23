@@ -4,7 +4,7 @@
 
   <view class="share-model" wx:if="{{ realShow }}">
     <view class="mask" bindtap="hideDialog"></view>
-    <view class="share-conetent">
+    <view class="share-conetent" style='position:{{ positionStatus }}'>
       <image class='share-image' style='width:{{ imageWidth }}px;height:{{ imageHeight }}px' src='{{ targetSharePath }}'></image>
       <button class='btn-save-local' bindtap='saveImageTap'>保存分享图</button>
     </view>

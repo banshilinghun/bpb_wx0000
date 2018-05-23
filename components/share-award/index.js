@@ -75,6 +75,11 @@ Component({
       value: 3
     },
 
+    positionStatus: {
+      type: String,
+      value: 'fixed'
+    },
+
     //隐藏显示，会触发事件
     showShareModel: {
       type: Boolean,

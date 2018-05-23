@@ -32,6 +32,7 @@ Page({
     }, 
     showShareModel: false,
     shareFriendType: 'normal',
+    positionStatus: 'absolute',
     shareTitle:''
   },
   onLoad: function () {
