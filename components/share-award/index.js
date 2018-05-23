@@ -89,6 +89,7 @@ Component({
   data: {
     detailStr: {
       invite: '你的好友邀请你加入',
+      nickInvite: '邀请你加入',
       bpbMini: '奔跑宝小程序',
       clickToMini: '(长按进入赚钱)',
       awardContent: '开车不顺手赚广告费是你的损失!'
@@ -134,13 +135,7 @@ Component({
     _propertyChange: function (newVal, oldVal) {
       console.log('_propertyChange---------->' + newVal);
       if (newVal) {
-        if (!this.data.targetSharePath){
-          this.shareMoments();
-        }else{
-          this.setData({
-            realShow: true
-          })
-        }
+        this.shareMoments();
       }
     },
 
@@ -193,15 +188,15 @@ Component({
           })
           that.downloadAvatar();
         },
-        fail: function(){
+        fail: function () {
           that.showErrorModel('网络错误');
         }
       })
     },
 
-    showErrorModel: function(content){
+    showErrorModel: function (content) {
       this.hideLoading();
-      if(!content){
+      if (!content) {
         content = '网络错误';
       }
       wx.showModal({
@@ -214,13 +209,13 @@ Component({
       })
     },
 
-    showLoading: function(){
+    showLoading: function () {
       wx.showLoading({
         title: '奔跑中🏃...',
       })
     },
 
-    hideLoading: function(){
+    hideLoading: function () {
       wx.hideLoading();
     },
 
@@ -238,7 +233,7 @@ Component({
           })
           that.drawImage();
         },
-        fail: function(){
+        fail: function () {
           that.showErrorModel('网络错误');
         }
       })
@@ -286,7 +281,15 @@ Component({
       ctx.setFillStyle(GRAY_COLOR);
       ctx.setFontSize(16);
       ctx.setTextAlign('left');
-      ctx.fillText(that.data.detailStr.invite, inviteTextScale * windowWidth, inviteTextHeightScale * windowHeight);
+      if (wx.canIUse('canvasContext.measureText')) {
+        let metrics = ctx.measureText(stringUtil.substringStr(that.data.nickname));
+        ctx.setFillStyle(THEME_COLOR);
+        ctx.fillText(stringUtil.substringStr(that.data.nickname), inviteTextScale * windowWidth, inviteTextHeightScale * windowHeight);
+        ctx.setFillStyle(GRAY_COLOR);
+        ctx.fillText(that.data.detailStr.nickInvite, inviteTextScale * windowWidth + metrics.width + 10, inviteTextHeightScale * windowHeight);
+      } else {
+        ctx.fillText(that.data.detailStr.invite, inviteTextScale * windowWidth, inviteTextHeightScale * windowHeight);
+      }
 
       //绘制昵称
       ctx.setFillStyle(WHITE);
@@ -364,14 +367,14 @@ Component({
      * 保存到相册
      */
     saveImageTap: function () {
-      var that = this; 
+      var that = this;
       that.requestAlbumScope();
     },
 
     /**
      * 检测相册权限
      */
-    requestAlbumScope: function(){
+    requestAlbumScope: function () {
       var that = this;
       // 获取用户信息
       wx.getSetting({
@@ -399,7 +402,7 @@ Component({
                             consoleUtil.log('用户未同意获取用户信息权限-------->success');
                           }
                         },
-                        fail: function(){
+                        fail: function () {
                           consoleUtil.log('用户未同意获取用户信息权限-------->fail');
                         }
                       })
@@ -413,7 +416,7 @@ Component({
       })
     },
 
-    saveImageToPhotosAlbum: function(){
+    saveImageToPhotosAlbum: function () {
       var that = this;
       wx.saveImageToPhotosAlbum({
         filePath: that.data.targetSharePath,

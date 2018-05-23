@@ -69,7 +69,7 @@ Page({
     awardBtnAbled: true,
     //二维码 path
     qrPath: null,
-    showDialog: false,
+    showDialog: true,
     showSharePop: false,
 
     //分享数据
@@ -111,6 +111,15 @@ Page({
     that.setTitle();
     that.setShareInfo();
     that.getRecommendInfo();
+    //TODO
+    that.setData({
+      shareInfo: {
+        shareAvatar: app.globalData.userInfo.avatarUrl,
+        shareNickname: app.globalData.userInfo.nickName,
+        awardMoney: 300,
+        awardType: 2
+      },
+    })
   },
 
   setShareInfo: function () {
@@ -131,6 +140,7 @@ Page({
           var recommendInfo = dataBean.data.recommended_info;
           console.log(recommendInfo);
           var tempList = [];
+          var tempUnFinishedList = [];
           var tempGoatList = [];
           var totalAward = 0;
           var reachableAward = 0;
@@ -139,8 +149,10 @@ Page({
           for (let recommendBean of recommendInfo) {
             //如果有登记时间，则表示已安装广告
             if (recommendBean.register_date) {
-              recommendBean.register_date = timeUtil.friendly_time(recommendBean.register_date);
+              recommendBean.date = timeUtil.friendly_time(recommendBean.register_date);
               tempList.push(recommendBean);
+            } else {
+              tempUnFinishedList.push(recommendBean);
             }
             //累计领取奖励
             if (recommendBean.status == 3) {
@@ -153,9 +165,11 @@ Page({
               unFinishNumber += 1;
             }
           }
+          //数组合并
+          tempUnFinishedList = tempUnFinishedList.concat(tempList);
 
           that.setData({
-            recommendList: tempList,
+            recommendList: tempUnFinishedList,
             totalAword: totalAward,
             GoatAward: GoatAward,
             remainAward: reachableAward,
@@ -191,10 +205,16 @@ Page({
 
   },
 
-
   /**
    * 分享到朋友圈
    */
+  shareMomentNormalClick: function(){
+    this.setData({
+      shareFriendType: 'normal'
+    })
+    this.shareMoments();
+  },
+
   shareMoments: function () {
     if (this.data.shareFriendType == 'award') {
       this.setData({
