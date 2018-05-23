@@ -20,7 +20,7 @@ Page({
     total: '0.00',
     rate: 0,
     stepsList: [],
-    showGoodsDetail: true,
+    showGoodsDetail: false,
     isShowToast: false,
     showSharePop: false,
     //分享朋友圈数据
@@ -36,14 +36,6 @@ Page({
   },
   onLoad: function () {
     //		console.log(app.globalData.uid);
-    that.setData({
-      shareInfo: {
-        shareAvatar: app.globalData.userInfo.avatarUrl,
-        shareNickname: app.globalData.userInfo.nickName,
-        awardMoney: data.amount,
-        awardType: data.type
-      },
-    })
   },
   onShow: function () {
     //
