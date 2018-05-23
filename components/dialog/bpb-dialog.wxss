@@ -33,7 +33,6 @@
   font-size:36rpx;
   color: #FF555C;
   padding-top:20rpx;
-
 }
 .title1{
   text-align: right;

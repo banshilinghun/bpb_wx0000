@@ -50,7 +50,7 @@ Page({
         })
       }
     })
-    that.recommend_reward_list(options.recomId)
+    that.recommend_reward_list(options.recomId)   
     if (app.globalData.isFirst) {
       that.setData({
         reward: true
@@ -255,12 +255,14 @@ Page({
       success: res => {
         if (res.data.code == 1000) {
           console.log(res.data.data)
-           
-          this.setData({
-            nickname: res.data.data.info.nickname,
-            wx_avatar: res.data.data.info.wx_avatar,
-            msgList: res.data.data.reward_list
-          });
+          if (res.data.data.info!=null){
+            this.setData({
+              nickname: res.data.data.info.nickname,
+              wx_avatar: res.data.data.info.wx_avatar,
+              msgList: res.data.data.reward_list
+            });
+          }
+    
         } else {
           //console.log(res.data)
           wx.showModal({

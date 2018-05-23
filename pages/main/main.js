@@ -35,13 +35,13 @@ Page({
         url: '../details/details?adId=' + recomAdId
       })
     }
-    if (recomType == 1 || recomType == 2){
-      if (loginFlag==0){
-        wx.navigateTo({
-          url: '../novice/novice?recomId=' + recomId
-        })
-      }
-    }
+    // if (recomType == 1 || recomType == 2){
+    //   if (loginFlag==0){
+    //     wx.navigateTo({
+    //       url: '../novice/novice?recomId=' + recomId
+    //     })
+    //   }
+    // }
     if (app.globalData.isFirst) {
       that.setData({
         reward: true
