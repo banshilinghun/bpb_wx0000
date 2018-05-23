@@ -5,7 +5,7 @@ const app = getApp()
 Page({
   data: {
     img: '../../image/index.png',
-    showDialog:false 
+    showDialog: false
   },
   //事件处理函数
   onLoad: function (options) {
@@ -24,14 +24,14 @@ Page({
         return null
       }
       that.setData({
-        user_id: getQueryString('user_id') ? getQueryString('user_id'):null,
+        user_id: getQueryString('user_id') ? getQueryString('user_id') : null,
         type: getQueryString('type') ? getQueryString('type') : null,
         adId: getQueryString('adId') ? getQueryString('adId') : null
       })
-    }else{
+    } else {
       that.setData({
-        user_id: options.user_id ? options.user_id:null,
-        type: options.type ? options.type:null,
+        user_id: options.user_id ? options.user_id : null,
+        type: options.type ? options.type : null,
         adId: options.adId ? options.adId : null
       })
     }
@@ -99,9 +99,27 @@ Page({
                     } else {
                       app.globalData.login = 0;
                     }
-                    wx.switchTab({
-                      url: '../main/main'
-                    })                       
+                    if (type == 1 || type == 2) {
+                      if (res.data.data.phone) {
+                        setTimeout(function () {
+                          wx.switchTab({
+                            url: '../main/main'
+                          })
+                        }, 1500);
+                      } else {
+                        setTimeout(function () {
+                          wx.redirectTo({
+                            url: '../novice/novice?recomId=' + recommendId
+                          })
+                        }, 1500);
+                      }
+                    }else{
+                      setTimeout(function () {
+                        wx.switchTab({
+                          url: '../main/main'
+                        })
+                      }, 1500);
+                    }
                   } else {
                     wx.showModal({
                       title: '提示',
@@ -110,8 +128,6 @@ Page({
                     });
                   }
                   //console.log(shareAd)
-              
-
                 },
                 fail: res => {
                   //console.log(2222);
@@ -133,7 +149,7 @@ Page({
         that.setData({
           showDialog: true
         })
-        
+
       }, complete: function (res) {
 
       }
@@ -148,15 +164,15 @@ Page({
       hasUserInfo: true
     })
   },
-  userInfoHandler:function(e){
-    var that=this;
+  userInfoHandler: function (e) {
+    var that = this;
     console.log(e.detail.userInfo)
-    if (e.detail.userInfo==undefined){
+    if (e.detail.userInfo == undefined) {
       wx.showToast({
         title: "请允许授权",
         icon: 'loading'
       })
-    }else{
+    } else {
       that.setData({
         showDialog: false
       })
