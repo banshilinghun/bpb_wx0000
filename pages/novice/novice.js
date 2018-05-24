@@ -1,5 +1,7 @@
 var app = getApp()
 var util = require("../../utils/util.js");
+const Constant = require("../../utils/Constant.js");
+const shareUtil = require("../../utils/shareUtil.js");
 Page({
   data: {
     registBtnTxt: "确定",
@@ -285,5 +287,38 @@ Page({
     wx.switchTab({
       url: '../main/main'
     })
+  },
+
+  onShareAppMessage: function(){
+    var that = this;
+    var shareTitle = shareUtil.getShareNormalTitle();
+    var adid = -1;
+    var adimg = '../../image/share-normal.png';
+    var desc = "拉上好友一起赚钱～";
+    var shareType = Constant.shareNormal;
+    return {
+      title: shareTitle,
+      desc: desc,
+      path: 'pages/index/index?' + '&user_id=' + app.globalData.uid + '&type=' + shareType,
+      imageUrl: adimg,
+      success: function (res) {
+        wx.showToast({
+          title: '分享成功',
+          icon: '',
+          image: '',
+          duration: 0,
+          mask: true,
+        })
+      },
+      fail: function () {
+        wx.showToast({
+          title: '分享取消',
+          icon: '',
+          image: '',
+          duration: 0,
+          mask: true,
+        })
+      }
+    }
   }
 })
