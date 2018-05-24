@@ -12,83 +12,98 @@
   color: #fff;
   font-size: 24rpx;
 }
-.pageImg{
-      background: url("https://wxapi.benpaobao.com/static/app_img/bpb_page.png") no-repeat;
-    background-size: 100% 100%;
-    position: relative;
-    width: 100%;
+
+.pageImg {
+  background: url("https://wxapi.benpaobao.com/static/app_img/bpb_page.png") no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  width: 100%;
+  margin-bottom:40rpx;
 }
-.swiper_container{
+
+.swiper_container {
   position: absolute;
 }
-.nick_name{
-  width:160rpx;
+
+.nick_name {
+  width: 160rpx;
   display: inline-block;
   overflow: hidden;
-text-overflow:ellipsis;
-white-space: nowrap;
-text-align: center
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
 }
-.dian{
-   display: inline-block;
-  color: #FCFCFC;
+
+.dian {
+  display: inline-block;
+  color: #fcfcfc;
   overflow: hidden;
   margin-right: 10rpx;
-  text-align: center
+  text-align: center;
 }
-.mount{
-    width: 260rpx;
-    display: inline-block;
-    text-align: right;
+
+.mount {
+  width: 260rpx;
+  display: inline-block;
+  text-align: right;
 }
-.headImg image{
-  width:100rpx;
+
+.headImg image {
+  width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
+  border: 8rpx solid #ff555c;
 }
-.nickNameCon{
-  font-size: 32rpx;
+
+.nickNameCon {
+  font-size: 24rpx;
   color: #fff;
   width: 320rpx;
-   overflow: hidden;
-text-overflow:ellipsis;
-white-space: nowrap;
-text-align: center;
-position: absolute;
-left: 50%;
-margin-left: -160rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  margin-left: -160rpx;
 }
-.linkcon{
+
+.linkcon {
   width: 120rpx;
-   text-align: center;
-   position: absolute;
-left: 50%;
-margin-left: -60rpx;
-font-size: 24rpx;
-color: #F8E71C;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  margin-left: -60rpx;
+  font-size: 24rpx;
+  color: #f8e71c;
 }
-.bpbImgCon{
+
+.bpbImgCon {
   width: 440rpx;
   height: 236rpx;
   position: absolute;
   left: 50%;
   margin-left: -220rpx;
 }
-.bpbImgCon image{
+
+.bpbImgCon image {
   width: 440rpx;
   height: 236rpx;
 }
-.joinImgCon{
+
+.joinImgCon {
   width: 240rpx;
   height: 42rpx;
-   position: absolute;
+  position: absolute;
   left: 50%;
   margin-left: -120rpx;
 }
-.joinImgCon image{
+
+.joinImgCon image {
   width: 240rpx;
   height: 42rpx;
 }
+
 .content {
   text-align: center;
 }
@@ -108,21 +123,21 @@ color: #F8E71C;
   border-radius: 50%;
 }
 
-.userinfo-logIcon{
+.userinfo-logIcon {
   width: 40rpx;
   height: 40rpx;
   margin: 20rpx;
 }
 
-.userinfo-verifiIcon{
- width: 40rpx;
+.userinfo-verifiIcon {
+  width: 40rpx;
   height: 40rpx;
   margin: 20rpx;
 }
 
-.input-log{
+.input-log {
   display: flex;
-  border-bottom: 2rpx solid #A95D33 ;
+  border-bottom: 2rpx solid #ddd;
   flex-direction: row;
   align-items: center;
 }
@@ -130,38 +145,37 @@ color: #F8E71C;
 .input-area {
   text-align: left;
   width: 90%;
-  margin:0 auto;
+  margin: 0 auto;
 }
 
 .input-area input {
-  height:96rpx;
-  line-height:96rpx;
+  height: 96rpx;
+  line-height: 96rpx;
   font-size: 32rpx;
   color: #333;
 }
-.phcolor{
-    color: #9D6400;opacity:1;
+
+.phcolor {
+  color: #666;
+  opacity: 1;
 }
 
 .btn-area {
   width: 90%;
   margin: 0 auto;
- 
 }
 
 .btn-area button {
   margin-top: 30rpx;
   color: #fff;
-   border-radius:25px
-   
+  border-radius: 25px;
 }
 
 .txt-area {
   margin-top: 30rpx;
   justify-content: space-between;
   font-size: 36rpx;
-  text-align:right;
-
+  text-align: right;
 }
 
 .forgot-password {
@@ -175,9 +189,9 @@ color: #F8E71C;
 .smsCode {
   display: flex;
   justify-content: space-between;
-  border-bottom: 2rpx solid #A95D33;
-  padding-right:5%;
-  align-items:center;
+  border-bottom: 2rpx solid #ddd;
+  padding-right: 5%;
+  align-items: center;
 }
 
 .smsCode input {
@@ -186,7 +200,7 @@ color: #F8E71C;
 
 .smsCode .getSmsCodeBtn {
   font-size: 30rpx;
-  color: #ff5539 ;
+  color: #ff5539;
   width: 216rpx;
   box-sizing: border-box;
   height: 96rpx;
@@ -194,9 +208,9 @@ color: #F8E71C;
   margin-right: 0;
   background: transparent;
   padding-right: 0;
-
 }
-.smsCode .getSmsCodeBtn::after{
+
+.smsCode .getSmsCodeBtn::after {
   content: none;
 }
 
@@ -209,8 +223,63 @@ color: #F8E71C;
   width: 202rpx;
   height: 240rpx;
 }
-.registerCon{
+
+.registerCon {
   position: absolute;
-  bottom: 64rpx;
-  width:100%;
+  bottom: 100rpx;
+  width: 100%;
+}
+
+.msite-nav {
+  overflow: visible;
+  height: 100rpx;
+  border-top: 1px solid #ddd;
+  width: 100%;
+  font-size: 20rpx;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: #fff;
+  position: fixed;
+  z-index: 900;
+  bottom: 0;
+  display: flex;
+}
+
+.msite-a {
+  background: #fff;
+  position: relative;
+  width: 400rpx;
+  height: 50rpx;
+  padding-top:8rpx;
+  font-size: 24rpx;
+  text-align: center;
+  color: #333;
+  display: block;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0%;
+    
+  
+}
+.msite-a image{
+  width: 48rpx;
+    height: 48rpx;
+    margin: 4rpx auto;
+    display: block;
+        border: 0 none;
+    vertical-align: top;
+}
+button::after{
+  border: none;
+}
+.msite-nav button{
+ overflow: visible;
+ padding-top:8rpx;
+ line-height: inherit;
+ padding-left: 0;
+ padding-right: 0;
 }
