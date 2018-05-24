@@ -32,10 +32,10 @@ Page({
         var windowscale = windowHeight / windowWidth;//屏幕高宽比  
         var imageWidth = windowWidth;
         var imageHeight = imageWidth * 1.8;
-        var swiperTop = imageWidth*0.34;
-        var headImgTop = windowWidth*0.056;
-        var nickNameTop = windowWidth * 0.192;
-        var linkconTop = windowWidth * 0.248;
+        var swiperTop = imageWidth*0.33;
+        var headImgTop = windowWidth*0.038;
+        var nickNameTop = windowWidth * 0.182;
+        // var linkconTop = windowWidth * 0.248;
         var bpbImgTop = windowWidth * 0.744;
         var joinImgTop = windowWidth*0.517;
         that.setData({
@@ -44,7 +44,6 @@ Page({
           swiperTop: swiperTop,
           headImgTop: headImgTop,
           nickNameTop: nickNameTop,
-          linkconTop: linkconTop,
           bpbImgTop: bpbImgTop,
           joinImgTop: joinImgTop
         })
@@ -280,6 +279,11 @@ Page({
           content: '网络错误'
         });
       }
+    })
+  },
+  backHome: function () {
+    wx.switchTab({
+      url: '../main/main'
     })
   }
 })
