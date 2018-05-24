@@ -198,7 +198,7 @@ Page({
                 text: '推荐奖励',
                 desc: '¥ ' + util.toDecimal2(recommendAmount),
                 hasAward: recommendHasAward,
-                tip: '还有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
+                tip: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
                 type: '2',
                 status: 3,
                 amount: claimAmoun

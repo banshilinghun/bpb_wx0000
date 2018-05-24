@@ -247,7 +247,7 @@ button::after{
 }
 
 .step-tip{
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #999999;
 }
 
@@ -258,4 +258,11 @@ button::after{
   align-items: center;
   right: 0;
   top: 0;
+}
+.zan-more{
+  font-size: 20rpx;
+  display: inline-block;
+  margin-left: 10rpx;
+  color: #4A90E2;
+  text-decoration:underline;
 }

@@ -101,4 +101,4 @@
 </view>
 <bpb-follow shareit='{{shareit}}'></bpb-follow>
 <bpb-reward reward='{{reward}}'></bpb-reward>
- <navigator url="../novice/novice?recomId=1604" style='height:40px;width:40px;'> 2222222</navigator> 
+   <!-- <navigator url="../novice/novice?recomId=1604" style='height:40px;width:40px;'> 2222222</navigator>    -->

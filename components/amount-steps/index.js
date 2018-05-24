@@ -25,5 +25,10 @@ Component({
       var myEventOption = {} // 触发事件的选项
       this.triggerEvent('action', myEventDetail, myEventOption);
     },
+    goRecommend:function(e){
+      wx.navigateTo({
+        url: '../recommend/recommend',
+      })
+    }
   }
 });
