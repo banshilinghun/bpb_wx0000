@@ -122,6 +122,14 @@
   font-size: 30rpx;
 }
 
+.adapter{
+  height: 100%;
+  position: absolute;
+  right: 0rpx;
+  display: flex;
+  align-items: center;
+}
+
 .btn-common {
   background: none;
   line-height: 60rpx;
@@ -132,8 +140,6 @@
   border-radius: 6rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
-  position: absolute;
-  right: 0rpx;
   font-weight: 500;
 }
 
@@ -214,9 +220,7 @@
   font-size: 26rpx;
   right: 0;
   color: #666;
-  position: absolute;
   min-width: 80rpx;
-  text-align: center;
 }
 
 .divider{
