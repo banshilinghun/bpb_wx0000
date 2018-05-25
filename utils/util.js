@@ -52,7 +52,7 @@ const dateToString = now => {
 //邮箱以及手机和身份证的正则表达式
 function regexConfig() {
 	var reg = {
-		phone: /^1(3|4|5|7|8)\d{9}$/,
+		phone: /^1(3|4|5|7|8|6|9)\d{9}$/,
 		card: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
 	}
 	return reg;
