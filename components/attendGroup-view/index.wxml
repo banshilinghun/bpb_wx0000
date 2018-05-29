@@ -1,0 +1,33 @@
+<!--components/attendGroup-view/index.wxml-->
+<view class='teamwork-container'>
+  <view class='number-wrapper'>
+    <text class='team-number-text'>{{ (teamInfo ? teamInfo.length : 0) + '人在开团，可直接参与' }}</text>
+    <view class='see-more-wrapper' wx:if='{{ showSeeMore }}' bindtap='showTeamWorkList'>
+      <text class='see-more'>查看更多</text>
+      <image class='see-more-image' src='../../image/see-more.png'></image>
+    </view>
+  </view>
+  <view>
+    <view class='item-wrapper'>
+      <view class='item-class' wx:for='{{ teamInfo }}' wx:key='{{item.id}}'>
+        <image class='user-avatar' src='{{ item.wx_avatar }}'></image>
+        <text class='user-name'>{{ item.nickname }}</text>
+        <view class='teamwork-detail'>
+          <view class='line-height-class diff-normal'>
+            <text class='black-color'>还差</text>
+            <text class='theme-color'>{{ item.diffNumber + '人'}}</text>
+            <text class='black-color'>拼成</text>
+          </view>
+          <view class='line-height-class pool-time black-color'>
+            <text>剩余</text>
+            <text class='theme-color'>{{ item.remainTime }}</text>
+          </view>
+        </view>
+        <view class='divider' wx:if='{{ !index == teamInfo.length - 1 }}'></view>
+        <view class='btn-wrapper'>
+          <button class='btn-common' bindtap='goJoinTeamwork'>去参团</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

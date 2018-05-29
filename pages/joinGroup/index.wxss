@@ -1,0 +1,158 @@
+/* pages/joinGroup/index.wxss */
+
+.group-container {
+  width: 100%;
+}
+
+.top-title-wrapper {
+  width: 100%;
+  padding-top: 40rpx;
+  padding-bottom: 40rpx;
+  text-align: center;
+}
+
+.top-title-status {
+  font-size: 32rpx;
+  color: #333;
+}
+
+.group-diff-people {
+  font-weight: 500;
+  font-size: 60rpx;
+  color: #333;
+}
+
+.theme-color {
+  color: #ff555c;
+}
+
+.middle-layout {
+  margin-top: 34rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.up-to-text {
+  font-size: 32rpx;
+  color: #333;
+  margin-top: 15rpx;
+}
+
+.time-remain-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+}
+
+.time-number-text {
+  color: #333;
+  font-size: 48rpx;
+  margin-right: 5rpx;
+  font-weight: 500;
+}
+
+.time-text {
+  color: #666;
+  font-size: 32rpx;
+}
+
+.time-margin-righjt {
+  margin-right: 20rpx;
+}
+
+.divider {
+  width: 100%;
+  height: 20rpx;
+  margin-top: 40rpx;
+  background-color: #f6f6f6;
+}
+
+.current-person-number {
+  font-size: 32rpx;
+  color: #333;
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+}
+
+.member-root {
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.member-wrapper{
+  width: 20%;
+  min-height: 110rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.member-avatar{
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+}
+
+.creater-border{
+  border: 2rpx solid #ff555c;
+}
+
+.group-creater-wrapper{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 5rpx;
+}
+
+.is-group-creater{
+  font-size: 20rpx;
+  color: #fff;
+  background-color: #ff555c;
+  text-align: center;
+  min-height: 30rpx;
+  min-width: 70rpx;
+  border-bottom-left-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+
+}
+
+.share-btn{
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  height: 120rpx;
+  line-height: 120rpx;
+  padding: 0;
+  background-color: #ff555c;
+  color: #fff;
+  font-size: 48rpx;
+  border-radius: 8rpx;
+  margin-top: 40rpx;
+}
+
+.yellow-color{
+  background-color: #FFBA00;
+}
+
+button::after{
+  border: none;
+}
+
+.share-tip-wrapper{
+  width: 100%;
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+.share-tip-text{
+  font-size: 28rpx;
+  color: #666;
+}

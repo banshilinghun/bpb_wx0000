@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "奔跑宝",
+  "usingComponents": {
+    "attend-view": "../../components/attendGroup-view/index"
+  }
+}

@@ -118,6 +118,9 @@ Page({
                         wx.switchTab({
                           url: '../main/main'
                         })
+                        // wx.redirectTo({
+                        //   url: '../teamworkList/index',
+                        // })
                       }, 1500);
                     }
                   } else {

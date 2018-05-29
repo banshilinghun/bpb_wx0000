@@ -1,0 +1,124 @@
+/* components/attendGroup-view/index.wxss */
+
+.teamwork-container {
+  width: 100%;
+}
+
+.number-wrapper {
+  padding-top: 15rpx;
+  padding-bottom: 15rpx;
+  padding-left: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.see-more-wrapper{
+  position: absolute;
+  right: 30rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.see-more{
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.see-more-image{
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.team-number-text {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.item-wrapper {
+  width: 100%;
+}
+
+.item-class {
+  min-height: 100rpx;
+  margin-left: 48rpx;
+  margin-right: 48rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.user-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+
+.user-name {
+  font-size: 28rpx;
+  color: #333;
+  margin-left: 20rpx;
+  width: 200rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.teamwork-detail{
+  margin-left: 40rpx;
+}
+
+.diff-normal{
+  font-size: 24rpx;
+}
+
+.black-color{
+  color: #333333;
+}
+
+.theme-color{
+  color: #ff555c;
+}
+
+.pool-time{
+  font-size: 24rpx;
+}
+
+.divider{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 88%;
+  height: 1rpx;
+  background-color: #DDDDDD;
+}
+
+.btn-wrapper{
+  position: absolute;
+  right: 0;
+}
+
+.btn-common {
+  background: none;
+  line-height: 56rpx;
+  height: 56rpx;
+  font-size: 28rpx;
+  padding: 0;
+  background-color: #ff555c;
+  border-radius: 8rpx;
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  color: #ffffff;
+}
+
+button::after{
+  border: none;
+}
+
+.line-height-class{
+  line-height: 34rpx;
+}

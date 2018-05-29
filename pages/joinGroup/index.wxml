@@ -1,0 +1,54 @@
+<!--pages/joinGroup/index.wxml-->
+<view class='group-container'>
+  <view class='top-title-wrapper'>
+    <text class='top-title-status'>{{ topTitle }}</text>
+  </view>
+  <view class='middle-layout'>
+    <view>
+      <view class='group-diff-people' wx:if='{{ !groupSuccess }}'>
+        <text>还差</text>
+        <text class='theme-color'>{{ diffPeople }}</text>
+        <text>人成团</text>
+      </view>
+      <view class='group-diff-people' wx:if='{{ groupSuccess }}'>
+        <text>组团成功</text>
+      </view>
+    </view>
+    <view class='up-to-text'>
+      <text>{{ installAd? '已安装广告' : '离广告安装截止时间还有'}}</text>
+    </view>
+    <view class='time-remain-wrapper' wx:if='{{ !installAd }}'>
+      <text class='time-number-text'>{{ hour }}</text>
+      <text class='time-text time-margin-righjt'>时</text>
+      <text class='time-number-text'>{{ minute }}</text>
+      <text class='time-text time-margin-righjt'>分</text>
+      <text class='time-number-text'>{{ second }}</text>
+      <text class='time-text'>秒</text>
+    </view>
+  </view>
+
+  <view class='divider'></view>
+  <!-- 当前团友 -->
+  <view class='group-person'>
+    <view class='current-person-number'>
+      <text>{{ '当前团友(' + currentPerson + ')' }}</text>
+    </view>
+    <view class='member-root'>
+      <view class='member-wrapper' wx:for='{{ memberList }}' wx:key='{{item.id}}'>
+        <image class='member-avatar {{ item.iscreater? "creater-border" : "" }}' src='{{ item.avatar }}'></image>
+        <view class='group-creater-wrapper'>
+          <view class='is-group-creater'>
+            <text>团长</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 按钮 -->
+  <view>
+    <button class='share-btn'>{{ groupSuccess? '炫耀一下' : '邀请好友参团' }}</button>
+    <view class='share-tip-wrapper' wx:if='{{ !groupSuccess }}'>
+      <text class='share-tip-text'>提示:分享到3个司机群，成团率 达99%</text>
+    </view>
+  </view>
+</view>
