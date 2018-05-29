@@ -1,103 +1,110 @@
-
 /*头部*/
-.headerView{
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(#FB653D, #FC3241);
-    padding: 20px 0 20px 0;
-    /*子控件居中显示*/
-    align-items: center; 
+
+.headerView {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(#fb653d, #fc3241);
+  padding: 20px 0 20px 0;
+  /*子控件居中显示*/
+  align-items: center;
 }
 
 /*头像*/
-.headerView .picture{
-height: 70px;
-width: 70px;
-margin-bottom: 6px;
-border-radius:50%;
+
+.headerView .picture {
+  height: 70px;
+  width: 70px;
+  margin-bottom: 6px;
+  border-radius: 50%;
 }
 
- /*名字*/
- .headerView .name{
-     color: white;
- }
+/*名字*/
+
+.headerView .name {
+  color: white;
+}
 
 /*表格*/
-.item{
-    display: flex;
-    flex-direction: row;
-    padding: 10px ;
-    background: white;
-    border: 0.5px solid lightgrey;
-    border-radius:4px;
-width:75%;
-margin:0 auto;
-margin-top:20px;
 
-
+.item {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  background: white;
+  border: 0.5px solid lightgrey;
+  border-radius: 4px;
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 /*图标*/
-.item .icon{
-    width: 26px;
-    height: 26px;
-    margin-right: 10px;
+
+.item .icon {
+  width: 26px;
+  height: 26px;
+  margin-right: 10px;
 }
 
 /*文字*/
-.item label{
-    font-size: 15px;
-    flex: 1;
 
-    /*垂直居中*/
-    margin: auto; 
+.item label {
+  font-size: 15px;
+  flex: 1;
+  /*垂直居中*/
+  margin: auto;
 }
 
 /*箭头*/
-.item .arrow{
-     width: 8px;
-    height: 9px;
-   margin: auto; 
+
+.item .arrow {
+  width: 8px;
+  height: 9px;
+  margin: auto;
 }
 
-.item .line{
-    background: lightgray;
-    height: 0.5px;
+.item .line {
+  background: lightgray;
+  height: 0.5px;
 }
-.userinfo-desc{
-  font-size:14px;
-color:#fff;
-margin-top:6px;
 
+.userinfo-desc {
+  font-size: 14px;
+  color: #fff;
+  margin-top: 6px;
 }
-.province-text{
+
+.province-text {
   padding-right: 6px;
 }
-.sta-text{
-  font-size:15px;
-margin-top:2px;
-color:#999999;
 
-}
-
- .ar_cont_h1{
-    font-size: 15px;
-    line-height: 10px;
-    color:#000;
-}
-.ar_cont{
- width: 80%;
- margin: 0 auto;
- margin-top: 30px;
-}
-.ar_cont_text{
+.sta-text {
   font-size: 15px;
-  color:#999999;
+  margin-top: 2px;
+  color: #999;
 }
+
+.ar_cont_h1 {
+  font-size: 15px;
+  line-height: 10px;
+  color: #000;
+}
+
+.ar_cont {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.ar_cont_text {
+  font-size: 15px;
+  color: #999;
+}
+
 .btn-quit {
-margin:0 auto;
-margin-top:20px;
-border:none;
-background-color:#ff555c;
-color:#FFF;
+  margin: 0 auto;
+  margin-top: 20px;
+  border: none;
+  background-color: #ff555c;
+  color: #fff;
 }
