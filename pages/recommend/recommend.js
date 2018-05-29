@@ -25,24 +25,24 @@ Page({
       {
         current: false,
         done: false,
-        text: '分享奔跑宝给好友或朋友圈'
+        text: '分享小程序给好友或转发朋友圈'
       },
       {
         done: false,
         current: false,
-        text: '好友',
-        secondText: '从分享链接进入',
-        thirdText: '奔跑宝'
+        text: '通过',
+        secondText: '分享链接进入',
+        thirdText: '小程序'
       },
       {
         done: false,
         current: false,
-        text: '好友首次完成广告安装'
+        text: '成功注册并完成首次广告安装'
       },
       {
         done: false,
         current: false,
-        text: '双方立即获得50元奖励；'
+        text: '双方即可获得50元奖励'
       }
     ],
     //页面状态标识
