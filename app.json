@@ -19,7 +19,9 @@
     "pages/recommend/recommend",
     "pages/moment/moment",
     "pages/share/share",
-    "pages/novice/novice"
+    "pages/novice/novice",
+    "pages/teamworkList/index",
+    "pages/joinGroup/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",

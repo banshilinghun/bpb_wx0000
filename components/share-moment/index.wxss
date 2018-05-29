@@ -45,12 +45,11 @@
 }
 
 .btn-save-local{
-  background: none;
-  width: 50%;
+  background: linear-gradient(45deg, #FB653D, #ff555c);
+  width: 100%;
   height: 88rpx;
   line-height: 88rpx;
   border-radius: 44rpx;
-  background-color: #ff555c;
   margin-top: 40rpx;
   color: #ffffff;
   font-size: 32rpx;

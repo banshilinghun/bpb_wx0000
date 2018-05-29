@@ -1,0 +1,2 @@
+<!--pages/teamworkList/index.wxml-->
+<attend-view teamInfo='{{ teamInfo }}' showSeeMore='{{ showSeeMore }}' openInterval='{{ openInterval }}' bind:goJoin='goJoinTeamwork'></attend-view>

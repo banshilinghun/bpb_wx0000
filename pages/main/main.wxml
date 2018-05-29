@@ -2,7 +2,7 @@
 <view>
   <!-- <view class='taewtw'  bindtap="goRegister">立马注册，获取新手奖励</view> -->
   <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}' circular='{{ circular }}'>
       <block wx:for="{{background}}" wx:key="*this">
         <swiper-item data-hi='{{item}}' bindtap="tapName" >
           <view class="swiper-item {{item}}" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'></view>
