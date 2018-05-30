@@ -19,7 +19,7 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 500,
-    //采用衔接滑动
+    //是否衔接滑动
     circular: true,
     shareit: false,
     reward: false
