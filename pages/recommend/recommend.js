@@ -42,7 +42,7 @@ Page({
       {
         done: false,
         current: false,
-        text: '双方即可获得50元奖励'
+        text: '双方即可获得30元奖励'
       }
     ],
     //页面状态标识
