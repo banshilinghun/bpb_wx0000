@@ -19,7 +19,6 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 500,
-    //是否衔接滑动
     circular: true,
     shareit: false,
     reward: false

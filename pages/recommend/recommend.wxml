@@ -56,8 +56,8 @@
             <button class='btn-recommend btn-common {{ awardBtnAbled ? "btn-enable" : "btn-disable" }}' bindtap='receiveAwardClick'>领取</button>
           </view>
         </view>
-        <view class='split-line'></view>
-        <view class='remind-friend'>
+        <view class='split-line' wx:if='{{ unfinishedNumber != 0 }}'></view>
+        <view class='remind-friend' wx:if='{{ unfinishedNumber != 0 }}'>
           <view style='width:{{ remindWidth }}px'>
             <text class='remind-text dark-color' wx:if='{{ unfinishedNumber != 0 }}'>{{unfinishedNumber}}个好友未完成，完成后奖励可达到</text>
             <text class='high-light-text theme-color bold-font' decode='{{true}}' wx:if='{{ unfinishedNumber != 0 }}'>&ensp;{{ remainAward }}元</text>
@@ -79,7 +79,7 @@
             <!-- {{item.wx_avatar}} -->
             <image class='avatar' src='{{ item.wx_avatar }}'></image>
             <text class='nickname'>{{ item.nickname }}</text>
-            <text class='install-ad'>{{ item.register_date? '已安装广告' : '未安装广告'}}</text>
+            <text class='install-ad'>{{ item.register_date? '已安装广告' : '未安装广告' }}</text>
             <view class='adapter'>
               <text class='time'>{{ item.date? item.date : '- -' }}</text>
             </view>
