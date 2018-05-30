@@ -1,5 +1,9 @@
 <!--index.wxml-->
 <view>
+<button class='mpweixin' open-type='contact'>
+    <text class='profile-text'> 绑定公众号，开启提醒功能即时获取广告信息</text>
+     <image class='profile-arrow' src='/image/gomp2.png'></image>
+</button>
 <!-- <view class='hr'></view> -->
   <!-- <view class='taewtw'  bindtap="goRegister">立马注册，获取新手奖励</view> -->
   <view class="page-section page-section-spacing swiper">
@@ -92,7 +96,7 @@
           </view>
           <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.share_img}}" class='wtwabt' open-type="share">
             <image src='../../image/shareicon.png'></image>
-            <view class='sharetext'>分享</view>
+            <view class='sharetext'>分享有奖</view>
           </button>
         </view>
       </view>
@@ -102,4 +106,4 @@
 </view>
 <bpb-follow shareit='{{shareit}}'></bpb-follow>
 <bpb-reward reward='{{reward}}'></bpb-reward>
-   <!-- <navigator url="../novice/novice?recomId=1604" style='height:40px;width:40px;'> 2222222</navigator>    -->
+    <navigator url="../novice/novice?recomId=1604" style='height:40px;width:40px;'> 2222222</navigator>    

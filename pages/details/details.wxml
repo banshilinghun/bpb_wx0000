@@ -16,11 +16,11 @@
         <view class="profile-item cwsfts">{{adInfo.name}}</view>
         <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
           <image src='../../image/shareicon.png'></image>
-          <view class='sharetext'>分享</view>
+          <view class='sharetext'>分享有奖</view>
         </button>
       </view>
     </block>
-    <block>
+    <!-- <block>
       <view class="profile">
         <view class="profile-item">广告类型:</view>
         <view class="right-text">
@@ -31,7 +31,7 @@
           <label class="data-text" wx:if="{{adInfo.type==4}}">车外</label>
         </view>
       </view>
-    </block>
+    </block> -->
     <block>
       <view class="profile">
         <view class="profile-item">实际收益:</view>
@@ -162,3 +162,12 @@
   adId='{{adId}}'
   bind:hideDialog='hideDialogListener'
 ></share-detail>
+ <!-- <view class='msite-nav'>
+ <button class='msite-a2'  open-type="contact" >
+  <image src='../../image/kf_icon.png'></image>
+  <text>客服</text>
+ </button>
+  <view class='msite-a'>
+  <text>分享</text>
+ </view>
+</view>  -->

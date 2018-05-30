@@ -13,7 +13,7 @@ Page({
     haveMyAd: false,
     //测试数据
     userList: [],
-    background: ['banner1', 'banner2'],
+    background: ['banner2'],
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -26,13 +26,21 @@ Page({
   },
 
   onLoad: function (options) {
-    var that=this;
+    var that = this;
+    that.setData({
+      userInfo: app.globalData.userInfo
+    })
+    if (that.data.background.length < 2) {
+      that.setData({
+        indicatorDots: false
+      })
+    }
     var loginFlag = app.globalData.login;
     var recomType = app.globalData.recomType;
     var recomAdId = app.globalData.recomAdId;
     var recomId = app.globalData.recomId;
     //recomType 1:拉新 2:奖励 3:广告
-    if (recomType==3){
+    if (recomType == 3) {
       wx.navigateTo({
         url: '../details/details?adId=' + recomAdId
       })
@@ -49,7 +57,7 @@ Page({
         reward: true
       })
     }
-    app.globalData.isFirst=false;
+    app.globalData.isFirst = false;
     this.judgeCanIUse();
     this.checkUpdate();
     wx.getSystemInfo({
@@ -97,7 +105,7 @@ Page({
   onShow: function () {
     var z = this;
     var loginFlag = app.globalData.login;
-    z.followFlag()
+    z.followFlag();
     if (loginFlag == 1) {
       wx.request({
         url: app.globalData.baseUrl + 'app/get/user_auth_status',
@@ -382,12 +390,16 @@ Page({
     })
   },
   followFlag: function () {//查询是否关注公众号
+    var that = this
     wx.request({
       url: app.globalData.baseUrl + 'app/get/user_has_subscribe',
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-             //console.log(res.data)
+          //console.log(res.data)
+          that.setData({
+            isFollow: res.data.data
+          })
         } else {
           //					console.log(res.data)
           wx.showModal({

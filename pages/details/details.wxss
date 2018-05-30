@@ -820,10 +820,10 @@ button::after {
 }
 .taewtw{
   width: 100%;
-  height: 60rpx;
-  line-height: 60rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   background: #FDFFE8;
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: #FF555C;
   text-align: center
 }
@@ -929,4 +929,79 @@ button::after {
 .tasts{
   color: #FF555C;
   font-size: 12px;
+}
+
+.msite-nav {
+  overflow: visible;
+  height: 98rpx;
+  width: 100%;
+  font-size: 28rpx;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: #fff;
+  position: fixed;
+  z-index: 900;
+  bottom: 0;
+  display: flex;
+ box-shadow: 0px 1px 3px #333333;
+}
+
+.msite-a {
+  background: #fff;
+  position: relative;
+  width: 400rpx;
+  height: 49rpx;
+  padding-top: 8rpx;
+  font-size: 28rpx;
+  text-align: center;
+  color: #333;
+  display: block;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
+}
+.msite-a2 {
+  background: #fff;
+  position: relative;
+  width: 196rpx;
+  height: 98rpx;
+  padding-top: 8rpx;
+  font-size: 28rpx;
+  text-align: center;
+  color: #333;
+  display: block;
+  /* -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%; */
+}
+
+.msite-a2 image {
+  width: 40rpx;
+  height: 40rpx;
+  margin: 4rpx auto;
+  display: block;
+  border: 0 none;
+  vertical-align: top;
+}
+
+button::after {
+  border: none;
+}
+
+.msite-nav button {
+  overflow: visible;
+  padding-top: 8rpx;
+  line-height: inherit;
+  padding-left: 0;
+  padding-right: 0;
+}
+button{
+  border-radius: 0;
 }

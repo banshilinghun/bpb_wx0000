@@ -4,7 +4,6 @@ const app = getApp()
 
 Page({
   data: {
-    img: '../../image/index.png',
     showDialog: false
   },
   //事件处理函数

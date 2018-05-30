@@ -37,12 +37,17 @@ Page({
   },
   onLoad: function () {
     //		console.log(app.globalData.uid);
+    var that = this;
+    that.setData({
+      userInfo: app.globalData.userInfo
+    })
   },
   onShow: function () {
     //
     //		var uidData = {};
     //		uidData.user_id = app.globalData.uid;
     var loginFlag = app.globalData.login;
+    this.followFlag()
     this.setData({
       loginFlag: loginFlag,
     })
@@ -462,7 +467,35 @@ Page({
       }
     }
   },
-
+  followFlag: function () {//查询是否关注公众号
+    var that = this
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/user_has_subscribe',
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          //console.log(res.data)
+          that.setData({
+            isFollow: res.data.data
+          })
+        } else {
+          //					console.log(res.data)
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+  },
   /**
    * 推荐好友
    */

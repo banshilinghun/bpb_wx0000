@@ -1,3 +1,5 @@
 {"navigationBarTitleText": "预约",
-    "enablePullDownRefresh": false
+    "enablePullDownRefresh": false,
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#333"
    }

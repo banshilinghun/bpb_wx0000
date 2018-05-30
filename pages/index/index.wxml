@@ -1,14 +1,13 @@
 <!--index.wxml-->
-<view class='welcomeImg' >
-<view class="goods-detail" wx:if="{{showDialog}}">
-  <view class="mask"></view>
-  <view class="goodsdetail">
-    <!-- <view class="title1" bindtap="hideGoodsDetail"><image src='../../image/close.png'></image></view> -->
-    <view class='title0'>提示</view>
-    <view class="title2">微信登录需要获取您的用户信息，请允许授权</view>
-    <view class="title4">
-      <button class='wtwabt2' open-type='getUserInfo' bindgetuserinfo="userInfoHandler">立即获取</button>
+ <image src='https://wxapi.benpaobao.com/static/app_img/bpb_welcome.png' class='welcomeImg' mode="aspectFill"></image>
+  <view class="goods-detail" wx:if="{{showDialog}}">
+    <view class="mask"></view>
+    <view class="goodsdetail">
+      <!-- <view class="title1" bindtap="hideGoodsDetail"><image src='../../image/close.png'></image></view> -->
+      <view class='title0'>提示</view>
+      <view class="title2">微信登录需要获取您的用户信息，请允许授权</view>
+      <view class="title4">
+        <button class='wtwabt2' open-type='getUserInfo' bindgetuserinfo="userInfoHandler">立即获取</button>
+      </view>
     </view>
   </view>
-</view>
-</view>

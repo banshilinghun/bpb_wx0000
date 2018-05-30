@@ -184,7 +184,7 @@ color:#ff555c;
   background: none;
   line-height: 1.2;
   padding: 0;
-  text-align: right
+  text-align: center;
 }
 .wtwabt image{
   height: 40rpx;
@@ -234,4 +234,28 @@ button{
   height: 20rpx;
   width: 100%;
   background: #f2f2f2;
+}
+.mpweixin{
+  height: 96rpx;
+  width: 100%;
+  font-size: 28rpx;
+  background: #FF555C;
+   display: flex;
+  /* padding: 20rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx; */
+  align-items: center;
+  text-align: left;
+  flex-direction: row;
+  color: #fff;
+  padding-left: 40rpx;
+}
+.profile-arrow{
+  width: 36rpx;
+  height: 36rpx;
+}
+.profile-text{
+  flex: 1;
 }
