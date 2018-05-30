@@ -20,11 +20,12 @@
     "pages/novice/novice"
   ],
   "window": {
-    "backgroundTextStyle": "dark",
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FB653D",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": false
+    "enablePullDownRefresh": false,
+    "navigationStyle":"default"
   },
   "tabBar": {
     "color": "#7A7E83",

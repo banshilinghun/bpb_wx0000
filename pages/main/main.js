@@ -17,8 +17,10 @@ Page({
     indicatorDots: true,
     vertical: false,
     autoplay: true,
-    interval: 2000,
+    interval: 3000,
     duration: 500,
+    //是否衔接滑动
+    circular: true,
     shareit: false,
     reward: false
   },

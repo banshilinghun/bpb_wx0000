@@ -59,25 +59,27 @@ Page({
             if (res.code) {
               app.globalData.code = res.code
               //console.log(app.globalData.userInfo)
+              var reqData={};
+              reqData.wx_code=res.code;
               if (app.globalData.userInfo) {
-                var avatarUrl = app.globalData.userInfo.avatarUrl;
-                var nickname = app.globalData.userInfo.nickName;
-                var gender = app.globalData.userInfo.gender
+                //reqData.wx_code = res.code;
+                reqData.avatar = app.globalData.userInfo.avatarUrl;
+                reqData.nickname = app.globalData.userInfo.nickName;
+                reqData.gender = app.globalData.userInfo.gender
               } else {
-                var avatarUrl = '';
-                var nickname = '';
-                var gender = 0;
+                reqData.avatar = '';
+                reqData.nickname = '';
+                reqData.gender = 0
+              }
+              if (recommendId){
+                reqData.recommender_userid = recommendId;
               }
               //console.log(res.code)
+              console.log(reqData);
               //发起网络请求
               wx.request({
                 url: app.globalData.baseUrl + 'app/user/wx_login',
-                data: {
-                  wx_code: res.code,
-                  avatar: avatarUrl,
-                  nickname: nickname,
-                  gender: gender
-                },
+                data: reqData,
                 header: {
                   'content-type': 'application/json'
                 },
