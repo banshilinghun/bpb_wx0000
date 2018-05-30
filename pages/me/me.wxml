@@ -1,4 +1,5 @@
 <view>
+<view class='hr'></view>
   <view class="amount">
     <view class="message__list">
       <block>
