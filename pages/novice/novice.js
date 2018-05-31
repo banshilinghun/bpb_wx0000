@@ -33,13 +33,15 @@ Page({
         var windowHeight = res.windowHeight;
         var windowscale = windowHeight / windowWidth;//屏幕高宽比  
         var imageWidth = windowWidth;
-        var imageHeight = imageWidth * 1.8;
-        var swiperTop = imageWidth*0.33;
-        var headImgTop = windowWidth*0.038;
-        var nickNameTop = windowWidth * 0.182;
+        var imageHeight = imageWidth * 1.608;
+        var swiperTop = imageWidth*0.38;
+        var headImgTop = windowWidth*0.05;
+        var nickNameTop = windowWidth * 0.208;
         // var linkconTop = windowWidth * 0.248;
         var bpbImgTop = windowWidth * 0.744;
         var joinImgTop = windowWidth*0.517;
+        var regWidth = windowWidth * 0.833;
+        var marRegWidth = -(regWidth/2)
         that.setData({
           imageWidth: imageWidth,
           imageHeight: imageHeight,
@@ -47,7 +49,9 @@ Page({
           headImgTop: headImgTop,
           nickNameTop: nickNameTop,
           bpbImgTop: bpbImgTop,
-          joinImgTop: joinImgTop
+          joinImgTop: joinImgTop,
+          regWidth: regWidth,
+          marRegWidth: marRegWidth
         })
       }
     })

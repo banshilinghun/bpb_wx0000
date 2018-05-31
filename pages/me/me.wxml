@@ -1,5 +1,9 @@
 <view>
-<view class='hr'></view>
+ <button class='mpweixin' wx:if='{{!isFollow}}' open-type="contact">
+    <text class='profile-text'> 绑定公众号，开启提醒功能即时获取广告信息</text>
+     <image class='profile-arrow' src='/image/gomp2.png'></image>
+</button>
+<view class='hr' wx:if='{{isFollow}}'></view>
   <view class="amount">
     <view class="message__list">
       <block>
@@ -50,7 +54,7 @@
             </view>
           </view>
           <view class="item_right1 item_right2">
-            <text>超过了{{rate}}%的同行</text>
+            <text>超过了{{rate}}%的车主</text>
           </view>
         </view>
         <view class="line"></view>

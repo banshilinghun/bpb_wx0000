@@ -71,9 +71,7 @@ font-size:32rpx;
   width: 85%;
   margin: 0 auto;
 }
-.welcomeImg{
-   background: url("https://wxapi.benpaobao.com/static/app_img/bpb_welcome.png") no-repeat;
-    background-size: 100% 100%;
+ .welcomeImg{
     width: 100vw;
     height: 100vh;
-}
+} 

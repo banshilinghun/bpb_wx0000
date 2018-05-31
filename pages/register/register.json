@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "手机号验证"
+  "navigationBarTitleText": "手机号验证",
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#333"
 }

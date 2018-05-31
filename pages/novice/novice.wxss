@@ -9,7 +9,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   letter-spacing: 2px;
-  color: #fff;
+  color: #666;
   font-size: 24rpx;
 }
 
@@ -18,7 +18,7 @@
   background-size: 100% 100%;
   position: relative;
   width: 100%;
-  margin-bottom:80rpx;
+  margin-bottom: 100rpx;
 }
 
 .swiper_container {
@@ -36,7 +36,7 @@
 
 .dian {
   display: inline-block;
-  color: #fcfcfc;
+  color: #666;
   overflow: hidden;
   margin-right: 10rpx;
   text-align: center;
@@ -52,12 +52,12 @@
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;
-  border: 8rpx solid #ff555c;
+  border: 8rpx solid #fff;
 }
 
 .nickNameCon {
   font-size: 24rpx;
-  color: #fff;
+  color: #333;
   width: 320rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -137,15 +137,14 @@
 
 .input-log {
   display: flex;
-  border-bottom: 2rpx solid #ddd;
+  border-bottom: 2rpx solid #666;
   flex-direction: row;
   align-items: center;
 }
 
 .input-area {
   text-align: left;
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .input-area input {
@@ -161,14 +160,13 @@
 }
 
 .btn-area {
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .btn-area button {
   margin-top: 30rpx;
   color: #fff;
-  border-radius: 25px;
+  border-radius: 10rpx;
 }
 
 .txt-area {
@@ -189,7 +187,7 @@
 .smsCode {
   display: flex;
   justify-content: space-between;
-  border-bottom: 2rpx solid #ddd;
+  border-bottom: 2rpx solid #666;
   padding-right: 5%;
   align-items: center;
 }
@@ -226,8 +224,8 @@
 
 .registerCon {
   position: absolute;
-  bottom: 110rpx;
-  width: 100%;
+  bottom: 70rpx;
+  left: 50%;
 }
 
 .msite-nav {
@@ -251,35 +249,44 @@
   position: relative;
   width: 400rpx;
   height: 50rpx;
-  padding-top:8rpx;
+  padding-top: 8rpx;
   font-size: 24rpx;
   text-align: center;
   color: #333;
   display: block;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 0%;
-    
-  
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
 }
-.msite-a image{
+
+.msite-a image {
   width: 48rpx;
-    height: 48rpx;
-    margin: 4rpx auto;
-    display: block;
-        border: 0 none;
-    vertical-align: top;
+  height: 48rpx;
+  margin: 4rpx auto;
+  display: block;
+  border: 0 none;
+  vertical-align: top;
 }
-button::after{
+
+button::after {
   border: none;
 }
-.msite-nav button{
- overflow: visible;
- padding-top:8rpx;
- line-height: inherit;
- padding-left: 0;
- padding-right: 0;
+
+.msite-nav button {
+  overflow: visible;
+  padding-top: 8rpx;
+  line-height: inherit;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.rules{
+  position: absolute;
+  top:30rpx;
+  font-size: 28rpx;
+  color: #fff;
+  right: 40rpx;
 }

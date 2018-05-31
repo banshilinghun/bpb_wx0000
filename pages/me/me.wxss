@@ -462,3 +462,28 @@ font-weight: 500;
   width: 100%;
   background: #f2f2f2;
 }
+.mpweixin{
+  height: 96rpx;
+  width: 100%;
+  font-size: 28rpx;
+  background: #FF555C;
+   display: flex;
+  /* padding: 20rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx; */
+  align-items: center;
+  text-align: left;
+  flex-direction: row;
+  color: #fff;
+  padding-left: 40rpx;
+  border-radius: 0;
+}
+.profile-arrow{
+  width: 36rpx;
+  height: 36rpx;
+}
+.profile-text{
+  flex: 1;
+}
