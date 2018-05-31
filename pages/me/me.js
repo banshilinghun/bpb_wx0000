@@ -204,11 +204,14 @@ Page({
                 current: false,
                 text: '推荐奖励',
                 desc: '¥ ' + util.toDecimal2(recommendAmount),
-                hasAward: recommendHasAward,
-                tip: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
+                hasAward:true,
+                // tip2: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
+                tip2: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
                 type: '2',
                 status: 3,
-                amount: claimAmoun
+                amount: claimAmoun,
+                action: '邀请好友',
+                btnType: 0
               })
             }
 
@@ -444,7 +447,7 @@ Page({
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?' + '&user_id=' + app.globalData.uid,
+      path: 'pages/index/index?' + 'user_id=' + app.globalData.uid,
       imageUrl: adimg,
       success: function (res) {
         wx.showToast({
@@ -518,7 +521,17 @@ Page({
       })
     }
   },
-
+  goTip:function(e){
+    wx.showModal({
+      title: '',
+      content: e.detail.step.tip2+'\r\n好友安装广告后方可领取奖励',
+      showCancel: false,
+      confirmText: '确定',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
   coupon: function (data) {//领取现金劵
     var that = this;
     var loginFlag = app.globalData.login;

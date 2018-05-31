@@ -101,3 +101,22 @@ border:none;
 background-color:#ff555c;
 color:#FFF;
 }
+.fllowgz{
+  width: 75%;
+  margin: 0 auto;
+  color: #7C7C7C;
+  font-size: 36rpx;
+  margin-top: 120rpx;
+}
+.fllowgz .fllowgz_text{
+  width: 100%;
+  text-align: center;
+  margin-top: 12rpx;
+}
+.fllow_btn{
+  width: 100%;
+  background: #ff555c;
+  margin-top: 60rpx;
+  border: 0;
+  color: #fff;
+}

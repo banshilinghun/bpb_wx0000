@@ -110,12 +110,6 @@ Page({
           that.setData({
             isFollow: res.data.data
           })
-          if (res.data.data == false && that.data.followFlag) {
-            that.setData({
-              showGoodsDetail: true
-            })
-          }
-
         } else {
           //					console.log(res.data)
           wx.showModal({
