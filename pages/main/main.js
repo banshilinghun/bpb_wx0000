@@ -66,7 +66,7 @@ Page({
         //console.log(res)
         that.setData({
           windowWidth: res.windowWidth,
-          bannerHeight: res.windowWidth * 0.33867
+          bannerHeight: res.windowWidth * 0.466666
         })
       }
     })
