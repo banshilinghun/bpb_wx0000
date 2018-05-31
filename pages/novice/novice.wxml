@@ -1,4 +1,6 @@
+<view style="width: {{imageWidth}}px; height: {{imageHeight+40}}px; background-color: #ff8246">
 <view class='pageImg' style="width: {{imageWidth}}px; height: {{imageHeight}}px;">
+ <view class='rules'>活动规则 >></view>
   <view class='headImg' style='left:50%;position: absolute;margin-left:-54rpx;top:{{headImgTop}}px'>
     <image src='{{wx_avatar}}'></image>
   </view>
@@ -26,7 +28,7 @@
   </swiper>
   <!-- <view class='bpbImgCon' style='top:{{ bpbImgTop}}px'><image src='../../image/bpb_ad_text.png'></image></view>
   <view class='joinImgCon' style='bottom: {{joinImgTop}}px'> <image src='../../image/join_img.png'></image></view> -->
-  <view class='registerCon'>
+  <view class='registerCon' style='width:{{regWidth}}px;margin-left:{{marRegWidth}}px'>
         <form bindsubmit="formSubmit" report-submit="istrue">
     <view class="input-area">
       <view class="input-log">
@@ -56,3 +58,4 @@
  </button>
 </view>
 <bpb-reward reward='{{reward}}'></bpb-reward>
+</view>
