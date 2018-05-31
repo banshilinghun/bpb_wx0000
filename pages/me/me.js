@@ -3,7 +3,9 @@ var util = require("../../utils/util.js");
 const Toast = require('../../components/toast/toast');
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
-const app = getApp()
+const Api = require("../../utils/Api.js");
+const dotHelper = require("../../pages/me/dotHelper.js");
+const app = getApp();
 Page({
   data: {
     inviteId: '我是邀请人id',
@@ -35,13 +37,13 @@ Page({
     positionStatus: 'absolute',
     shareTitle:''
   },
+
   onLoad: function () {
-    //		console.log(app.globalData.uid);
   },
+
   onShow: function () {
-    //
-    //		var uidData = {};
-    //		uidData.user_id = app.globalData.uid;
+    //请求判断是否显示红点
+    dotHelper.requestDotStatus();
     var loginFlag = app.globalData.login;
     this.setData({
       loginFlag: loginFlag,
@@ -497,6 +499,8 @@ Page({
         header: app.globalData.header,
         success: res => {
           if (res.data.code == 1000) {
+            //请求红点状态
+            dotHelper.requestDotStatus();
             that.setData({
               shareInfo: {
                 shareAvatar: app.globalData.userInfo.avatarUrl,

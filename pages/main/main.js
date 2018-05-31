@@ -3,6 +3,8 @@
 var util = require("../../utils/util.js");
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
+const Api = require("../../utils/Api.js");
+const dotHelper = require("../../pages/me/dotHelper.js");
 var app = getApp()
 Page({
   data: {
@@ -37,25 +39,18 @@ Page({
         url: '../details/details?adId=' + recomAdId
       })
     }
-    // if (recomType == 1 || recomType == 2){
-    //   if (loginFlag==0){
-    //     wx.navigateTo({
-    //       url: '../novice/novice?recomId=' + recomId
-    //     })
-    //   }
-    // }
     if (app.globalData.isFirst) {
       that.setData({
         reward: true
       })
     }
-    app.globalData.isFirst=false;
+    app.globalData.isFirst = false;
+    //请求红点状态
+    dotHelper.requestDotStatus();
     this.judgeCanIUse();
     this.checkUpdate();
     wx.getSystemInfo({
       success: function (res) {
-        // console.log(res.windowWidth)  屏幕宽度
-        //console.log(res)
         that.setData({
           windowWidth: res.windowWidth,
           bannerHeight: res.windowWidth * 0.33867
@@ -406,7 +401,6 @@ Page({
       }
     })
   },
-
 
   /**
    * 版本更新

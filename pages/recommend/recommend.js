@@ -3,6 +3,7 @@ const app = getApp();
 const timeUtil = require('../../utils/timeUtil.js');
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
+const dotHelper = require("../../pages/me/dotHelper.js");
 
 //活动或者推荐 推荐和活动的页面布局有变化
 const FLAG_ARRAY = ['active', 'recommend'];
@@ -169,7 +170,6 @@ Page({
             unReceiveList: tempGoatList,
             awardBtnAbled: GoatAward == 0 ? false : true,
           })
-          console.log('awardBtnAbled----------->' + that.data.awardBtnAbled);
         } else {
           that.showModel(res.data.msg);
         }
@@ -254,6 +254,8 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
+          //请求红点状态
+          dotHelper.requestDotStatus();
           that.setData({
             shareInfo: {
               shareAvatar: app.globalData.userInfo.avatarUrl,
@@ -355,7 +357,6 @@ Page({
    * 点击生成分享图片按钮事件回调，图片保存成功隐藏奖励弹出框
    */
   hideDialogListener: function () {
-    console.log('hideDialogListener----------->');
     this.setData({
       showDialog: false
     })
@@ -386,7 +387,6 @@ Page({
       path: 'pages/index/index?' + '&user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
       success: function (res) {
-        console.log('share------success')
         wx.showToast({
           title: '分享成功',
           icon: '',
