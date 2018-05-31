@@ -235,3 +235,29 @@ button{
   width: 100%;
   background: #f2f2f2;
 }
+
+.movable-wrapper{
+  position: fixed;
+  width: 100rpx;
+  height: 100rpx;
+  bottom: 100rpx;
+  right: 50rpx;
+}
+
+movable-area{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+
+movable-view{
+  height: 100rpx;
+  width: 100rpx;
+  background-color: green;
+}
+
+.active-img{
+  height: 100%;
+  width: 100%;
+}

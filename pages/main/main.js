@@ -24,7 +24,7 @@ Page({
     //是否衔接滑动
     circular: true,
     shareit: false,
-    reward: false
+    reward: false,
   },
 
   onLoad: function (options) {
@@ -365,9 +365,7 @@ Page({
       })
     } else if (event.currentTarget.dataset.hi == 'banner2') {
       //活动详情页
-      wx.navigateTo({
-        url: '../recommend/recommend?flag=active',
-      })
+      that.skipRecommend();
     }
   },
   hideShare: function () {
@@ -431,5 +429,15 @@ Page({
       })
     }
   },
+
+  recommendClick: function(){
+    this.skipRecommend();
+  },
+
+  skipRecommend: function(){
+    wx.navigateTo({
+      url: '../recommend/recommend?flag=active',
+    })
+  }
 
 })
