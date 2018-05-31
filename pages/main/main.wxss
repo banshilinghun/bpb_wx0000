@@ -277,6 +277,9 @@ movable-view{
   flex-direction: row;
   color: #fff;
   padding-left: 40rpx;
+  position: fixed;
+  top: 0;
+  z-index: 999999;
 }
 .profile-arrow{
   width: 36rpx;
@@ -284,4 +287,7 @@ movable-view{
 }
 .profile-text{
   flex: 1;
+}
+.page_index{
+  margin-top: 96rpx;
 }

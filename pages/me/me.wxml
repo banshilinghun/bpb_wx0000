@@ -1,6 +1,6 @@
 <view>
  <button class='mpweixin' wx:if='{{!isFollow}}' open-type="contact">
-    <text class='profile-text'> 绑定公众号，开启提醒功能即时获取广告信息</text>
+    <text class='profile-text'> 关注公众号，开启提醒功能即时获取广告信息</text>
      <image class='profile-arrow' src='/image/gomp2.png'></image>
 </button>
 <view class='hr' wx:if='{{isFollow}}'></view>
@@ -17,7 +17,7 @@
       </block>
       <view class="twxtawd">
        <view class='step-container'>
-  <amount-steps type="vertical" hasDesc steps="{{stepsList}}" bind:action='actionClickListener'></amount-steps>
+  <amount-steps type="vertical" hasDesc steps="{{stepsList}}" bind:action='actionClickListener' bind:tip='goTip'></amount-steps>
 </view>
       </view>
       <view class="line"></view>
