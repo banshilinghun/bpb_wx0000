@@ -293,6 +293,15 @@ Page({
     })
   },
 
+  /**
+   * 活动规则
+   */
+  showActiveRule: function(){
+    wx.navigateTo({
+      url: '../recommend/recommend?flag=rule'
+    })
+  },
+
   onShareAppMessage: function(){
     var that = this;
     var shareTitle = shareUtil.getShareNormalTitle();
@@ -303,7 +312,7 @@ Page({
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?' + '&user_id=' + app.globalData.uid + '&type=' + shareType,
+      path: 'pages/index/index?' + 'user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
       success: function (res) {
         wx.showToast({

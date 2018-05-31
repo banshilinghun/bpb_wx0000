@@ -5,24 +5,29 @@
   margin-bottom: 20rpx;
 }
 
-.flex-container{
+.flex-container {
   display: flex;
 }
 
-.flex-column{
+.flex-column {
   flex-direction: column;
 }
 
-.flex-column-reverse{
+.flex-column-reverse {
   flex-direction: column-reverse;
 }
 
-.image-wrapper{
+.image-wrapper {
   margin: 20rpx;
+  border-radius: 10rpx;
+  -moz-box-shadow: 0px 0px 4px #999;
+  -webkit-box-shadow: 0px 0px 4px #999;
+  box-shadow: 0px 0px 4px #999;
 }
 
-.topImage{
+.topImage {
   width: 100%;
+  height: 100%;
   border-radius: 10rpx;
 }
 
@@ -37,7 +42,7 @@
   font-size: 32rpx;
 }
 
-.margin-top-step{
+.margin-top-step {
   margin-top: 18rpx;
 }
 
@@ -74,7 +79,7 @@
   align-items: center;
 }
 
-.share-layout{
+.share-layout {
   height: 100%;
   line-height: 100%;
   display: flex;
@@ -88,23 +93,23 @@
   height: 116rpx;
 }
 
-.share-text{
+.share-text {
   font-size: 26rpx;
   margin-top: 15rpx;
 }
 
-.recommend-split-line{
+.recommend-split-line {
   width: 95%;
   height: 4rpx;
   margin-left: 5%;
 }
 
-.recommend-result{
+.recommend-result {
   padding-left: 40rpx;
   padding-right: 40rpx;
 }
 
-.recommend-success{
+.recommend-success {
   min-height: 96rpx;
   display: flex;
   align-items: center;
@@ -118,11 +123,11 @@
   position: relative;
 }
 
-.get-award-text{
+.get-award-text {
   font-size: 30rpx;
 }
 
-.adapter{
+.adapter {
   height: 100%;
   position: absolute;
   right: 0rpx;
@@ -143,14 +148,14 @@
   font-weight: 500;
 }
 
-.btn-enable{
+.btn-enable {
   color: #ff555c;
   border: 2rpx solid #ff555c;
 }
 
-.btn-disable{
-  border: 2rpx solid #999999;
-  color: #999999;
+.btn-disable {
+  border: 2rpx solid #999;
+  color: #999;
 }
 
 .btn-recommend {
@@ -171,12 +176,12 @@
   font-size: 30rpx;
 }
 
-.list-wrapper{
+.list-wrapper {
   margin-top: 20rpx;
   margin-bottom: 20rpx;
 }
 
-.recommend-friend-list{
+.recommend-friend-list {
   margin-left: 40rpx;
   margin-right: 40rpx;
   margin-bottom: 20rpx;
@@ -224,53 +229,53 @@
   min-width: 80rpx;
 }
 
-.divider{
+.divider {
   width: 100%;
   height: 20rpx;
   background-color: #f7f7f7;
 }
 
-.recommendList-line{
+.recommendList-line {
   position: absolute;
   right: 0;
   bottom: 0;
   width: 89%;
   height: 1rpx;
-  background-color: #DDDDDD;
+  background-color: #ddd;
 }
 
-.split-line{
+.split-line {
   width: 100%;
   height: 1rpx;
-  background-color: #DDDDDD;
+  background-color: #ddd;
 }
 
-.recommend-people{
+.recommend-people {
   height: 70rpx;
   display: flex;
   align-items: center;
 }
 
-.dark-color{
+.dark-color {
   color: #333;
 }
 
-.black-color{
+.black-color {
   color: black;
 }
 
-.gray-color{
+.gray-color {
   color: #666;
 }
 
-.theme-color{
+.theme-color {
   color: #ff555c;
 }
 
-.share-color{
-  color: #7F7F7F;
+.share-color {
+  color: #7f7f7f;
 }
 
-.bold-font{
+.bold-font {
   font-weight: 500;
 }

@@ -238,10 +238,10 @@ button{
 
 .movable-wrapper{
   position: fixed;
-  width: 100rpx;
-  height: 100rpx;
+  width: 110rpx;
+  height: 180rpx;
   bottom: 100rpx;
-  right: 50rpx;
+  right: 30rpx;
 }
 
 movable-area{

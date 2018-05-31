@@ -1,11 +1,11 @@
 <!--pages/recommend/recommend.wxml-->
 <view class='recommend-container'>
-  <view class='image-wrapper'>
-    <image class='topImage' style='height:{{ topImage.imageHeight }}px' src='{{ topImage.imageSrc }}' bindtap='previewImage' mode='aspectFill'></image>
+  <view class='image-wrapper' style='height:{{ topImage.imageHeight }}px'>
+    <image id='top-image' class='topImage' src='{{ topImage.imageSrc }}' bindtap='previewImage' mode='scaleToFill'></image>
   </view>
 
-  <!-- 活动规则 -->
-  <view class="flex-container {{ pageFlag ? 'flex-column' : 'flex-column-reverse' }}">
+  <view class="flex-container {{ isActive || isRule  ? 'flex-column' : 'flex-column-reverse' }}">
+    <!-- 活动规则 -->
     <view class='recommend-rule-wrapper'>
       <view class='recommend-rule'>
         <view class='rule-title dark-color bold-font'>活动规则：</view>
@@ -42,7 +42,7 @@
       <view class='divider'></view>
     </view>
     <!-- 推荐结果 -->
-    <view>
+    <view wx:if='{{ !isRule }}'>
       <view class='recommend-result'>
         <view class='recommend-success'>
           <text class='rule-title dark-color bold-font'>我成功推荐了{{ recommendList ? recommendList.length : 0 }}个好友，累计领取奖励{{ totalAword }}元</text>

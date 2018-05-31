@@ -279,6 +279,13 @@ Component({
      */
     downloadAdImage: function () {
       let that = this;
+      let adImg = that.data.adImageUrl;
+      if (adImg.indexOf('http:') != -1) {
+        adImg = adImg.replace('http:', 'https:');
+      }
+      that.setData({
+        adImageUrl: adImg
+      })
       wx.downloadFile({
         url: that.data.adImageUrl,
         success: function (res) {

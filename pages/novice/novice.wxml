@@ -1,6 +1,6 @@
 <view style="width: {{imageWidth}}px; height: {{imageHeight+40}}px; background-color: #ff8246">
 <view class='pageImg' style="width: {{imageWidth}}px; height: {{imageHeight}}px;">
- <view class='rules'>活动规则 >></view>
+ <view class='rules' bindtap='showActiveRule'>活动规则 >></view>
   <view class='headImg' style='left:50%;position: absolute;margin-left:-54rpx;top:{{headImgTop}}px'>
     <image src='{{wx_avatar}}'></image>
   </view>

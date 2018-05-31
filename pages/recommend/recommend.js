@@ -6,7 +6,7 @@ const shareUtil = require("../../utils/shareUtil.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 
 //活动或者推荐 推荐和活动的页面布局有变化
-const FLAG_ARRAY = ['active', 'recommend'];
+const FLAG_ARRAY = ['active', 'recommend', 'rule'];
 //二维码地址
 const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
 //推荐地址
@@ -47,7 +47,7 @@ Page({
       }
     ],
     //页面状态标识
-    pageFlag: true,
+    pageFlag: FLAG_ARRAY[0],
     //顶部图片
     topImage: {
       imageHeight: 120,
@@ -87,7 +87,11 @@ Page({
     },
     showAwardModel: false,
     shareFriendType: 'award',
-    shareTitle: ''
+    shareTitle: '',
+    //是否是活动规则
+    isRule: false,
+    //是否是活动详情
+    isActive: true,
   },
 
   /**
@@ -96,17 +100,29 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.setData({
-      pageFlag: options.flag == FLAG_ARRAY[0]
+      pageFlag: options.flag,
+      isRule: options.flag == FLAG_ARRAY[2],
+      isActive: options.flag == FLAG_ARRAY[0]
     })
     wx.getSystemInfo({
       success: function (res) {
         console.log(res);
         that.setData({
-          topImage: {
-            imageHeight: res.windowWidth * 0.34,
-            imageSrc: that.data.topImage.imageSrc
-          },
           remindWidth: res.windowWidth - 200
+        });
+        //创建节点选择器
+        var query = wx.createSelectorQuery();
+        //选择id
+        query.select('#top-image').boundingClientRect()
+        query.exec(function (res) {
+          //res就是 所有标签为mjltest的元素的信息 的数组
+          console.log(res)
+          that.setData({
+            topImage: {
+              imageHeight: res[0].width * 0.467,
+              imageSrc: that.data.topImage.imageSrc
+            },
+          })
         })
       },
     })
@@ -185,8 +201,16 @@ Page({
 
   setTitle: function () {
     var that = this;
+    let pageTitle = '活动详情';
+    if (that.data.pageFlag == FLAG_ARRAY[0]){
+      pageTitle = '活动详情';
+    } else if (that.data.pageFlag == FLAG_ARRAY[1]){
+      pageTitle = '推荐好友';
+    } else {
+      pageTitle = '活动规则';
+    }
     wx.setNavigationBarTitle({
-      title: that.data.pageFlag ? '活动详情' : '推荐好友',
+      title: pageTitle,
     })
   },
 
@@ -384,7 +408,7 @@ Page({
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?' + '&user_id=' + app.globalData.uid + '&type=' + shareType,
+      path: 'pages/index/index?' + 'user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
       success: function (res) {
         wx.showToast({
