@@ -17,7 +17,8 @@
     "pages/arrangement/arrangement",
     "pages/joinList/joinList",
     "pages/recommend/recommend",
-    "pages/novice/novice"
+    "pages/novice/novice",
+    "pages/teaching/teaching"
   ],
   "window": {
     "backgroundTextStyle": "light",

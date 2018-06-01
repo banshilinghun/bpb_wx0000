@@ -80,17 +80,20 @@ Page({
             app.globalData.session_id = res.data.data.session_id;
             app.globalData.uid = res.data.data.uid;
             wx.showToast({
-              title: "手机号验证成功"
+              title: "注册成功"
             })
-            if (res.data.data.status == 0) {
-              that.redirectTo(res.data.data);
-            } else {
-              wx.switchTab({
-                url: '../main/main'
-              })
-            }
+            // if (res.data.data.status == 0) {
+            //   that.redirectTo(res.data.data);
+            // } else {
+            //   wx.switchTab({
+            //     url: '../main/main'
+            //   })
+            // }
 
             app.globalData.login = 1;
+            wx.redirectTo({
+              url: '../teaching/teaching'
+            }) 
           } else {
             //console.log(res.data)
             wx.showModal({
