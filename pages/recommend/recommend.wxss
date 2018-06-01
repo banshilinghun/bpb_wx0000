@@ -20,9 +20,9 @@
 .image-wrapper {
   margin: 20rpx;
   border-radius: 10rpx;
-  -moz-box-shadow: 0px 0px 4px #999;
-  -webkit-box-shadow: 0px 0px 4px #999;
-  box-shadow: 0px 0px 4px #999;
+  -moz-box-shadow: 0px 0px 6px #999;
+  -webkit-box-shadow: 0px 0px 6px #999;
+  box-shadow: 0px 0px 6px #999;
 }
 
 .topImage {

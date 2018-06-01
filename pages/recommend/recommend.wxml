@@ -16,11 +16,15 @@
           </view>
           <view class='text-block rule-item'>
             <text class='rule-one-text dark-color' decode='{{true}}'>2.&ensp;&ensp;</text>
-            <text class='rule-one-text dark-color'>推荐奖励发放后，请到页面“我的”-“待收收益”里领取。</text>
+            <text class='rule-one-text dark-color'>推荐奖励发放后，请到页面【我的】-【待收收益】里领取。</text>
           </view>
           <view class='text-block rule-item'>
             <text class='rule-one-text dark-color' decode='{{true}}'>3.&ensp;&ensp;</text>
-            <text class='rule-one-text dark-color'>关注“奔跑宝”服务号，可实时收到奖励领取提醒。</text>
+            <text class='rule-one-text dark-color'>关注【奔跑宝】微信公众号，即时查看奖励信息。</text>
+          </view>
+          <view class='text-block rule-item'>
+            <text class='rule-one-text dark-color' decode='{{true}}'>4.&ensp;&ensp;</text>
+            <text class='rule-one-text dark-color'>本次活动最终解释权归【奔跑宝】所有。</text>
           </view>
         </view>
       </view>
@@ -44,8 +48,11 @@
     <!-- 推荐结果 -->
     <view wx:if='{{ !isRule }}'>
       <view class='recommend-result'>
-        <view class='recommend-success'>
-          <text class='rule-title dark-color bold-font'>我成功推荐了{{ recommendList ? recommendList.length : 0 }}个好友，累计领取奖励{{ totalAword }}元</text>
+        <view class='recommend-success rule-title dark-color bold-font'>
+          <text>我成功推荐了</text>
+          <text class='theme-color'>{{ recommendList ? recommendList.length : 0 }}个</text>
+          <text>好友，累计领取奖励</text>
+          <text class='theme-color'>{{ totalAword }}元</text>
         </view>
         <view class='split-line'></view>
         <view class='get-award-wrapper'>

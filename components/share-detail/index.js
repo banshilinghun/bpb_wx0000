@@ -146,7 +146,7 @@ Component({
    */
   data: {
     detailStr: {
-      invite: '邀请你赚钱',
+      invite: '邀请您赚钱',
       bpbMini: '奔跑宝小程序',
       clickToMini: '(长按进入赚钱)',
       incomeTitle: '预计收益：',
@@ -354,7 +354,7 @@ Component({
 
     showLoading: function () {
       wx.showLoading({
-        title: '奔跑中🏃...',
+        title: '奔跑中🚗...',
       })
     },
 
@@ -440,9 +440,10 @@ Component({
       ctx.fillText(that.data.adName, adTopMargin * windowWidth, adNameHeightScale * windowHeight);
 
       //绘制线
-      ctx.setStrokeStyle(LINE_COLOR);
+      ctx.setStrokeStyle(LINE_COLOR); 
+      ctx.setLineDash([10, 20], 5);
       ctx.moveTo(adTopMargin * windowWidth, adLineHeightScale * windowHeight);
-      ctx.lineTo((adLineWidthScale + adTopMargin) * windowWidth, adLineHeightScale * windowHeight);
+      ctx.lineTo(windowWidth * (1 - adTopMargin), adLineHeightScale * windowHeight);
       ctx.stroke();
 
       //绘制昵称
@@ -462,6 +463,7 @@ Component({
       ctx.fillRect(0, dividerHeightBottomScale * windowHeight, windowWidth, dividerHeight * windowHeight);
       //绘制线
       ctx.setStrokeStyle(LINE_COLOR);
+      ctx.setLineDash([10, 5], 5);
       ctx.moveTo(adTopMargin * windowWidth, dividerHeightTopScale * windowHeight);
       ctx.lineTo(windowWidth * (1 - adTopMargin), dividerHeightTopScale * windowHeight);
       ctx.stroke();

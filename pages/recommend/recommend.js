@@ -32,7 +32,7 @@ Page({
       {
         done: false,
         current: false,
-        text: '通过',
+        text: '好友通过',
         secondText: '分享链接进入',
         thirdText: '小程序'
       },
@@ -44,7 +44,9 @@ Page({
       {
         done: false,
         current: false,
-        text: '双方即可获得30元奖励'
+        text: '双方即可获得',
+        secondText: '30元',
+        thirdText: '奖励'
       }
     ],
     //页面状态标识
@@ -209,9 +211,9 @@ Page({
     if (that.data.pageFlag == FLAG_ARRAY[2]) {
       pageTitle = '活动规则';
     } else if (that.data.pageFlag == FLAG_ARRAY[1]){
-      pageTitle = '推荐好友';
+      pageTitle = '推荐有奖';
     } else {
-      pageTitle = '活动详情';
+      pageTitle = '推荐有奖';
     }
     wx.setNavigationBarTitle({
       title: pageTitle,
@@ -371,7 +373,7 @@ Page({
 
   showLoadingToast: function () {
     wx.showToast({
-      title: '奔跑中...',
+      title: '奔跑中🚗...',
       icon: 'loading'
     })
   },
