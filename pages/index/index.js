@@ -11,6 +11,11 @@ Page({
     var that = this;
     //如果是小程序码进入，处理逻辑
     console.log(options)
+    if(options.pages){
+      that.setData({
+        jump: options.pages
+      })
+    }
     if (options.scene) {
       console.log(decodeURIComponent(options.scene));
       var scene = decodeURIComponent(options.scene);
@@ -115,11 +120,38 @@ Page({
                         }, 1500);
                       }
                     }else{
-                      setTimeout(function () {
-                        wx.switchTab({
-                          url: '../main/main'
-                        })
-                      }, 1500);
+                      console.log(type)
+                      if (that.data.jump =='ads'){
+                        setTimeout(function () {
+                          wx.switchTab({
+                            url: '../main/main'
+                          })
+                        }, 1500);
+                      } else if (that.data.jump == 'regist'){
+                        setTimeout(function () {
+                          wx.redirectTo({
+                            url: '../register/register'
+                          })
+                        }, 1500);
+                      } else if (that.data.jump == 'recommend'){
+                        setTimeout(function () {
+                          wx.redirectTo({
+                            url: '../recommend/recommend?flag=mp'
+                          })
+                        }, 1500);
+                      } else if (that.data.jump == 'account'){
+                        setTimeout(function () {
+                          wx.switchTab({
+                            url: '../me/me'
+                          })
+                        }, 1500);
+                      }else{
+                        setTimeout(function () {
+                          wx.switchTab({
+                            url: '../main/main'
+                          })
+                        }, 1500);
+                      }
                     }
                   } else {
                     wx.showModal({

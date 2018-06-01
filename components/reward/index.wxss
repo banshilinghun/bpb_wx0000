@@ -16,11 +16,11 @@
   display: block
 }
 .colse{
-  width: 96rpx;
-  height: 96rpx;
+  width: 80rpx;
+  height: 80rpx;
   margin: 0 auto;
    display: block;
-   margin-top: 48rpx;
+   margin-top: 20rpx;
 }
 
 

@@ -26,26 +26,28 @@
 }
 
 .nick_name {
-  width: 160rpx;
+  width: 35%;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: center;
+  text-align: left;
 }
 
 .dian {
+  width: 35%;
   display: inline-block;
   color: #666;
   overflow: hidden;
-  margin-right: 10rpx;
   text-align: center;
 }
 
 .mount {
-  width: 260rpx;
+  width: 30%;
   display: inline-block;
   text-align: right;
+  color: #ff555c;
+  font-weight: 600;
 }
 
 .headImg image {
@@ -137,7 +139,7 @@
 
 .input-log {
   display: flex;
-  border-bottom: 2rpx solid #666;
+  border-bottom: 1rpx solid #999;
   flex-direction: row;
   align-items: center;
 }
@@ -187,7 +189,7 @@
 .smsCode {
   display: flex;
   justify-content: space-between;
-  border-bottom: 2rpx solid #666;
+  border-bottom: 1rpx solid #999;
   padding-right: 5%;
   align-items: center;
 }

@@ -15,11 +15,11 @@
       <swiper-item>
         <view class="swiper_item">
           <view class='nick_name'>{{item.nickname}}</view>
-           <view class='dian'>·········</view> 
-          <view class='mount'>
-          获得<text wx:if="{{item.type==1}}">新手</text>
+            <view class='dian'>获得<text wx:if="{{item.type==1}}">新手</text>
           <text wx:if="{{item.type==3}}">广告</text>
-          <text wx:if="{{item.type==2}}">推荐</text>奖励
+          <text wx:if="{{item.type==2}}">推荐</text>奖励</view>  
+          <view class='mount'>
+          
           {{item.amount}}元
           </view>
         </view>
