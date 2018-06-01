@@ -397,7 +397,7 @@ Component({
         filePath: that.data.targetSharePath,
         success: function () {
           wx.showModal({
-            title: '提示',
+            title: '',
             content: '✌️图片保存成功，\n快去分享到朋友圈吧',
             showCancel: false
           })

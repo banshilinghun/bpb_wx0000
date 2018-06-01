@@ -6,7 +6,8 @@ const shareUtil = require("../../utils/shareUtil.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 
 //活动或者推荐 推荐和活动的页面布局有变化
-const FLAG_ARRAY = ['active', 'recommend', 'rule'];
+//active:活动，recommend:推荐，rule:活动规则，mp:公众号跳转
+const FLAG_ARRAY = ['active', 'recommend', 'rule', 'mp'];
 //二维码地址
 const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
 //推荐地址
@@ -92,6 +93,8 @@ Page({
     isRule: false,
     //是否是活动详情
     isActive: true,
+    //是否是公众号进入，显示回到首页
+    showGoHomeBtn: false
   },
 
   /**
@@ -102,7 +105,8 @@ Page({
     that.setData({
       pageFlag: options.flag,
       isRule: options.flag == FLAG_ARRAY[2],
-      isActive: options.flag == FLAG_ARRAY[0]
+      isActive: options.flag == FLAG_ARRAY[0],
+      showGoHomeBtn: options.flag == FLAG_ARRAY[3]
     })
     wx.getSystemInfo({
       success: function (res) {
@@ -201,13 +205,13 @@ Page({
 
   setTitle: function () {
     var that = this;
-    let pageTitle = '活动详情';
-    if (that.data.pageFlag == FLAG_ARRAY[0]){
-      pageTitle = '活动详情';
+    let pageTitle = '';
+    if (that.data.pageFlag == FLAG_ARRAY[2]) {
+      pageTitle = '活动规则';
     } else if (that.data.pageFlag == FLAG_ARRAY[1]){
       pageTitle = '推荐好友';
     } else {
-      pageTitle = '活动规则';
+      pageTitle = '活动详情';
     }
     wx.setNavigationBarTitle({
       title: pageTitle,
@@ -383,6 +387,12 @@ Page({
   hideDialogListener: function () {
     this.setData({
       showDialog: false
+    })
+  },
+
+  goHomeListener: function(){
+    wx.switchTab({
+      url: '../main/main',
     })
   },
 
