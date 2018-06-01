@@ -459,9 +459,12 @@ Component({
 
       //绘制间隔
       ctx.setFillStyle(DIVIDER_COLOR);
-      ctx.fillRect(0, dividerHeightTopScale * windowHeight, windowWidth, dividerHeight * windowHeight);
-      ctx.setFillStyle(DIVIDER_COLOR);
       ctx.fillRect(0, dividerHeightBottomScale * windowHeight, windowWidth, dividerHeight * windowHeight);
+      //绘制线
+      ctx.setStrokeStyle(LINE_COLOR);
+      ctx.moveTo(adTopMargin * windowWidth, dividerHeightTopScale * windowHeight);
+      ctx.lineTo(windowWidth * (1 - adTopMargin), dividerHeightTopScale * windowHeight);
+      ctx.stroke();
 
       //绘制二维码
       ctx.drawImage(that.data.QRPath, windowWidth * (0.5 - qrCodeWidthScale / 2), qrCodeHeightScale * windowHeight, qrCodeWidthScale * windowWidth, qrCodeWidthScale * windowWidth);
@@ -597,7 +600,7 @@ Component({
         filePath: that.data.targetSharePath,
         success: function () {
           wx.showModal({
-            title: '提示',
+            title: '',
             content: '✌️图片保存成功，\n快去分享到朋友圈吧',
             showCancel: false
           })
