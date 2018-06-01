@@ -1,0 +1,4 @@
+<!--index.wxml-->
+ <image src='https://wxapi.benpaobao.com/static/app_img/teaching.png' style='width:{{imgWidth}}px;height:{{imgHeight}}px' class='welcomeImg' ></image>
+ <button class='goMain' bindtap="goMain">立即领取广告</button>
+

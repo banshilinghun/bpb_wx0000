@@ -264,7 +264,7 @@ movable-view{
 .mpweixin{
   height: 96rpx;
   width: 100%;
-  font-size: 28rpx;
+  font-size: 26rpx;
   background: #FF555C;
    display: flex;
   /* padding: 20rpx;
@@ -279,7 +279,7 @@ movable-view{
   padding-left: 40rpx;
   position: fixed;
   top: 0;
-  z-index: 999999;
+  z-index: 999;
 }
 .profile-arrow{
   width: 36rpx;

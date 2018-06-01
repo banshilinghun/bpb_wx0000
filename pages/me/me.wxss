@@ -465,7 +465,7 @@ font-weight: 500;
 .mpweixin{
   height: 96rpx;
   width: 100%;
-  font-size: 28rpx;
+  font-size: 26rpx;
   background: #FF555C;
    display: flex;
   /* padding: 20rpx;

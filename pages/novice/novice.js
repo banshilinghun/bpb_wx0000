@@ -114,14 +114,16 @@ Page({
           if (res.data.code == 1000) {
             app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
             app.globalData.session_id = res.data.data.session_id;
-            wx.showToast({
-              title: "手机号验证成功"
-            })
-            wx.switchTab({
-              url: '../main/main'
-            })
-
             app.globalData.login = 1;
+            wx.showToast({
+              title: "注册成功"
+            })
+            // wx.switchTab({
+            //   url: '../main/main'
+            // })
+            wx.redirectTo({
+              url: '../teaching/teaching'
+            })        
           } else {
             //console.log(res.data)
             wx.showModal({

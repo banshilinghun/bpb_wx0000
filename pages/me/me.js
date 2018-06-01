@@ -16,7 +16,15 @@ Page({
       'url': 'auth/auth',
       "icon": '../../image/card.png',
       'deposit': 0
-    }],
+    },
+    {
+      "desc": "新手教程",
+      "id": "teaching",
+      'url': 'teaching/teaching',
+      "icon": '../../image/card.png',
+      'deposit': 0
+    }
+    ],
     total: "0.00",
     amount: '0.00',
     total: '0.00',
@@ -31,11 +39,11 @@ Page({
       shareNickname: '',
       awardMoney: '',
       awardType: ''
-    }, 
+    },
     showShareModel: false,
     shareFriendType: 'normal',
     positionStatus: 'absolute',
-    shareTitle:''
+    shareTitle: ''
   },
 
   onLoad: function () {
@@ -204,7 +212,7 @@ Page({
                 current: false,
                 text: '推荐奖励',
                 desc: '¥ ' + util.toDecimal2(recommendAmount),
-                hasAward:true,
+                hasAward: true,
                 // tip2: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
                 tip2: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
                 type: '2',
@@ -364,7 +372,13 @@ Page({
                 content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
               })
             }
-          } else {
+          } 
+          else if (myProfile[i].id == 'teaching'){
+            wx.navigateTo({
+              url: '../teaching/teaching'
+            })
+          }
+          else {
 
             if (that.data.loginFlag == 1) {
               wx.navigateTo({
@@ -521,15 +535,15 @@ Page({
       })
     }
   },
-  goTip:function(e){
+  goTip: function (e) {
     wx.showModal({
       title: '',
-      content: e.detail.step.tip2+'\r\n好友安装广告后方可领取奖励',
+      content: e.detail.step.tip2 + '\r\n好友安装广告后方可领取奖励',
       showCancel: false,
       confirmText: '确定',
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
     })
   },
   coupon: function (data) {//领取现金劵
@@ -592,8 +606,8 @@ Page({
         }
       })
     }
-    },
- 
+  },
+
   /**
    * 领取奖励后分享
    */
@@ -612,7 +626,7 @@ Page({
   /**
    * 隐藏奖励弹框
    */
-  hideDialogListener: function(){
+  hideDialogListener: function () {
     this.setData({
       showGoodsDetail: false
     })
