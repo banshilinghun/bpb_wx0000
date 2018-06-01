@@ -46,7 +46,7 @@
 
 .btn-save-local{
   background: linear-gradient(45deg, #FB653D, #ff555c);
-  width: 100%;
+  width: 80%;
   height: 88rpx;
   line-height: 88rpx;
   border-radius: 44rpx;
@@ -58,13 +58,17 @@
 
 .close-wrppper{
   position: fixed;
-  right: 0;
-  top: 0;
+  right: 5%;
+  top: 10rpx;
   padding: 20rpx;
-  z-index: 99;
+  z-index: 101;
 }
 
 .close-image{
   width: 50rpx;
   height: 50rpx;
+  border-radius: 50%;
+  -moz-box-shadow: 0px 0px 5px #999;
+  -webkit-box-shadow: 0px 0px 5px #999;
+  box-shadow: 0px 0px 5px #999;
 }

@@ -67,7 +67,7 @@ page {
   padding-top: 10rpx;
   overflow: hidden;
   padding-right: 10px;
-  text-align: right;
+  text-align: center;
 }
 
 .time {

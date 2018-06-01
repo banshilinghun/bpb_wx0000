@@ -216,7 +216,7 @@ Component({
 
     showLoading: function () {
       wx.showLoading({
-        title: '奔跑中🏃...',
+        title: '奔跑中🚗...',
       })
     },
 

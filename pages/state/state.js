@@ -131,7 +131,7 @@ Page({
   onPullDownRefresh: function () {
     var z = this;
     wx.showToast({
-      title: '奔跑中...',
+      title: '奔跑中🚗...',
       icon: 'loading'
     })
     //		var uidData = {};

@@ -76,7 +76,7 @@
     <block>
       <button bindtap='recommendFriendListener' class='share-button'>
         <image class='itemicon' src='../../image/shmgc.png'></image>
-        <text class='profile-item'>推荐好友</text>
+        <text class='profile-item'>推荐有奖</text>
         <image class='profile-arrow' src='/image/arrow.png'>
         </image>
       </button>

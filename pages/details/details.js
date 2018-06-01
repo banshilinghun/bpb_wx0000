@@ -253,7 +253,7 @@ Page({
             incomeMoney: adInfoBean.amount,
             adImageUrl: adInfoBean.img_url,
             adName: adInfoBean.name,
-            adTime: adInfoBean.begin_date + '-' + adInfoBean.end_date,
+            adTime: adInfoBean.begin_date + ' ~ ' + adInfoBean.end_date,
             adId: adInfoBean.id,
             joinNumber: adInfoBean.total_count - adInfoBean.current_count
           })

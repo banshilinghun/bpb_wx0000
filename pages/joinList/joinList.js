@@ -142,7 +142,7 @@ Page({
 
   showLoadingToast: function () {
     wx.showToast({
-      title: '奔跑中...',
+      title: '奔跑中🚗...',
       icon: 'loading'
     });
   },
