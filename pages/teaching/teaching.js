@@ -16,7 +16,7 @@ Page({
         var windowHeight = res.windowHeight;
         var windowscale = windowHeight / windowWidth;//屏幕高宽比  
         var imageWidth = windowWidth;
-        var imageHeight = imageWidth * 6.2;
+        var imageHeight = imageWidth * 5.36;
         that.setData({
           imgWidth: imageWidth,
           imgHeight: imageHeight

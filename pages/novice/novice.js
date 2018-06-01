@@ -118,12 +118,12 @@ Page({
             wx.showToast({
               title: "注册成功"
             })
-            // wx.switchTab({
-            //   url: '../main/main'
-            // })
-            wx.redirectTo({
-              url: '../teaching/teaching'
-            })        
+            wx.switchTab({
+              url: '../main/main'
+            })
+            // wx.redirectTo({
+            //   url: '../teaching/teaching'
+            // })        
           } else {
             //console.log(res.data)
             wx.showModal({

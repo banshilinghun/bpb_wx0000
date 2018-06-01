@@ -82,18 +82,17 @@ Page({
             wx.showToast({
               title: "注册成功"
             })
-            // if (res.data.data.status == 0) {
-            //   that.redirectTo(res.data.data);
-            // } else {
-            //   wx.switchTab({
-            //     url: '../main/main'
-            //   })
-            // }
-
             app.globalData.login = 1;
-            wx.redirectTo({
-              url: '../teaching/teaching'
-            }) 
+            if (res.data.data.status == 0) {
+              that.redirectTo(res.data.data);
+            } else {
+              wx.switchTab({
+                url: '../main/main'
+              })
+            }
+            // wx.redirectTo({
+            //   url: '../teaching/teaching'
+            // }) 
           } else {
             //console.log(res.data)
             wx.showModal({

@@ -15,7 +15,7 @@ Page({
     haveMyAd: false,
     //测试数据
     userList: [],
-    background: ['banner2'],
+    background: ['banner1','banner2'],
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -369,8 +369,11 @@ Page({
     var that = this;
     console.log(event.currentTarget.dataset.hi)
     if (event.currentTarget.dataset.hi == 'banner1') {
-      that.setData({
-        shareit: true
+      // that.setData({
+      //   shareit: true
+      // })
+      wx.navigateTo({
+        url: '../teaching/teaching',
       })
     } else if (event.currentTarget.dataset.hi == 'banner2') {
       //活动详情页

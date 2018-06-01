@@ -21,7 +21,7 @@ Page({
       "desc": "新手教程",
       "id": "teaching",
       'url': 'teaching/teaching',
-      "icon": '../../image/card.png',
+      "icon": '../../image/tech.png',
       'deposit': 0
     }
     ],
