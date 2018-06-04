@@ -28,7 +28,7 @@ function getShareAwardTitle(award, awardType) {
  * 广告分享title
  */
 function getShareAdTitle(){
-  return '[' + app.globalData.userInfo.nickName + '@我]' + ' 开车不顺手赚广告费是你的损失了！';
+  return '[' + app.globalData.userInfo.nickName + '@我]' + ' 开车还能赚广告费，不来是你的损失！';
 }
 
 module.exports = {

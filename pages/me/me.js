@@ -452,7 +452,7 @@ Page({
   //分享
   onShareAppMessage: function (res) {
     var that = this;
-    if (res.from == 'button') {
+    if (res.from == 'button' && !res.target.dataset.step) {
       var shareTitle = shareUtil.getShareAwardTitle(that.data.shareInfo.awardMoney, that.data.shareInfo.awardType);
       var adid = -1;
       var adimg = '../../image/share-award.png';
