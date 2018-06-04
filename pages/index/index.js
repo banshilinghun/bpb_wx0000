@@ -47,35 +47,37 @@ Page({
     var recommendId = that.data.user_id;
     var type = that.data.type;
     var adId = that.data.adId;
-    wx.getUserInfo({
-      success: function (infoRes) {
-        console.log(infoRes.userInfo)
-        app.globalData.userInfo = infoRes.userInfo
-        that.setData({
-          userInfo: infoRes.userInfo,
-          hasUserInfo: true
-        })
-        wx.login({
-          success: res => {
-            //var that = this;
-            // 发送 res.code 到后台换取 openId, sessionKey, unionId
-            //console.log(res)
-            if (res.code) {
-              app.globalData.code = res.code
-              //console.log(app.globalData.userInfo)
-              var reqData={};
-              reqData.wx_code=res.code;
+    wx.login({
+      success: res => {
+        //var that = this;
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        //console.log(res)
+        if (res.code) {
+          app.globalData.code = res.code;
+          var reqData = {};
+          reqData.wx_code = res.code;
+          wx.getUserInfo({
+            success: function (infoRes) {
+              console.log(infoRes)
+              app.globalData.userInfo = infoRes.userInfo
+              that.setData({
+                userInfo: infoRes.userInfo,
+                hasUserInfo: true
+              })
+              reqData.iv =infoRes.iv;
+              reqData.encryptedData=infoRes.encryptedData;
               if (app.globalData.userInfo) {
                 //reqData.wx_code = res.code;
                 reqData.avatar = app.globalData.userInfo.avatarUrl;
                 reqData.nickname = app.globalData.userInfo.nickName;
-                reqData.gender = app.globalData.userInfo.gender
+                reqData.gender = app.globalData.userInfo.gender;
+
               } else {
                 reqData.avatar = '';
                 reqData.nickname = '';
                 reqData.gender = 0
               }
-              if (recommendId){
+              if (recommendId) {
                 reqData.recommender_userid = recommendId;
               }
               //console.log(res.code)
@@ -100,6 +102,7 @@ Page({
                     app.globalData.recomId = that.data.user_id;
                     app.globalData.recomType = that.data.type;
                     app.globalData.recomAdId = that.data.adId;
+
                     if (res.data.data.phone) {
                       app.globalData.login = 1;
                     } else {
@@ -119,33 +122,33 @@ Page({
                           })
                         }, 1500);
                       }
-                    }else{
+                    } else {
                       console.log(type)
-                      if (that.data.jump =='ads'){
+                      if (that.data.jump == 'ads') {
                         setTimeout(function () {
                           wx.switchTab({
                             url: '../main/main'
                           })
                         }, 1500);
-                      } else if (that.data.jump == 'regist'){
+                      } else if (that.data.jump == 'regist') {
                         setTimeout(function () {
                           wx.redirectTo({
                             url: '../register/register'
                           })
                         }, 1500);
-                      } else if (that.data.jump == 'recommend'){
+                      } else if (that.data.jump == 'recommend') {
                         setTimeout(function () {
                           wx.redirectTo({
                             url: '../recommend/recommend?flag=mp'
                           })
                         }, 1500);
-                      } else if (that.data.jump == 'account'){
+                      } else if (that.data.jump == 'account') {
                         setTimeout(function () {
                           wx.switchTab({
                             url: '../me/me'
                           })
                         }, 1500);
-                      }else{
+                      } else {
                         setTimeout(function () {
                           wx.switchTab({
                             url: '../main/main'
@@ -172,21 +175,28 @@ Page({
                   });
                 }
               })
-            } else {
-              console.log('获取用户登录态失败！' + res.errMsg)
+            }, fail: function (e) {
+              that.setData({
+                showDialog: true
+              })
+
+            }, complete: function (res) {
+
             }
-          }
-
-        })
-      }, fail: function (e) {
-        that.setData({
-          showDialog: true
-        })
-
-      }, complete: function (res) {
-
+          })
+          //console.log(app.globalData.userInfo)
+         
+         
+        } else {
+          console.log('获取用户登录态失败！' + res.errMsg)
+        }
+    
+       
       }
+
     })
+
+
   },
 
   getUserInfo: function (e) {
@@ -199,7 +209,7 @@ Page({
   },
   userInfoHandler: function (e) {
     var that = this;
-    console.log(e.detail.userInfo)
+    console.log(e)
     if (e.detail.userInfo == undefined) {
       wx.showToast({
         title: "请允许授权",
@@ -210,63 +220,62 @@ Page({
         showDialog: false
       })
       app.globalData.userInfo = e.detail.userInfo
-      wx.login({
+      console.log(e.detail)
+      // reqData.iv = infoRes.iv;
+      // reqData.encryptedData = infoRes.encryptedData;
+      var iv = e.detail.iv;
+      var encryptedData = e.detail.encryptedData;
+      var wx_code = app.globalData.code;
+      var avatarUrl = e.detail.userInfo.avatarUrl;
+      var nickname = e.detail.userInfo.nickName;
+      var gender = e.detail.userInfo.gender;
+      wx.request({
+        url: app.globalData.baseUrl + 'app/user/wx_login',
+        data: {
+          wx_code: wx_code,
+          avatar: avatarUrl,
+          nickname: nickname,
+          gender: gender,
+          iv:iv,
+          encryptedData:encryptedData
+        },
+        header: {
+          'content-type': 'application/json'
+        },
         success: res => {
-          if (res.code) {
-            app.globalData.code = res.code
-            var avatarUrl = e.detail.userInfo.avatarUrl;
-            var nickname = e.detail.userInfo.nickName;
-            var gender = e.detail.userInfo.gender;
-            wx.request({
-              url: app.globalData.baseUrl + 'app/user/wx_login',
-              data: {
-                wx_code: res.code,
-                avatar: avatarUrl,
-                nickname: nickname,
-                gender: gender
-              },
-              header: {
-                'content-type': 'application/json'
-              },
-              success: res => {
-                if (res.data.code == 1000) {
-                  app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
-                  app.globalData.uid = res.data.data.uid;
-                  app.globalData.checkStaus = res.data.data.status;
-                  app.globalData.isFirst = res.data.data.isFirst;
-                  app.globalData.recomId = that.data.user_id;
-                  app.globalData.recomType = that.data.type;
-                  app.globalData.recomAdId = that.data.adId;
-                  if (res.data.data.phone) {
-                    app.globalData.login = 1;
-                  } else {
-                    app.globalData.login = 0;
-                  }
-                  wx.switchTab({
-                    url: '../main/main'
-                  })
-                } else {
-                  wx.showModal({
-                    title: '提示',
-                    showCancel: false,
-                    content: res.data.msg
-                  });
-                }
-              },
-              fail: res => {
-                wx.showModal({
-                  title: '提示',
-                  showCancel: false,
-                  content: res.errMsg
-                });
-              }
+          if (res.data.code == 1000) {
+            app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
+            app.globalData.uid = res.data.data.uid;
+            app.globalData.checkStaus = res.data.data.status;
+            app.globalData.isFirst = res.data.data.isFirst;
+            app.globalData.recomId = that.data.user_id;
+            app.globalData.recomType = that.data.type;
+            app.globalData.recomAdId = that.data.adId;
+            if (res.data.data.phone) {
+              app.globalData.login = 1;
+            } else {
+              app.globalData.login = 0;
+            }
+            wx.switchTab({
+              url: '../main/main'
             })
           } else {
-            console.log('获取用户登录态失败！' + res.errMsg)
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: res.data.msg
+            });
           }
+        },
+        fail: res => {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.errMsg
+          });
         }
-
       })
+   
     }
   }
 })

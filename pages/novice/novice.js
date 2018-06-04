@@ -106,9 +106,7 @@ Page({
       wx.request({
         url: app.globalData.baseUrl + 'app/user/regist',
         data: registData,
-        header: {
-          'content-type': 'application/json'
-        },
+        header: app.globalData.header,
         success: res => {
           that.setregistData2();
           if (res.data.code == 1000) {
@@ -220,9 +218,7 @@ Page({
     wx.request({
       url: app.globalData.baseUrl + 'app/get/regist_verify_wx',
       data: rqData,
-      header: {
-        'content-type': 'application/json'
-      },
+      header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
 
