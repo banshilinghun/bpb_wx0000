@@ -372,11 +372,11 @@ Component({
                           if (res.authSetting['scope.writePhotosAlbum']) {
                             that.saveImageToPhotosAlbum();
                           } else {
-                            consoleUtil.log('用户未同意获取用户信息权限-------->success');
+                            console.log('用户未同意获取用户信息权限-------->success');
                           }
                         },
                         fail: function () {
-                          consoleUtil.log('用户未同意获取用户信息权限-------->fail');
+                          console.log('用户未同意获取用户信息权限-------->fail');
                         }
                       })
                     }

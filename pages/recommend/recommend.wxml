@@ -16,7 +16,7 @@
           </view>
           <view class='text-block rule-item'>
             <text class='rule-one-text dark-color' decode='{{true}}'>2.&ensp;&ensp;</text>
-            <text class='rule-one-text dark-color'>推荐奖励发放后，请到页面【我的】-【待收收益】里领取。</text>
+            <text class='rule-one-text dark-color'>推荐奖励发放后，请到【我的】-【待收收益】里领取。</text>
           </view>
           <view class='text-block rule-item'>
             <text class='rule-one-text dark-color' decode='{{true}}'>3.&ensp;&ensp;</text>
