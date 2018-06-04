@@ -1,5 +1,5 @@
 <view>
- <button class='mpweixin' wx:if='{{!isFollow}}' open-type="contact">
+ <button class='mpweixin' wx:if='{{ !isFollow && showRecommend }}' open-type="contact">
     <text class='profile-text'> 关注奔跑宝公众号，开启提醒功能即时获取广告信息</text>
      <image class='profile-arrow' src='/image/gomp2.png'></image>
 </button>
