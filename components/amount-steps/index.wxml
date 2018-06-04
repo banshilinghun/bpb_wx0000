@@ -8,7 +8,7 @@
     <view wx:if='{{step.type==2&&step.tip2}}' class='zan-more' bindtap="goTip" data-step='{{step}}'><icon type="info" size="18"/></view>
     <view class='step-right-wrapper'>
       <!-- hasAward 是否可以领取奖励，不可领取则显示提示文字 -->
-      <button class='step-action' bindtap='handleTap' wx:if='{{step.hasAward && step.action }}' data-step='{{step}}' data-index='{{index}}'>{{step.action}}</button>
+      <button class='step-action' bindtap='handleTap' wx:if='{{step.hasAward && step.action }}' data-step='{{step}}' data-index='{{index}}' open-type='{{ openType }}'>{{step.action}}</button>
       <text class='step-tip' wx:if='{{!step.hasAward && step.tip}}'>{{ step.tip }}</text>
     </view>
     <view class="zan-steps__icons">

@@ -31,7 +31,9 @@ App({
     shareInviteId: '',
     checkStaus: '',
     baseUrl: releaseDomain,
-    isFirst:false
+    isFirst:false,
+    //分享开关
+    shareFlag: false
   },
 
   /**

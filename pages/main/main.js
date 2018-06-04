@@ -6,6 +6,8 @@ const shareUtil = require("../../utils/shareUtil.js");
 const Api = require("../../utils/Api.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 var app = getApp()
+const shareFlagUrl = app.globalData.baseUrl + 'app/get/share_flag';
+
 Page({
   data: {
     myAd: '',
@@ -25,6 +27,8 @@ Page({
     circular: true,
     shareit: false,
     reward: false,
+    showRecommend: false,
+    shareAwardText: '分享'
   },
 
   onLoad: function (options) {
@@ -102,6 +106,7 @@ Page({
     var z = this;
     var loginFlag = app.globalData.login;
     z.followFlag();
+    z.getShareFlag();
     if (loginFlag == 1) {
       wx.request({
         url: app.globalData.baseUrl + 'app/get/user_auth_status',
@@ -399,6 +404,43 @@ Page({
           })
         } else {
           //					console.log(res.data)
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+  },
+
+  /**
+   * 查询是否显示朋友圈
+   */
+  getShareFlag: function(){
+    var that = this;
+    wx.request({
+      url: shareFlagUrl,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          app.globalData.shareFlag = res.data.data;
+          that.setData({
+            showRecommend: res.data.data,
+            background: res.data.data ? ['banner1', 'banner2'] : ['banner1'],
+            shareAwardText: res.data.data ? '分享有奖' : '分享',
+          })
+          that.setData({
+            indicatorDots: that.data.background.length > 1
+          })
+        } else {
           wx.showModal({
             title: '提示',
             showCancel: false,

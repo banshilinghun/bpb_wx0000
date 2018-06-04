@@ -48,7 +48,8 @@ Page({
     adName: '',
     adTime: '',
     adId: '',
-    showShareModel: false
+    showShareModel: false,
+    shareAwardText: '分享'
   },
 
   onLoad: function (options) {
@@ -84,6 +85,10 @@ Page({
   
   onShow: function (n) {
     var that = this;
+    //根据 flag 改变分享文案
+    that.setData({
+      shareAwardText: app.globalData.shareFlag? '分享有奖' : '分享'
+    })
     wx.request({
       url: app.globalData.baseUrl + 'app/get/user_auth_status',
       data: {},

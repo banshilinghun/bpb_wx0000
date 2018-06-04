@@ -16,7 +16,7 @@
         <view class="profile-item cwsfts">{{adInfo.name}}</view>
         <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
           <image src='../../image/shareicon.png'></image>
-          <view class='sharetext'>分享有奖</view>
+          <view class='sharetext'>{{ shareAwardText }}</view>
         </button>
       </view>
     </block>

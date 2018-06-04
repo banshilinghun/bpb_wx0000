@@ -152,91 +152,103 @@ button::after {
   font-size: 24rpx;
   color: #ff5a39;
 }
-.timetxt{
-color:#999;
-}
-.timetxt2{
-color:#ff555c;
+
+.timetxt {
+  color: #999;
 }
 
-.notify_swiper{
+.timetxt2 {
+  color: #ff555c;
+}
+
+.notify_swiper {
   width: 100%;
   height: 60rpx;
   background-color: gray;
 }
 
-.swiper_item{
+.swiper_item {
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-.swiper_content{
+.swiper_content {
   font-size: 28rpx;
   color: white;
   margin-left: 20rpx;
 }
-.ywxst{
+
+.ywxst {
   font-size: 19rpx;
 }
-.wtwabt{
+
+.wtwabt {
   margin-top: 16rpx;
   background: none;
   line-height: 1.2;
   padding: 0;
   text-align: center;
 }
-.wtwabt image{
+
+.wtwabt image {
   height: 40rpx;
   width: 40rpx;
 }
-.sharetext{
+
+.sharetext {
   font-size: 20rpx;
   color: #ff555c;
 }
-.taewtw{
+
+.taewtw {
   width: 100%;
   height: 60rpx;
   line-height: 60rpx;
-  background: #FDFFE8;
+  background: #fdffe8;
   font-size: 24rpx;
-  color: #FF555C;
-  text-align: center
+  color: #ff555c;
+  text-align: center;
 }
-.swiper-item{
+
+.swiper-item {
   display: block;
   height: 300rpx;
 }
-.banner1 {
-position:relative;
-align-items:center;
-justify-content:center;
-   background: url("https://wxapi.benpaobao.com/static/app_img/home_banner1.png") no-repeat;
-    background-size: 100% 100%;
-    width: 100%;
 
+.banner1 {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: url("https://wxapi.benpaobao.com/static/app_img/home_banner1.png") no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
 }
+
 .banner2 {
-position:relative;
-align-items:center;
-justify-content:center;
-background: url("https://wxapi.benpaobao.com/static/app_img/home_banner2.png") no-repeat;
-    background-size: 100% 100%;
-    width: 100%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: url("https://wxapi.benpaobao.com/static/app_img/home_banner2.png") no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
 }
-swiper{
+
+swiper {
   height: 300rpx;
 }
-button{
+
+button {
   border-radius: 0;
 }
-.hr{
+
+.hr {
   height: 20rpx;
   width: 100%;
   background: #f2f2f2;
 }
 
-.movable-wrapper{
+.movable-wrapper {
   position: fixed;
   width: 110rpx;
   height: 180rpx;
@@ -244,29 +256,30 @@ button{
   right: 30rpx;
 }
 
-movable-area{
+movable-area {
   height: 100%;
   width: 100%;
   overflow: hidden;
   position: absolute;
 }
 
-movable-view{
+movable-view {
   height: 100rpx;
   width: 100rpx;
   background-color: green;
 }
 
-.active-img{
+.active-img {
   height: 100%;
   width: 100%;
 }
-.mpweixin{
+
+.mpweixin {
   height: 96rpx;
   width: 100%;
   font-size: 26rpx;
-  background: #FF555C;
-   display: flex;
+  background: #ff555c;
+  display: flex;
   /* padding: 20rpx;
   padding-top: 20rpx;
   padding-bottom: 20rpx;
@@ -281,13 +294,16 @@ movable-view{
   top: 0;
   z-index: 999;
 }
-.profile-arrow{
+
+.profile-arrow {
   width: 36rpx;
   height: 36rpx;
 }
-.profile-text{
+
+.profile-text {
   flex: 1;
 }
-.page_index{
+
+.page_index {
   margin-top: 96rpx;
 }

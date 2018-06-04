@@ -43,7 +43,9 @@ Page({
     showShareModel: false,
     shareFriendType: 'normal',
     positionStatus: 'absolute',
-    shareTitle: ''
+    shareTitle: '',
+    showRecommend: false,
+    openType: ''
   },
 
   onLoad: function () {
@@ -60,6 +62,11 @@ Page({
     this.followFlag()
     this.setData({
       loginFlag: loginFlag,
+    })
+    //是否显示推荐有奖
+    this.setData({
+      showRecommend: app.globalData.shareFlag,
+      openType: app.globalData.shareFlag? '' : 'share'
     })
 
     function compare(property) {
@@ -531,7 +538,7 @@ Page({
       that.coupon(e.detail.step)
     } else {
       wx.navigateTo({
-        url: '../recommend/recommend'
+        url: '../recommend/recommend?flag=recommend'
       })
     }
   },

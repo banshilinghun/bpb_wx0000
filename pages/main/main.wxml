@@ -97,7 +97,7 @@
           </view>
           <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.share_img}}" class='wtwabt' open-type="share">
             <image src='../../image/shareicon.png'></image>
-            <view class='sharetext'>分享有奖</view>
+            <view class='sharetext'>{{ shareAwardText }}</view>
           </button>
         </view>
       </view>
@@ -105,11 +105,11 @@
     </block>
   </view>
 </view>
-<view class='movable-wrapper' bindtap='recommendClick'>
+<!-- 推荐有奖 -->
+<view class='movable-wrapper' bindtap='recommendClick' wx:if='{{ showRecommend }}'>
   <image class='active-img' src='../../image/recommend.gif'></image>
 </view>
 
-<!-- 推荐有奖 -->
 <bpb-follow shareit='{{shareit}}'></bpb-follow>
 <bpb-reward reward='{{reward}}'></bpb-reward>
        <!-- <navigator url="../novice/novice?recomId=1604" style='height:40px;width:40px;'> 2222222</navigator>        -->
