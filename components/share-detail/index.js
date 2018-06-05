@@ -441,7 +441,8 @@ Component({
 
       //绘制线
       ctx.setStrokeStyle(LINE_COLOR); 
-      ctx.setLineDash([10, 20], 5);
+      //ctx.setLineDash([10, 20], 5);
+      ctx.setLineWidth(0.5);
       ctx.moveTo(adTopMargin * windowWidth, adLineHeightScale * windowHeight);
       ctx.lineTo(windowWidth * (1 - adTopMargin), adLineHeightScale * windowHeight);
       ctx.stroke();
@@ -463,7 +464,8 @@ Component({
       ctx.fillRect(0, dividerHeightBottomScale * windowHeight, windowWidth, dividerHeight * windowHeight);
       //绘制线
       ctx.setStrokeStyle(LINE_COLOR);
-      ctx.setLineDash([10, 5], 5);
+      //ctx.setLineDash([10, 5], 5);
+      ctx.setLineWidth(0.5);
       ctx.moveTo(adTopMargin * windowWidth, dividerHeightTopScale * windowHeight);
       ctx.lineTo(windowWidth * (1 - adTopMargin), dividerHeightTopScale * windowHeight);
       ctx.stroke();
