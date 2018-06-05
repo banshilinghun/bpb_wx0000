@@ -27,24 +27,24 @@ Page({
       {
         current: false,
         done: false,
-        text: '分享小程序给好友或转发朋友圈'
+        text: '分享小程序给好友，或转发朋友圈'
       },
       {
         done: false,
         current: false,
-        text: '好友通过',
-        secondText: '分享链接进入',
-        thirdText: '小程序'
+        text: '好友',
+        secondText: '从分享链接进入',
+        thirdText: '奔跑宝小程序'
       },
       {
         done: false,
         current: false,
-        text: '成功注册并完成首次广告安装'
+        text: '好友注册，首次完成广告安装'
       },
       {
         done: false,
         current: false,
-        text: '双方即可获得',
+        text: '双方各获得',
         secondText: '30元',
         thirdText: '奖励'
       }
@@ -165,8 +165,11 @@ Page({
             //如果有登记时间，则表示已安装广告
             if (recommendBean.register_date) {
               recommendBean.date = timeUtil.friendly_time(recommendBean.register_date);
+              recommendBean.adStatus = '广告运行中';
               tempList.push(recommendBean);
             } else {
+              recommendBean.date = timeUtil.friendly_time(recommendBean.sign_date);
+              recommendBean.adStatus = recommendBean.username ? '已注册，未安装广告' : '未注册';
               tempUnFinishedList.push(recommendBean);
             }
             //累计领取奖励
@@ -210,7 +213,7 @@ Page({
     let pageTitle = '';
     if (that.data.pageFlag == FLAG_ARRAY[2]) {
       pageTitle = '活动规则';
-    } else if (that.data.pageFlag == FLAG_ARRAY[1]){
+    } else if (that.data.pageFlag == FLAG_ARRAY[1]) {
       pageTitle = '推荐有奖';
     } else {
       pageTitle = '推荐有奖';
@@ -230,7 +233,7 @@ Page({
   /**
    * 分享到朋友圈
    */
-  shareMomentNormalClick: function(){
+  shareMomentNormalClick: function () {
     this.setData({
       shareFriendType: 'normal'
     })
@@ -324,29 +327,25 @@ Page({
    */
   remindFriendClick: function () {
     var that = this;
-    if (that.data.unfinishedNumber != 0) {
-      wx.request({
-        url: NOTIFY_URL,
-        header: app.globalData.header,
-        success: function (res) {
-          if (res.data.code == 1000) {
-            wx.showToast({
-              title: '提醒成功'
-            })
-          } else {
-            that.showModel(res.data.msg);
-          }
-        },
-        fail: function (res) {
+    if (that.data.unfinishedNumber == 0) {
+      return;
+    }
+    wx.request({
+      url: NOTIFY_URL,
+      header: app.globalData.header,
+      success: function (res) {
+        if (res.data.code == 1000) {
+          wx.showToast({
+            title: '提醒成功'
+          })
+        } else {
           that.showModel(res.data.msg);
         }
-      })
-    } else {
-      that.setData({
-        shareFriendType: 'normal',
-        showSharePop: true
-      })
-    }
+      },
+      fail: function (res) {
+        that.showModel(res.data.msg);
+      }
+    })
   },
 
   showModel: function (tip) {
@@ -392,7 +391,7 @@ Page({
     })
   },
 
-  goHomeListener: function(){
+  goHomeListener: function () {
     wx.switchTab({
       url: '../main/main',
     })
