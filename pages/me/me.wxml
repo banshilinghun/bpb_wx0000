@@ -1,6 +1,6 @@
 <view>
- <button class='mpweixin' wx:if='{{ !isFollow && showRecommend }}' open-type="contact">
-    <text class='profile-text'> 关注奔跑宝公众号，开启提醒功能即时获取广告信息</text>
+ <button class='mpweixin' wx:if='{{ !isFollow && showRecommend }}' open-type="contact" session-from='{"nickName":"{{userInfo.nickName}}" ,"avatarUrl":"{{userInfo.avatarUrl}}"}'>
+    <text class='profile-text'> 关注公众号，开启奖励提醒。点击进入客服回复数字1</text>
      <image class='profile-arrow' src='/image/gomp2.png'></image>
 </button>
 <view class='hr' wx:if='{{isFollow}}'></view>
