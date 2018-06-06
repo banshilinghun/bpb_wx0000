@@ -33,9 +33,9 @@
     <!-- 推荐结果 -->
     <view wx:if='{{ !isRule }}'>
       <view class='recommend-result'>
-        <view class='recommend-success rule-title dark-color bold-font'>
+        <view class='recommend-success rule-one-text dark-color'>
           <text>我成功推荐了</text>
-          <text>{{ recommendList ? recommendList.length : 0 }}个</text>
+          <text>{{ successRecommendCount }}个</text>
           <text>好友，累计领取奖励</text>
           <text>{{ totalAword }}元</text>
         </view>
@@ -65,9 +65,9 @@
       <view class='divider'></view>
 
       <!-- 已推荐好友 -->
-      <view class='recommend-friend-list'>
-        <view class='rule-title dark-color bold-font recommend-people' wx:if='{{ recommendList.length == 0 || !recommendList }}'>已接受邀请的好友：暂无</view>
-        <view class='rule-title dark-color bold-font recommend-people' wx:if='{{ recommendList.length != 0 && recommendList }}'>已接受邀请的好友({{ recommendList ? recommendList.length : 0 }})：</view>
+      <view class=' {{ (recommendList.length == 0 || !recommendList)? "recommend-friend-list" : "recommend-friend-list-margin" }}'>
+        <view class='rule-one-text dark-color recommend-people' wx:if='{{ recommendList.length == 0 || !recommendList }}'>已接受邀请的好友：暂无</view>
+        <view class='rule-one-text dark-color recommend-people' wx:if='{{ recommendList.length != 0 && recommendList }}'>已接受邀请的好友({{ recommendList ? recommendList.length : 0 }})：</view>
         <view wx:for='{{ recommendList }}' wx:key='item.id' wx:if='{{ recommendList.length != 0 && recommendList }}'>
           <view class='recommend-list-item'>
             <!-- {{item.wx_avatar}} -->
@@ -97,13 +97,13 @@
   <view class='share-wrapper'>
     <button class='share-layout' open-type='share' style='background-color: #fff' data-type='normal'>
       <image class='share-icon' src='../../image/share-friend.png'></image>
-      <text class='share-text share-color'>微信好友</text>
+      <text class='share-text share-color'>分享给好友</text>
     </button>
   </view>
   <view class='share-wrapper' bindtap='shareMomentNormalClick'>
     <view class='share-layout'>
       <image class='share-icon' src='../../image/moment.png'></image>
-      <text class='share-text share-color'>微信朋友圈</text>
+      <text class='share-text share-color'>分享到朋友圈</text>
     </view>
   </view>
 </view>
