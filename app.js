@@ -5,10 +5,10 @@ const app = getApp();
 const releaseDomain = 'https://wxapi.benpaobao.com/';
 const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
 //是否是发布状态，上线时改为true
-const release = false;
-const release2 = true;
+const release = true;
+const release2 = false;
 //true-ken测试地址，false-小彭测试地址
-const domainStatus = true;
+const domainStatus = false;
 
 App({
   onLaunch: function () {

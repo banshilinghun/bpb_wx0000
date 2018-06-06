@@ -31,12 +31,12 @@ Page({
     checkPlan: false,
     istrue: true,
     inviteId: '我是shareInviteId',
-    showGoodsDetail:false,
-    goHome:false,
+    showGoodsDetail: false,
+    goHome: false,
     avatarList: [],
     showJoining: false,
     joinCount: 0,
-    reward:false,
+    reward: false,
     showSharePop: false,
     //生成分享图片
     shareAvatar: '',
@@ -49,15 +49,21 @@ Page({
     adTime: '',
     adId: '',
     showShareModel: false,
-    shareAwardText: '分享'
+    shareAwardText: '分享',
+    isShowLoadingMore: false,
+    haveLoca:false
   },
 
   onLoad: function (options) {
     //console.log(options.share);
-    var that=this;
-    if (options.share!=undefined){
+    var that = this;
+    that.setData({
+      latitude: null,
+      longitude: null
+    })
+    if (options.share != undefined) {
       this.setData({
-       goHome: true
+        goHome: true
       })
     }
     console.log(options)
@@ -65,7 +71,7 @@ Page({
       adId: options.adId
     })
     app.globalData.shareInviteId = options.inviteId;
-    if (app.globalData.isFirst){
+    if (app.globalData.isFirst) {
       that.setData({
         reward: true
       })
@@ -77,17 +83,17 @@ Page({
         //console.log(res)
         that.setData({
           windowWidth: res.windowWidth,
-          bannerHeight: res.windowWidth*0.5625
+          bannerHeight: res.windowWidth * 0.5625
         })
       }
-    }) 
+    })
   },
-  
+
   onShow: function (n) {
     var that = this;
     //根据 flag 改变分享文案
     that.setData({
-      shareAwardText: app.globalData.shareFlag? '分享有奖' : '分享'
+      shareAwardText: app.globalData.shareFlag ? '分享有奖' : '分享'
     })
     wx.request({
       url: app.globalData.baseUrl + 'app/get/user_auth_status',
@@ -95,12 +101,12 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-          if (res.data.data.status!=0){
+          if (res.data.data.status != 0) {
             that.setData({
               loginStaus: 2
             })
           }
-        } 
+        }
       },
       fail: res => {
         wx.showModal({
@@ -111,38 +117,39 @@ Page({
       }
     })
     var loginFlag = app.globalData.login;
-    console.log(loginFlag)
+    //console.log(loginFlag)
     var checkStaus = app.globalData.checkStaus;
-    if (loginFlag!=1){//没有登录
-        that.setData({
-          loginStaus:0
-        })
-    }else{//已登录
-      if (checkStaus==0){//未认证
+    if (loginFlag != 1) {//没有登录
+      that.setData({
+        loginStaus: 0
+      })
+    } else {//已登录
+      if (checkStaus == 0) {//未认证
         that.setData({
           loginStaus: 1
         })
-      }else{//登录了且认证了
+      } else {//登录了且认证了
         that.setData({
           loginStaus: 2
         })
       }
     }
     var pages = getCurrentPages();
+    console.log(pages)
     var currPage = pages[pages.length - 1]; //当前页面
     //console.log(currPage.data.mydata) //就可以看到data里mydata的值了
-    if (currPage.data.mydata!=undefined){
-      if (currPage.data.mydata.share == 1 && n != 0){
-       that.setData({
-         showGoodsDetail: true
-       })
-      }else{
+    if (currPage.data.mydata != undefined) {
+      if (currPage.data.mydata.share == 1 && n != 0) {
+        that.setData({
+          showGoodsDetail: true
+        })
+      } else {
         that.setData({
           showGoodsDetail: false
         })
       }
     }
- 
+
     var reqData = {};
     reqData.ad_id = that.data.adId;
     wx.getLocation({
@@ -153,50 +160,55 @@ Page({
         //				console.log(res.longitude)
         that.setData({
           latitude: latitude,
-          longitude: longitude
+          longitude: longitude,
+          haveLoca:true
         })
-        if (that.data.service != undefined) {
-          if (that.data.service.length > 0) {
-            //var dis = [];
-            for (var j = 0; j < that.data.service.length; j++) {
-              that.data.service[j].distance = getDistance(that.data.latitude, that.data.longitude, that.data.service[j].lat, that.data.service[j].lng).toFixed(2);
-            }
-
-          }
-        }
-        console.log(that.data.service)
-        if (that.data.service!=undefined){
-          that.setData({
-            service: that.data.service
-          })
-        }
+        reqData.lat = latitude;
+        reqData.lng = longitude;
+        that.requestAdInfo(reqData);
       }
     })
-    that.requestAdInfo(reqData);
+    if (that.data.latitude == null) {
+      that.requestAdInfo(reqData);
+    } else {
+      reqData.lat = that.data.latitude;
+      reqData.lng = that.data.longitude;
+      that.requestAdInfo(reqData);
+    }
+
     that.requestJoinList();
   },
 
-  requestAdInfo: function (reqData){
+  requestAdInfo: function (reqData) {
     var that = this;
+    //console.log(reqData)
     wx.request({
       url: app.globalData.baseUrl + 'app/get/ad_info',
       data: reqData,
       header: app.globalData.header,
       success: res => {
-        // console.log(res.data.data)
+        console.log(res.data)
         if (res.data.code == 1000) {
           console.log(res.data)
           var enddate = res.data.data.info.end_date;
           res.data.data.info.begin_date = res.data.data.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
           res.data.data.info.end_date = res.data.data.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-          var serviceList = res.data.data.ad_server;
+        
+          that.setData({
+            page: res.data.data.ad_server.page,
+            hasMore: res.data.data.ad_server.hasMore,
+            sortedKey: res.data.data.ad_server.sortedKey
+          })
+          var serviceList = res.data.data.ad_server.servers;
           if (serviceList.length > 0) {
             //var dis = [];
             for (var j = 0; j < serviceList.length; j++) {
               //						console.log(serviceList[i])
               //                          console.log(that.data.latitude)
-              serviceList[j].distance = getDistance(that.data.latitude, that.data.longitude, serviceList[j].lat, serviceList[j].lng).toFixed(2);
+              serviceList[j].distance = (serviceList[j].distance / 1000).toFixed(2);
               serviceList[j].lista = 1;
+              serviceList[j].logo = serviceList[j].logo ? serviceList[j].logo :'../../image/noimg.png';
+              //serviceList[j].logo = '../../image/noimg.png';
               if (res.data.data.isRegist) {
                 serviceList[j].lista = 0;
               } else {
@@ -209,6 +221,7 @@ Page({
                     }
                   }
                   if (res.data.data.subscribe != null) {
+                   
                     if (res.data.data.subscribe.ad_id == res.data.data.info.id) {
                       if (res.data.data.subscribe.server_id == serviceList[j].id) {
                         serviceList[j].lista = 2;
@@ -234,10 +247,19 @@ Page({
             }
           }
           console.log(serviceList)
-          that.setData({
-            service: serviceList,
-            joinCount: res.data.data.info.total_count - res.data.data.info.current_count
-          })
+          if (res.data.data.ad_server.page == 0) {
+            that.setData({
+              service: serviceList,
+              joinCount: res.data.data.info.total_count - res.data.data.info.current_count
+            })
+          } else {
+            var serviceList = that.data.service.concat(serviceList)
+            that.setData({
+              service: serviceList,
+              joinCount: res.data.data.info.total_count - res.data.data.info.current_count
+            })
+          }
+
 
           if (res.data.data.imgs.length == 0) {
             that.setData({
@@ -276,12 +298,38 @@ Page({
           showCancel: false,
           content: '网络错误'
         });
+      },
+      complete: res => {
+        that.setData({
+          isShowLoadingMore: false
+        });
       }
     })
   },
+  onReachBottom: function () {
+    var that = this;
+    if (!that.data.hasMore) {
+      return;
+    }
+    that.setData({
+      isShowLoadingMore: true
+    });
+    var reqData = {};
+    reqData.ad_id = that.data.adId;
+    reqData.page = that.data.page + 1;
+    reqData.sorted_key = that.data.sortedKey;
+    that.requestAdInfo(reqData);
+    //this.showLoadingToast();
+    // that.setData({
+    //   isShowLoadingMore: true
+    // });
+    // setTimeout(function () {
+    //   that.requestJoinList(that.data.pageIndex + 1);
+    // }, 1000);
+  },
 
   /** 请求已参与车主列表 */
-  requestJoinList: function(){
+  requestJoinList: function () {
     var that = this;
     wx.request({
       url: that.data.joinListUrl,
@@ -290,9 +338,9 @@ Page({
         page_no: 1,
         page_size: 20,
       },
-      success: function(res){
+      success: function (res) {
         console.log(res);
-        if(res.data.code == 1000){
+        if (res.data.code == 1000) {
           var dataList = res.data.data.info;
           var tempAvatarList = [];
           for (var key in dataList) {
@@ -300,7 +348,7 @@ Page({
             //过滤没有头像用户
             if (!dataBean.wx_avatar.trim()) {
               dataList.splice(key, 1);
-            }else{
+            } else {
               tempAvatarList.push(dataBean.wx_avatar);
             }
           }
@@ -309,7 +357,7 @@ Page({
             showJoining: dataList.length == 0 ? false : true,
             joinAvatarList: tempAvatarList
           });
-        }else{
+        } else {
           wx.showModal({
             title: '提示',
             content: res.data.msg,
@@ -317,7 +365,7 @@ Page({
           })
         }
       },
-      fail: function(res){
+      fail: function (res) {
         wx.showModal({
           title: '提示',
           content: '网络错误',
@@ -327,7 +375,7 @@ Page({
     })
   },
 
-  joinClick: function(){
+  joinClick: function () {
     var that = this;
     wx.navigateTo({
       url: '../joinList/joinList?adId=' + that.data.adId,
@@ -374,7 +422,7 @@ Page({
   },
 
   arrangement: function (e) {
-    if(app.globalData.login==1){
+    if (app.globalData.login == 1) {
       wx.request({
         url: app.globalData.baseUrl + 'app/get/user_auth_status',
         data: {},
@@ -386,8 +434,8 @@ Page({
               wx.navigateTo({
                 url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
               })
-            }else{
-              if ( res.data.data.status == 2){
+            } else {
+              if (res.data.data.status == 2) {
                 wx.showModal({
                   title: "提示",
                   content: "你没通过身份认证，不能预约广告",
@@ -401,13 +449,13 @@ Page({
                     }
                   }
                 })
-              } else if (res.data.data.status == 1){
+              } else if (res.data.data.status == 1) {
                 wx.showModal({
                   title: '提示',
                   showCancel: false,
                   content: "你的身份认证信息正在审核中，不能预约广告"
                 });
-              }else{
+              } else {
                 wx.showModal({
                   title: "提示",
                   content: "你没进行身份认证，不能预约广告",
@@ -422,7 +470,7 @@ Page({
                   }
                 })
               }
-            
+
             }
           } else {
             wx.showModal({
@@ -440,7 +488,7 @@ Page({
           });
         }
       })
-    }else{
+    } else {
       wx.showModal({
         title: "提示",
         content: "你还没有登录，不能预约广告",
@@ -470,7 +518,7 @@ Page({
   /**
    * 分享
    */
-  shareDetailListener: function(){
+  shareDetailListener: function () {
     this.setData({
       showSharePop: true
     })
@@ -479,14 +527,14 @@ Page({
   /**
    * 生成图片分享朋友圈
    */
-  shareMomentListener: function(){
+  shareMomentListener: function () {
     console.log('shareMomentListener------------->')
     this.setData({
       showShareModel: true
     })
   },
 
-  dialogClickListener: function(){
+  dialogClickListener: function () {
     this.setData({
       showSharePop: true
     })
@@ -495,7 +543,7 @@ Page({
   //分享
   onShareAppMessage: function (res) {
     //console.log(res)
-    var that=this;
+    var that = this;
     if (res.from == 'button') {
       var shareTitle = shareUtil.getShareAdTitle(that.data.adInfo.name);
       var adid = res.target.dataset.adid;
@@ -519,11 +567,11 @@ Page({
       path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
       success: function (res) {
-        setTimeout(function(){
+        setTimeout(function () {
           that.setData({
             showGoodsDetail: false
           })
-        },1000)
+        }, 1000)
         wx.showToast({
           title: '分享成功',
           icon: '',
@@ -552,7 +600,7 @@ Page({
   /**
    * 隐藏弹框
    */
-  hideDialogListener: function(){
+  hideDialogListener: function () {
     console.log('hideDialogListener------------->')
     this.setData({
       showGoodsDetail: false
@@ -569,17 +617,17 @@ Page({
       showGoodsDetail: false
     });
   },
-  goRegister:function(){
+  goRegister: function () {
     wx.navigateTo({
       url: '../register/register'
     })
   },
-  goAuth:function(){
+  goAuth: function () {
     wx.navigateTo({
       url: '../auth/auth'
     })
   },
-  backHome:function(){
+  backHome: function () {
     wx.switchTab({
       url: '../main/main'
     })

@@ -83,16 +83,20 @@
     </block>
     <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id">
       <view class="item">
+      <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
+      <image src='{{item.logo}}' class='sev_logo'></image>
         <view class="item-middle">
           <view>
             <text class="title">{{item.name}}</text>
           </view>
           <view class="myad-li">
             <view class="message">
-              <image src='../../image/dw.png'></image>{{item.address}}</view>
+              <image src='../../image/dw.png'></image>{{item.address}}
+              </view>
+               <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label>
             <view class="mmtext">剩余车辆
               <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
-              <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label>
+             
             </view>
           </view>
         </view>
@@ -161,7 +165,15 @@
   showShareModel='{{ showShareModel }}'
   adId='{{adId}}'
   bind:hideDialog='hideDialogListener'
-></share-detail>
+>
+</share-detail>
+  <!--正在加载-->
+  <view class='load-more' hidden='{{!isShowLoadingMore}}'>
+    <view class="weui-loadmore">
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗...</view>
+    </view>
+  </view>
  <!-- <view class='msite-nav'>
  <button class='msite-a2'  open-type="contact" >
   <image src='../../image/kf_icon.png'></image>
