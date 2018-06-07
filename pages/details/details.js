@@ -845,7 +845,7 @@ Page({
     console.log(e);
     var that = this;
     let image = e.currentTarget.dataset.image;
-    if(image.indexOf('http') == -1){
+    if(!image||image.indexOf('http') == -1){
       return;
     }
     wx.previewImage({
