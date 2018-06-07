@@ -137,34 +137,10 @@
         </view>
       </block>
     </view>
-    <!-- <form bindsubmit="formSubmit" report-submit="{{istrue}}">
-    <button class="btn-quit" formType="submit" wx:if="{{sta==10}}"> 领取广告 </button>
-  </form>
-  <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==0}}"> 登记 </button>
-  <button class="btn-gray" wx:if="{{sta==11}}"> 登记 </button>
-  <button class="btn-gray" wx:if="{{sta==9}}"> 已投完 </button>
-  <button class="btn-gray" wx:if="{{sta==1}}"> 登记审核中 </button>
-  <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==2}}"> 审核失败，请重新登记 </button>
-  <button class="btn-gray" wx:if="{{sta==3}}"> {{ckdate}}开始检测 </button>
-  <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==4}}"> 开始检测 </button>
-  <button class="btn-gray" wx:if="{{sta==5}}"> 检测审核中</button>
-  <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==6}}"> 审核失败，请重新检测</button>
-  <button class="btn-gray" wx:if="{{sta==7}}"> 已领取其它广告</button>
-  <button class="btn-gray" wx:if="{{sta==8}}"> 广告已结束</button> -->
   </view>
 </view>
 
-<!--goodsdetail start-->
-<view class="goods-detail" hidden="{{!showGoodsDetail}}">
-  <view class="mask" bindtap="hideGoodsDetail"></view>
-  <view class='title0'>预约成功</view>
-  <view class="title2">分享给微信好友，让你的朋友们 一起赚钱吧!</view>
-  <view class="title4">
-    <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}" class='wtwabt2 ' open-type="share">
-      分享微信好友
-    </button>
-  </view>
-</view>
+
 
 <dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!' btnText='分享微信好友' />
 <view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
