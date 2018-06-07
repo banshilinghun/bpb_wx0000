@@ -64,6 +64,8 @@ Page({
     unReceiveList: [],
     //累计领取奖励
     totalAword: 0,
+    //成功推荐人数
+    successRecommendCount: 0,
     //待领取奖励
     GoatAward: 0,
     //好友全部完成可达奖励
@@ -187,6 +189,7 @@ Page({
           tempUnFinishedList = tempUnFinishedList.concat(tempList);
 
           that.setData({
+            successRecommendCount: tempList.length,
             recommendList: tempUnFinishedList,
             totalAword: totalAward,
             GoatAward: GoatAward,

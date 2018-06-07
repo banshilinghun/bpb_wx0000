@@ -8,7 +8,7 @@
   display: flex;
 }
 
-.bottom-margin{
+.bottom-margin {
   height: 194rpx;
   width: 100%;
 }
@@ -76,6 +76,7 @@
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 20;
   flex-direction: row;
   -moz-box-shadow: 0px 0px 6px #999;
   -webkit-box-shadow: 0px 0px 6px #999;
@@ -121,7 +122,7 @@
 }
 
 .recommend-success {
-  min-height: 96rpx;
+  min-height: 70rpx;
   padding-top: 20rpx;
   padding-bottom: 20rpx;
   display: flex;
@@ -148,6 +149,7 @@
 .btn-common {
   background: none;
   line-height: 60rpx;
+  min-width: 260rpx;
   height: 60rpx;
   font-size: 36rpx;
   padding: 0;
@@ -155,7 +157,6 @@
   border-radius: 6rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
-  font-weight: 500;
 }
 
 .btn-enable {
@@ -190,6 +191,11 @@
 }
 
 .recommend-friend-list {
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+}
+
+.recommend-friend-list-margin {
   margin-left: 40rpx;
   margin-right: 40rpx;
   margin-bottom: 20rpx;
@@ -262,8 +268,8 @@
   min-height: 70rpx;
   display: flex;
   align-items: center;
-  padding-top: 15rpx;
-  padding-bottom: 15rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
 }
 
 .dark-color {
@@ -290,7 +296,7 @@
   font-weight: 500;
 }
 
-.go-home{
+.go-home {
   width: 80rpx;
   height: 80rpx;
   position: fixed;
@@ -308,12 +314,12 @@
   align-items: center;
 }
 
-.go-home-icon{
+.go-home-icon {
   width: 35rpx;
   height: 35rpx;
 }
 
-.go-home-text{
+.go-home-text {
   font-size: 18rpx;
   color: #fff;
 }
