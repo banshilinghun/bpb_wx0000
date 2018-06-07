@@ -18,8 +18,7 @@
     "pages/joinList/joinList",
     "pages/recommend/recommend",
     "pages/novice/novice",
-    "pages/teaching/teaching",
-    "pages/map/index"
+    "pages/teaching/teaching"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -84,58 +84,60 @@
         </view>
       </view>
     </block>
-    <view>
-      <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id" wx:if='{{ !showMap }}'>
-        <view class="itemcon {{item.lista==2?'curitem':''}}">
-          <view class="item {{item.lista==2?'curitemList':''}}">
-            <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
-            <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
-            <image src='{{item.logo}}' class='sev_logo'></image>
-            <view class="item-middle">
-              <view>
-                <text class="title">{{item.name}}</text>
-              </view>
-              <view class="myad-li">
-                <view class="message">
-                  <image src='../../image/dw.png'></image>{{item.address}}
+    <view >
+      <view >
+        <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id" wx:if='{{ !showMap }}'>
+          <view class="itemcon {{item.lista==2?'curitem':''}}">
+            <view class="item {{item.lista==2?'curitemList':''}}">
+              <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
+              <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
+              <image src='{{item.small_logo}}' class='sev_logo' catchtap='previewImage' data-image='{{ item.logo }}'></image>
+              <view class="item-middle">
+                <view>
+                  <text class="title">{{item.name}}</text>
                 </view>
-                <!-- <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> -->
-                <view class="mmtext">剩余车辆
-                  <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
+                <view class="myad-li">
+                  <view class="message">
+                    <image src='../../image/dw.png'></image>{{item.address}}
+                  </view>
+                  <!-- <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> -->
+                  <view class="mmtext">剩余车辆
+                    <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
 
+                  </view>
                 </view>
-              </view>
 
+              </view>
+              <view class="item_right">
+                <view>
+                  <text class="time">{{item.distance}}km</text>
+                </view>
+                <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
+                  <image src='../../image/dh.png'></image>导航
+                </view>
+                <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
+                <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
+                <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
+              </view>
             </view>
-            <view class="item_right">
-              <view>
-                <text class="time">{{item.distance}}km</text>
-              </view>
-              <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
-                <image src='../../image/dh.png'></image>导航
-              </view>
-              <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
-              <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
-              <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
+            <view class='yy_time' wx:if='{{item.lista==2}}'>
+              <label class="province-text">已预约{{selDate}} {{selTime}}</label>
             </view>
           </view>
-          <view class='yy_time' wx:if='{{item.lista==2}}'>
-            <label class="province-text">已预约{{selDate}} {{selTime}}</label>
-          </view>
-        </view>
-      </block>
+        </block>
 
-      <block wx:if='{{ showMap }}'>
-        <view class='map-wrapper' style='height:{{ mapHeight }}px'>
-          <map class='map' id='myMap' longitude="{{ longitude }}" latitude="{{ latitude }}" scale="{{ scale }}" show-location="true" markers="{{ markers }}" bindmarkertap="bindMarkertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{ controls }}'
-            bindtap='bindMapTap'>
-            <!--定位当前位置-->
-            <cover-view class='cover-layout' bindtap='moveToSelfLocation'>
-              <cover-image class='self-location' src='../../image/self-location.png'></cover-image>
-            </cover-view>
-          </map>
-        </view>
-      </block>
+        <block wx:if='{{ showMap }}'>
+          <view class='map-wrapper ' style='height:{{ mapHeight }}px'>
+            <map class='map' id='myMap' longitude="{{ longitude }}" latitude="{{ latitude }}" scale="{{ scale }}" show-location="true" markers="{{ markers }}" bindmarkertap="bindMarkertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{ controls }}'
+              bindtap='bindMapTap'>
+              <!--定位当前位置-->
+              <cover-view class='cover-layout' bindtap='moveToSelfLocation'>
+                <cover-image class='self-location' src='../../image/self-location.png'></cover-image>
+              </cover-view>
+            </map>
+          </view>
+        </block>
+      </view>
     </view>
   </view>
 </view>

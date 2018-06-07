@@ -1129,11 +1129,17 @@ button {
 }
 
 .action-text {
-  font-size: 36rpx;
-  color: #333;
+  font-size: 34rpx;
+  color: #666;
   width: 100%;
   text-align: right;
   z-index: 8;
+}
+
+.action-image {
+  width: 30rpx;
+  margin-left: 5rpx;
+  height: 30rpx;
 }
 
 .profile-wrapper, .account-wrapper {
@@ -1152,3 +1158,9 @@ button {
 .itemcon {
   background: #fff;
 }
+
+/* 翻转动画 start*/
+
+
+
+/* 翻转动画 end */

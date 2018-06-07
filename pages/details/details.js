@@ -65,6 +65,7 @@ Page({
     shareAwardText: '分享',
     isShowLoadingMore: false,
     haveLoca:false,
+    isPreview: false
   },
 
   onLoad: function (options) {
@@ -97,7 +98,6 @@ Page({
           bannerHeight: res.windowWidth * 0.5625,
           mapHeight: 0.8 * res.windowHeight
         })
-        that.createControl();
       }
     })
     that.requestLocation();
@@ -106,6 +106,12 @@ Page({
   onShow: function (n) {
     var that = this;
     //根据 flag 改变分享文案
+    if (that.data.isPreview){
+      that.setData({
+        isPreview: false
+      })
+      return;
+    }
     that.setData({
       shareAwardText: app.globalData.shareFlag ? '分享有奖' : '分享'
     })
@@ -221,7 +227,7 @@ Page({
               //                          console.log(that.data.latitude)
               serviceList[j].distance = (serviceList[j].distance / 1000).toFixed(2);
               serviceList[j].lista = 1;
-              serviceList[j].logo = serviceList[j].logo ? serviceList[j].logo :'../../image/noimg.png';
+              serviceList[j].small_logo = serviceList[j].small_logo ? serviceList[j].small_logo :'../../image/noimg.png';
               //serviceList[j].logo = '../../image/noimg.png';
               if (res.data.data.isRegist) {
                 serviceList[j].lista = 0;
@@ -730,7 +736,7 @@ Page({
       marker.height = 40;
       marker.iconPath = '../../image/server-map-icon.png';
       marker.callout = this.createCallout(marker);
-      marker.label = this.createLabel(marker);
+      //marker.label = this.createLabel(marker);
     }
     console.log(serverList);
     this.setData({
@@ -742,12 +748,13 @@ Page({
    * marker上的气泡
    */
   createCallout: function (marker) {
+    let distance = util.getDistance(this.data.latitude, this.data.longitude, marker.lat, marker.lng);
     let callout = {};
-    callout.color = '#333333';
-    callout.content = marker.name + '\n' + marker.address;
+    callout.color = '#ffffff';
+    callout.content = marker.name + '\n' + marker.address + '\n' + '距离我' + distance.toFixed(2) + ' km';
     callout.fontSize = 13;
     callout.borderRadius = 5;
-    callout.bgColor = '#ffffff';
+    callout.bgColor = '#6E707c';
     callout.padding = 5;
     callout.textAlign = 'left';
     callout.display = 'BYCLICK';
@@ -755,16 +762,14 @@ Page({
   },
 
   createLabel: function (marker) {
-    let distance = util.getDistance(this.data.latitude, this.data.longitude, marker.lat, marker.lng);
-    console.log('distance----------->' + distance.toFixed(2));
     let label = {};
     label.color = '#ffffff';
-    label.content = distance.toFixed(2) + '公里';
+    label.content = distance.toFixed(2) + 'km';
     label.fontSize = 10;
     label.borderRadius = 5;
     label.borderWidth = 1;
     label.borderColor = '#ffffff';
-    label.bgColor = '#7A7E83';
+    label.bgColor = '#6E707c';
     label.padding = 5;
     label.textAlign = 'left';
     return label;
@@ -824,7 +829,32 @@ Page({
     var that = this;
     that.setData({
       showMap: !that.data.showMap,
-      actionText: that.data.showMap ? '地图' : '列表'
+      actionText: that.data.showMap ? '地图' : '列表',
     })
+    if(that.data.showMap){
+      wx.createSelectorQuery().select('#myMap').boundingClientRect(function (rect) {
+        // 使页面滚动到底部
+        wx.pageScrollTo({
+          scrollTop: rect.bottom
+        })
+      }).exec()
+    }
   },
+
+  previewImage: function(e){
+    console.log(e);
+    var that = this;
+    let image = e.currentTarget.dataset.image;
+    if(image.indexOf('http') == -1){
+      return;
+    }
+    wx.previewImage({
+      urls: [image],
+      complete: function(){
+        that.setData({
+          isPreview: true
+        })
+      }
+    })
+  }
 })
