@@ -546,9 +546,16 @@ Page({
     wx.showModal({
       title: '',
       content: e.detail.step.tip2 + '\r\n好友安装广告后方可领取奖励',
-      showCancel: false,
-      confirmText: '确定',
-      success: function (res) { },
+      confirmText: '查看',
+      cancelText:"取消",
+      cancelColor:'#999',
+      success: function (res) {
+        if (res.confirm){
+          wx.navigateTo({
+            url: '../recommend/recommend?flag=recommend'
+          })
+        }
+       },
       fail: function (res) { },
       complete: function (res) { },
     })

@@ -81,10 +81,12 @@
         <view class="profile-item cwsfts">预约前往下列服务站</view>
       </view>
     </block>
-    <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id">
-      <view class="item">
-      <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
-      <image src='{{item.logo}}' class='sev_logo'></image>
+    <block  wx:for="{{service}}" wx:for-index="index" wx:key="item.id" >
+    <view class="itemcon {{item.lista==2?'curitem':''}}">
+      <view class="item {{item.lista==2?'curitemList':''}}">
+        <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
+        <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
+        <image src='{{item.logo}}' class='sev_logo'></image>
         <view class="item-middle">
           <view>
             <text class="title">{{item.name}}</text>
@@ -92,13 +94,14 @@
           <view class="myad-li">
             <view class="message">
               <image src='../../image/dw.png'></image>{{item.address}}
-              </view>
-               <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label>
+            </view>
+            <!-- <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> -->
             <view class="mmtext">剩余车辆
               <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
-             
+
             </view>
           </view>
+        
         </view>
         <view class="item_right">
           <view>
@@ -108,10 +111,14 @@
             <image src='../../image/dh.png'></image>导航
           </view>
           <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
-          <view class="fastwx" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
+          <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
           <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
         </view>
       </view>
+       <view class='yy_time' wx:if='{{item.lista==2}}'>
+           <label class="province-text">已预约{{selDate}} {{selTime}}</label> 
+       </view>
+       </view>
     </block>
   </view>
   <!-- <form bindsubmit="formSubmit" report-submit="{{istrue}}">
@@ -131,7 +138,7 @@
 </view>
 
 <!--goodsdetail start-->
- <!-- <view class="goods-detail" hidden="{{!showGoodsDetail}}">
+<!-- <view class="goods-detail" hidden="{{!showGoodsDetail}}">
   <view class="mask" bindtap="hideGoodsDetail"></view>
   <view class="goodsdetail">
     <view class='title0'>预约成功</view>
@@ -144,7 +151,7 @@
   </view>
 </view>  -->
 
- <dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!' btnText='分享微信好友' /> 
+<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!' btnText='分享微信好友' />
 <view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
   <view class="count">
   </view>
@@ -153,28 +160,17 @@
 
 <share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener' adId="{{ adInfo.id }}"></share-popup>
 
-<share-detail 
-  avatar='{{ shareAvatar }}'
-  nickname='{{ shareNickname }}'
-  incomeMoney='{{ incomeMoney }}'
-  joinNumber='{{ joinNumber }}'
-  joinAvatarList='{{ joinAvatarList }}'
-  adImageUrl='{{ adImageUrl }}'
-  adName='{{ adName }}'
-  adTime='{{ adTime }}'
-  showShareModel='{{ showShareModel }}'
-  adId='{{adId}}'
-  bind:hideDialog='hideDialogListener'
->
+<share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}' joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
+  adId='{{adId}}' bind:hideDialog='hideDialogListener'>
 </share-detail>
-  <!--正在加载-->
-  <view class='load-more' hidden='{{!isShowLoadingMore}}'>
-    <view class="weui-loadmore">
-      <view class="weui-loading"></view>
-      <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗...</view>
-    </view>
+<!--正在加载-->
+<view class='load-more' hidden='{{!isShowLoadingMore}}'>
+  <view class="weui-loadmore">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗...</view>
   </view>
- <!-- <view class='msite-nav'>
+</view>
+<!-- <view class='msite-nav'>
  <button class='msite-a2'  open-type="contact" >
   <image src='../../image/kf_icon.png'></image>
   <text>客服</text>

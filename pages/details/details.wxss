@@ -1,6 +1,6 @@
 @import "../me/me.wxss";
 page {
-  background-color: #eee;
+  background-color: #F6F6F6;
   padding-bottom: 140rpx;
 }
 
@@ -8,19 +8,17 @@ page {
   height: 465.75rpx;
 }
 
-.profile-wrapper, .account-wrapper {
-  background-color: #fff;
-  margin-bottom: 20rpx;
-  padding-left: 10px;
-  padding-right: 10px;
-}
+
 
 .profile, .account {
   display: flex;
   padding: 24rpx;
   align-items: center;
   flex-direction: row;
-  border-bottom: 1rpx solid #f0f0f0;
+  border-bottom: 2rpx solid #eee;
+  background: #fff;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
 }
 
 .profile-item, .account-item {
@@ -45,7 +43,7 @@ page {
 }
 
 .protwo {
-  margin-top: 10px;
+  margin-top: 16rpx;
   margin-bottom: 0;
 }
 
@@ -63,15 +61,21 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 8rpx;
+  padding: 10rpx;
   background-color: #fff;
-  border-bottom: 1rpx solid #eee;
+  border-bottom: 2rpx solid #eee;
   position: relative;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+
+}
+.curitem{
+  margin-top: 6rpx;
+  margin-bottom: 6rpx;
+  box-shadow:0rpx 0rpx 8rpx 0rpx rgba(0,0,0,0.2);
 }
 
-.item:last-child {
-  border: none;
-}
+
 
 .item-left {
   margin-top: 15rpx;
@@ -112,7 +116,7 @@ page {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
 }
 
 .item_right {
@@ -135,7 +139,7 @@ page {
 .mmtext {
   font-size: 28rpx;
   color: #333;
-  margin-top: 35rpx;
+  margin-top: 25rpx;
   margin-bottom: 20rpx;
 }
 
@@ -678,6 +682,17 @@ button::after {
   width: 128rpx;
   border-radius: 28rpx;
 }
+.fastwx3{
+  background: #fff;
+  color: #ff555c;
+  font-size: 28rpx;
+  text-align: center;
+  height: 56rpx;
+  line-height: 56rpx;
+  width: 128rpx;
+  border-radius: 28rpx;
+  border: 2rpx solid #ff555c
+}
 .txtstx{
   font-size: 20rpx;
   display: block;
@@ -1051,6 +1066,21 @@ button{
   width:172rpx;
 height:64rpx;
 position: absolute;
-left: -18rpx;
+left: -20rpx;
 top:0;
+z-index: 8;
+}
+.profile-wrapper, .account-wrapper {
+   background-color: transparent; 
+  margin-bottom: 16rpx; 
+}
+.yy_time{
+  width: 100%;
+  height: 60rpx;
+  background: #fff;
+  line-height: 60rpx;
+  text-align: center;
+}
+.itemcon{
+  background: #fff;
 }

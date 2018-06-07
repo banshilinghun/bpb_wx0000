@@ -146,14 +146,14 @@ height:48rpx;
 }
 .ammitbt{
   border: 1px solid #ff5a39;
-color:#ff5a39;
+color:#fff;
 font-size:28rpx;
 height:56rpx;
 line-height:56rpx;
 width:108rpx;
 border-radius:28rpx;
 text-align: center;
-
+background:  #ff5a39;
 }
 .ammitbt2{
   border: 1px solid #ccc;
