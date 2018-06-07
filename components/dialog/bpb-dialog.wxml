@@ -1,6 +1,7 @@
 <!--components/dialog/bpb-dialog.wxml-->
 <view class="goods-detail" wx:if="{{showDialog}}">
   <view class="mask" bindtap="hideDialog"></view>
+   <image class="colse" src="../../image/close.png" bindtap="hideDialog"></image>
   <view class="goodsdetail">
     <!-- <view class="title1" bindtap="hideGoodsDetail"><image src='../../image/close.png'></image></view> -->
     <view class='title0'>{{title}}</view>
