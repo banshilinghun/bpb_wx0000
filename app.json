@@ -18,7 +18,8 @@
     "pages/joinList/joinList",
     "pages/recommend/recommend",
     "pages/novice/novice",
-    "pages/teaching/teaching"
+    "pages/teaching/teaching",
+    "pages/map/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -26,7 +27,7 @@
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": false,
-    "navigationStyle":"default"
+    "navigationStyle": "default"
   },
   "tabBar": {
     "color": "#7A7E83",

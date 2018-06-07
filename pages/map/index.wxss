@@ -1,0 +1,25 @@
+.map-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.cover-layout {
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  bottom: 40rpx;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.self-location {
+  width: 60rpx;
+  height: 60rpx;
+}

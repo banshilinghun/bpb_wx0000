@@ -1,7 +1,6 @@
 @import "../me/me.wxss";
 page {
   background-color: #eee;
-  padding-bottom: 140rpx;
 }
 
 .swiper-banner {
@@ -1053,4 +1052,47 @@ height:64rpx;
 position: absolute;
 left: -18rpx;
 top:0;
+}
+
+/* map start */
+.map-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.cover-layout {
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  bottom: 40rpx;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.self-location {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+/* map end */
+
+.action-wrapper{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  min-width: 100rpx;
+}
+
+.action-text{
+  font-size: 36rpx;
+  color: #333;
+  width: 100%;
+  text-align: right;
 }
