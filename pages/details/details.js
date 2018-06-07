@@ -660,7 +660,7 @@ Page({
         id: 1,
         iconPath: '../../image/center-location.png',
         position: {
-          left: that.data.windowWidth / 2 - controlsWidth * 3 / 4,
+          left: (that.data.windowWidth - controlsWidth) / 2 ,
           top: (that.data.mapHeight) / 2 - controlsHeight * 3 / 4,
           width: controlsWidth,
           height: controlsHeight
@@ -728,7 +728,7 @@ Page({
       marker.longitude = marker.lng;
       marker.width = 40;
       marker.height = 40;
-      marker.iconPath = '../../image/dog-select.png';
+      marker.iconPath = '../../image/server-map-icon.png';
       marker.callout = this.createCallout(marker);
       marker.label = this.createLabel(marker);
     }
@@ -743,11 +743,11 @@ Page({
    */
   createCallout: function (marker) {
     let callout = {};
-    callout.color = '#ffffff';
+    callout.color = '#333333';
     callout.content = marker.name + '\n' + marker.address;
-    callout.fontSize = 12;
+    callout.fontSize = 13;
     callout.borderRadius = 5;
-    callout.bgColor = '#ff555c';
+    callout.bgColor = '#ffffff';
     callout.padding = 5;
     callout.textAlign = 'left';
     callout.display = 'BYCLICK';

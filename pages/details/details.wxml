@@ -86,37 +86,45 @@
     </block>
     <view>
       <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id" wx:if='{{ !showMap }}'>
-        <view class="item">
-          <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
-          <image src='{{item.logo}}' class='sev_logo'></image>
-          <view class="item-middle">
-            <view>
-              <text class="title">{{item.name}}</text>
-            </view>
-            <view class="myad-li">
-              <view class="message">
-                <image src='../../image/dw.png'></image>{{item.address}}
+        <view class="itemcon {{item.lista==2?'curitem':''}}">
+          <view class="item {{item.lista==2?'curitemList':''}}">
+            <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
+            <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
+            <image src='{{item.logo}}' class='sev_logo'></image>
+            <view class="item-middle">
+              <view>
+                <text class="title">{{item.name}}</text>
               </view>
-              <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label>
-              <view class="mmtext">剩余车辆
-                <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
+              <view class="myad-li">
+                <view class="message">
+                  <image src='../../image/dw.png'></image>{{item.address}}
+                </view>
+                <!-- <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> -->
+                <view class="mmtext">剩余车辆
+                  <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
 
+                </view>
               </view>
+
+            </view>
+            <view class="item_right">
+              <view>
+                <text class="time">{{item.distance}}km</text>
+              </view>
+              <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
+                <image src='../../image/dh.png'></image>导航
+              </view>
+              <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
+              <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
+              <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
             </view>
           </view>
-          <view class="item_right">
-            <view>
-              <text class="time">{{item.distance}}km</text>
-            </view>
-            <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
-              <image src='../../image/dh.png'></image>导航
-            </view>
-            <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
-            <view class="fastwx" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
-            <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
+          <view class='yy_time' wx:if='{{item.lista==2}}'>
+            <label class="province-text">已预约{{selDate}} {{selTime}}</label>
           </view>
         </view>
       </block>
+
       <block wx:if='{{ showMap }}'>
         <view class='map-wrapper' style='height:{{ mapHeight }}px'>
           <map class='map' id='myMap' longitude="{{ longitude }}" latitude="{{ latitude }}" scale="{{ scale }}" show-location="true" markers="{{ markers }}" bindmarkertap="bindMarkertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{ controls }}'
@@ -129,6 +137,32 @@
         </view>
       </block>
     </view>
+    <!-- <form bindsubmit="formSubmit" report-submit="{{istrue}}">
+    <button class="btn-quit" formType="submit" wx:if="{{sta==10}}"> 领取广告 </button>
+  </form>
+  <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==0}}"> 登记 </button>
+  <button class="btn-gray" wx:if="{{sta==11}}"> 登记 </button>
+  <button class="btn-gray" wx:if="{{sta==9}}"> 已投完 </button>
+  <button class="btn-gray" wx:if="{{sta==1}}"> 登记审核中 </button>
+  <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==2}}"> 审核失败，请重新登记 </button>
+  <button class="btn-gray" wx:if="{{sta==3}}"> {{ckdate}}开始检测 </button>
+  <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==4}}"> 开始检测 </button>
+  <button class="btn-gray" wx:if="{{sta==5}}"> 检测审核中</button>
+  <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==6}}"> 审核失败，请重新检测</button>
+  <button class="btn-gray" wx:if="{{sta==7}}"> 已领取其它广告</button>
+  <button class="btn-gray" wx:if="{{sta==8}}"> 广告已结束</button> -->
+  </view>
+</view>
+
+<!--goodsdetail start-->
+<view class="goods-detail" hidden="{{!showGoodsDetail}}">
+  <view class="mask" bindtap="hideGoodsDetail"></view>
+  <view class='title0'>预约成功</view>
+  <view class="title2">分享给微信好友，让你的朋友们 一起赚钱吧!</view>
+  <view class="title4">
+    <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}" class='wtwabt2 ' open-type="share">
+      分享微信好友
+    </button>
   </view>
 </view>
 
