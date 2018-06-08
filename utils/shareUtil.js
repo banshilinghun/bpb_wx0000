@@ -5,8 +5,8 @@ const app = getApp();
 /**
  * 普通拉新分享title
  */
-function getShareNormalTitle(){
-  return '[' + app.globalData.userInfo.nickName + '@我]'  + ' 有钱一起赚！在奔跑宝能赚广告费的好事别说我没告诉你！';
+function getShareNormalTitle() {
+  return '[' + app.globalData.userInfo.nickName + '@我]' + ' 贴车身广告，有钱一起赚';
 }
 
 /**
@@ -14,20 +14,20 @@ function getShareNormalTitle(){
  */
 function getShareAwardTitle(award, awardType) {
   let awardTypeStr;
-  if (awardType == 2){
+  if (awardType == 2) {
     awardTypeStr = '推荐奖励';
-  } else if (awardType == 3){
+  } else if (awardType == 3) {
     awardTypeStr = '广告奖励';
-  }else{
-    awardTypeStr = '新手奖励';
+  } else {
+    awardTypeStr = '新手专享奖励';
   }
-  return '[' + app.globalData.userInfo.nickName + '@我]' + ' 我刚领取了' + awardTypeStr + award + '元，你还不来？点击领取！';
+  return '[' + app.globalData.userInfo.nickName + '@我]' + ' 我已领取' + awardTypeStr + award + '元，你还不来';
 }
 
 /**
  * 广告分享title
  */
-function getShareAdTitle(){
+function getShareAdTitle() {
   return '[' + app.globalData.userInfo.nickName + '@我]' + ' 开车还能赚广告费，不来是你的损失！';
 }
 
