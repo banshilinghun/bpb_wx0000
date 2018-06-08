@@ -1127,7 +1127,7 @@ button {
   height: 100%;
   display: flex;
   align-items: center;
-  min-width: 100rpx;
+  padding-left: 30rpx;
 }
 
 .action-text {
@@ -1139,9 +1139,9 @@ button {
 }
 
 .action-image {
-  width: 30rpx;
+  width: 50rpx;
   margin-left: 5rpx;
-  height: 30rpx;
+  height: 79rpx;
 }
 
 .profile-wrapper, .account-wrapper {
@@ -1163,6 +1163,43 @@ button {
 
 /* 翻转动画 start*/
 
+.list-root-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+}
 
+.list-inner {
+  width: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+.list-inner-click {
+  transform: rotateY(-180deg);
+}
+
+.list-transform{
+  width: 100%;
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.map-transform{
+  width: 100vw;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
 
 /* 翻转动画 end */

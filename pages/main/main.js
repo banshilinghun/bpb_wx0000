@@ -320,6 +320,7 @@ Page({
   //分享
   onShareAppMessage: function (res) {
     if (res.from == 'button') {
+      console.log(res);
       var shareTitle = shareUtil.getShareAdTitle(res.target.dataset.adname);
       var adid = res.target.dataset.adid;
       var adimg = res.target.dataset.adimg;
