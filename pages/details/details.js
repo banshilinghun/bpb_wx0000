@@ -751,7 +751,7 @@ Page({
     let distance = util.getDistance(this.data.latitude, this.data.longitude, marker.lat, marker.lng);
     let callout = {};
     callout.color = '#ffffff';
-    callout.content = marker.name + '\n' + marker.address + '\n' + '距离我' + distance.toFixed(2) + ' km';
+    callout.content = marker.name + '\n' + marker.address + '\n' + '距离我 ' + distance.toFixed(2) + ' km';
     callout.fontSize = 13;
     callout.borderRadius = 5;
     callout.bgColor = '#6E707c';
