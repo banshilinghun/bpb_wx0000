@@ -50,11 +50,11 @@
 
           </view>
         </view>
-        <button class="btn-red" wx:if="{{canCheck==4}}" bindtap="goMap" data-longitude="{{myAd.subscribe.lng}}" data-latitude="{{myAd.subscribe.lat}}" data-name="{{myAd.subscribe.serviceName}}" data-address="{{myAd.subscribe.address}}"> 已预约{{myAd.subscribe.date}} 安装广告，导航前往网点安装</button>
+        <button class="btn-red dh-btn" wx:if="{{canCheck==4}}" bindtap="goMap" data-longitude="{{myAd.subscribe.lng}}" data-latitude="{{myAd.subscribe.lat}}" data-name="{{myAd.subscribe.serviceName}}" data-address="{{myAd.subscribe.address}}"> 已预约{{myAd.subscribe.date}}{{myAd.subscribe.begin_time}}-{{myAd.subscribe.end_time}}<view class='yjdh-btn'>一键导航</view></button>
         <button class="btn-red" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 立即检测 </button>
         <button class="btn-gray" wx:if="{{canCheck==0}}"> {{myAd.check.checkDate}}开始期中检测 </button>
-        <button class="btn-gray" wx:if="{{canCheck==2}}"> {{myAd.check.checkDate}}开始网点检测 </button>
-        <button class="btn-red" wx:if="{{canCheck==3}}" bindtap="goMap" data-longitude="{{myAd.check.lng}}" data-latitude="{{myAd.check.lat}}" data-name="{{myAd.check.serviceName}}" data-address="{{myAd.check.address}}">网点检测，导航前往服务网点检测 </button>
+        <button class="btn-gray" wx:if="{{canCheck==2}}"> {{myAd.check.checkDate}}开始服务网点检测 </button>
+        <button class="btn-red dh-btn" wx:if="{{canCheck==3}}" bindtap="goMap" data-longitude="{{myAd.check.lng}}" data-latitude="{{myAd.check.lat}}" data-name="{{myAd.check.serviceName}}" data-address="{{myAd.check.address}}">广告检测，请前往服务网点检测 <view class='yjdh-btn'>一键导航</view></button>
         <button class="btn-gray" wx:if="{{canCheck==5}}">检测审核中，通过后可提取收益</button>
       </view>
     </block>

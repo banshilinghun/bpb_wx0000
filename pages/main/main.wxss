@@ -119,6 +119,10 @@ page {
   color: #fff;
   font-size: 28rpx;
   height: 90rpx;
+  line-height:90rpx;
+  padding-left:30rpx;
+padding-right:30rpx;
+
 }
 
 .btn-gray {
@@ -128,10 +132,30 @@ page {
   color: #fff;
   font-size: 28rpx;
   height: 90rpx;
+  line-height:90rpx;
+   padding-left:30rpx;
+padding-right:30rpx;
 }
 
 button::after {
   content: none;
+}
+.dh-btn{
+  text-align: left;
+  position: relative;
+}
+.yjdh-btn{
+  position: absolute;
+  top: 17rpx;
+  right: 30rpx;
+  width:148rpx;
+height:56rpx;
+box-shadow:0rpx 0rpx 4rpx 0rpx rgba(161,17,0,1);
+border-radius:8rpx;
+background: #fff;
+color: #FB523E;
+line-height: 56rpx;
+text-align: center;
 }
 
 .watwx {
