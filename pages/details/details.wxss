@@ -117,7 +117,6 @@ page {
 
 .item_right {
   overflow: hidden;
-  padding-right: 10px;
   text-align: right;
 }
 
@@ -148,6 +147,7 @@ page {
 .province-text {
   color: #ff5a39;
   font-size: 28rpx;
+  font-weight: 600;
 }
 
 .orgtext image {
@@ -161,6 +161,7 @@ page {
   color: #ff5a39;
   font-size: 28rpx;
   margin-bottom: 16rpx;
+  font-weight: 600;
 }
 
 .line {
@@ -1076,7 +1077,7 @@ button {
   margin-top: 14rpx;
   width: 160rpx;
   height: 160rpx;
-  border-radius: 4rpx;
+  border-radius: 8rpx;
 }
 
 .myad-li {
@@ -1089,6 +1090,7 @@ button {
   position: absolute;
   left: -20rpx;
   top: 0;
+  z-index: 6;
 }
 
 /* map start */

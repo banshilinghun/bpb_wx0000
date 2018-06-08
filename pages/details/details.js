@@ -106,10 +106,12 @@ Page({
   onShow: function (n) {
     var that = this;
     //根据 flag 改变分享文案
+    wx.showNavigationBarLoading();
     if (that.data.isPreview){
       that.setData({
         isPreview: false
       })
+      wx.hideNavigationBarLoading()
       return;
     }
     that.setData({
@@ -227,7 +229,7 @@ Page({
               //                          console.log(that.data.latitude)
               serviceList[j].distance = (serviceList[j].distance / 1000).toFixed(2);
               serviceList[j].lista = 1;
-              serviceList[j].small_logo = serviceList[j].small_logo ? serviceList[j].small_logo :'../../image/noimg.png';
+              // serviceList[j].small_logo = serviceList[j].small_logo ? serviceList[j].small_logo :'../../image/noimg.png';
               //serviceList[j].logo = '../../image/noimg.png';
               if (res.data.data.isRegist) {
                 serviceList[j].lista = 0;
@@ -323,6 +325,7 @@ Page({
         that.setData({
           isShowLoadingMore: false
         });
+        wx.hideNavigationBarLoading()
       }
     })
   },
@@ -845,6 +848,7 @@ Page({
     console.log(e);
     var that = this;
     let image = e.currentTarget.dataset.image;
+    let samllImage = e.currentTarget.dataset.samllimage;
     if(!image||image.indexOf('http') == -1){
       return;
     }
