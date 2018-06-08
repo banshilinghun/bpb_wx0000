@@ -1,12 +1,13 @@
 /** 分享工具类 */
 
 const app = getApp();
+const stringUtil = require('stringUtil.js');
 
 /**
  * 普通拉新分享title
  */
 function getShareNormalTitle() {
-  return '[' + app.globalData.userInfo.nickName + '@我]' + ' 贴车身广告，有钱一起赚';
+  return '[' + stringUtil.substringName(app.globalData.userInfo.nickName) + '@我]' + ' 贴车身广告，有钱一起赚';
 }
 
 /**
@@ -21,14 +22,14 @@ function getShareAwardTitle(award, awardType) {
   } else {
     awardTypeStr = '新手专享奖励';
   }
-  return '[' + app.globalData.userInfo.nickName + '@我]' + ' 我已领取' + awardTypeStr + award + '元，你还不来';
+  return '[' + stringUtil.substringName(app.globalData.userInfo.nickName) + '@我]' + ' 我已领取' + awardTypeStr + award + '元，你还不来';
 }
 
 /**
  * 广告分享title
  */
 function getShareAdTitle() {
-  return '[' + app.globalData.userInfo.nickName + '@我]' + ' 开车还能赚广告费，不来是你的损失！';
+  return '[' + stringUtil.substringName(app.globalData.userInfo.nickName) + '@我]' + ' 开车还能赚广告费，不来是你的损失！';
 }
 
 module.exports = {
