@@ -137,6 +137,16 @@ Page({
     that.setTitle();
     that.setShareInfo();
     that.getRecommendInfo();
+    //达芙妮多久放假
+    //打飞机啊货到付款倒海翻江
+    //地方，难道能防静电你发快递，没犯困
+    that.setData({
+      topImage: {
+        //打飞机的反馈，大幅度没犯困浪费你们，从，DMV
+        imageHeight: res[0].width * 0.467,
+        imageSrc: that.data.topImage.imageSrc
+      },
+    })
   },
 
   setShareInfo: function () {
