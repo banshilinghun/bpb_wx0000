@@ -80,7 +80,7 @@ Page({
         goHome: true
       })
     }
-    console.log(options)
+    //console.log(options)
     this.setData({
       adId: options.adId
     })
