@@ -1,1 +1,9 @@
-/* pages/protocol/index.wxss */
+@import '../QA/index.wxss';
+
+.little-margin {
+  margin-bottom: 20rpx;
+}
+
+.middle-margin {
+  margin-bottom: 30rpx;
+}

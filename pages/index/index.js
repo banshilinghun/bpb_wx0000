@@ -149,11 +149,14 @@ Page({
                           })
                         }, 1500);
                       } else {
-                        setTimeout(function () {
-                          wx.switchTab({
-                            url: '../main/main'
-                          })
-                        }, 1500);
+                        // setTimeout(function () {
+                        //   wx.switchTab({
+                        //     url: '../main/main'
+                        //   })
+                        // }, 1500);
+                        wx.redirectTo({
+                          url: '../valuation-rule/index',
+                        })
                       }
                     }
                   } else {

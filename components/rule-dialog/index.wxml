@@ -1,0 +1,13 @@
+
+<view class='rule-dialog' wx:if='{{ showRuleDialog }}'>
+  <view class='rule-mask'></view>
+  <view class='rule-dialog-wrapper'>
+    <view class='rule-content-wrapper'>
+      <image id='rule-image' class='rule-image' style='height: {{ imageHeight }}rpx' src='../../image/rule.png'></image>
+      <view class='rule-content-root' wx:for='{{ ruleList }}' wx:key='rule'>
+        <text class='rule-content'>{{ item }}</text>
+      </view>
+      <button class='rule-btn' bindtap='hideDialogListener'>知道了</button>
+    </view>
+  </view>
+</view>

@@ -2,13 +2,12 @@
 <view>
   <view class='QA-container'>
     <view>
-      <text>深圳奔跑宝科技有限公司（以下称乙方）根据广告投放客户需求委托私家车、网约车等车主（以下称甲方）在车内、外发布广告，我司同意您作为广告投放车主并以我司名义为上述广告投放客户提供投放服务。一旦您登陆本应用程序、通过本应用程序接广告投放单，则视作您以充分阅读并接受本《服务合作协议》（以下称“协议”）的所有条款，您同意协议对您和我司具有法律约束力。如果您不同意本协议，则不能登陆应用程序或为广告投放客户服务。</text>
+      <text class='QA-text middle-margin'>深圳奔跑宝科技有限公司（以下称乙方）根据广告投放客户需求委托私家车、网约车等车主（以下称甲方）在车内、外发布广告，我司同意您作为广告投放车主并以我司名义为上述广告投放客户提供投放服务。一旦您登陆本应用程序、通过本应用程序接广告投放单，则视作您以充分阅读并接受本《服务合作协议》（以下称“协议”）的所有条款，您同意协议对您和我司具有法律约束力。如果您不同意本协议，则不能登陆应用程序或为广告投放客户服务。</text>
     </view>
     <view wx:for='{{ protocolList }}' class='item' wx:key='title'>
       <text class='QA-title'>{{ item.title }}</text>
-      <view wx:for='{{ item.subList }}' wx:for-item='subItem' wx:key='sub'>
-        <text class='QA-text'>{{ subItem.Q }}</text>
-        <text class='QA-text {{ subItem.noMargin? "" : "sub-item" }}'>{{ subItem.A }}</text>
+      <view wx:for='{{ item.content }}' wx:for-item='subItem' wx:key='sub'>
+        <text class='QA-text {{ index == item.content.length - 1? "middle-margin" : "little-margin" }}'>{{ subItem }}</text>
       </view>
     </view>
   </view>

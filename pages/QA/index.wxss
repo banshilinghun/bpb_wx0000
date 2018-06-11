@@ -23,6 +23,15 @@
   display: block;
 }
 
+.QA-text-inline{
+  font-size: 28rpx;
+  color: #333333;
+}
+
 .bold{
   font-weight: 500;
+}
+
+.blue-color{
+  color: blue;
 }

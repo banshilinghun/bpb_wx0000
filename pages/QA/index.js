@@ -28,4 +28,10 @@ Page({
 
   },
 
+  callPhoneListener: function(e){
+    wx.makePhoneCall({
+      phoneNumber: e.currentTarget.dataset.phonenumber,
+    })
+  }
+
 })

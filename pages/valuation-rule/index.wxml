@@ -1,0 +1,5 @@
+<view class='test' bindtap='valuationClick'>
+</view>
+<rule-dialog
+  showRuleDialog='{{ showRuleDialog }}'
+></rule-dialog>
