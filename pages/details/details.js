@@ -712,7 +712,7 @@ Page({
     wx.request({
       url: ad_server_list,
       data: {
-        ad_id: 28
+        ad_id: that.data.adId
       },
       header: app.globalData.header,
       success: res => {
