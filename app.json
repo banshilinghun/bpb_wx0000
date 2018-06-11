@@ -18,11 +18,13 @@
     "pages/joinList/joinList",
     "pages/recommend/recommend",
     "pages/novice/novice",
-    "pages/teaching/teaching"
+    "pages/teaching/teaching",
+    "pages/QA/index",
+    "pages/protocol/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#FB653D",
+    "navigationBarBackgroundColor": "#333",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": false,

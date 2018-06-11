@@ -81,6 +81,14 @@
         </image>
       </button>
     </block>
+    <block>
+      <button bindtap='QAListener' class='share-button'>
+        <image class='itemicon' src='../../image/QA.svg'></image>
+        <text class='profile-item'>车主问答</text>
+        <image class='profile-arrow' src='/image/arrow.png'>
+        </image>
+      </button>
+    </block>
   </view>
   <!-- <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">登录</text></button> -->
 </view>

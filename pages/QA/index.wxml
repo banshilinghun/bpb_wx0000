@@ -1,0 +1,18 @@
+<view>
+  <view class='QA-container'>
+    <view wx:for='{{ QAList }}' class='item' wx:key='title'>
+      <text class='QA-title'>{{ item.title }}</text>
+      <view wx:for='{{ item.subList }}' wx:for-item='subItem' wx:key='sub'>
+        <text class='QA-text'>{{ subItem.Q }}</text>
+        <text class='QA-text {{ subItem.noMargin? "" : "sub-item" }}'>{{ subItem.A }}</text>
+      </view>
+    </view>
+    <view>
+      <text class='QA-text bold'>奔跑宝全国客服热线：400-888-3390</text>
+      <text class='QA-text bold'>微信公众号：奔跑宝</text>
+      <text class='QA-text bold'>微信客服号(小荷)：benpaobao888</text>
+      <text class='QA-text bold sub-item'>微信客服号(小婷)：taoxiaoxiao1011</text>
+      <text class='QA-text bold sub-item'>注：本车主问答最终解释权归深圳奔跑宝科技有限公司所有</text>
+    </view>
+  </view>
+</view>

@@ -637,6 +637,12 @@ Page({
     })
   },
 
+  QAListener: function(){
+    wx.navigateTo({
+      url: '../QA/index',
+    })
+  },
+
   /**
    * 隐藏奖励弹框
    */

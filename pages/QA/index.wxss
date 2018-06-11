@@ -1,0 +1,28 @@
+
+.QA-container{
+  padding: 20rpx 40rpx;
+}
+
+.item{
+
+}
+
+.sub-item{
+  margin-bottom: 40rpx;
+}
+
+.QA-title{
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.QA-text{
+  font-size: 28rpx;
+  color: #333333;
+  display: block;
+}
+
+.bold{
+  font-weight: 500;
+}
