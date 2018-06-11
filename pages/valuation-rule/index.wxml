@@ -3,3 +3,9 @@
 <rule-dialog
   showRuleDialog='{{ showRuleDialog }}'
 ></rule-dialog>
+
+<view class='table-wrapper'>
+  <view class='rule-table {{ item.isTitle?  "table-title-color" : "table-content-color"}}' wx:for='{{ tableRuleList }}' wx:key='table'>
+    <text class='rule-table-text'>{{ item.content }}</text>
+  </view>
+</view>
