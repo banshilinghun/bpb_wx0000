@@ -12,7 +12,7 @@
             <view>
               <text class="title">待收收益</text>
             </view>
-            <view class='atwxsd' wx:if='{{isDiDi==1}}'>
+            <view class='atwxsd' wx:if='{{isDiDi==1}}' bindtap='goValuation'>
               <view class='tasdxs'>
                 计价规则
                 <icon type="info" size="12" color='#ff555c' />

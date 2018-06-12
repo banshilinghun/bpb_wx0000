@@ -20,7 +20,7 @@ Page({
     },
     {
       "desc": "车主问答",
-      "id": "teaching",
+      "id": "qa",
       'url': 'QA/index',
       "icon": '../../image/qa_icon.png',
       'deposit': 0
@@ -340,7 +340,7 @@ Page({
       myProfile = this.data.myProfile;
     for (var i = 0, len = myProfile.length; i < len; ++i) {
       if (myProfile[i].id == id) {
-        if (i == 0) {
+        if (i == 2) {
           if (that.data.loginFlag == 1) {
             if (this.data.status == 0) {
               wx.navigateTo({
@@ -393,7 +393,12 @@ Page({
             wx.navigateTo({
               url: '../teaching/teaching'
             })
-          } else {
+          } else if (myProfile[i].id == 'qa') {
+            wx.navigateTo({
+              url: '../QA/index'
+            })
+          }
+          else {
 
             if (that.data.loginFlag == 1) {
               wx.navigateTo({
@@ -667,4 +672,9 @@ Page({
     });
     Toast(text);
   },
+  goValuation:function(){
+    wx.navigateTo({
+      url: '../valuation/valuation',
+    })
+  }
 })
