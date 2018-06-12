@@ -27,9 +27,12 @@
             <view>
               <text class="title">{{myAd.name}}</text>
             </view>
-            <view class="myad-li">
-              <view class="message">实际收益：
+            <view class="myad-li" >
+              <view class="message" wx:if='{{isDiDi!=1}}'>实际收益：
                 <label class="data-text">{{myAd.amount}}元</label>
+              </view>
+               <view class="message" wx:if='{{isDiDi==1}}'>预计收益：
+                <label class="data-text">500<label class="data-blt">~</label>868元</label>
               </view>
               <view class="message">投放时间：
                 <label class="data-text">{{myAd.begin_date}}
@@ -68,8 +71,11 @@
             <text class="title">{{item.name}}</text>
           </view>
           <view class="myad-li">
-            <view class="message" wx:if="{{status==3}}">实际收益：
+            <view class="message" wx:if="{{status==3&&isDiDi!=1}}">实际收益：
               <label class="data-text">{{item.amount}}元</label>
+            </view>
+            <view class="message" wx:if="{{status==3&&isDiDi==1}}">预计收益：
+              <label class="data-text">500<label class="data-blt">~</label>868元</label>
             </view>
             <view class="message" wx:if="{{status!=3}}">实际收益：
               <label class="data-text ywxst">***

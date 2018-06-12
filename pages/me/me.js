@@ -10,18 +10,26 @@ Page({
   data: {
     inviteId: '我是邀请人id',
     userInfo: {},
-    myProfile: [{
-      "desc": "身份认证",
-      "id": "identity",
-      'url': 'auth/auth',
-      "icon": '../../image/card.png',
-      'deposit': 0
-    },
+    myProfile: [
     {
       "desc": "新手教程",
       "id": "teaching",
       'url': 'teaching/teaching',
       "icon": '../../image/tech.png',
+      'deposit': 0
+    },
+    {
+      "desc": "车主问答",
+      "id": "teaching",
+      'url': 'QA/index',
+      "icon": '../../image/qa_icon.png',
+      'deposit': 0
+    },
+    {
+      "desc": "身份认证",
+      "id": "identity",
+      'url': 'auth/auth',
+      "icon": '../../image/card.png',
       'deposit': 0
     }
     ],
@@ -45,7 +53,8 @@ Page({
     positionStatus: 'absolute',
     shareTitle: '',
     showRecommend: false,
-    openType: ''
+    openType: '',
+    isDiDi: 0  //是否是滴滴车主
   },
 
   onLoad: function () {
@@ -298,7 +307,8 @@ Page({
           if (res.data.code == 1000) {
             //					console.log(res.data)
             this.setData({
-              status: res.data.data.status
+              status: res.data.data.status,
+              isDiDi: res.data.data.user_type //是否是滴滴合法车主
             })
           } else {
             wx.showModal({
@@ -379,13 +389,11 @@ Page({
                 content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
               })
             }
-          } 
-          else if (myProfile[i].id == 'teaching'){
+          } else if (myProfile[i].id == 'teaching'){
             wx.navigateTo({
               url: '../teaching/teaching'
             })
-          }
-          else {
+          } else {
 
             if (that.data.loginFlag == 1) {
               wx.navigateTo({

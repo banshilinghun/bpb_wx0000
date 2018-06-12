@@ -8,7 +8,7 @@ const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
 const release = true;
 const release2 = false;
 //true-ken测试地址，false-小彭测试地址
-const domainStatus = true;
+const domainStatus = false;
 
 App({
   onLaunch: function () {
