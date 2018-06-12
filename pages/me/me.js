@@ -639,7 +639,7 @@ Page({
 
   QAListener: function(){
     wx.navigateTo({
-      url: '../protocol/index',
+      url: '../QA/index',
     })
   },
 

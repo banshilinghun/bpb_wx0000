@@ -20,17 +20,7 @@ Component({
    */
   data: {
     ruleList: [
-      '备注：在线时长数值向下取整数，例如车主在线6.8小时，以6小时计算。当日收益将于第二日中午12时前计入车主【我的】-【待收收益】内。'],
-    tableRuleList: [{ content: '车主当日在线时长', isTitle: true },
-    { content: '车主当日广告收入', isTitle: true },
-    { content: '2小时以内' },
-    { content: '0元' },
-    { content: '2小时至5小时' },
-    { content: '10元' },
-    { content: '6小时至11小时' },
-    { content: '10元+3元/小时' },
-    { content: '12小时以上' },
-    { content: '28元' }]
+      '备注：在线时长数值向下取整数，例如车主在线6.8小时，以6小时计算。当日收益将于第二日中午12时前计入车主【我的】-【待收收益】内。']
   },
 
   ready: function () {

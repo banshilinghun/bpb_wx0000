@@ -1,5 +1,5 @@
 {
-  "component": true,
+  "navigationBarTitleText": "活动详情",
   "usingComponents": {
     "rule-table": "../../components/rule-table/index"
   }

@@ -20,7 +20,8 @@
     "pages/novice/novice",
     "pages/teaching/teaching",
     "pages/QA/index",
-    "pages/protocol/index"
+    "pages/protocol/index",
+    "pages/valuation/valuation"
   ],
   "window": {
     "backgroundTextStyle": "light",

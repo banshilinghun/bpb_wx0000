@@ -1,0 +1,29 @@
+<view>
+  <image class='valu-image' src='../../image/rule-valu.png' style='height: {{ imageHeight }}px'></image>
+  <view class='valu-wrapper'>
+    <view>
+      <text class='valu-tips'>车友们，为了更好的服务您们，奔跑宝联合滴滴出行为活跃车主按照【滴滴车主APP】在线时长提供广告收益，详细情况如下：</text>
+    </view>
+    <view>
+      <rule-table textSmall='{{ textSmall }}' tableHeight='{{ tableHeight }}'></rule-table>
+    </view>
+    <view>
+      <view>
+        <text class='valu-remark'>备注：</text>
+      </view>
+      <view class='valu-content' wx:for='{{ valuList }}' wx:key='valu'>
+        <text>{{ item }}</text>
+      </view>
+      <view class='valu-content'>
+        <text>6．其它疑问请联系奔跑宝服务热线：</text>
+        <text class='text-blod'>400-888-3390</text>
+        <text>或添加奔跑宝客服号（小荷）</text>
+        <text class='text-blod'>benpaobao888</text>
+        <text>、（小婷）</text>
+        <text class='text-blod'>taoxiaoxiao1011</text>
+        <text>。</text>
+      </view>
+    </view>
+  </view>
+  <button class='valu-btn' bindtap='knowListener'>知道了</button>
+</view>

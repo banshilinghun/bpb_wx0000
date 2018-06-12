@@ -1,0 +1,5 @@
+<view class='table-wrapper' style='height: {{ tableHeight }}rpx'>
+  <view class='rule-table {{ item.isTitle?  "table-title-color" : "table-content-color"}} ' wx:for='{{ tableRuleList }}' wx:key='table'>
+    <text class=' rule-table-small' style='font-size: {{ textSmall? "24rpx" : "28rpx" }}'>{{ item.content }}</text>
+  </view>
+</view>

@@ -1,14 +1,9 @@
-
 <view class='rule-dialog' wx:if='{{ showRuleDialog }}'>
   <view class='rule-mask'></view>
   <view class='rule-dialog-wrapper'>
     <view class='rule-content-wrapper'>
       <image id='rule-image' class='rule-image' style='height: {{ imageHeight }}rpx' src='../../image/rule.png'></image>
-      <view class='table-wrapper'>
-  <view class='rule-table {{ item.isTitle?  "table-title-color" : "table-content-color"}}' wx:for='{{ tableRuleList }}' wx:key='table'>
-    <text class='rule-table-text'>{{ item.content }}</text>
-  </view>
-</view>
+      <rule-table></rule-table>
       <view class='rule-content-root' wx:for='{{ ruleList }}' wx:key='rule'>
         <text class='rule-content'>{{ item }}</text>
       </view>
