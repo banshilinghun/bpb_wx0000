@@ -20,8 +20,7 @@
     "pages/novice/novice",
     "pages/teaching/teaching",
     "pages/QA/index",
-    "pages/protocol/index",
-    "pages/valuation-rule/index"
+    "pages/protocol/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
