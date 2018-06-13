@@ -20,12 +20,28 @@ Component({
    */
   data: {
     ruleList: [
-      '备注：在线时长数值向下取整数，例如车主在线6.8小时，以6小时计算。当日收益将于第二日中午12时前计入车主【我的】-【待收收益】内。']
+      '备注：在线时长数值向下取整数，例如车主在线6.8小时，以6小时计算。当日收益将于第二日中午12时前计入车主【我的】-【待收收益】内。'],
+    status: false,
+    text: '3'
   },
 
   ready: function () {
-    var that = this;
-
+    let that = this;
+    let count = 3;
+    setInterval(function(){
+      if(count > 0){
+        count--;
+        that.setData({
+          text: count,
+          status: false
+        })
+      }else{
+        that.setData({
+          text: '知道了',
+          status: true
+        })
+      }
+    }, 1000);
   },
 
   /**
@@ -36,14 +52,7 @@ Component({
     _propertyChange: function (newVal, oldVal) {
       var that = this;
       if (newVal) {
-        // wx.createSelectorQuery().in(this)
-        //   .select('.rule-image')
-        //   .boundingClientRect(function (res) {
-        //     console.log(res);
-        //     that.setData({
-        //       imageHeight: res.width * 0.564 + 'px'
-        //     })
-        //   }).exec();
+        
       }
     },
 

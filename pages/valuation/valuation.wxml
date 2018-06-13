@@ -15,13 +15,13 @@
         <text>{{ item }}</text>
       </view>
       <view class='valu-content'>
-        <text>6．其它疑问请联系奔跑宝服务热线：</text>
+        <text>6．其他疑问可通过以下方式联系奔跑宝：\n奔跑宝服务热线：</text>
         <text class='text-blod'>400-888-3390</text>
-        <text>或添加奔跑宝客服号（小荷）</text>
+        <text>\n奔跑宝微信客服号（小荷）：</text>
         <text class='text-blod'>benpaobao888</text>
-        <text>、（小婷）</text>
+        <text>\n奔跑宝微信客服号（小婷）：</text>
         <text class='text-blod'>taoxiaoxiao1011</text>
-        <text>。</text>
+        <text></text>
       </view>
     </view>
   </view>
