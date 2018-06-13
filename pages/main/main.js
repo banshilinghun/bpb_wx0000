@@ -293,6 +293,7 @@ Page({
                 }
               }
               if (res.data.data.check.checkType == 'SERVER_CHECK') {//期末检测
+                //console.log(res.data.data.check.checkType)
                 if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
                   this.setData({
                     canCheck: 2

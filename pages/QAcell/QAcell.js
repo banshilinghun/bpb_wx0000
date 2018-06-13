@@ -70,6 +70,7 @@ Page({
           success: res => {
             if (res.data.code == 1000) {
               if (res.data.data.user_type == 1) {//滴滴合法车主
+              //res.data.data.status 0 未认证 1审核中 2未通过  3通过了
                 wx.navigateTo({
                   url: '../valuation/valuation',
                 })

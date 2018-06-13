@@ -63,6 +63,7 @@ Page({
     adId: '',
     serverId:'',
     showShareModel: false,
+    showShare:true,
     shareAwardText: '分享',
     isShowLoadingMore: false,
     haveLoca:false,
@@ -169,9 +170,11 @@ Page({
     var currPage = pages[pages.length - 1]; //当前页面
     //console.log(currPage.data.mydata) //就可以看到data里mydata的值了
     if (currPage.data.mydata != undefined) {
-      if (currPage.data.mydata.share == 1 && n != 0) {
+     
+      if (currPage.data.mydata.share == 1 && n != 0 && that.data.showShare) {
         that.setData({
-          showGoodsDetail: true
+          showGoodsDetail: true,
+          showShare:false
         })
       } else {
         that.setData({
