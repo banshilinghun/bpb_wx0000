@@ -1,6 +1,6 @@
 <view class='service-container'>
   <view>
-    <button class='service-wrapper' open-type='contact'>
+    <button class='service-wrapper' open-type='contact' session-from='{"nickName":"{{userInfo.nickName}}" ,"avatarUrl":"{{userInfo.avatarUrl}}"}'>
       <view class='service-image-wrapper'>
         <image class='service-image' src='../../image/bpb-service.png'></image>
       </view>

@@ -19,13 +19,6 @@ Page({
       'deposit': 0
     },
     {
-      "desc": "车主问答",
-      "id": "qa",
-      'url': 'QA/index',
-      "icon": '../../image/qa_icon.png',
-      'deposit': 0
-    },
-    {
       "desc": "身份认证",
       "id": "identity",
       'url': 'auth/auth',
@@ -340,7 +333,7 @@ Page({
       myProfile = this.data.myProfile;
     for (var i = 0, len = myProfile.length; i < len; ++i) {
       if (myProfile[i].id == id) {
-        if (i == 2) {
+        if (i == 1) {
           if (that.data.loginFlag == 1) {
             if (this.data.status == 0) {
               wx.navigateTo({
