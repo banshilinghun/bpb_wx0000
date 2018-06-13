@@ -14,7 +14,7 @@
   align-items: center;
   text-align: left;
   min-height: 140rpx;
-  padding: 24rpx 10rpx 24rpx 30rpx;
+  padding: 24rpx 40rpx 24rpx 30rpx;
 }
 
 .service-image-wrapper{
@@ -48,4 +48,15 @@
 
 button::after{
   border: none;
+}
+
+.service-arrow-wrapper{
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.service-arrow{
+  height: 32rpx;
+  width: 32rpx;
 }
