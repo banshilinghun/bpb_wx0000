@@ -81,7 +81,7 @@
     <block wx:if="{{service.length>0}}">
       <view class="profile frpro">
         <view class="profile-item cwsfts">预约前往下列服务网点</view>
-        <view class='action-wrapper' bindtap='changeListMap'>
+        <view class='action-wrapper' bindtap='changeListMap' style='display:none'>
           <image class='action-image' src='{{ showMap? "../../image/ad-list-icon.png" : "../../image/ad-map-icon.png" }}'></image>
         </view>
       </view>

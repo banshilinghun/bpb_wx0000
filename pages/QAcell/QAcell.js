@@ -1,6 +1,6 @@
 
 const url = '../QAanswer/answer';
-
+var app = getApp();
 Page({
 
   /**
@@ -58,7 +58,51 @@ Page({
     var that = this;
     //计费逻辑判断
     if (e.detail.cell.flag == 'valuation'){
-      console.log('计费')
+      var loginFlag = app.globalData.login;
+      if (loginFlag == 1) {//登录了
+      wx.showLoading({
+        title: '奔跑中🚗。..',
+      })
+        wx.request({
+          url: app.globalData.baseUrl + 'app/get/user_auth_status',
+          data: {},
+          header: app.globalData.header,
+          success: res => {
+            if (res.data.code == 1000) {
+              if (res.data.data.user_type == 1) {//滴滴合法车主
+                wx.navigateTo({
+                  url: '../valuation/valuation',
+                })
+              }else{
+                wx.navigateTo({
+                  url: e.detail.cell.path + '?title=' + that.data.title + '&content=' + e.detail.cell.content + '&flag=' + e.detail.cell.flag,
+                })
+              }
+            } else {
+              wx.showModal({
+                title: '提示',
+                showCancel: false,
+                content: res.data.msg
+              });
+            }
+          },
+          fail: res => {
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: '网络错误'
+            });
+          },
+          complete:res=>{
+            wx.hideLoading();
+          }
+        })
+
+      }else{
+        wx.navigateTo({
+          url: e.detail.cell.path + '?title=' + that.data.title + '&content=' + e.detail.cell.content + '&flag=' + e.detail.cell.flag,
+        })
+      }
     }else{
       wx.navigateTo({
         url: e.detail.cell.path + '?title=' + that.data.title + '&content=' + e.detail.cell.content + '&flag=' + e.detail.cell.flag,
