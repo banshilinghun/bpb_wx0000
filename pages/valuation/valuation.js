@@ -17,6 +17,18 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    console.log(options.arrangementData)
+    if (options.arrangementData==undefined){
+       that.setData({
+         goFlag:0
+       })
+    }else{
+      that.setData({
+        goFlag: 1,
+        arrangementData: options.arrangementData
+      })
+    }
+  
     wx.getSystemInfo({
       success: function (res) {
         console.log(res);
@@ -28,8 +40,15 @@ Page({
   },
 
   knowListener: function(){
-    wx.navigateBack({
-      delta: 1,
-    })
+    var that=this;
+    if (that.data.goFlag==0){
+      wx.navigateBack({
+        delta: 1,
+      })
+    }else{
+      wx.navigateTo({
+        url: '../arrangement/arrangement?arrangementData=' + that.data.arrangementData+'&backFlag=1'
+      })
+    }
   }
 })

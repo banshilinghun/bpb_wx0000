@@ -331,5 +331,10 @@ Page({
         })
       }
     }
+  },
+  goProtocol:function(){
+    wx.navigateTo({
+      url: '../protocol/index',
+    })
   }
 })

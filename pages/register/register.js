@@ -243,6 +243,11 @@ Page({
     wx.redirectTo({
       url: '../auth/auth' //参数只能是字符串形式，不能为json对象
     })
+  },
+  goProtocol: function () {
+    wx.navigateTo({
+      url: '../protocol/index',
+    })
   }
 
 })

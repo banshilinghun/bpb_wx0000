@@ -447,6 +447,10 @@ Page({
     } else if (event.currentTarget.dataset.hi == 'banner2') {
       //活动详情页
       that.skipRecommend();
+    } else if (event.currentTarget.dataset.hi == 'banner3'){
+      wx.navigateTo({
+        url: '../valuation/valuation',
+      })
     }
   },
   hideShare: function () {

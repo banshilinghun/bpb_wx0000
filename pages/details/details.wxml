@@ -37,7 +37,7 @@
         <view class="profile-item" wx:if='{{isDiDi!=1}}'>实际收益:</view>
         <view class="profile-item" wx:if='{{isDiDi==1}}'>预计收益:</view>
         <view class="right-text red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>{{adInfo.amount}}元</view>
-        <view class="right-text red-text adxtwtx" wx:if='{{isDiDi==1}}'>500<label class="data-blt2">~</label>868元<icon type="info" size="12"  color='#ff555c'/></view>
+        <view class="right-text red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>500<label class="data-blt2">~</label>868元<icon type="info" size="16"  color='#ff555c'/></view>
         <view class="right-text tasts" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
       </view>
     </block>
@@ -159,9 +159,7 @@
   </view>
 </view>
 <bpb-reward reward='{{reward}}'></bpb-reward>
-
 <share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener' adId="{{ adInfo.id }}"></share-popup>
-
 <share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}' joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
   adId='{{adId}}' bind:hideDialog='hideDialogListener'>
 </share-detail>
@@ -172,6 +170,7 @@
     <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗...</view>
   </view>
 </view>
+<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail'  data-adId="{{adId}}" data-serverId="{{serverId}}"></rule-dialog>
 <!-- <view class='msite-nav'>
  <button class='msite-a2'  open-type="contact" >
   <image src='../../image/kf_icon.png'></image>

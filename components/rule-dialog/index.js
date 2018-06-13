@@ -48,9 +48,19 @@ Component({
     },
 
     hideDialogListener: function () {
+      var myEventDetail = {};// detail对象，提供给事件监听函数
+      var myEventOption = {} // 触发事件的选项
+      //console.log('openType-------->' + this.data.openType);
+        this.triggerEvent('btnclick', myEventDetail, myEventOption);
       this.setData({
         showRuleDialog: false
       })
+    },
+    goRuleDetail:function(){
+      var myEventDetail = {};// detail对象，提供给事件监听函数
+      var myEventOption = {} // 触发事件的选项
+      //console.log('openType-------->' + this.data.openType);
+      this.triggerEvent('btnclickDetail', myEventDetail, myEventOption);
     }
   }
 })

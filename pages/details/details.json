@@ -7,6 +7,7 @@
         "dialog": "../../components/dialog/bpb-dialog",
         "bpb-reward": "../../components/reward/index",
         "share-popup": "../../components/share-popup/index",
-        "share-detail": "../../components/share-detail/index"
+        "share-detail": "../../components/share-detail/index",
+        "rule-dialog": "../../components/rule-dialog/index"
       }
 }
