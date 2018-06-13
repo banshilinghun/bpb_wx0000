@@ -7,7 +7,7 @@
       <view class='rule-content-root' wx:for='{{ ruleList }}' wx:key='rule'>
         <text class='rule-content'>{{ item }}</text>
       </view>
-      <button class='rule-btn' bindtap='hideDialogListener'>知道了</button>
+      <button class='rule-btn' style='background-color: {{ status? "#FF555C" : "#ccc" }}' bindtap='hideDialogListener' disabled='{{ !status }}'>{{ text }}</button>
     </view>
   </view>
 </view>
