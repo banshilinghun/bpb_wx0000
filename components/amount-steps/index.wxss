@@ -262,7 +262,7 @@ button::after{
 .zan-more{
   font-size: 20rpx;
   display: inline-block;
-  margin-left: 10rpx;
+  margin-left: 4rpx;
   color: #4A90E2;
   text-decoration:underline;
 }

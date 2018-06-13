@@ -4,12 +4,13 @@ const app = getApp()
 
 Page({
   data: {
-   
+    teach:0
   },
   //事件处理函数
   onLoad: function () {
     var that = this;
     //如果是小程序码进入，处理逻辑
+    var reqData={};
     wx.getSystemInfo({
       success: function (res) {
         var windowWidth = res.windowWidth;
@@ -23,12 +24,48 @@ Page({
         })
       }
     })
-    
+    var loginFlag = app.globalData.login;
+    if (loginFlag==1){
+      that.getMyAd(reqData)
+    }
   },
 
   onShow: function () {
     var that = this;
     
+  },
+  getMyAd: function (reqData) { 
+    var z = this;
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/my_ad',
+      data: reqData,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+           console.log(res.data)
+           if (res.data.data!=null){
+             if (res.data.data.id == 28) {
+               that.setData({
+                 teach: 1
+               })
+             }
+           }
+        } else {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });    
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
   },
   goMain:function(){
     wx.switchTab({

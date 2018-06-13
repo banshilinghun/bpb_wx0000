@@ -15,7 +15,7 @@
             <view class='atwxsd' wx:if='{{isDiDi==1}}' bindtap='goValuation'>
               <view class='tasdxs'>
                 计价规则
-                <icon type="info" size="12" color='#ff555c' />
+                <icon type="info" size="16" color='#ff555c' />
               </view>
             </view>
           </view>

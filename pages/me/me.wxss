@@ -500,10 +500,10 @@ font-weight: 500;
 }
 .tasdxs{
   position: relative;
-  padding-right: 12px;
+  padding-right: 18px;
 }
 .tasdxs icon{
   position: absolute;
-  top: 0;
+  top: 2px;
   right: 0;
 }

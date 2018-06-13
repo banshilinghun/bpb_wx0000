@@ -61,11 +61,13 @@ Page({
     adName: '',
     adTime: '',
     adId: '',
+    serverId:'',
     showShareModel: false,
     shareAwardText: '分享',
     isShowLoadingMore: false,
     haveLoca:false,
     isPreview: false,
+    showRule:false,
     isDiDi:0 //是否滴滴合法车主
   },
 
@@ -116,7 +118,8 @@ Page({
       return;
     }
     that.setData({
-      shareAwardText: app.globalData.shareFlag ? '分享有奖' : '分享'
+      shareAwardText: app.globalData.shareFlag ? '分享有奖' : '分享',
+      showRule: false
     })
     wx.request({
       url: app.globalData.baseUrl + 'app/get/user_auth_status',
@@ -451,6 +454,12 @@ Page({
   },
 
   arrangement: function (e) {
+    var that=this;
+    console.log(e)
+    that.setData({
+      serverId: e.currentTarget.dataset.serverid
+    })
+    console.log(that.data.serverId)
     if (app.globalData.login == 1) {
       wx.request({
         url: app.globalData.baseUrl + 'app/get/user_auth_status',
@@ -460,9 +469,16 @@ Page({
           if (res.data.code == 1000) {
             //					console.log(res.data)
             if (res.data.data.status == 3) {
-              wx.navigateTo({
-                url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
-              })
+              console.log(this.data.isDiDi)
+              if(that.data.isDiDi==1){
+                  that.setData({
+                    showRule:true
+                  })
+              }else{
+                wx.navigateTo({
+                  url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
+                })
+              }
             } else {
               if (res.data.data.status == 2) {
                 wx.showModal({
@@ -864,6 +880,22 @@ Page({
           isPreview: true
         })
       }
+    })
+  },
+  goValuation: function () {
+    wx.navigateTo({
+      url: '../valuation/valuation',
+    })
+  },
+  iKnow:function(e){
+    wx.navigateTo({
+      url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
+    })
+  },
+  goRuleDetail:function(e){
+    console.log(e)
+    wx.navigateTo({
+      url: '../valuation/valuation?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
     })
   }
 })

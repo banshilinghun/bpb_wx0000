@@ -115,3 +115,14 @@
   width: 202rpx;
   height: 240rpx;
 }
+
+.fwxytext{
+  width: 100%;
+  text-align: center;
+  font-size: 24rpx;
+  color: #333;
+  margin-top: 20rpx;
+}
+.fwxytext text{
+  color: #79a5e5;
+}

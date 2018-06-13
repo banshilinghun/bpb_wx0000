@@ -18,4 +18,5 @@
       <button disabled="{{registDisabled}}" style="background-color:{{registBtnBgBgColor}}" formType="submit" loading="{{btnLoading}}"> {{registBtnTxt}} </button>
     </view>
   </form>
+  <view class='fwxytext' bindtap="goProtocol">我同意<text>《奔跑宝服务合作协议》</text></view>
 </view>

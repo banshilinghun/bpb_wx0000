@@ -1,6 +1,8 @@
 {
    "navigationBarTitleText": "身份认证",
    "enablePullDownRefresh": true,
+      "navigationBarBackgroundColor": "#FB653D",
+      "navigationBarTextStyle": "white",
    "usingComponents": {
     "dialog": "../../components/dialog/bpb-dialog",
     "bpb-follow": "../../components/follow/index"
