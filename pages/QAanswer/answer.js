@@ -20,11 +20,6 @@ Page({
       answer: options.content,
       flag: options.flag? options.flag : ''
     })
-
-    //计费逻辑判断
-    if (this.data.flag == 'valuation'){
-      
-    }
   },
 
 

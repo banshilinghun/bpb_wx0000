@@ -56,8 +56,13 @@ Page({
   navigateListener: function (e) {
     console.log(e);
     var that = this;
-    wx.navigateTo({
-      url: e.detail.cell.path + '?title=' + that.data.title + '&content=' + e.detail.cell.content + '&flag=' + e.detail.cell.flag,
-    })
+    //计费逻辑判断
+    if (e.detail.cell.flag == 'valuation'){
+      console.log('计费')
+    }else{
+      wx.navigateTo({
+        url: e.detail.cell.path + '?title=' + that.data.title + '&content=' + e.detail.cell.content + '&flag=' + e.detail.cell.flag,
+      })
+    }
   }
 })
