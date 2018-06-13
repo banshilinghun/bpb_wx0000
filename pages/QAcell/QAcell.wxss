@@ -1,0 +1,8 @@
+/* pages/QAcell/QAcell.wxss */
+
+.cell-container{
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F6F6F6;
+  padding-top: 20rpx;
+}
