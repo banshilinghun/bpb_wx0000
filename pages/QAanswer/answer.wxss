@@ -1,11 +1,13 @@
 
-.QA-container{
-  padding: 20rpx 40rpx;
+.answer-container{
+  padding: 20rpx 40rpx 20rpx 40rpx;
 }
 
-.sub-item{
-  margin-bottom: 40rpx;
+.answer-text{
+  font-size: 32rpx;
+  color: #333333;
 }
+
 
 .QA-title{
   font-size: 32rpx;

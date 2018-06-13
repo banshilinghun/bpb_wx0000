@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "客服",
+  "usingComponents": {
+    "cell": "../../components/cell/index"
+  }
+}

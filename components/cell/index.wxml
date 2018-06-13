@@ -1,0 +1,14 @@
+
+<view class='cell-container'>
+  <view class='cell-group'>
+    <view class='cell-item' wx:for='{{ cellList }}' wx:key='cell' bindtap='handleCellTap' data-cell='{{ item }}'>
+      <view class='cell-title-wrapper'>
+        <text class='cell-title'>{{ item.cellTitle }}</text>
+      </view>
+      <view class='cell-image-wrapper'>
+        <image class='cell-image' src='../../image/arrow.png'></image>
+      </view>
+      <view class='cell-line' wx:if='{{ index != cellList.length - 1 }}'></view>
+    </view>
+  </view>
+</view>
