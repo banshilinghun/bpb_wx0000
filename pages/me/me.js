@@ -187,7 +187,59 @@ Page({
                   })
                 }
               }
-            }
+            } else if (arr[i].type == 5) {//安装补贴劵
+              if (arr[i].status == 1) {
+                stepList.push({
+                  current: false,
+                  text: '安装补贴奖励',
+                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
+                  hasAward: false,
+                  tip: '检测广告后可领取',
+                  type: arr[i].type,
+                  status: arr[i].status,
+                  amount: arr[i].amount
+                })
+              } else if (arr[i].status == 2) {
+                stepList.push({
+                  current: false,
+                  text: '安装补贴奖励',
+                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
+                  hasAward: true,
+                  idList: [arr[i].coupon_id],
+                  btnType: 1,
+                  action: '领 取',
+                  type: arr[i].type,
+                  status: arr[i].status,
+                  amount: arr[i].amount
+                })
+              }
+            } else if (arr[i].type == 6) {//抢活补贴
+              if (arr[i].status == 1) {
+                stepList.push({
+                  current: false,
+                  text: '抢活补贴奖励',
+                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
+                  hasAward: false,
+                  tip: '检测广告后可领取',
+                  type: arr[i].type,
+                  status: arr[i].status,
+                  amount: arr[i].amount
+                })
+              } else if (arr[i].status == 2) {
+                stepList.push({
+                  current: false,
+                  text: '抢活补贴奖励',
+                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
+                  hasAward: true,
+                  idList: [arr[i].coupon_id],
+                  btnType: 1,
+                  action: '领 取',
+                  type: arr[i].type,
+                  status: arr[i].status,
+                  amount: arr[i].amount
+                })
+              }
+            }  
           }
           //console.log(recommendAmount)
           //console.log(stepList)
@@ -572,6 +624,8 @@ Page({
     var couponData = {};
     couponData.coupon_id_list = data.idList;
     var text = "奖励" + data.amount + "元已放入余额里";
+    console.log(data.type)
+    var couponType = data.type;
     if (loginFlag == 1) {
       wx.request({
         url: app.globalData.baseUrl + 'app/get/collect_account_coupon',
@@ -591,10 +645,13 @@ Page({
             })
             that.onShow();
             //that.showToast(text)
-            that.setData({
-              showGoodsDetail: true,
-              shareTitle: text
-            })
+           
+            if (couponType != 5 && couponType != 6){
+              that.setData({
+                showGoodsDetail: true,
+                shareTitle: text
+              })
+            }
           } else {
             wx.showModal({
               title: '提示',
