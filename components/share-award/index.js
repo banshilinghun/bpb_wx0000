@@ -99,11 +99,7 @@ Component({
       clickToMini: '(长按进入赚钱)',
       awardContent: '开车不顺手赚广告费是你的损失!'
     },
-    awardStr: [
-      '我刚领取新手奖励',
-      '我刚领取推荐奖励',
-      '我刚领取广告奖励'
-    ],
+    awardStr: '我刚领取奖励',
     targetSharePath: null,
     QRPath: null,
     avatarPath: null,
@@ -306,7 +302,7 @@ Component({
       ctx.setFillStyle(NORMAL_COLOR);
       ctx.setFontSize(14);
       ctx.setTextAlign('left');
-      ctx.fillText(that.data.awardStr[that.data.awardType - 1], adAwardWidthScale * windowWidth, adAwardHeightScale * windowHeight);
+      ctx.fillText(that.data.awardStr, adAwardWidthScale * windowWidth, adAwardHeightScale * windowHeight);
 
       //绘制金额
       ctx.setFillStyle(THEME_COLOR);
