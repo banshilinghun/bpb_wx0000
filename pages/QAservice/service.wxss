@@ -8,7 +8,7 @@
 
 .service-wrapper{
   background-color: #fff;
-  margin-bottom: 40rpx;
+  margin-bottom: 20rpx;
   display: flex;
   flex-direction: row;
   align-items: center;

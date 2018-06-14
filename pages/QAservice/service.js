@@ -25,7 +25,7 @@ Page({
     wx.getSystemInfo({
       success: function(res) {
         that.setData({
-          bannerHeight: res.windowWidth * 0.467
+          bannerHeight: res.windowWidth * 0.34667
         })
       }
     })

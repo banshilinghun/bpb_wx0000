@@ -265,4 +265,5 @@ button::after{
   margin-left: 4rpx;
   color: #4A90E2;
   text-decoration:underline;
+  vertical-align: text-bottom
 }

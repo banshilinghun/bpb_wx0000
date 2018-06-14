@@ -20,18 +20,18 @@
         </button>
       </view>
     </block>
-    <!-- <block>
+     <block>
       <view class="profile">
         <view class="profile-item">广告类型:</view>
         <view class="right-text">
-          <label class="data-text" wx:if="{{adInfo.type==0}}">车尾</label>
-          <label class="data-text" wx:if="{{adInfo.type==1}}">车内</label>
-          <label class="data-text" wx:if="{{adInfo.type==2}}">车尾+车内</label>
-          <label class="data-text" wx:if="{{adInfo.type==3}}">车内+车外</label>
-          <label class="data-text" wx:if="{{adInfo.type==4}}">车外</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==0}}">车尾</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==1}}">车内</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==2}}">车尾+车内</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==3}}">车内+车外</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==4}}">车外</label>
         </view>
       </view>
-    </block> -->
+    </block> 
     <block>
       <view class="profile">
         <view class="profile-item" wx:if='{{isDiDi!=1}}'>实际收益:</view>

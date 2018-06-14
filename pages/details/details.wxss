@@ -1218,3 +1218,6 @@ button {
   padding-left: 6rpx;
   padding-right: 6rpx;
 }
+.swtwxs{
+  color:#666;
+}
