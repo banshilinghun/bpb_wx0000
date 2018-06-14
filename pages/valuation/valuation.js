@@ -50,5 +50,12 @@ Page({
         url: '../arrangement/arrangement?arrangementData=' + that.data.arrangementData+'&backFlag=1'
       })
     }
+  },
+
+  callPhoneListener: function (e) {
+    wx.makePhoneCall({
+      phoneNumber: e.currentTarget.dataset.phonenumber,
+    })
   }
+
 })

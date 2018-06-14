@@ -11,7 +11,7 @@ Component({
     },
     imageHeight: {
       type: Number,
-      value: 316
+      value: 158
     }
   },
 
@@ -28,6 +28,7 @@ Component({
   ready: function () {
     let that = this;
     let count = 3;
+    //倒计时
     setInterval(function(){
       if(count > 0){
         count--;
@@ -42,6 +43,15 @@ Component({
         })
       }
     }, 1000);
+    //改变高度
+    wx.getSystemInfo({
+      success: function(res) {
+        that.setData({
+          imageHeight: (res.windowWidth * (1- 0.08) - 30) * 0.564
+        })
+        console.log('imageHeight----------->' + that.data.imageHeight);
+      }
+    })
   },
 
   /**
