@@ -26,7 +26,6 @@
   font-size: 32rpx;
   color: #333333;
   font-weight: 500;
-  margin-left: 40rpx;
   display: block;
   padding-top: 20rpx;
   padding-bottom: 20rpx;
@@ -38,7 +37,7 @@
   display: flex;
   align-items: center;
   height: 100%;
-  margin-right: 40rpx;
+  margin-right: 30rpx;
 }
 
 .cell-image{
@@ -53,4 +52,10 @@
   width: calc(100% - 40rpx);
   background-color: #ddd;
   height: 1rpx;
+}
+
+.cell-left-image{
+  width: 50rpx;
+  height: 50rpx;
+  margin-left: 30rpx;
 }

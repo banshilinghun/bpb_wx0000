@@ -40,7 +40,7 @@ Page({
     var loginFlag = app.globalData.login;
     if (loginFlag == 1) {//登录了
       wx.showLoading({
-        title: '奔跑中🚗。..',
+        title: '奔跑中🚗...',
       })
       wx.request({
         url: app.globalData.baseUrl + 'app/get/user_auth_status',

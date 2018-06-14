@@ -6,7 +6,7 @@
       </view>
       <view class='text-wrapper'>
         <view class='text1'>
-          <text>奔跑宝小荷(客服)</text>
+          <text>奔跑宝客服小荷</text>
         </view>
         <view class='text2'>
           <text>点我，小荷在等你喔~</text>
@@ -16,6 +16,10 @@
         <image class='service-arrow' src='../../image/arrow.png'></image>
       </view>
     </button>
+  </view>
+
+  <view>
+  <image class='care-banner' src='https://wxapi.benpaobao.com/static/app_img/care-banner.png' style='height: {{ bannerHeight }}px'></image>
   </view>
 
   <cell cellList='{{ cellList }}' bind:navigate='navigateListener'></cell>
