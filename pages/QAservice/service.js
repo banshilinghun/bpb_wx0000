@@ -7,10 +7,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cellList: [{ cellTitle: '项目介绍', path: url + '?flag=1'},
-      { cellTitle: '程序使用', path: url + '?flag=2'},
-      { cellTitle: '法律问题', path: url + '?flag=3'},
-      { cellTitle: '其他问题', path: url + '?flag=4'},]
+    cellList: [{ cellTitle: '我们是谁？', path: url + '?flag=1'},
+      { cellTitle: '如何赚钱？', path: url + '?flag=2'},
+      { cellTitle: '拒绝法盲！', path: url + '?flag=3'},
+      { cellTitle: '其它问题。', path: url + '?flag=4'},]
   },
 
   /**

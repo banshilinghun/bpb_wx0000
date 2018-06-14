@@ -25,11 +25,11 @@
 }
 
 .rule-content-wrapper {
-  margin: 40rpx 8%;
+  margin: 40rpx 4%;
   width: 84%;
   background-color: #fff;
   border-radius: 10rpx;
-  padding: 40rpx;
+  padding: 40rpx 30rpx 40rpx 30rpx;
 }
 
 .rule-content-root{

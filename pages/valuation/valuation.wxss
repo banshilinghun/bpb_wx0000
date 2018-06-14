@@ -46,3 +46,7 @@ button::after{
 .text-blod{
   font-weight: 600;
 }
+
+.blue-color{
+  color: blue;
+}
