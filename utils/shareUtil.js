@@ -15,14 +15,16 @@ function getShareNormalTitle() {
  */
 function getShareAwardTitle(award, awardType) {
   let awardTypeStr;
-  if (awardType == 2) {
+  if (awardTypeStr == 1){
+    awardTypeStr = '新手红包';
+  } else if (awardType == 2) {
     awardTypeStr = '推荐奖励';
   } else if (awardType == 3) {
-    awardTypeStr = '广告奖励';
-  } else {
-    awardTypeStr = '新手专享奖励';
+    awardTypeStr = '广告收入';
+  } else{
+    awardTypeStr = '奖励';
   }
-  return '[' + stringUtil.substringName(app.globalData.userInfo.nickName) + '@我]' + ' 我已领取' + awardTypeStr + award + '元，你还不来';
+  return '[' + stringUtil.substringName(app.globalData.userInfo.nickName) + '@我]' + ' 我刚领取' + awardTypeStr + award + '元，你还不来?';
 }
 
 /**
