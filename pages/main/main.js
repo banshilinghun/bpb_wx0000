@@ -500,6 +500,7 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
+         //res.data.data = false;
           app.globalData.shareFlag = res.data.data;
           that.setData({
             bannerFlag: that.data.bannerFlag+1,
