@@ -46,7 +46,6 @@ Page({
     positionStatus: 'absolute',
     shareTitle: '',
     showRecommend: false,
-    openType: '',
     isDiDi: 0  //是否是滴滴车主
   },
 
@@ -67,8 +66,7 @@ Page({
     })
     //是否显示推荐有奖
     this.setData({
-      showRecommend: app.globalData.shareFlag,
-      openType: app.globalData.shareFlag? '' : 'share'
+      showRecommend: app.globalData.shareFlag
     })
 
     function compare(property) {
