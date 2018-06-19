@@ -1,4 +1,6 @@
-// components/rule-dialog/index.js
+
+var timer = null;
+
 Component({
   /**
    * 组件的属性列表
@@ -27,22 +29,6 @@ Component({
 
   ready: function () {
     let that = this;
-    let count = 3;
-    //倒计时
-    setInterval(function(){
-      if(count > 0){
-        count--;
-        that.setData({
-          text: count,
-          status: false
-        })
-      }else{
-        that.setData({
-          text: '知道了',
-          status: true
-        })
-      }
-    }, 1000);
     //改变高度
     wx.getSystemInfo({
       success: function(res) {
@@ -62,14 +48,35 @@ Component({
     _propertyChange: function (newVal, oldVal) {
       var that = this;
       if (newVal) {
-        
+        //重置状态
+        that.setData({
+          text: '3',
+          status: false
+        })
+        let count = 3;
+        //倒计时
+        timer = setInterval(function () {
+          if (count > 0) {
+            count--;
+            that.setData({
+              text: count,
+              status: false
+            })
+          } else {
+            that.setData({
+              text: '知道了',
+              status: true
+            })
+          }
+        }, 1000);
+      }else{
+        clearInterval(timer);
       }
     },
 
     hideDialogListener: function () {
       var myEventDetail = {};// detail对象，提供给事件监听函数
       var myEventOption = {} // 触发事件的选项
-      //console.log('openType-------->' + this.data.openType);
         this.triggerEvent('btnclick', myEventDetail, myEventOption);
       this.setData({
         showRuleDialog: false
@@ -78,7 +85,6 @@ Component({
     goRuleDetail:function(){
       var myEventDetail = {};// detail对象，提供给事件监听函数
       var myEventOption = {} // 触发事件的选项
-      //console.log('openType-------->' + this.data.openType);
       this.triggerEvent('btnclickDetail', myEventDetail, myEventOption);
     }
   }
