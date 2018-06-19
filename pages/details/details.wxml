@@ -102,7 +102,7 @@
                   <view>
                     <text class="title">{{item.name}}</text>
                   </view>
-                  <view class="myad-li">
+                  <view class="myad-li" bindtap='showAddress' data-address='{{item.address}}'>
                     <view class="message">
                       <image src='../../image/dw.png'></image>{{item.address}}
                     </view>

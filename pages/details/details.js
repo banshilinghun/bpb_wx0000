@@ -900,5 +900,12 @@ Page({
     wx.navigateTo({
       url: '../valuation/valuation?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
     })
+  },
+  showAddress:function(e){
+    wx.showModal({
+      title: '',
+      showCancel:false,
+      content: e.currentTarget.dataset.address
+    })
   }
 })
