@@ -1,7 +1,13 @@
 //main.js
 //获取应用实例
 var util = require("../../utils/util.js");
+const Constant = require("../../utils/Constant.js");
+const shareUtil = require("../../utils/shareUtil.js");
+const Api = require("../../utils/Api.js");
+const dotHelper = require("../../pages/me/dotHelper.js");
 var app = getApp()
+const shareFlagUrl = app.globalData.baseUrl + 'app/get/share_flag';
+
 Page({
   data: {
     myAd: '',
@@ -11,26 +17,61 @@ Page({
     haveMyAd: false,
     //测试数据
     userList: [],
+    background: ['banner3','banner1','banner2'],
+    indicatorDots: true,
+    vertical: false,
+    autoplay: true,
+    interval: 3000,
+    duration: 500,
+    //是否衔接滑动
+    circular: true,
+    shareit: false,
+    reward: false,
+    showRecommend: false,
+    shareAwardText: '分享',
+    isDiDi:0, //是否是滴滴车主
+    bannerFlag:0
   },
 
-  onLoad: function () {
+  onLoad: function (options) {
+    //console.log(options);
+    var that = this;
+    that.setData({
+      userInfo: app.globalData.userInfo
+    })
+    if (that.data.background.length < 2) {
+      that.setData({
+        indicatorDots: false
+      })
+    }
     var loginFlag = app.globalData.login;
-    // if (loginFlag != 1) {
-    //   wx.showModal({
-    //     title: "提示",
-    //     content: "你还没有登录",
-    //     confirmText: "立即登录",
-    //     cancelText: "取消",
-    //     success: function (sure) {
-    //       if (sure.confirm) {
-    //         wx.navigateTo({
-    //           url: '../register/register'
-    //         })
-    //       }
-    //     }
-    //   })
-    // }
+    var recomType = app.globalData.recomType;
+    var recomAdId = app.globalData.recomAdId;
+    var recomId = app.globalData.recomId;
+    //recomType 1:拉新 2:奖励 3:广告
+    if (recomType == 3) {
+      wx.navigateTo({
+        url: '../details/details?adId=' + recomAdId
+      })
+    }
+    if (app.globalData.isFirst) {
+      that.setData({
+        reward: true
+      })
+    }
+    app.globalData.isFirst = false;
+    //请求红点状态
+    dotHelper.requestDotStatus();
     this.judgeCanIUse();
+    this.checkUpdate();
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          windowWidth: res.windowWidth,
+          bannerHeight: res.windowWidth * 0.466666
+        })
+      }
+    })
   },
 
   /**
@@ -42,11 +83,11 @@ Page({
     //微信版本过低
     wx.getSystemInfo({
       success: function (res) {
-        console.log('brand------------->' + res.brand);
-        console.log('model------------->' + res.model);
-        console.log('version------------->' + res.version);
-        console.log('system------------->' + res.system);
-        console.log('SDKVersion------------->' + res.SDKVersion);
+        // console.log('brand------------->' + res.brand);
+        // console.log('model------------->' + res.model);
+        // console.log('version------------->' + res.version);
+        // console.log('system------------->' + res.system);
+        // console.log('SDKVersion------------->' + res.SDKVersion);
       },
     })
     if (!wx.canIUse('picker.mode.selector')) {
@@ -66,20 +107,74 @@ Page({
   onShow: function () {
     var z = this;
     var loginFlag = app.globalData.login;
+    z.followFlag();
+    z.getShareFlag();
+    var reqData={};
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        //        console.log(res.longitude)
+        z.setData({
+          latitude: latitude,
+          longitude: longitude
+        })
+        reqData.lat = latitude;
+        reqData.lng = longitude;
+        if(loginFlag==1){
+          z.getMyAd(reqData)
+        }
+      }
+    })
+ 
     if (loginFlag == 1) {
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+        url: app.globalData.baseUrl + 'app/get/user_auth_status',
         data: {},
         header: app.globalData.header,
         success: res => {
           if (res.data.code == 1000) {
             //					console.log(res.data)
-            this.setData({
+            z.setData({
+              bannerFlag: z.data.bannerFlag + 1,
               status: res.data.data.status,
               name: res.data.data.real_name,
               province: res.data.data.province,
               city: res.data.data.city,
-              plate_no: res.data.data.plate_no
+              plate_no: res.data.data.plate_no,
+              isDiDi:res.data.data.user_type //是否是滴滴车主
+            })
+            //if (z.data.bannerFlag==2&&)
+            //console.log(z.data.bannerFlag);
+            if (z.data.bannerFlag == 2) {
+              if (z.data.showRecommend) {//可以显示推荐朋友圈
+                if (z.data.isDiDi==1) {//滴滴合法车主
+                  z.setData({
+                    background: ['banner3', 'banner1', 'banner2']
+                  })
+                } else {//不是滴滴合法车主
+                  z.setData({
+                    background: ['banner1', 'banner2']
+                  })
+                }
+              } else {//不显示推荐朋友圈
+                if (z.data.isDiDi==1) {//滴滴合法车主
+                  z.setData({
+                    background: ['banner3', 'banner1']
+                  })
+                } else {//不是滴滴合法车主
+                  z.setData({
+                    background: ['banner1']
+                  })
+                }
+              }
+              z.setData({
+                bannerFlag: 0
+              })
+            }
+            z.setData({
+              indicatorDots: z.data.background.length > 1
             })
           } else {
             wx.showModal({
@@ -97,121 +192,16 @@ Page({
           });
         }
       })
-
-      wx.request({
-        url: 'https://wxapi.benpaobao.com/app/get/my_ad',
-        data: {},
-        header: app.globalData.header,
-        success: res => {
-          if (res.data.code == 1000) {
-            //					console.log(res.data)
-            //console.log(res.data.data)
-            if (res.data.data != null) {
-              var nowdate = util.dateToString(new Date());
-              if (res.data.data.subscribe != null && res.data.data.check == null) {
-                res.data.data.subscribe.date = res.data.data.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-                this.setData({
-                  canCheck: 4
-                })
-              }
-              if (res.data.data.check != null) {
-                if (res.data.data.check.checkType == 'SELF_CHECK') {//期中检测
-                  if (nowdate < res.data.data.check.checkDate) { //期中检测还未到检测时间
-                    this.setData({
-                      canCheck: 0
-                    })
-                  }
-                  if (nowdate >= res.data.data.check.checkDate) { //可以期中检测了
-                    this.setData({
-                      canCheck: 1
-                    })
-                  }
-                }
-                if (res.data.data.check.checkType == 'SERVER_CHECK') {//期末检测
-                  if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
-                    this.setData({
-                      canCheck: 2
-                    })
-                  }
-                  if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期末检测了
-                    this.setData({
-                      canCheck: 3
-                    })
-                  }
-                  if (res.data.data.check.status == 1) {//期末检测审核中
-                    this.setData({
-                      canCheck: 5
-                    })
-                  }
-
-                }
-              }
-
-              // if (res.data.data.check != null) {
-
-              //   if (nowdate >= res.data.data.check.date && res.data.data.check.status == 0) { //可以检测了
-              //     this.setData({
-              //       canCheck: 1
-              //     })
-              //   }
-              //   if (res.data.data.check.status == 1) { //检测审核中
-              //     this.setData({
-              //       canCheck: 2
-              //     })
-              //   }
-              //   if (res.data.data.check.status == 2) { //检测未通过
-              //     this.setData({
-              //       canCheck: 3
-              //     })
-              //   }
-              // }
-
-              res.data.data.begin_date = res.data.data.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-              res.data.data.end_date = res.data.data.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-              if (res.data.data.check != null) {
-                res.data.data.check.checkDate = res.data.data.check.checkDate.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日");
-              }
-              var myad = res.data.data;
-
-              z.setData({
-                myAd: myad,
-                haveMyAd: true
-              })
-
-            } else {
-              //z.shippingAddress()
-              z.setData({
-                myAd: null,
-                haveMyAd: false
-              })
-            }
-
-          } else {
-            if (res.data.code == 3000) {
-              wx.redirectTo({
-                url: '../login/login'
-              })
-            } else {
-              wx.showModal({
-                title: '提示',
-                showCancel: false,
-                content: res.data.msg
-              });
-            }
-
-          }
-        },
-        fail: res => {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '网络错误'
-          });
-        }
-      })
+      if (z.data.latitude==null){
+        z.getMyAd(reqData);
+      }else{
+        reqData.lat = z.data.latitude;
+        reqData.lng = z.data.longitude;
+        z.getMyAd(reqData);
+      }
     }
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/ad_list',
+      url: app.globalData.baseUrl + 'app/get/ad_list',
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -271,11 +261,106 @@ Page({
     })
 
   },
+  getMyAd:function(reqData){
+    var z=this;
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/my_ad',
+      data: reqData,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          //					console.log(res.data)
+          //console.log(res.data.data)
+          if (res.data.data != null) {
+            var nowdate = util.dateToString(new Date());
+            if (res.data.data.subscribe != null && res.data.data.check == null) {
+              res.data.data.subscribe.date = res.data.data.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+              this.setData({
+                canCheck: 4
+              })
+            }
+            if (res.data.data.check != null) {
+              if (res.data.data.check.checkType == 'SELF_CHECK') {//期中检测
+                if (nowdate < res.data.data.check.checkDate) { //期中检测还未到检测时间
+                  this.setData({
+                    canCheck: 0
+                  })
+                }
+                if (nowdate >= res.data.data.check.checkDate) { //可以期中检测了
+                  this.setData({
+                    canCheck: 1
+                  })
+                }
+              }
+              if (res.data.data.check.checkType == 'SERVER_CHECK') {//期末检测
+                //console.log(res.data.data.check.checkType)
+                if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
+                  this.setData({
+                    canCheck: 2
+                  })
+                }
+                if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期末检测了
+                  this.setData({
+                    canCheck: 3
+                  })
+                }
+                if (res.data.data.check.status == 1) {//期末检测审核中
+                  this.setData({
+                    canCheck: 5
+                  })
+                }
+
+              }
+            }
+            res.data.data.begin_date = res.data.data.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+            res.data.data.end_date = res.data.data.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+            if (res.data.data.check != null) {
+              res.data.data.check.checkDate = res.data.data.check.checkDate.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日");
+            }
+            var myad = res.data.data;
+
+            z.setData({
+              myAd: myad,
+              haveMyAd: true
+            })
+
+          } else {
+            //z.shippingAddress()
+            z.setData({
+              myAd: null,
+              haveMyAd: false
+            })
+          }
+
+        } else {
+          if (res.data.code == 3000) {
+            wx.redirectTo({
+              url: '../register/register'
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: res.data.msg
+            });
+          }
+
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+  },
   go: function (event) {
     //		console.log(event)
     var adId = event.currentTarget.dataset.name;
     //		console.log(adId);
-    var status = this.data.status;
+    //var status = this.data.status;
     //				console.log(status);
     wx.navigateTo({
       url: '../details/details?adId=' + adId
@@ -284,7 +369,7 @@ Page({
   },
   onPullDownRefresh: function () {
     wx.showToast({
-      title: '奔跑中...',
+      title: '奔跑中🚗...',
       icon: 'loading'
     })
     this.onShow();
@@ -299,27 +384,28 @@ Page({
   //分享
   onShareAppMessage: function (res) {
     if (res.from == 'button') {
-      var shareTitle = res.target.dataset.adname;
+      console.log(res);
+      var shareTitle = shareUtil.getShareAdTitle(res.target.dataset.adname);
       var adid = res.target.dataset.adid;
       var adimg = res.target.dataset.adimg;
       var desc = '全新广告，躺着赚钱，速速来抢～';
+      var shareType = Constant.shareAd;
     }
     if (res.from == 'menu') {
-      var shareTitle = '奔跑宝，私家车广告平台';
+      var shareTitle = shareUtil.getShareNormalTitle();
       var adid = -1;
-      var adimg = '../../image/bpbimg.jpg';
+      var adimg = '../../image/share-normal.png';
       var desc = '拉上好友一起赚钱～';
+      var shareType = Constant.shareNormal;
     }
     console.log(res);
-    //console.log(this)
     var that = this
     return {
       title: shareTitle,
       desc: desc,
-      path: 'pages/index/index?adId=' + adid,
+      path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
       success: function (res) {
-        console.log('share------success')
         wx.showToast({
           title: '分享成功',
           icon: '',
@@ -348,13 +434,166 @@ Page({
       name: e.currentTarget.dataset.name,
       address: e.currentTarget.dataset.address
     })
+  },
+  tapName: function (event) {
+    var that = this;
+    console.log(event.currentTarget.dataset.hi)
+    if (event.currentTarget.dataset.hi == 'banner1') {
+      // that.setData({
+      //   shareit: true
+      // })
+      wx.navigateTo({
+        url: '../teaching/teaching',
+      })
+    } else if (event.currentTarget.dataset.hi == 'banner2') {
+      //活动详情页
+      that.skipRecommend();
+    } else if (event.currentTarget.dataset.hi == 'banner3'){
+      wx.navigateTo({
+        url: '../valuation/valuation',
+      })
+    }
+  },
+  hideShare: function () {
+    var that = this;
+    that.setData({
+      shareit: false
+    })
+  },
+  followFlag: function () {//查询是否关注公众号
+    var that = this
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/user_has_subscribe',
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          //console.log(res.data)
+          that.setData({
+            isFollow: res.data.data
+          })
+        } else {
+          //					console.log(res.data)
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+  },
+
+  /**
+   * 查询是否显示朋友圈
+   */
+  getShareFlag: function(){
+    var that = this;
+    wx.request({
+      url: shareFlagUrl,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+         //res.data.data = false;
+          app.globalData.shareFlag = res.data.data;
+          that.setData({
+            bannerFlag: that.data.bannerFlag+1,
+            showRecommend: res.data.data,
+            background: res.data.data ? ['banner1', 'banner2'] : ['banner1'],
+            shareAwardText: res.data.data ? '分享有奖' : '分享',
+          })
+          //console.log(that.data.bannerFlag);
+          if (that.data.bannerFlag==2){
+            if (that.data.showRecommend){//可以显示推荐朋友圈
+              if(that.data.isDiDi==1){//滴滴合法车主
+                that.setData({
+                  background: ['banner3','banner1', 'banner2']
+                })
+              }else{//不是滴滴合法车主
+                that.setData({
+                  background: ['banner1', 'banner2']
+                })
+              }
+            }else{//不显示推荐朋友圈
+              if (that.data.isDiDi==1) {//滴滴合法车主
+                that.setData({
+                  background: ['banner3', 'banner1']
+                })
+              } else {//不是滴滴合法车主
+                that.setData({
+                  background: ['banner1']
+                })
+              }
+            }
+            that.setData({
+              bannerFlag:0
+            })
+          }
+          that.setData({
+            indicatorDots: that.data.background.length > 1
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+  },
+
+  /**
+   * 版本更新
+   */
+  checkUpdate: function () {
+    if (wx.canIUse('getUpdateManager')) {
+      const updateManager = wx.getUpdateManager();
+      updateManager.onCheckForUpdate(function (res) {
+        // 请求完新版本信息的回调
+        console.log('onCheckForUpdate----------------->');
+      })
+
+      updateManager.onUpdateReady(function () {
+        wx.showModal({
+          title: '更新提示',
+          content: '新版本已经准备好，即刻体验？',
+          success: function (res) {
+            if (res.confirm) {
+              // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+              updateManager.applyUpdate();
+            }
+          }
+        })
+      })
+
+      updateManager.onUpdateFailed(function () {
+        // 新的版本下载失败
+      })
+    }
+  },
+
+  recommendClick: function(){
+    this.skipRecommend();
+  },
+
+  skipRecommend: function(){
+    wx.navigateTo({
+      url: '../recommend/recommend?flag=active',
+    })
   }
-  // compare: function (property){
-  //   return function (a, b) {
-  //     var value1 = a[property];
-  //     var value2 = b[property];
-  //     return value1 - value2;
-  //   }
-  // }
 
 })

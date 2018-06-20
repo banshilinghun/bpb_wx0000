@@ -21,7 +21,7 @@ Page({
 	},
 	onShow: function() {
 		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_deposit_ispaid',
+			url: app.globalData.baseUrl + 'app/get/user_deposit_ispaid',
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -60,7 +60,7 @@ Page({
 					//console.log(res.code)
 					//发起网络请求
 					wx.request({
-						url: 'https://wxapi.benpaobao.com/app/commit/pay_user_deposit',
+						url: app.globalData.baseUrl + 'app/commit/pay_user_deposit',
 						data: {
 							wx_code: res.code
 						},
@@ -121,7 +121,7 @@ Page({
 	},
 	returnDeposit: function() {
 		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_not_finish_ad',
+			url: app.globalData.baseUrl + 'app/get/user_not_finish_ad',
 			data: {},
 			header: app.globalData.header,
 			success: obj => {
@@ -143,7 +143,7 @@ Page({
 							success: function(res) {
 								if(res.cancel) {
 									wx.request({
-										url: 'https://wxapi.benpaobao.com/app/commit/deposit_sendback',
+										url: app.globalData.baseUrl + 'app/commit/deposit_sendback',
 										data: {},
 										header: app.globalData.header,
 										success: res2 => {

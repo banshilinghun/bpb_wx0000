@@ -1,0 +1,61 @@
+
+.cell-container{
+  width: 100%;
+  background-color: #fff;
+}
+
+.cell-group{
+  width: 100%;
+  /* border-top: 1rpx solid #ddd;
+  border-bottom: 1rpx solid #ddd; */
+}
+
+.cell-item{
+  width: 100%;
+  position: relative;
+  display: flex;
+  min-height: 100rpx;
+  align-items: center;
+}
+
+.cell-title-wrapper{
+  margin-right: 100rpx;
+}
+
+.cell-title{
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: 500;
+  display: block;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.cell-image-wrapper{
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 30rpx;
+}
+
+.cell-image{
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.cell-line{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: calc(100% - 40rpx);
+  background-color: #ddd;
+  height: 1rpx;
+}
+
+.cell-left-image{
+  width: 50rpx;
+  height: 50rpx;
+  margin-left: 30rpx;
+}

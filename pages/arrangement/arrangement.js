@@ -11,11 +11,22 @@ Page({
   onLoad: function (options) {
     var adData = JSON.parse(options.arrangementData);
     // console.log(adData)
+    console.log(options.backFlag)
     var ad_id = adData.adid;
     var server_id = adData.serverid;
     this.getSubscribeDates(ad_id, server_id);
+    this.setData({
+      backFlag: options.backFlag ? options.backFlag:0
+    })
   },
-
+  onUnload:function(){
+    if (this.data.backFlag==1){
+      wx.navigateBack({
+        delta: 1
+      })
+    }
+   
+  },
   getSubscribeDates: function (ad_id, server_id) {
     var that = this;
     var reqData = {
@@ -23,7 +34,7 @@ Page({
       server_id: server_id
     }
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/subscribe_dates',
+      url: app.globalData.baseUrl + 'app/get/subscribe_dates',
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -102,7 +113,7 @@ Page({
       success: function (sure) {
         if (sure.confirm) {
           wx.request({
-            url: 'https://wxapi.benpaobao.com/app/save/ad_subscribe',
+            url: app.globalData.baseUrl + 'app/save/ad_subscribe',
             data: reqData,
             header: app.globalData.header,
             success: res => {

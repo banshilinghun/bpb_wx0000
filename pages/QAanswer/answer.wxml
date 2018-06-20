@@ -1,0 +1,19 @@
+<view class='answer-container'>
+  <text class='answer-text'>{{ answer }}</text>
+
+  <view wx:if='{{ flag == "contact" }}'>
+      <view bindtap='callPhoneListener' data-phoneNumber='400-888-3390'>
+        <text class='QA-text-inline bold'>奔跑宝全国客服热线：</text>
+        <text class='QA-text-inline bold blue-color'>400-888-3390</text>
+      </view>
+      <view class='QA-official'>
+        <text class='QA-text bold'>微信公众号：奔跑宝</text>
+      </view>
+      <view>
+        <text class='QA-text bold'>微信客服号(小荷)：benpaobao888</text>
+      </view>
+      <view>
+        <text class='QA-text bold sub-item'>微信客服号(小婷)：taoxiaoxiao1011</text>
+      </view>
+    </view>
+</view>

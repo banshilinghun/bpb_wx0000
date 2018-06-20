@@ -47,37 +47,40 @@ Page({
     var that = this;
     //console.log(param)
     var registData = {};
+    if (app.globalData.recomId) {
+      registData.recommender_userid = app.globalData.recomId;
+    }
     registData.phone_no = param.username.trim();
     registData.verify_code = param.smsCode.trim();
     //registData.password = param.password.trim();
     registData.wx_code = that.data.wx_code.trim();
     if (app.globalData.userInfo) {
-      registData.avata = app.globalData.userInfo.avatarUrl;
+      registData.avatar = app.globalData.userInfo.avatarUrl;
       registData.nickname = app.globalData.userInfo.nickName;
       registData.gender = app.globalData.userInfo.gender
     } else {
-      registData.avata = '';
+      registData.avatar = '';
       registData.nickname = '';
-      registData.gender = '';
+      registData.gender = 0;
     }
     var flag = this.checkUserName(param)
 
     if (flag) {
       this.setregistData1();
       wx.request({
-        url: 'https://wxapi.benpaobao.com/app/user/regist',
+        url: app.globalData.baseUrl + 'app/user/regist',
         data: registData,
-        header: {
-          'content-type': 'application/json'
-        },
+        header: app.globalData.header,
         success: res => {
           that.setregistData2();
           if (res.data.code == 1000) {
             app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
             app.globalData.session_id = res.data.data.session_id;
+            app.globalData.uid = res.data.data.uid;
             wx.showToast({
-              title: "手机号验证成功"
+              title: "注册成功"
             })
+            app.globalData.login = 1;
             if (res.data.data.status == 0) {
               that.redirectTo(res.data.data);
             } else {
@@ -85,8 +88,9 @@ Page({
                 url: '../main/main'
               })
             }
-
-            app.globalData.login = 1;
+            // wx.redirectTo({
+            //   url: '../teaching/teaching'
+            // }) 
           } else {
             //console.log(res.data)
             wx.showModal({
@@ -203,11 +207,9 @@ Page({
     }, 1000);
 
     wx.request({
-      url: 'https://wxapi.benpaobao.com/app/get/regist_verify_wx',
+      url: app.globalData.baseUrl + 'app/get/regist_verify_wx',
       data: rqData,
-      header: {
-        'content-type': 'application/json'
-      },
+      header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
 
@@ -240,6 +242,11 @@ Page({
     //		param = JSON.stringify(param);
     wx.redirectTo({
       url: '../auth/auth' //参数只能是字符串形式，不能为json对象
+    })
+  },
+  goProtocol: function () {
+    wx.navigateTo({
+      url: '../protocol/index',
     })
   }
 

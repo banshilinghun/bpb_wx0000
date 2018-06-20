@@ -1,4 +1,13 @@
 {
-   "navigationBarTitleText": "我的",
-    "enablePullDownRefresh": true
+  "navigationBarTitleText": "我的",
+  "enablePullDownRefresh": true,
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#333",
+  "usingComponents": {
+    "amount-steps": "../../components/amount-steps/index",
+    "share-popup": "../../components/share-popup/index",
+    "dialog": "../../components/dialog/bpb-dialog",
+    "zan-toast": "../../components/toast/index",
+    "share-award": "../../components/share-award/index"
+  }
 }

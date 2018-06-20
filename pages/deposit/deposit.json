@@ -1,3 +1,5 @@
 {
-    "navigationBarTitleText": "押金"
+    "navigationBarTitleText": "押金",
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#333"
 }

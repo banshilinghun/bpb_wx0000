@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "rule-table": "../../components/rule-table/index"
+  }
+}

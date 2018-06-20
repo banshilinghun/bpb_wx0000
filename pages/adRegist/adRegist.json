@@ -1,3 +1,5 @@
 {
-   "navigationBarTitleText": "登记"
+   "navigationBarTitleText": "登记",
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#333"
 }

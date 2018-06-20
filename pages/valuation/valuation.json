@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "计价规则",
+  "usingComponents": {
+    "rule-table": "../../components/rule-table/index"
+  }
+}

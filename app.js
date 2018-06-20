@@ -1,40 +1,51 @@
 //app.js
-const app = getApp()
-//app.userInfo={};
+const app = getApp();
+
+//正式域名
+const releaseDomain = 'https://wxapi.benpaobao.com/';
+const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
+//是否是发布状态，上线时改为true
+const release = false;
+const release2 = true;
+//true-ken测试地址，false-小彭测试地址
+const domainStatus = false;
+
 App({
   onLaunch: function () {
     // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              //console.log(res.userInfo)
-              this.globalData.userInfo = res.userInfo
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      }
-    })
-
+    this.globalData.baseUrl = this.getApiUrl();
   },
 
   globalData: {
     userInfo: null,
     login: 0,
+    uid:'',
+    recomId:null,
+    recomType:null,
+    recomAdId:null,
     header: {
       'Cookie': '',
       'content-type': 'application/json'
     },
     //分享传入的邀请人的id
     shareInviteId: '',
-    checkStaus: ''
+    checkStaus: '',
+    baseUrl: releaseDomain,
+    isFirst:false,
+    //分享开关
+    shareFlag: false
+  },
+
+  /**
+   * 加载域名
+   */
+  getApiUrl: function(){
+    if(release){
+      return releaseDomain;
+    }else if(release2){
+      return releaseDomain2;
+    }else {
+      return domainStatus ? 'http://192.168.1.114:8000/' : 'http://192.168.1.142:8001/';
+    }
   }
 })

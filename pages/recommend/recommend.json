@@ -1,0 +1,14 @@
+{
+  "navigationBarTitleText": "活动详情",
+  "enablePullDownRefresh": true,
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#333",
+  "usingComponents": {
+    "banner": "../../components/banner/banner",
+    "dialog": "../../components/dialog/bpb-dialog",
+    "share-popup": "../../components/share-popup/index",
+    "bpb-steps": "../../components/steps/index",
+    "share-moment": "../../components/share-moment/index",
+    "share-award": "../../components/share-award/index"
+  }
+}

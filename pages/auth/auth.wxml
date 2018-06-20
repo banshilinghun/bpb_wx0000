@@ -11,7 +11,7 @@
                 <view class="weui-label">车主姓名</view>
               </view>
               <view class="weui-cell__bd">
-                <input id="name" class="weui-input" name="name" maxlength='11' type="text" placeholder="请填写车主姓名" />
+                <input id="name" class="weui-input" name="name" maxlength='11' type="text" placeholder="填本人姓名（非公司名称）" />
               </view>
             </view>
             <!-- <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
@@ -47,13 +47,13 @@
                   <label class="radio">
                     <radio value="2" />私家车
                   </label>
-                  <label class="radio">
+                  <!-- <label class="radio">
                     <radio value="0" />其他
-                  </label>
+                  </label> -->
                 </radio-group>
               </view>
             </view>
-            <view class="weui-cell weui-cell_input">
+            <!-- <view class="weui-cell weui-cell_input">
               <view class="weui-cell__hd">
                 <view class="weui-label">租赁公司</view>
               </view>
@@ -63,7 +63,7 @@
                   <view class="weui-input" wx:if='{{sourceTypeIndex!=""}}'>{{nameList[sourceTypeIndex]}}</view>
                 </picker>
               </view>
-            </view>
+            </view> -->
             <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
               <view class="weui-cell__hd">
                 <view class="weui-label">选择车型</view>

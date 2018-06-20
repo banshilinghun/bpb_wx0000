@@ -9,7 +9,7 @@ Page({
 	},
 	onShow: function() {
 		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_bancard',
+			url: app.globalData.baseUrl + 'app/get/user_bancard',
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -47,7 +47,7 @@ Page({
 		})
 
 		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_account',
+			url: app.globalData.baseUrl + 'app/get/user_account',
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -154,7 +154,7 @@ Page({
 						success: function(res) {
 							if(res.confirm) {
 								wx.request({
-									url: 'https://wxapi.benpaobao.com/app/commit/user_withdraw',
+									url: app.globalData.baseUrl + 'app/commit/user_withdraw',
 									data: reqdata,
 									header: app.globalData.header,
 									success: res => {

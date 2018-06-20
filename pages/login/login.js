@@ -65,7 +65,7 @@ Page({
 		if(flag) {
 			this.setLoginData1();
 				wx.request({
-				url: 'https://wxapi.benpaobao.com/app/user/login',
+				url: app.globalData.baseUrl + 'app/user/login',
 				data: loginData,
 				header: {
 					'content-type': 'application/json'

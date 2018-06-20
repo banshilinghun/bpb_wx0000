@@ -22,7 +22,7 @@ Page({
 	},
 	onLoad: function(options) {
 		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/citys',
+			url: app.globalData.baseUrl + 'app/get/citys',
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -53,7 +53,7 @@ Page({
 		})
 
 		wx.request({
-			url: 'https://wxapi.benpaobao.com/app/get/user_auth_status',
+			url: app.globalData.baseUrl + 'app/get/user_auth_status',
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -103,7 +103,7 @@ Page({
 							bank_abb: res.data.bank
 						})
 						wx.request({
-							url: 'https://wxapi.benpaobao.com/app/get/bank_info?bank_abb=' + res.data.bank,
+							url: app.globalData.baseUrl + 'app/get/bank_info?bank_abb=' + res.data.bank,
 							data: {},
 							header: app.globalData.header,
 							success: res2 => {
@@ -300,7 +300,7 @@ Page({
 				});
 			} else {
 				wx.request({
-					url: 'https://wxapi.benpaobao.com/app/add/user_bankcard',
+					url: app.globalData.baseUrl + 'app/add/user_bankcard',
 					data: formData,
 					header: app.globalData.header,
 					success: res => {

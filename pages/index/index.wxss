@@ -4,3 +4,74 @@
   display: block;
   margin-top: 120rpx
 }
+
+.goods-detail .mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+}
+
+.goods-detail .mask {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.goodsdetail {
+  position: fixed;
+  top: 50%;
+  width: 80%;
+  min-height: 340rpx;
+  left: 10%;
+  margin-top: -160rpx;
+  background: #fff;
+  z-index: 9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.title0{
+  text-align: center;
+  font-size:40rpx;
+  color: #FF555C;
+  padding-top:20rpx;
+
+}
+.title1{
+  text-align: right;
+}
+.title1 image{
+  width: 48rpx;
+  height: 48rpx;
+}
+.title2 {
+  font-size: 32rpx;
+  color: #333;
+  margin-top: 20rpx;
+  text-align: center;
+}
+.goodsdetail .title2 {
+padding:5rpx 60rpx;
+color:#333;
+font-size:32rpx;
+
+}
+
+.goodsdetail .title4 {
+  width: 100%;
+  position: absolute;
+  bottom: 30rpx;
+  color: #3c3c3c;
+}
+
+.wtwabt2{
+  background: #ff555c;
+  color: #fff;
+  width: 85%;
+  margin: 0 auto;
+}
+ .welcomeImg{
+    width: 100vw;
+    height: 100vh;
+} 

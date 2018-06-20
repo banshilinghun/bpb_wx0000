@@ -75,7 +75,7 @@ Page({
         });
       } else {
         wx.request({
-          url: 'https://wxapi.benpaobao.com/app/regist/user_ad',
+          url: app.globalData.baseUrl + 'app/regist/user_ad',
           data: formData,
           header: app.globalData.header,
           success: res => {
@@ -125,7 +125,7 @@ Page({
       }
       if (cartPhoto != undefined && carnPhoto != undefined) {
         wx.request({
-          url: 'https://wxapi.benpaobao.com/app/regist/user_ad',
+          url: app.globalData.baseUrl + 'app/regist/user_ad',
           header: app.globalData.header,
           data: formData,
           success: res => {
@@ -174,7 +174,7 @@ Page({
       }
       if (carnPhoto != undefined && carwPhoto != undefined) {
         wx.request({
-          url: 'https://wxapi.benpaobao.com/app/regist/user_ad',
+          url: app.globalData.baseUrl + 'app/regist/user_ad',
           data: formData,
           header: app.globalData.header,
           success: res => {
@@ -219,7 +219,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: 'https://wxapi.benpaobao.com/app/regist/upload_img',
+          url: app.globalData.baseUrl + 'app/regist/upload_img',
           filePath: res.tempFilePaths[0],
           name: 'behind_car',
           header: {
@@ -276,7 +276,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: 'https://wxapi.benpaobao.com/app/regist/upload_img',
+          url: app.globalData.baseUrl + 'app/regist/upload_img',
           filePath: res.tempFilePaths[0],
           name: 'inside_car',
           header: {
@@ -332,7 +332,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: 'https://wxapi.benpaobao.com/app/regist/upload_img',
+          url: app.globalData.baseUrl + 'app/regist/upload_img',
           filePath: res.tempFilePaths[0],
           name: 'front_car',
           header: {

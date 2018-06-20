@@ -1,0 +1,66 @@
+
+.answer-container{
+  padding: 20rpx 40rpx 20rpx 40rpx;
+}
+
+.answer-text{
+  font-size: 32rpx;
+  color: #333333;
+}
+
+
+.QA-title{
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.QA-text{
+  font-size: 28rpx;
+  color: #333333;
+  display: block;
+}
+
+.QA-text-inline{
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.bold{
+  font-weight: 500;
+}
+
+.blue-color{
+  color: blue;
+}
+
+.QA-official{
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.QA-parse-wrapper{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+}
+
+.QA-parse{
+  width: 80rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  padding: 0;
+  border-radius: 10rpx;
+  background-color: #fff;
+  color: #333;
+  font-size: 24rpx;
+  border: 2rpx solid #333;
+}
+
+button::after{
+  border: none;
+}

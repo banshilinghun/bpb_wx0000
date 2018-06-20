@@ -1,0 +1,325 @@
+/* pages/recommend/recommend.wxss */
+
+.recommend-container {
+  width: 100%;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.bottom-margin {
+  height: 194rpx;
+  width: 100%;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.image-wrapper {
+  margin: 20rpx;
+  border-radius: 10rpx;
+  -moz-box-shadow: 0px 0px 6px #999;
+  -webkit-box-shadow: 0px 0px 6px #999;
+  box-shadow: 0px 0px 6px #999;
+}
+
+.topImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 10rpx;
+}
+
+.recommend-rule {
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  padding-bottom: 20rpx;
+  margin-top: 20rpx;
+}
+
+.rule-title {
+  font-size: 38rpx;
+}
+
+.margin-top-step {
+  margin-top: 15rpx;
+}
+
+.rule-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.rule-one-text {
+  font-size: 34rpx;
+  color: #666;
+}
+
+.text-block {
+  margin-top: 25rpx;
+}
+
+.high-light-text {
+  font-size: 34rpx;
+}
+
+.share-container {
+  width: 100%;
+  background-color: #fff;
+  height: 194rpx;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  flex-direction: row;
+  -moz-box-shadow: 0px 0px 6px #999;
+  -webkit-box-shadow: 0px 0px 6px #999;
+  box-shadow: 0px 0px 6px #999;
+}
+
+.share-wrapper {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.share-layout {
+  height: 100%;
+  line-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.share-text {
+  font-size: 32rpx;
+  margin-top: 15rpx;
+}
+
+.recommend-split-line {
+  width: 95%;
+  height: 4rpx;
+  margin-left: 5%;
+}
+
+.recommend-result {
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+}
+
+.recommend-success {
+  min-height: 70rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.get-award-wrapper {
+  min-height: 110rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.adapter {
+  height: 100%;
+  position: absolute;
+  right: 0rpx;
+  display: flex;
+  align-items: center;
+}
+
+.btn-common {
+  background: none;
+  line-height: 60rpx;
+  min-width: 260rpx;
+  height: 60rpx;
+  font-size: 36rpx;
+  padding: 0;
+  background-color: #fff;
+  border-radius: 6rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
+
+.btn-enable {
+  color: #ff555c;
+  border: 2rpx solid #ff555c;
+}
+
+.btn-disable {
+  border: 2rpx solid #999;
+  color: #999;
+}
+
+.btn-recommend {
+  display: inline-block;
+  margin-left: 40rpx;
+}
+
+.remind-friend {
+  width: 100%;
+  min-height: 120rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.list-wrapper {
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.recommend-friend-list {
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+}
+
+.recommend-friend-list-margin {
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.recommend-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 75rpx;
+  position: relative;
+}
+
+.recommend-friend-title {
+  color: black;
+}
+
+.avatar {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+}
+
+.nickname {
+  font-size: 32rpx;
+  color: #333;
+  margin-left: 20rpx;
+  width: 180rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.install-ad {
+  font-size: 30rpx;
+  color: #333;
+  margin-left: 30rpx;
+}
+
+.time {
+  font-size: 28rpx;
+  right: 0;
+  color: #666;
+  text-align: center;
+  min-width: 80rpx;
+}
+
+.divider {
+  width: 100%;
+  height: 20rpx;
+  background-color: #f7f7f7;
+}
+
+.recommendList-line {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 89%;
+  height: 1rpx;
+  background-color: #ddd;
+}
+
+.split-line {
+  width: 100%;
+  height: 1rpx;
+  background-color: #ddd;
+}
+
+.recommend-people {
+  min-height: 70rpx;
+  display: flex;
+  align-items: center;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.dark-color {
+  color: #333;
+}
+
+.black-color {
+  color: black;
+}
+
+.gray-color {
+  color: #666;
+}
+
+.theme-color {
+  color: #ff555c;
+}
+
+.share-color {
+  color: #666;
+}
+
+.bold-font {
+  font-weight: 500;
+}
+
+.go-home {
+  width: 80rpx;
+  height: 80rpx;
+  position: fixed;
+  left: 30rpx;
+  bottom: 100rpx;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.7;
+  -moz-box-shadow: 0px 0px 8px #333;
+  -webkit-box-shadow: 0px 0px 8px #333;
+  box-shadow: 0px 0px 8px #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.go-home-icon {
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.go-home-text {
+  font-size: 18rpx;
+  color: #fff;
+}

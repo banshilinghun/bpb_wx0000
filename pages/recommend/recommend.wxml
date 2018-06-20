@@ -1,0 +1,119 @@
+<!--pages/recommend/recommend.wxml-->
+<view class='recommend-container'>
+  <view class='image-wrapper' style='height:{{ topImage.imageHeight }}px'>
+    <image id='top-image' class='topImage' src='{{ topImage.imageSrc }}' bindtap='previewImage' mode='scaleToFill'></image>
+  </view>
+
+  <view class="flex-container {{ isActive || isRule  ? 'flex-column' : 'flex-column-reverse' }}">
+    <!-- 活动规则 -->
+    <view class='recommend-rule-wrapper'>
+      <view class='recommend-rule'>
+        <view class='rule-title dark-color bold-font'>活动规则：</view>
+        <view class='rule-detail'>
+          <view class='rule-item'>
+            <text class='rule-one-text dark-color margin-top-step' decode='{{true}}'>1.&ensp;&ensp;</text>
+            <bpb-steps type="vertical" steps="{{stepsList}}"></bpb-steps>
+          </view>
+          <view class='text-block rule-item'>
+            <text class='rule-one-text dark-color' decode='{{true}}'>2.&ensp;&ensp;</text>
+            <text class='rule-one-text dark-color'>推荐奖励发放后，请到【我的】-【待收收益】里领取。</text>
+          </view>
+          <view class='text-block rule-item'>
+            <text class='rule-one-text dark-color' decode='{{true}}'>3.&ensp;&ensp;</text>
+            <text class='rule-one-text dark-color'>关注【奔跑宝】微信公众号，即时查看奖励信息。</text>
+          </view>
+          <view class='text-block rule-item'>
+            <text class='rule-one-text dark-color' decode='{{true}}'>4.&ensp;&ensp;</text>
+            <text class='rule-one-text dark-color'>本次活动最终解释权归【奔跑宝】所有。</text>
+          </view>
+        </view>
+      </view>
+      <view class='divider'></view>
+    </view>
+    <!-- 推荐结果 -->
+    <view wx:if='{{ !isRule }}'>
+      <view class='recommend-result'>
+        <view class='recommend-success rule-one-text dark-color'>
+          <text>我成功推荐了</text>
+          <text>{{ successRecommendCount }}个</text>
+          <text>好友，累计领取奖励</text>
+          <text>{{ totalAword }}元</text>
+        </view>
+        <view class='split-line'></view>
+        <view class='get-award-wrapper'>
+          <text class='rule-one-text dark-color'>未领取奖励</text>
+          <text class='high-light-text {{ GoatAward != 0? "bold-font" : "" }} {{ GoatAward != 0? "theme-color" : "dark-color" }}' decode='{{true}}'>&ensp;{{ GoatAward }}元</text>
+          <view class='adapter'>
+            <button class='btn-recommend btn-common {{ awardBtnAbled ? "btn-enable" : "btn-disable" }}' bindtap='receiveAwardClick'>领取</button>
+          </view>
+        </view>
+        <view>
+          <view class='split-line'></view>
+          <view class='remind-friend'>
+            <view style='width:{{ remindWidth }}px'>
+              <text class='rule-one-text {{ unfinishedNumber==0? "dark-color" : "theme-color" }} {{ unfinishedNumber==0? "" : "bold-font" }}'>{{ unfinishedNumber }}个</text>
+              <text class='rule-one-text dark-color'>好友未完成，完成后奖励可达到</text>
+              <text class='rule-one-text {{ unfinishedNumber==0? "dark-color" : "theme-color" }} {{ unfinishedNumber==0? "" : "bold-font" }}' decode='{{true}}'>&ensp;{{ remainAward }}元</text>
+            </view>
+            <view class='adapter'>
+              <button class='btn-recommend btn-common {{ unfinishedNumber != 0 ? "btn-enable" : "btn-disable" }}' bindtap='remindFriendClick' >一键提醒好友</button>
+          
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class='divider'></view>
+
+      <!-- 已推荐好友 -->
+      <view class=' {{ (recommendList.length == 0 || !recommendList)? "recommend-friend-list" : "recommend-friend-list-margin" }}'>
+        <view class='rule-one-text dark-color recommend-people' wx:if='{{ recommendList.length == 0 || !recommendList }}'>已接受邀请的好友：暂无</view>
+        <view class='rule-one-text dark-color recommend-people' wx:if='{{ recommendList.length != 0 && recommendList }}'>已接受邀请的好友({{ recommendList ? recommendList.length : 0 }})：</view>
+        <view wx:for='{{ recommendList }}' wx:key='item.id' wx:if='{{ recommendList.length != 0 && recommendList }}'>
+          <view class='recommend-list-item'>
+            <!-- {{item.wx_avatar}} -->
+            <image class='avatar' src='{{ item.wx_avatar }}'></image>
+            <text class='nickname'>{{ item.nickname }}</text>
+            <text class='install-ad'>{{ item.adStatus}}</text>
+            <view class='adapter'>
+              <text class='time'>{{ item.date }}</text>
+            </view>
+            <view class='recommendList-line' wx:if='{{index != (recommendList.length - 1)}}'></view>
+          </view>
+        </view>
+      </view>
+      <view class='divider'></view>
+    </view>
+  </view>
+  <view class='bottom-margin'></view>
+</view>
+
+<!-- 回到首页 -->
+<view class='go-home' bindtap='goHomeListener' wx:if='{{ showGoHomeBtn }}'>
+  <image class='go-home-icon' src='../../image/go-home.png'></image>
+  <text class='go-home-text'>首页</text>
+</view>
+<!-- 分享布局 -->
+<view class='share-container'>
+  <view class='share-wrapper'>
+    <button class='share-layout' open-type='share' style='background-color: #fff' data-type='normal'>
+      <image class='share-icon' src='../../image/share-friend.png'></image>
+      <text class='share-text share-color'>分享给好友</text>
+    </button>
+  </view>
+  <view class='share-wrapper' bindtap='shareMomentNormalClick'>
+    <view class='share-layout'>
+      <image class='share-icon' src='../../image/moment.png'></image>
+      <text class='share-text share-color'>分享到朋友圈</text>
+    </view>
+  </view>
+</view>
+
+<dialog showDialog='{{ showDialog }}' bind:btnclick='dialogClickListener' title='{{ shareTitle }}' description='邀请新用户安装广告，双方还能各拿奖励30元哦!' btnText='邀请好友' />
+
+<!-- 拉新分享 -->
+<share-moment avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' showShareModel='{{ showNewShare }}'></share-moment>
+
+<!-- 奖励分享 -->
+<share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showAwardModel }}' bind:hideDialog='hideDialogListener'></share-award>
+
+<share-popup showPop='{{ showSharePop }}' shareFriendType='{{ shareFriendType }}' bind:shareMoment='shareMomentListener'></share-popup>

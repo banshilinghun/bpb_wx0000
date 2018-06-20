@@ -1,0 +1,11 @@
+{
+   "navigationBarTitleText": "奔跑宝",
+   "enablePullDownRefresh": false,
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#333",
+   "usingComponents": {
+    "dialog": "../../components/dialog/bpb-dialog",
+    "bpb-follow": "../../components/follow/index",
+    "bpb-reward": "../../components/reward/index"
+  }
+}

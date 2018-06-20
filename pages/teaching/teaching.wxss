@@ -1,0 +1,11 @@
+.goMain{
+  background: #FF555C;
+  border: none;
+  width: 100%;
+  color: #fff;
+  border-radius: 0;
+  font-size: 36rpx;
+  position: fixed;
+  bottom: 0;
+   box-shadow: inset 0 -8rpx 0 #FF555C; 
+}

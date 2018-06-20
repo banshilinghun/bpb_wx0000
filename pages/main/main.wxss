@@ -1,5 +1,6 @@
+
 page {
-  background-color: #eee;
+  background-color: #F6F6F6;
 }
 
 .message_list {
@@ -67,7 +68,7 @@ page {
   padding-top: 10rpx;
   overflow: hidden;
   padding-right: 10px;
-  text-align: right;
+  text-align: center;
 }
 
 .time {
@@ -116,7 +117,12 @@ page {
   border-radius: 0 !important;
   background: #fb523e;
   color: #fff;
-  font-size: 26rpx;
+  font-size: 28rpx;
+  height: 90rpx;
+  line-height:90rpx;
+  padding-left:30rpx;
+padding-right:30rpx;
+
 }
 
 .btn-gray {
@@ -124,11 +130,32 @@ page {
   border-radius: 0 !important;
   background: #ccc;
   color: #fff;
-  font-size: 26rpx;
+  font-size: 28rpx;
+  height: 90rpx;
+  line-height:90rpx;
+   padding-left:30rpx;
+padding-right:30rpx;
 }
 
 button::after {
   content: none;
+}
+.dh-btn{
+  text-align: left;
+  position: relative;
+}
+.yjdh-btn{
+  position: absolute;
+  top: 17rpx;
+  right: 30rpx;
+  width:148rpx;
+height:56rpx;
+box-shadow:0rpx 0rpx 4rpx 0rpx rgba(161,17,0,1);
+border-radius:8rpx;
+background: #fff;
+color: #FB523E;
+line-height: 56rpx;
+text-align: center;
 }
 
 .watwx {
@@ -152,45 +179,166 @@ button::after {
   font-size: 24rpx;
   color: #ff5a39;
 }
-.timetxt{
-color:#999;
-}
-.timetxt2{
-color:#ff555c;
+
+.timetxt {
+  color: #999;
 }
 
-.notify_swiper{
+.timetxt2 {
+  color: #ff555c;
+}
+
+.notify_swiper {
   width: 100%;
   height: 60rpx;
   background-color: gray;
 }
 
-.swiper_item{
+.swiper_item {
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-.swiper_content{
+.swiper_content {
   font-size: 28rpx;
   color: white;
   margin-left: 20rpx;
 }
-.ywxst{
+
+.ywxst {
   font-size: 19rpx;
 }
-.wtwabt{
+
+.wtwabt {
   margin-top: 16rpx;
   background: none;
   line-height: 1.2;
   padding: 0;
-  text-align: right
+  text-align: center;
 }
-.wtwabt image{
+
+.wtwabt image {
   height: 40rpx;
   width: 40rpx;
 }
-.sharetext{
+
+.sharetext {
   font-size: 20rpx;
   color: #ff555c;
+}
+
+.taewtw {
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  background: #fdffe8;
+  font-size: 24rpx;
+  color: #ff555c;
+  text-align: center;
+}
+
+.swiper-item {
+  display: block;
+  height: 300rpx;
+}
+
+.banner1 {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: url("https://wxapi.benpaobao.com/static/app_img/home_banner1.png") no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+}
+
+.banner2 {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: url("https://wxapi.benpaobao.com/static/app_img/home_banner2.png") no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+}
+.banner3 {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: url("https://wxapi.benpaobao.com/static/app_img/home_banner3.png") no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+}
+
+swiper {
+  height: 300rpx;
+}
+
+button {
+  border-radius: 0;
+}
+
+.hr {
+  height: 20rpx;
+  width: 100%;
+  background: #f2f2f2;
+}
+
+.movable-wrapper {
+  position: fixed;
+  width: 110rpx;
+  height: 180rpx;
+  bottom: 100rpx;
+  right: 30rpx;
+}
+
+movable-area {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+
+movable-view {
+  height: 100rpx;
+  width: 100rpx;
+  background-color: green;
+}
+
+.active-img {
+  height: 100%;
+  width: 100%;
+}
+
+.mpweixin {
+  height: 96rpx;
+  width: 100%;
+  font-size: 26rpx;
+  background: #ff555c;
+  display: flex;
+  /* padding: 20rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx; */
+  align-items: center;
+  text-align: left;
+  flex-direction: row;
+  color: #fff;
+  padding-left: 40rpx;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
+
+.profile-arrow {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.profile-text {
+  flex: 1;
+}
+
+.page_index {
+  margin-top: 96rpx;
 }

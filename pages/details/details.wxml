@@ -1,11 +1,11 @@
 <view class='taewtw' wx:if='{{loginStaus==0}}' bindtap="goRegister">立马注册，躺着赚钱，速速来抢</view>
-<view class='taewtw' wx:if='{{loginStaus==1}}' bindtap="goAuth">立马注册，躺着赚钱，速速来抢</view>
+<view class='taewtw' wx:if='{{loginStaus==1}}' bindtap="goAuth">立马认证，躺着赚钱，速速来抢</view>
 <view>
   <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white">
+    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>
       <block wx:for="{{banners}}" wx:key="item.id">
         <swiper-item>
-          <image src="{{item}}" mode="scaleToFill" style="width:100%;height:465.75rpx;"></image>
+          <image src="{{item}}" mode="scaleToFill" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'></image>
         </swiper-item>
       </block>
     </swiper>
@@ -14,28 +14,31 @@
     <block>
       <view class="profile frpro">
         <view class="profile-item cwsfts">{{adInfo.name}}</view>
-         <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}"  class='wtwabt' open-type="share"><image src='../../image/shareicon.png'></image>
-           <view class='sharetext'>分享</view> 
-          </button>
+        <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
+          <image src='../../image/shareicon.png'></image>
+          <view class='sharetext'>{{ shareAwardText }}</view>
+        </button>
       </view>
     </block>
-    <block>
+     <block>
       <view class="profile">
         <view class="profile-item">广告类型:</view>
         <view class="right-text">
-          <label class="data-text" wx:if="{{adInfo.type==0}}">车尾</label>
-          <label class="data-text" wx:if="{{adInfo.type==1}}">车内</label>
-          <label class="data-text" wx:if="{{adInfo.type==2}}">车尾+车内</label>
-          <label class="data-text" wx:if="{{adInfo.type==3}}">车内+车外</label>
-          <label class="data-text" wx:if="{{adInfo.type==4}}">车外</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==0}}">车尾</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==1}}">车内</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==2}}">车尾+车内</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==3}}">车内+车外</label>
+          <label class="data-text swtwxs" wx:if="{{adInfo.type==4}}">车外</label>
         </view>
       </view>
-    </block>
+    </block> 
     <block>
       <view class="profile">
-        <view class="profile-item">实际收益:</view>
-        <view class="right-text" wx:if='{{adInfo.amount!=null}}'>{{adInfo.amount}}元</view>
-        <view class="right-text tasts" wx:if='{{adInfo.amount==null}}' bindtap="goRegister">身份认证后可查看收益</view>
+        <view class="profile-item" wx:if='{{isDiDi!=1}}'>实际收益:</view>
+        <view class="profile-item" wx:if='{{isDiDi==1}}'>预计收益:</view>
+        <view class="right-text red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>{{adInfo.amount}}元</view>
+        <view class="right-text red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>300<label class="data-blt2">~</label>868元<icon type="info" size="16"  color='#ff555c'/></view>
+        <view class="right-text tasts" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
       </view>
     </block>
     <block>
@@ -60,72 +63,120 @@
       </view>
     </view>
   </block>
-    <view class="profile-wrapper protwo">
+  <view class='join-list-wrapper' wx:if='{{showJoining}}' bindtap='joinClick'>
+    <view class='join-left-layout'>
+      <text class='already-join-text'>已参与</text>
+      <text class='already-join-number'>{{ joinCount + '人'}}</text>
+    </view>
+    <view class='join-center-line'></view>
+    <scroll-view class='join-avatar-scroll' scroll-x='true'>
+      <view class='join-avatar-wrapper' wx:for='{{avatarList}}' wx:for-item='item' wx:key='index'>
+        <view class='join-avatar-item'>
+          <image class='join-avatar' src='{{item.wx_avatar}}'></image>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="profile-wrapper protwo">
     <block wx:if="{{service.length>0}}">
       <view class="profile frpro">
-        <view class="profile-item cwsfts">预约前往下列服务站</view>
+        <view class="profile-item cwsfts">预约前往下列服务网点</view>
+        <view class='action-wrapper' bindtap='changeListMap' style='display:none'>
+          <image class='action-image' src='{{ showMap? "../../image/ad-list-icon.png" : "../../image/ad-map-icon.png" }}'></image>
+        </view>
       </view>
     </block>
-    <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id">
-      <view class="item">
-        <view class="item-middle">
-          <view>
-            <text class="title">{{item.name}}</text>
-          </view>
-          <view class="myad-li">
-            <view class="message">
-              <image src='../../image/dw.png'></image>{{item.address}}</view>
-            <view class="mmtext">剩余车辆
-              <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
-               <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> 
+
+    <view class='list-root-wrapper'>
+      <view class='list-inner {{ showMap? "list-inner-click" : "" }}'>
+        <!-- 列表 -->
+        <view class='list-transform'>
+          <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id" wx:if='{{ !showMap }}'>
+            <view class="itemcon {{item.lista==2?'curitem':''}}">
+              <view class="item {{item.lista==2?'curitemList':''}}">
+                <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
+                <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
+                <image wx:if='{{item.small_logo!=null}}' src='{{item.small_logo}}' class='sev_logo' catchtap='previewImage' data-image='{{ item.logo }}' data-samllImage='{{item.small_logo}}'></image>
+                <image wx:if='{{item.small_logo==null}}' src='../../image/noimg.png' class='sev_logo'></image>
+                <view class="item-middle">
+                  <view>
+                    <text class="title">{{item.name}}</text>
+                  </view>
+                  <view class="myad-li" bindtap='showAddress' data-address='{{item.address}}'>
+                    <view class="message">
+                      <image src='../../image/dw.png'></image>{{item.address}}
+                    </view>
+                    <!-- <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> -->
+                    <view class="mmtext">剩余车辆
+                      <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
+
+                    </view>
+                  </view>
+
+                </view>
+                <view class="item_right">
+                  <view>
+                    <text class="time">{{item.distance}}km</text>
+                  </view>
+                  <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
+                    <image src='../../image/dh.png'></image>导航
+                  </view>
+                  <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
+                  <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
+                  <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
+                </view>
+              </view>
+              <view class='yy_time' wx:if='{{item.lista==2}}'>
+                <label class="province-text">已预约{{selDate}} {{selTime}}</label>
+              </view>
             </view>
-          </view>
+          </block>
         </view>
-        <view class="item_right">
-          <view>
-            <text class="time">{{item.distance}}km</text>
-          </view>
-          <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
-            <image src='../../image/dh.png'></image>导航
-          </view>
-          <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
-          <view class="fastwx" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
-          <view class="fastwx2" wx:if='{{item.lista==0}}' > 预约</view>
+        <!-- 地图 -->
+        <view class='map-transform'>
+          <block wx:if='{{ showMap }}'>
+            <view class='map-wrapper ' style='height:{{ mapHeight }}px'>
+              <map class='map' id='myMap' longitude="{{ longitude }}" latitude="{{ latitude }}" scale="{{ scale }}" show-location="true" markers="{{ markers }}" bindmarkertap="bindMarkertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{ controls }}'
+                bindtap='bindMapTap'>
+                <!--定位当前位置-->
+                <cover-view class='cover-layout' bindtap='moveToSelfLocation'>
+                  <cover-image class='self-location' src='../../image/self-location.png'></cover-image>
+                </cover-view>
+              </map>
+            </view>
+          </block>
         </view>
       </view>
-    </block>
+    </view>
   </view>
-  <!-- <form bindsubmit="formSubmit" report-submit="{{istrue}}">
-    <button class="btn-quit" formType="submit" wx:if="{{sta==10}}"> 领取广告 </button>
-  </form>
-  <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==0}}"> 登记 </button>
-  <button class="btn-gray" wx:if="{{sta==11}}"> 登记 </button>
-  <button class="btn-gray" wx:if="{{sta==9}}"> 已投完 </button>
-  <button class="btn-gray" wx:if="{{sta==1}}"> 登记审核中 </button>
-  <button class="btn-quit" bindtap="regist" data-adId="{{adInfo.id}}" data-type="{{adInfo.type}}" wx:if="{{sta==2}}"> 审核失败，请重新登记 </button>
-  <button class="btn-gray" wx:if="{{sta==3}}"> {{ckdate}}开始检测 </button>
-  <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==4}}"> 开始检测 </button>
-  <button class="btn-gray" wx:if="{{sta==5}}"> 检测审核中</button>
-  <button class="btn-quit" bindtap="check" data-checkId="{{ckid}}" data-type="{{adInfo.type}}" wx:if="{{sta==6}}"> 审核失败，请重新检测</button>
-  <button class="btn-gray" wx:if="{{sta==7}}"> 已领取其它广告</button>
-  <button class="btn-gray" wx:if="{{sta==8}}"> 广告已结束</button> -->
 </view>
 
-<!--goodsdetail start-->
-<view class="goods-detail" hidden="{{!showGoodsDetail}}">
-  <view class="mask" bindtap="hideGoodsDetail"></view>
-  <view class="goodsdetail">
-    <!-- <view class="title1" bindtap="hideGoodsDetail"><image src='../../image/close.png'></image></view> -->
-    <view class='title0'>预约成功</view>
-    <view class="title2">分享给微信好友，让你的朋友们 一起赚钱吧!</view>
-    <view class="title4">
-      <button data-adName="{{adInfo.name}}" data-adId="{{adInfo.id}}"  class='wtwabt2' open-type="share">
-      分享微信好友
-          </button>
-    </view>
+
+
+<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!' btnText='分享微信好友' />
+<view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
+  <view class="count">
   </view>
 </view>
-  <view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
-    <view class="count">
-    </view>
+<bpb-reward reward='{{reward}}'></bpb-reward>
+<share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener' adId="{{ adInfo.id }}"></share-popup>
+<share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}' joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
+  adId='{{adId}}' bind:hideDialog='hideDialogListener'>
+</share-detail>
+<!--正在加载-->
+<view class='load-more' hidden='{{!isShowLoadingMore}}'>
+  <view class="weui-loadmore">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗...</view>
   </view>
+</view>
+<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail'  data-adId="{{adId}}" data-serverId="{{serverId}}"></rule-dialog>
+<!-- <view class='msite-nav'>
+ <button class='msite-a2'  open-type="contact" >
+  <image src='../../image/kf_icon.png'></image>
+  <text>客服</text>
+ </button>
+  <view class='msite-a'>
+  <text>分享</text>
+ </view>
+</view>  -->
