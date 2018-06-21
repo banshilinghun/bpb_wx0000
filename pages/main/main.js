@@ -83,16 +83,11 @@ Page({
     //微信版本过低
     wx.getSystemInfo({
       success: function (res) {
-        // console.log('brand------------->' + res.brand);
-        // console.log('model------------->' + res.model);
-        // console.log('version------------->' + res.version);
-        // console.log('system------------->' + res.system);
-        // console.log('SDKVersion------------->' + res.SDKVersion);
+        if (res.SDKVersion >= '1.1.1' && !wx.canIUse('picker.mode.selector')) {
+          that.showLowVersionTips();
+        }
       },
     })
-    if (!wx.canIUse('picker.mode.selector')) {
-      that.showLowVersionTips();
-    }
   },
 
   showLowVersionTips: function () {

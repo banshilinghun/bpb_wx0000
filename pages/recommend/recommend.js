@@ -203,7 +203,7 @@ Page({
         }
       },
       fail: function (res) {
-        that.showModel(res.data.msg);
+        that.showModel('服务器开小差了~');
       },
       complete: function () {
         wx.stopPullDownRefresh();
@@ -346,7 +346,7 @@ Page({
         }
       },
       fail: function (res) {
-        that.showModel(res.data.msg);
+        that.showModel('服务器开小差了~');
       }
     })
   },

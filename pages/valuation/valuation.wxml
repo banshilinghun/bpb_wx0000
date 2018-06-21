@@ -16,7 +16,7 @@
       </view>
       <view class='valu-content'>
         <text>6．其他疑问可通过以下方式联系奔跑宝：\n奔跑宝服务热线：</text>
-        <text class='text-blod blue-color' bindtap='callPhoneListener' data-phoneNumber='400-888-3390'>400-888-3390</text>
+        <text class='text-blod' data-phoneNumber='400-888-3390'>400-888-3390</text>
         <text>\n奔跑宝微信客服号（小荷）：</text>
         <text class='text-blod'>benpaobao888</text>
         <text>\n奔跑宝微信客服号（小婷）：</text>
