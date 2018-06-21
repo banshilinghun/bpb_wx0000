@@ -45,7 +45,7 @@ Page({
            console.log(res.data)
            if (res.data.data!=null){
              if (res.data.data.id == 28) {
-               that.setData({
+               z.setData({
                  teach: 1
                })
              }
