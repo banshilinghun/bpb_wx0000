@@ -2,9 +2,9 @@
   <text class='answer-text'>{{ answer }}</text>
 
   <view wx:if='{{ flag == "contact" }}'>
-      <view bindtap='callPhoneListener' data-phoneNumber='400-888-3390'>
+      <view data-phoneNumber='400-888-3390'>
         <text class='QA-text-inline bold'>奔跑宝全国客服热线：</text>
-        <text class='QA-text-inline bold blue-color'>400-888-3390</text>
+        <text class='QA-text-inline bold'>400-888-3390</text>
       </view>
       <view class='QA-official'>
         <text class='QA-text bold'>微信公众号：奔跑宝</text>

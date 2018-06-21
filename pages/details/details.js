@@ -747,7 +747,7 @@ Page({
         }
       },
       fail: res => {
-        that.showModal(res.data.msg);
+        that.showModal('网络错误');
       }
     })
   },
