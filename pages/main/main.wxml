@@ -28,7 +28,7 @@
               <text class="title">{{myAd.name}}</text>
             </view>
             <view class="myad-li">
-              <view class="message">实际收益：
+              <view class="message">实际收益2：
                 <label class="data-text">{{myAd.amount}}元</label>
               </view>
               <view class="message">投放时间：
