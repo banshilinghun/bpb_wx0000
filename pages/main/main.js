@@ -107,6 +107,25 @@ Page({
     var loginFlag = app.globalData.login;
     z.followFlag();
     z.getShareFlag();
+    var reqData={};
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        //        console.log(res.longitude)
+        z.setData({
+          latitude: latitude,
+          longitude: longitude
+        })
+        reqData.lat = latitude;
+        reqData.lng = longitude;
+        if(loginFlag==1){
+          z.getMyAd(reqData)
+        }
+      }
+    })
+ 
     if (loginFlag == 1) {
       wx.request({
         url: app.globalData.baseUrl + 'app/get/user_auth_status',
@@ -138,98 +157,13 @@ Page({
           });
         }
       })
-
-      wx.request({
-        url: app.globalData.baseUrl + 'app/get/my_ad',
-        data: {},
-        header: app.globalData.header,
-        success: res => {
-          if (res.data.code == 1000) {
-            //					console.log(res.data)
-            //console.log(res.data.data)
-            if (res.data.data != null) {
-              var nowdate = util.dateToString(new Date());
-              if (res.data.data.subscribe != null && res.data.data.check == null) {
-                res.data.data.subscribe.date = res.data.data.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-                this.setData({
-                  canCheck: 4
-                })
-              }
-              if (res.data.data.check != null) {
-                if (res.data.data.check.checkType == 'SELF_CHECK') {//期中检测
-                  if (nowdate < res.data.data.check.checkDate) { //期中检测还未到检测时间
-                    this.setData({
-                      canCheck: 0
-                    })
-                  }
-                  if (nowdate >= res.data.data.check.checkDate) { //可以期中检测了
-                    this.setData({
-                      canCheck: 1
-                    })
-                  }
-                }
-                if (res.data.data.check.checkType == 'SERVER_CHECK') {//期末检测
-                  if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
-                    this.setData({
-                      canCheck: 2
-                    })
-                  }
-                  if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期末检测了
-                    this.setData({
-                      canCheck: 3
-                    })
-                  }
-                  if (res.data.data.check.status == 1) {//期末检测审核中
-                    this.setData({
-                      canCheck: 5
-                    })
-                  }
-
-                }
-              }
-              res.data.data.begin_date = res.data.data.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-              res.data.data.end_date = res.data.data.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-              if (res.data.data.check != null) {
-                res.data.data.check.checkDate = res.data.data.check.checkDate.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日");
-              }
-              var myad = res.data.data;
-
-              z.setData({
-                myAd: myad,
-                haveMyAd: true
-              })
-
-            } else {
-              //z.shippingAddress()
-              z.setData({
-                myAd: null,
-                haveMyAd: false
-              })
-            }
-
-          } else {
-            if (res.data.code == 3000) {
-              wx.redirectTo({
-                url: '../register/register'
-              })
-            } else {
-              wx.showModal({
-                title: '提示',
-                showCancel: false,
-                content: res.data.msg
-              });
-            }
-
-          }
-        },
-        fail: res => {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '网络错误'
-          });
-        }
-      })
+      if (z.data.latitude==null){
+        z.getMyAd(reqData);
+      }else{
+        reqData.lat = z.data.latitude;
+        reqData.lng = z.data.longitude;
+        z.getMyAd(reqData);
+      }
     }
     wx.request({
       url: app.globalData.baseUrl + 'app/get/ad_list',
@@ -291,6 +225,100 @@ Page({
       }
     })
 
+  },
+  getMyAd:function(reqData){
+    var z=this;
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/my_ad',
+      data: reqData,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          //					console.log(res.data)
+          //console.log(res.data.data)
+          if (res.data.data != null) {
+            var nowdate = util.dateToString(new Date());
+            if (res.data.data.subscribe != null && res.data.data.check == null) {
+              res.data.data.subscribe.date = res.data.data.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+              this.setData({
+                canCheck: 4
+              })
+            }
+            if (res.data.data.check != null) {
+              if (res.data.data.check.checkType == 'SELF_CHECK') {//期中检测
+                if (nowdate < res.data.data.check.checkDate) { //期中检测还未到检测时间
+                  this.setData({
+                    canCheck: 0
+                  })
+                }
+                if (nowdate >= res.data.data.check.checkDate) { //可以期中检测了
+                  this.setData({
+                    canCheck: 1
+                  })
+                }
+              }
+              if (res.data.data.check.checkType == 'SERVER_CHECK') {//期末检测
+                if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
+                  this.setData({
+                    canCheck: 2
+                  })
+                }
+                if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期末检测了
+                  this.setData({
+                    canCheck: 3
+                  })
+                }
+                if (res.data.data.check.status == 1) {//期末检测审核中
+                  this.setData({
+                    canCheck: 5
+                  })
+                }
+
+              }
+            }
+            res.data.data.begin_date = res.data.data.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+            res.data.data.end_date = res.data.data.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+            if (res.data.data.check != null) {
+              res.data.data.check.checkDate = res.data.data.check.checkDate.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日");
+            }
+            var myad = res.data.data;
+
+            z.setData({
+              myAd: myad,
+              haveMyAd: true
+            })
+
+          } else {
+            //z.shippingAddress()
+            z.setData({
+              myAd: null,
+              haveMyAd: false
+            })
+          }
+
+        } else {
+          if (res.data.code == 3000) {
+            wx.redirectTo({
+              url: '../register/register'
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: res.data.msg
+            });
+          }
+
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
   },
   go: function (event) {
     //		console.log(event)
