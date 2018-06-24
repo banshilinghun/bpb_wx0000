@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "参与人数",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#333"
 }
