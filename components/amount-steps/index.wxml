@@ -5,7 +5,7 @@
   >
     <view class="zan-steps__title">{{ step.text }}</view>
     <view wx:if="{{ hasDesc && step.desc }}" class="zan-steps__title zan-steps__title--desc bpb-award">{{ step.desc }}</view>
-    <view wx:if='{{step.type==2&&step.tip2}}' class='zan-more' bindtap="goTip" data-step='{{step}}'><icon type="info" size="18"/></view>
+    <view wx:if='{{step.type==2&&step.tip2}}' class='zan-more' bindtap="goTip" data-step='{{step}}'><icon type="info" size="16"/></view>
     <view class='step-right-wrapper'>
       <!-- hasAward 是否可以领取奖励，不可领取则显示提示文字 -->
       <button class='step-action' bindtap='handleTap' wx:if='{{step.hasAward && step.action }}' data-step='{{step}}' data-index='{{index}}' open-type='{{ openType }}'>{{step.action}}</button>

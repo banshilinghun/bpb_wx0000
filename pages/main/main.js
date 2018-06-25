@@ -17,7 +17,7 @@ Page({
     haveMyAd: false,
     //测试数据
     userList: [],
-    background: ['banner1','banner2'],
+    background: ['banner3','banner1','banner2'],
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -28,11 +28,13 @@ Page({
     shareit: false,
     reward: false,
     showRecommend: false,
-    shareAwardText: '分享'
+    shareAwardText: '分享',
+    isDiDi:0, //是否是滴滴车主
+    bannerFlag:0
   },
 
   onLoad: function (options) {
-    console.log(options);
+    //console.log(options);
     var that = this;
     that.setData({
       userInfo: app.globalData.userInfo
@@ -134,12 +136,45 @@ Page({
         success: res => {
           if (res.data.code == 1000) {
             //					console.log(res.data)
-            this.setData({
+            z.setData({
+              bannerFlag: z.data.bannerFlag + 1,
               status: res.data.data.status,
               name: res.data.data.real_name,
               province: res.data.data.province,
               city: res.data.data.city,
-              plate_no: res.data.data.plate_no
+              plate_no: res.data.data.plate_no,
+              isDiDi:res.data.data.user_type //是否是滴滴车主
+            })
+            //if (z.data.bannerFlag==2&&)
+            //console.log(z.data.bannerFlag);
+            if (z.data.bannerFlag == 2) {
+              if (z.data.showRecommend) {//可以显示推荐朋友圈
+                if (z.data.isDiDi==1) {//滴滴合法车主
+                  z.setData({
+                    background: ['banner3', 'banner1', 'banner2']
+                  })
+                } else {//不是滴滴合法车主
+                  z.setData({
+                    background: ['banner1', 'banner2']
+                  })
+                }
+              } else {//不显示推荐朋友圈
+                if (z.data.isDiDi==1) {//滴滴合法车主
+                  z.setData({
+                    background: ['banner3', 'banner1']
+                  })
+                } else {//不是滴滴合法车主
+                  z.setData({
+                    background: ['banner1']
+                  })
+                }
+              }
+              z.setData({
+                bannerFlag: 0
+              })
+            }
+            z.setData({
+              indicatorDots: z.data.background.length > 1
             })
           } else {
             wx.showModal({
@@ -462,10 +497,38 @@ Page({
         if (res.data.code == 1000) {
           app.globalData.shareFlag = res.data.data;
           that.setData({
+            bannerFlag: that.data.bannerFlag+1,
             showRecommend: res.data.data,
             background: res.data.data ? ['banner1', 'banner2'] : ['banner1'],
             shareAwardText: res.data.data ? '分享有奖' : '分享',
           })
+          //console.log(that.data.bannerFlag);
+          if (that.data.bannerFlag==2){
+            if (that.data.showRecommend){//可以显示推荐朋友圈
+              if(that.data.isDiDi==1){//滴滴合法车主
+                that.setData({
+                  background: ['banner3','banner1', 'banner2']
+                })
+              }else{//不是滴滴合法车主
+                that.setData({
+                  background: ['banner1', 'banner2']
+                })
+              }
+            }else{//不显示推荐朋友圈
+              if (that.data.isDiDi==1) {//滴滴合法车主
+                that.setData({
+                  background: ['banner3', 'banner1']
+                })
+              } else {//不是滴滴合法车主
+                that.setData({
+                  background: ['banner1']
+                })
+              }
+            }
+            that.setData({
+              bannerFlag:0
+            })
+          }
           that.setData({
             indicatorDots: that.data.background.length > 1
           })

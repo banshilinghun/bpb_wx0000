@@ -961,7 +961,17 @@ button::after {
   color: #ff555c;
   font-size: 12px;
 }
-
+.red-text{
+   color: #ff555c;
+   position: relative;
+}
+.red-text icon{
+  position: absolute;
+  top: 0;
+}
+.adxtwtx{
+  padding-right: 12px;
+}
 .msite-nav {
   overflow: visible;
   height: 98rpx;
@@ -1203,3 +1213,7 @@ button {
 }
 
 /* 翻转动画 end */
+.data-blt2{
+  padding-left: 6rpx;
+  padding-right: 6rpx;
+}

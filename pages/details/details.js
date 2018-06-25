@@ -65,7 +65,8 @@ Page({
     shareAwardText: '分享',
     isShowLoadingMore: false,
     haveLoca:false,
-    isPreview: false
+    isPreview: false,
+    isDiDi:0 //是否滴滴合法车主
   },
 
   onLoad: function (options) {
@@ -123,6 +124,10 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
+          console.log(res.data)
+          that.setData({
+            isDiDi: res.data.data.user_type
+          })
           if (res.data.data.status != 0) {
             that.setData({
               loginStaus: 2

@@ -1,24 +1,30 @@
 <view>
- <button class='mpweixin' wx:if='{{ !isFollow && showRecommend }}' open-type="contact" session-from='{"nickName":"{{userInfo.nickName}}" ,"avatarUrl":"{{userInfo.avatarUrl}}"}'>
+  <button class='mpweixin' wx:if='{{ !isFollow && showRecommend }}' open-type="contact" session-from='{"nickName":"{{userInfo.nickName}}" ,"avatarUrl":"{{userInfo.avatarUrl}}"}'>
     <text class='profile-text'> 关注公众号，开启奖励提醒。点击进入客服回复数字1</text>
-     <image class='profile-arrow' src='/image/gomp2.png'></image>
-</button>
-<view class='hr' wx:if='{{isFollow}}'></view>
+    <image class='profile-arrow' src='/image/gomp2.png'></image>
+  </button>
+  <view class='hr' wx:if='{{isFollow}}'></view>
   <view class="amount">
     <view class="message__list">
       <block>
         <view class="item2 item3 item4">
-          <view class="item-middle">
+          <view class="item-middle wxataws">
             <view>
               <text class="title">待收收益</text>
+            </view>
+            <view class='atwxsd' wx:if='{{isDiDi==1}}'>
+              <view class='tasdxs'>
+                计价规则
+                <icon type="info" size="12" color='#ff555c' />
+              </view>
             </view>
           </view>
         </view>
       </block>
       <view class="twxtawd">
-       <view class='step-container'>
-  <amount-steps type="vertical" hasDesc steps="{{stepsList}}" bind:action='actionClickListener' bind:tip='goTip' openType='{{ openType }}'></amount-steps>
-</view>
+        <view class='step-container'>
+          <amount-steps type="vertical" hasDesc steps="{{stepsList}}" bind:action='actionClickListener' bind:tip='goTip' openType='{{ openType }}'></amount-steps>
+        </view>
       </view>
       <view class="line"></view>
       <block>
@@ -62,6 +68,14 @@
     </view>
   </view>
   <view class="profile-wrapper" catchtap="loadProfile">
+    <block wx:if='{{ showRecommend }}'>
+      <button bindtap='recommendFriendListener' class='share-button'>
+        <image class='itemicon' src='../../image/shmgc.png'></image>
+        <text class='profile-item'>推荐有奖</text>
+        <image class='profile-arrow' src='/image/arrow.png'>
+        </image>
+      </button>
+    </block>
     <block wx:for="{{myProfile}}" wx:key="item.id">
       <view class="profile" id="{{item.id}}" bindtap="kindToggle">
         <image class="itemicon" src="{{item.icon}}"></image>
@@ -73,18 +87,11 @@
         <image wx:if="{{item.deposit==0}}" class="profile-arrow" src="/image/arrow.png"></image>
       </view>
     </block>
-    <block wx:if='{{ showRecommend }}'>
-      <button bindtap='recommendFriendListener' class='share-button'>
-        <image class='itemicon' src='../../image/shmgc.png'></image>
-        <text class='profile-item'>推荐有奖</text>
-        <image class='profile-arrow' src='/image/arrow.png'>
-        </image>
-      </button>
-    </block>
+  
   </view>
   <!-- <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">登录</text></button> -->
 </view>
- <dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='{{shareTitle}}' description='邀请新用户安装广告，双方还能各拿奖励30元哦!'  btnText='邀请好友' />
+<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='{{shareTitle}}' description='邀请新用户安装广告，双方还能各拿奖励30元哦!' btnText='邀请好友' />
 <zan-toast id="zan-toast-test"></zan-toast>
 
 <share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener'></share-popup>
