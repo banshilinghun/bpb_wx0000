@@ -69,7 +69,13 @@ Page({
     haveLoca:false,
     isPreview: false,
     showRule:false,
-    isDiDi:0 //是否滴滴合法车主
+    //是否滴滴合法车主
+    isDiDi:0 ,
+    //地址弹框 start
+    showAddressDialog: false,
+    address: '',
+    phone: ''
+    //end
   },
 
   onLoad: function (options) {
@@ -885,27 +891,32 @@ Page({
       }
     })
   },
+
   goValuation: function () {
     wx.navigateTo({
       url: '../valuation/valuation',
     })
   },
+
   iKnow:function(e){
     wx.navigateTo({
       url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
     })
   },
+
   goRuleDetail:function(e){
     console.log(e)
     wx.navigateTo({
       url: '../valuation/valuation?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
     })
   },
+
   showAddress:function(e){
-    wx.showModal({
-      title: '',
-      showCancel:false,
-      content: e.currentTarget.dataset.address
+    console.log(e);
+    this.setData({
+      showAddressDialog: true,
+      address: e.currentTarget.dataset.address.address,
+      phone: e.currentTarget.dataset.address.phone
     })
   }
 })

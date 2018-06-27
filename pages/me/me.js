@@ -6,25 +6,27 @@ const shareUtil = require("../../utils/shareUtil.js");
 const Api = require("../../utils/Api.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const app = getApp();
+//推荐奖励是否关闭
+const shareFlag = app.globalData.shareFlag;
 Page({
   data: {
     inviteId: '我是邀请人id',
     userInfo: {},
     myProfile: [
-    {
-      "desc": "新手教程",
-      "id": "teaching",
-      'url': 'teaching/teaching',
-      "icon": '../../image/tech.png',
-      'deposit': 0
-    },
-    {
-      "desc": "身份认证",
-      "id": "identity",
-      'url': 'auth/auth',
-      "icon": '../../image/card.png',
-      'deposit': 0
-    }
+      {
+        "desc": "新手教程",
+        "id": "teaching",
+        'url': 'teaching/teaching',
+        "icon": '../../image/tech.png',
+        'deposit': 0
+      },
+      {
+        "desc": "身份认证",
+        "id": "identity",
+        'url': 'auth/auth',
+        "icon": '../../image/card.png',
+        'deposit': 0
+      }
     ],
     total: "0.00",
     amount: '0.00',
@@ -32,6 +34,7 @@ Page({
     rate: 0,
     stepsList: [],
     showGoodsDetail: false,
+    description: '',
     isShowToast: false,
     showSharePop: false,
     //分享朋友圈数据
@@ -237,21 +240,23 @@ Page({
                   amount: arr[i].amount
                 })
               }
-            }  
+            }
           }
           //console.log(recommendAmount)
           //console.log(stepList)
-
+          //没有推荐奖励信息且推荐开关已开才显示推荐邀请
           if (recommendList.length == 0) {
-            stepList.push({
-              current: false,
-              text: '推荐奖励',
-              desc: '¥ 0.00',
-              hasAward: true,
-              btnType: 0,
-              action: '邀请好友',
-              status: 4
-            })
+            if (shareFlag) {
+              stepList.push({
+                current: false,
+                text: '推荐奖励',
+                desc: '¥ 0.00',
+                hasAward: true,
+                btnType: 0,
+                action: '邀请好友',
+                status: 4
+              })
+            }
           } else {
             if (recommendHasAward) {
               stepList.push({
@@ -272,13 +277,13 @@ Page({
                 text: '推荐奖励',
                 desc: '¥ ' + util.toDecimal2(recommendAmount),
                 hasAward: true,
-                // tip2: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
                 tip2: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
                 type: '2',
                 status: 3,
                 amount: claimAmoun,
                 action: '邀请好友',
-                btnType: 0
+                btnType: 0,
+                openType: shareFlag ? '' : 'share'
               })
             }
 
@@ -432,7 +437,7 @@ Page({
                 content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
               })
             }
-          } else if (myProfile[i].id == 'teaching'){
+          } else if (myProfile[i].id == 'teaching') {
             wx.navigateTo({
               url: '../teaching/teaching'
             })
@@ -587,7 +592,10 @@ Page({
     })
   },
 
-  actionClickListener: function (e) {//待收收益里面的按钮
+  /**
+   * 待收收益里面的按钮
+   */
+  actionClickListener: function (e) {
     var that = this;
     //console.log(e.detail.step)
     if (e.detail.step.btnType == 1) {
@@ -598,24 +606,28 @@ Page({
       })
     }
   },
+
+  //查看推荐奖励不可领原因
   goTip: function (e) {
     wx.showModal({
       title: '',
       content: e.detail.step.tip2 + '\r\n好友安装广告后方可领取奖励',
-      confirmText: '查看',
-      cancelText:"取消",
-      cancelColor:'#999',
+      confirmText: shareFlag ? '查看' : '我知道了',
+      cancelText: "取消",
+      showCancel: shareFlag,
+      cancelColor: '#999',
       success: function (res) {
-        if (res.confirm){
+        if (res.confirm && shareFlag) {
           wx.navigateTo({
             url: '../recommend/recommend?flag=recommend'
           })
         }
-       },
+      },
       fail: function (res) { },
       complete: function (res) { },
     })
   },
+
   coupon: function (data) {//领取现金劵
     var that = this;
     var loginFlag = app.globalData.login;
@@ -642,12 +654,12 @@ Page({
               },
             })
             that.onShow();
-            //that.showToast(text)
-           
-            if (couponType != 5 && couponType != 6){
+            //分享弹框
+            if (couponType != 5 && couponType != 6) {
               that.setData({
                 showGoodsDetail: true,
-                shareTitle: text
+                shareTitle: text, 
+                description: shareFlag ? '邀请新用户安装广告，双方还能各拿奖励30元哦!' : '赶快邀请好友一起赚钱'
               })
             }
           } else {
@@ -698,7 +710,7 @@ Page({
     })
   },
 
-  QAListener: function(){
+  QAListener: function () {
     wx.navigateTo({
       url: '../QA/index',
     })
@@ -720,7 +732,7 @@ Page({
     });
     Toast(text);
   },
-  goValuation:function(){
+  goValuation: function () {
     wx.navigateTo({
       url: '../valuation/valuation',
     })

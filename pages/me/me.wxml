@@ -90,7 +90,7 @@
   </view>
   <!-- <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">登录</text></button> -->
 </view>
-<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='{{shareTitle}}' description='邀请新用户安装广告，双方还能各拿奖励30元哦!' btnText='邀请好友' />
+<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='{{shareTitle}}' description='{{ description }}' btnText='邀请好友' />
 <zan-toast id="zan-toast-test"></zan-toast>
 
 <share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener'></share-popup>

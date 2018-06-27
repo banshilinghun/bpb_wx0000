@@ -8,6 +8,7 @@
         "bpb-reward": "../../components/reward/index",
         "share-popup": "../../components/share-popup/index",
         "share-detail": "../../components/share-detail/index",
-        "rule-dialog": "../../components/rule-dialog/index"
+        "rule-dialog": "../../components/rule-dialog/index",
+        "dialog-address": "../../components/dialog-address/index"
       }
 }

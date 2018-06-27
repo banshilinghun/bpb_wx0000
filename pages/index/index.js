@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
+const shareFlagUrl = app.globalData.baseUrl + 'app/get/share_flag';
 
 Page({
   data: {
@@ -110,26 +111,14 @@ Page({
                     }
                     if (type == 1 || type == 2) {
                       if (res.data.data.phone) {
-                        setTimeout(function () {
-                          wx.switchTab({
-                            url: '../main/main'
-                          })
-                        }, 1500);
+                        that.showMain();
                       } else {
-                        setTimeout(function () {
-                          wx.redirectTo({
-                            url: '../novice/novice?recomId=' + recommendId
-                          })
-                        }, 1500);
+                        that.getShareFlag(recommendId);
                       }
                     } else {
                       console.log(type)
                       if (that.data.jump == 'ads') {
-                        setTimeout(function () {
-                          wx.switchTab({
-                            url: '../main/main'
-                          })
-                        }, 1500);
+                        that.showMain();
                       } else if (that.data.jump == 'regist') {
                         setTimeout(function () {
                           wx.redirectTo({
@@ -149,11 +138,7 @@ Page({
                           })
                         }, 1500);
                       } else {
-                        setTimeout(function () {
-                          wx.switchTab({
-                            url: '../main/main'
-                          })
-                        }, 1500);
+                        that.showMain();
                       }
                     }
                   } else {
@@ -185,18 +170,52 @@ Page({
             }
           })
           //console.log(app.globalData.userInfo)
-         
-         
         } else {
           console.log('获取用户登录态失败！' + res.errMsg)
         }
-    
-       
       }
-
     })
+  },
 
+  /**
+   * 根据开关跳转
+   */
+  getShareFlag: function (recommendId) {
+    var that = this;
+    wx.request({
+      url: shareFlagUrl,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          if (res.data.data){
+            setTimeout(function () {
+              wx.redirectTo({
+                url: '../novice/novice?recomId=' + recommendId
+              })
+            }, 1500);
+          }else{
+            that.showMain();
+          }
+        } else {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
+        }
+      },
+      fail: res => {
+        that.showMain();
+      }
+    })
+  },
 
+  showMain: function(){
+    setTimeout(function () {
+      wx.switchTab({
+        url: '../main/main'
+      })
+    }, 1500);
   },
 
   getUserInfo: function (e) {

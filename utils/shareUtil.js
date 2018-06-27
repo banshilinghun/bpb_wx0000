@@ -15,7 +15,7 @@ function getShareNormalTitle() {
  */
 function getShareAwardTitle(award, awardType) {
   let awardTypeStr;
-  if (awardTypeStr == 1){
+  if (awardType == 1){
     awardTypeStr = '新手红包';
   } else if (awardType == 2) {
     awardTypeStr = '推荐奖励';

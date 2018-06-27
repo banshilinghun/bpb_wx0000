@@ -102,7 +102,7 @@
                   <view>
                     <text class="title">{{item.name}}</text>
                   </view>
-                  <view class="myad-li" bindtap='showAddress' data-address='{{item.address}}'>
+                  <view class="myad-li" bindtap='showAddress' data-address='{{item}}'>
                     <view class="message">
                       <image src='../../image/dw.png'></image>{{item.address}}
                     </view>
@@ -170,7 +170,11 @@
     <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗...</view>
   </view>
 </view>
+<!-- 规则弹框 -->
 <rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail'  data-adId="{{adId}}" data-serverId="{{serverId}}"></rule-dialog>
+<!-- 地址弹框 -->
+<dialog-address showAddressDialog='{{ showAddressDialog }}' address='{{ address }}' phone='{{ phone }}'></dialog-address>
+
 <!-- <view class='msite-nav'>
  <button class='msite-a2'  open-type="contact" >
   <image src='../../image/kf_icon.png'></image>
