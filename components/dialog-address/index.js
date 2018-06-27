@@ -32,8 +32,9 @@ Component({
 
     callListener: function (e) {
       console.log(e);
+      let that = this;
       wx.makePhoneCall({
-        phoneNumber: '',
+        phoneNumber: e.currentTarget.dataset.photo,
       })
     },
 
