@@ -507,3 +507,23 @@ font-weight: 500;
   top: 2px;
   right: 0;
 }
+
+.step-empty{
+  width: 100%;
+  min-height: 120rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.step-empty-image{
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.step-empty-text{
+  font-size: 28rpx;
+  color: #999;
+  margin-left: 20rpx;
+}

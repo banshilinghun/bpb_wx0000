@@ -22,8 +22,12 @@
         </view>
       </block>
       <view class="twxtawd">
-        <view class='step-container'>
-          <amount-steps type="vertical" hasDesc steps="{{stepsList}}" bind:action='actionClickListener' bind:tip='goTip' openType='{{ openType }}'></amount-steps>
+        <view class='step-container' wx:if='{{ stepsList && stepsList.length != 0 }}'>
+          <amount-steps type="vertical" hasDesc steps="{{ stepsList }}" bind:action='actionClickListener' bind:tip='goTip' openType='{{ openType }}'></amount-steps>
+        </view>
+        <view class='step-empty' wx:if='{{ !stepsList || stepsList.length == 0 }}'>
+          <image class='step-empty-image' src='../../image/award-empty.png'></image>
+          <text class='step-empty-text'>暂无可领取收益</text>
         </view>
       </view>
       <view class="line"></view>

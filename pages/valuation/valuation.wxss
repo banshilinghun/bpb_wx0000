@@ -50,3 +50,11 @@ button::after{
 .blue-color{
   color: blue;
 }
+
+.theme-color{
+  color: #ff555c;
+}
+
+.valu-bonus{
+  margin-bottom: 30rpx;
+}

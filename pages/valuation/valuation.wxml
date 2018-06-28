@@ -8,6 +8,23 @@
       <rule-table textSmall='{{ textSmall }}' tableHeight='{{ tableHeight }}'></rule-table>
     </view>
     <view>
+      <view class='valu-bonus'>
+        <view class='valu-content'>
+          <text>项目试点阶段，活动补贴有 “</text>
+          <text>安装补贴</text>
+          <text>” 和 “</text>
+          <text>抢活补贴</text>
+          <text>” ：</text>
+        </view>
+        <view class='valu-content'>
+          <text>安装补贴</text>
+          <text>：车主预约广告任务后，在预约时间当天前往服务点安装，就能获得50元安装补贴。</text>
+        </view>
+        <view class='valu-content'>
+          <text>抢活补贴</text>
+          <text>：广告开始前，有七天安装时间。第一天安装，抢活补贴最高35元，每推后一天安装，抢活补贴减少5元，最后一天安装补贴为5元。</text>
+        </view>
+      </view>
       <view>
         <text class='valu-remark'>备注：</text>
       </view>
