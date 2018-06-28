@@ -658,7 +658,7 @@ Page({
               that.setData({
                 showGoodsDetail: true,
                 shareTitle: text, 
-                description: shareFlag ? '邀请新用户安装广告，双方还能各拿奖励30元哦!' : '赶快邀请好友一起赚钱'
+                description: shareFlag ? '邀请新用户安装广告，双方还能各拿奖励30元哦!' : '赶快邀请好友一起赚钱！'
               })
             }
           } else {

@@ -74,7 +74,13 @@ Page({
     //地址弹框 start
     showAddressDialog: false,
     address: '',
-    phone: ''
+    phone: '',
+    //end
+    //注册认证弹窗start
+    showAuthDialog: false,
+    authStr: '',
+    authContent: '',
+    authStatus: ''
     //end
   },
 
@@ -128,33 +134,8 @@ Page({
       shareAwardText: app.globalData.shareFlag ? '分享有奖' : '分享',
       showRule: false
     })
-    wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_auth_status',
-      data: {},
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          console.log(res.data)
-          that.setData({
-            isDiDi: res.data.data.user_type
-          })
-          if (res.data.data.status != 0) {
-            that.setData({
-              loginStaus: 2
-            })
-          }
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
+    //注册认证状态
     var loginFlag = app.globalData.login;
-    //console.log(loginFlag)
     var checkStaus = app.globalData.checkStaus;
     if (loginFlag != 1) {//没有登录
       that.setData({
@@ -171,12 +152,15 @@ Page({
         })
       }
     }
+
+    //检测是否是滴滴车主以及注册认证状态
+    that.checkUserAuthStatus();
+    
     var pages = getCurrentPages();
     console.log(pages)
     var currPage = pages[pages.length - 1]; //当前页面
     //console.log(currPage.data.mydata) //就可以看到data里mydata的值了
     if (currPage.data.mydata != undefined) {
-     
       if (currPage.data.mydata.share == 1 && n != 0 && that.data.showShare) {
         that.setData({
           showGoodsDetail: true,
@@ -191,6 +175,7 @@ Page({
 
     var reqData = {};
     reqData.ad_id = that.data.adId;
+    //请求地理位置信息
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
@@ -207,6 +192,7 @@ Page({
         that.requestAdInfo(reqData);
       }
     })
+    //请求广告信息
     if (that.data.latitude == null) {
       that.requestAdInfo(reqData);
     } else {
@@ -214,8 +200,53 @@ Page({
       reqData.lng = that.data.longitude;
       that.requestAdInfo(reqData);
     }
-
     that.requestJoinList();
+  },
+
+  checkUserAuthStatus: function(){
+    let that = this;
+    wx.request({
+      url: app.globalData.baseUrl + 'app/get/user_auth_status',
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          console.log(res.data)
+          that.setData({
+            isDiDi: res.data.data.user_type
+          })
+          if (res.data.data.status != 0) {
+            that.setData({
+              loginStaus: 2
+            })
+          }
+          //未注册和未认证弹框
+          if (app.globalData.showAuthTip) {
+            return;
+          }
+          if (that.data.loginStaus == 0 || that.data.loginStaus == 1){
+            that.showRequireAuthDialog(that.data.loginStaus);
+            app.globalData.showAuthTip = true;
+          }
+        }
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
+      }
+    })
+  },
+
+  showRequireAuthDialog: function(loginStatus){
+    this.setData({
+      showAuthDialog: true,
+      authStr: loginStatus == 0? '立即注册' : '立即认证',
+      authContent: loginStatus == 0 ? '先注册，抢活快\n广告安装无障碍' : '先认证，抢活快\n广告安装无障碍',
+      authStatus: loginStatus
+    })
   },
 
   requestAdInfo: function (reqData) {
@@ -666,21 +697,25 @@ Page({
       showGoodsDetail: !this.data.showGoodsDetail
     });
   },
+
   hideGoodsDetail: function () {
     this.setData({
       showGoodsDetail: false
     });
   },
+
   goRegister: function () {
     wx.navigateTo({
       url: '../register/register'
     })
   },
+
   goAuth: function () {
     wx.navigateTo({
       url: '../auth/auth'
     })
   },
+
   backHome: function () {
     wx.switchTab({
       url: '../main/main'
@@ -918,5 +953,19 @@ Page({
       address: e.currentTarget.dataset.address.address,
       phone: e.currentTarget.dataset.address.phone
     })
+  },
+
+  handleActionTap: function(event){
+    console.log(event);
+    let status = event.detail.data.status;
+    if (status == 0) {
+      wx.navigateTo({
+        url: '../register/register',
+      })
+    } else if (status == 1) {
+      wx.navigateTo({
+        url: '../auth/auth',
+      })
+    }
   }
 })

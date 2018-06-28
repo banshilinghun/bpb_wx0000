@@ -35,7 +35,6 @@ Component({
         that.setData({
           imageHeight: (res.windowWidth * (1- 0.08) - 30) * 0.564
         })
-        console.log('imageHeight----------->' + that.data.imageHeight);
       }
     })
   },

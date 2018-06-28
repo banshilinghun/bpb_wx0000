@@ -6,7 +6,7 @@ const releaseDomain = 'https://wxapi.benpaobao.com/';
 const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
 //是否是发布状态，上线时改为true
 const release = false;
-const release2 = false;
+const release2 = true;
 //true-ken测试地址，false-小彭测试地址
 const domainStatus = false;
 
@@ -33,7 +33,9 @@ App({
     baseUrl: releaseDomain,
     isFirst:false,
     //分享开关
-    shareFlag: false
+    shareFlag: false,
+    //是否已经展示认证弹窗
+    showAuthTip: false
   },
 
   /**

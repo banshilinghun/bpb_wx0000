@@ -1,0 +1,17 @@
+<view class='rule-dialog' wx:if='{{ showDialog }}'>
+  <view class='rule-mask'></view>
+  <view class='root'>
+    <view class='content-wrapper'>
+      <view class='content-root'>
+        <image class='auth-image' src='{{ imageSrc }}' style='height: {{ imageHeight }}px'></image>
+        <view class='content'>
+          <view class='text'>
+            <text class='text-divider'>{{ content }}</text>
+          </view>
+        </view>
+      </view>
+      <button class='btn' bindtap='actionListener' data-status='{{ status }}'>{{ btnStr }}</button>
+    </view>
+    <image class="colse" src="../../image/close.png" bindtap="hideDialog"></image>
+  </view>
+</view>

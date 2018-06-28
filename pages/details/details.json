@@ -1,14 +1,15 @@
 {
-   "navigationBarTitleText": "广告详情",
-    "enablePullDownRefresh": false,
-    "navigationBarTextStyle": "white",
-    "navigationBarBackgroundColor": "#333",
-      "usingComponents": {
-        "dialog": "../../components/dialog/bpb-dialog",
-        "bpb-reward": "../../components/reward/index",
-        "share-popup": "../../components/share-popup/index",
-        "share-detail": "../../components/share-detail/index",
-        "rule-dialog": "../../components/rule-dialog/index",
-        "dialog-address": "../../components/dialog-address/index"
-      }
+  "navigationBarTitleText": "广告详情",
+  "enablePullDownRefresh": false,
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#333",
+  "usingComponents": {
+    "dialog": "../../components/dialog/bpb-dialog",
+    "bpb-reward": "../../components/reward/index",
+    "share-popup": "../../components/share-popup/index",
+    "share-detail": "../../components/share-detail/index",
+    "rule-dialog": "../../components/rule-dialog/index",
+    "dialog-address": "../../components/dialog-address/index",
+    "dialog-auth": "../../components/dialog-common/index"
+  }
 }
