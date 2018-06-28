@@ -5,8 +5,8 @@
   <view class="swiper">
 
     <block>
-      <form bindsubmit="formSubmit" >
-        <view class="weui-cells my-cells">
+      <form bindsubmit="formSubmit">
+        <view class="weui-cells my-cells" wx:if='{{carOut}}'>
           <view class="weui-cell">
             <view class="weui-cell__bd">
               <view class="weui-uploader">
@@ -29,7 +29,7 @@
             </view>
           </view>
         </view>
-           <view class="weui-cells my-cells martnone">
+        <view class="weui-cells my-cells martnone" wx:if='{{carOut}}'>
           <view class="weui-cell">
             <view class="weui-cell__bd">
               <view class="weui-uploader">
@@ -52,7 +52,7 @@
             </view>
           </view>
         </view>
-        <view class="weui-cells my-cells martnone">
+        <view class="weui-cells my-cells martnone" wx:if='{{carIn}}'>
           <view class="weui-cell">
             <view class="weui-cell__bd">
               <view class="weui-uploader">
@@ -75,7 +75,7 @@
             </view>
           </view>
         </view>
-        <view class="weui-cells my-cells martnone">
+        <view class="weui-cells my-cells martnone" wx:if='{{carTail}}'>
           <view class="weui-cell">
             <view class="weui-cell__bd">
               <view class="weui-uploader">

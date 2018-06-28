@@ -13,21 +13,20 @@ Page({
     inviteId: '我是邀请人id',
     userInfo: {},
     myProfile: [
-      {
-        "desc": "新手教程",
-        "id": "teaching",
-        'url': 'teaching/teaching',
-        "icon": '../../image/tech.png',
-        'deposit': 0
-      },
-      {
-        "desc": "身份认证",
-        "id": "identity",
-        'url': 'auth/auth',
-        "icon": '../../image/card.png',
-        'deposit': 0
-      }
-    ],
+    {
+      "desc": "新手教程",
+      "id": "teaching",
+      'url': 'teaching/teaching',
+      "icon": '../../image/tech.png',
+      'deposit': 0
+    },
+    {
+      "desc": "注册认证",
+      "id": "identity",
+      'url': 'auth/auth',
+      "icon": '../../image/card.png',
+      'deposit': 0
+    }],
     total: "0.00",
     amount: '0.00',
     total: '0.00',
