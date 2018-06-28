@@ -42,23 +42,20 @@ Page({
 			ckId: adData.checkid,
 			type: adData.type
 		})
-		// if(adData.type == 0) {
-		// 	this.setData({
-		// 		carw: true
-		// 	})
-		// }
-		// if(adData.type == 1) {
-		// 	this.setData({
-		// 		cart: true,
-		// 		carn: true
-		// 	})
-		// }
-		// if(adData.type == 2) {
-		// 	this.setData({
-		// 		carw: true,
-		// 		carn: true
-		// 	})
-		// }
+
+		if(adData.type == 3) {
+			this.setData({
+        carOut: true,
+				carIn: true,
+        carTail:true
+			})
+		}
+		if(adData.type == 4) {
+			this.setData({
+        carOut: true,
+        carTail: true
+			})
+		}
 
 	},
 
@@ -97,9 +94,9 @@ Page({
       wx.showModal({
         title: '提示',
         showCancel: false,
-        content: '请上传车头照片'
+        content: '请上传车尾照片'
       });
-    }else if (carnPhoto == undefined) {
+    } else if (carnPhoto == undefined && this.data.carIn) {
       wx.showModal({
         title: '提示',
         showCancel: false,

@@ -19,7 +19,7 @@ Page({
       'deposit': 0
     },
     {
-      "desc": "身份认证",
+      "desc": "注册认证",
       "id": "identity",
       'url': 'auth/auth',
       "icon": '../../image/card.png',

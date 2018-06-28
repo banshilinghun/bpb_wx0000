@@ -30,7 +30,8 @@ Page({
     showRecommend: false,
     shareAwardText: '分享',
     isDiDi:0, //是否是滴滴车主
-    bannerFlag:0
+    bannerFlag:0,
+    showDialog:false
   },
 
   onLoad: function (options) {
@@ -68,7 +69,9 @@ Page({
       success: function (res) {
         that.setData({
           windowWidth: res.windowWidth,
-          bannerHeight: res.windowWidth * 0.466666
+          bannerHeight: res.windowWidth * 0.466666,
+          checkImg: res.windowWidth*0.8,
+          checkImg2: res.windowWidth * 0.8*0.466667
         })
       }
     })
@@ -275,15 +278,25 @@ Page({
               })
             }
             if (res.data.data.check != null) {
-              if (res.data.data.check.checkType == 'SELF_CHECK') {//期中检测
-                if (nowdate < res.data.data.check.checkDate) { //期中检测还未到检测时间
+              if (res.data.data.check.checkType == 'SELF_CHECK') {//自主检测
+                if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //自主检测还未到检测时间
                   this.setData({
                     canCheck: 0
                   })
                 }
-                if (nowdate >= res.data.data.check.checkDate) { //可以期中检测了
+                if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期中检测了
                   this.setData({
                     canCheck: 1
+                  })
+                }
+                if (res.data.data.check.status == 1) {//检测审核中
+                  this.setData({
+                    canCheck: 5
+                  })
+                }
+                if (res.data.data.check.status == 2) {//检测未通过
+                  this.setData({
+                    canCheck: 8
                   })
                 }
               }
@@ -302,6 +315,30 @@ Page({
                 if (res.data.data.check.status == 1) {//期末检测审核中
                   this.setData({
                     canCheck: 5
+                  })
+                }
+
+              }
+              if (res.data.data.check.checkType == 'ANY_CHECK') {//两种检测
+                //console.log(res.data.data.check.checkType)
+                if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
+                  this.setData({
+                    canCheck: 2
+                  })
+                }
+                if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期末检测了
+                  this.setData({
+                    canCheck: 6
+                  })
+                }
+                if (res.data.data.check.status == 1) {//期末检测审核中
+                  this.setData({
+                    canCheck: 5
+                  })
+                }
+                if (res.data.data.check.status == 2) {//检测未通过
+                  this.setData({
+                    canCheck: 7
                   })
                 }
 
@@ -428,6 +465,36 @@ Page({
       latitude: Number(e.currentTarget.dataset.latitude),
       name: e.currentTarget.dataset.name,
       address: e.currentTarget.dataset.address
+    })
+  },
+  selCheck:function(e){
+    this.setData({
+      showDialog: true,
+       srver_longitude: Number(e.currentTarget.dataset.longitude),
+      srver_latitude: Number(e.currentTarget.dataset.latitude),
+      srver_name: e.currentTarget.dataset.name,
+      srver_address: e.currentTarget.dataset.address
+    })
+  },
+  severCheck:function(){
+    var that=this;
+    wx.openLocation({
+      longitude: Number(that.data.srver_longitude),
+      latitude: Number(that.data.srver_latitude),
+      name: that.data.srver_name,
+      address: that.data.srver_address
+    })
+    that.setData({
+      showDialog: false
+    })
+  },
+  selfCheck:function(e){
+    var that=this;
+    wx.navigateTo({
+      url: '../check/check?ckData=' + JSON.stringify(e.currentTarget.dataset)
+    })
+    that.setData({
+      showDialog: false
     })
   },
   tapName: function (event) {
@@ -588,6 +655,11 @@ Page({
   skipRecommend: function(){
     wx.navigateTo({
       url: '../recommend/recommend?flag=active',
+    })
+  },
+  hideDialog:function(){
+    this.setData({
+      showDialog:false
     })
   }
 
