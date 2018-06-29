@@ -6,7 +6,8 @@ Page({
    */
   data: {
     answer: '',
-    flag: ''
+    flag: '',
+    reconList: ['https://wxapi.benpaobao.com/static/app_img/reconsider1.jpg','https://wxapi.benpaobao.com/static/app_img/reconsider2.jpg']
   },
 
   /**
@@ -35,6 +36,15 @@ Page({
   callPhoneListener: function (e) {
     wx.makePhoneCall({
       phoneNumber: e.currentTarget.dataset.phonenumber,
+    })
+  },
+
+  previewImage: function(event){
+    var that = this;
+    console.log(event);
+    wx.previewImage({
+      current: event.currentTarget.dataset.index,
+      urls: that.data.reconList,
     })
   }
 
