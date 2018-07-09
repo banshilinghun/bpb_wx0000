@@ -4,18 +4,19 @@ const timeUtil = require('../../utils/timeUtil.js');
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 
 //活动或者推荐 推荐和活动的页面布局有变化
 //active:活动，recommend:推荐，rule:活动规则，mp:公众号跳转
 const FLAG_ARRAY = ['active', 'recommend', 'rule', 'mp'];
 //二维码地址
-const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
+const QR_CODE_URL = ApiConst.QrCode();
 //推荐地址
-const RECOMMEND_URL = app.globalData.baseUrl + 'app/get/recommendation_user';
+const RECOMMEND_URL = ApiConst.recommendationUser();
 //领取奖励
-const COUPON_URL = app.globalData.baseUrl + 'app/get/collect_account_coupon';
+const COUPON_URL = ApiConst.collectAccountCoupon();
 //发送一键邀请通知
-const NOTIFY_URL = app.globalData.baseUrl + 'app/send/recommender_notify';
+const NOTIFY_URL = ApiConst.recommenderNotify();
 
 Page({
 

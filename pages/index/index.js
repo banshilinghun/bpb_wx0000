@@ -1,7 +1,8 @@
 //index.js
 //获取应用实例
 const app = getApp();
-const shareFlagUrl = app.globalData.baseUrl + 'app/get/share_flag';
+const ApiConst = require("../../utils/api/ApiConst.js");
+const shareFlagUrl = ApiConst.getShareFlag();
 
 Page({
   data: {
@@ -85,7 +86,7 @@ Page({
               console.log(reqData);
               //发起网络请求
               wx.request({
-                url: app.globalData.baseUrl + 'app/user/wx_login',
+                url: ApiConst.wxLogin(),
                 data: reqData,
                 header: {
                   'content-type': 'application/json'
@@ -246,7 +247,7 @@ Page({
       var nickname = e.detail.userInfo.nickName;
       var gender = e.detail.userInfo.gender;
       wx.request({
-        url: app.globalData.baseUrl + 'app/user/wx_login',
+        url: ApiConst.wxLogin(),
         data: {
           wx_code: wx_code,
           avatar: avatarUrl,

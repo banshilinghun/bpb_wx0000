@@ -1,4 +1,5 @@
 var util = require("../../utils/util.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 var sourceType = [
 	['camera'],
@@ -104,7 +105,7 @@ Page({
       });
     }else{
       wx.request({
-        url: app.globalData.baseUrl + 'app/commit/mid_check',
+        url: ApiConst.midCheck(),
         data: formData,
         header: app.globalData.header,
         success: res => {
@@ -149,7 +150,7 @@ Page({
 				//				console.log(res)
 				var wxres = res;
 				wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/upload/mid_check_img',
+          url: ApiConst.midCheckImg(),
 					filePath: res.tempFilePaths[0],
           name: 'left_img',
 					header: {
@@ -205,7 +206,7 @@ Page({
         //				console.log(res)
         var wxres = res;
         wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/upload/mid_check_img',
+          url: ApiConst.midCheckImg(),
           filePath: res.tempFilePaths[0],
           name: 'right_img',
           header: {
@@ -262,7 +263,7 @@ Page({
 				var wxres = res;
 
 				wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/upload/mid_check_img',
+          url: ApiConst.midCheckImg(),
 					filePath: res.tempFilePaths[0],
           name: 'in_img',
 					header: {
@@ -318,7 +319,7 @@ Page({
 				var wxres = res;
         console.log(wxres);
 				wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/upload/mid_check_img',
+          url: ApiConst.midCheckImg(),
 					filePath: res.tempFilePaths[0],
           name: 'front_img',
 					header: {

@@ -2,6 +2,7 @@ var app = getApp()
 var util = require("../../utils/util.js");
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 Page({
   data: {
     registBtnTxt: "确定",
@@ -104,7 +105,7 @@ Page({
     if (flag) {
       this.setregistData1();
       wx.request({
-        url: app.globalData.baseUrl + 'app/user/regist',
+        url: ApiConst.regist(),
         data: registData,
         header: app.globalData.header,
         success: res => {
@@ -216,7 +217,7 @@ Page({
     }, 1000);
 
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/regist_verify_wx',
+      url: ApiConst.registVerifyWx(),
       data: rqData,
       header: app.globalData.header,
       success: res => {
@@ -250,7 +251,7 @@ Page({
     var reqData={};
     reqData.recommender_id=recommender_id;
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/recommend_reward_list',
+      url: ApiConst.recommendRewardList(),
       data: reqData,
       header: {
         'content-type': 'application/json'

@@ -4,14 +4,14 @@
  */
 
 const app = getApp();
-const Api = require("../../utils/Api.js");
+const Api = require("../../utils/api/ApiConst.js");
 
 /**
  * 改变红点状态
  */
 function requestDotStatus() {
   wx.request({
-    url: Api.dotUrl,
+    url: Api.GetDotUrl(),
     header: app.globalData.header,
     success: function (res) {
       let dataBean = res.data;

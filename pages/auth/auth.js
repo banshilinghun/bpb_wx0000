@@ -1,4 +1,5 @@
 var util = require("../../utils/util.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 var sourceType = [
   ['camera'],
@@ -86,7 +87,7 @@ Page({
     })
    
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/brands',
+      url: ApiConst.getBrands(),
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -401,7 +402,7 @@ Page({
 
       if (carPhoto != undefined) {
         wx.request({
-          url: app.globalData.baseUrl + 'app/user/auth_identity_info',
+          url: ApiConst.authIdentityInfo(),
           data: formData,
           header: app.globalData.header,
           success: res => {
@@ -462,7 +463,7 @@ Page({
         console.log(res)
         var wxres = res;
         wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/user/upload_identity_img', //仅为示例，非真实的接口地址
+          url: ApiConst.uploadIdentityImg(), //仅为示例，非真实的接口地址
           filePath: res.tempFilePaths[0],
           name: 'car',
           header: {

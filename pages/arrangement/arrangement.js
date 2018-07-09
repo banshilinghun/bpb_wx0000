@@ -1,5 +1,6 @@
 // var order = ['demo1', 'demo2', 'demo3']
-const app = getApp()
+const app = getApp();
+const ApiConst = require("../../utils/api/ApiConst.js");
 Page({
   data: {
     toView: 'green',
@@ -34,7 +35,7 @@ Page({
       server_id: server_id
     }
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/subscribe_dates',
+      url: ApiConst.getSubscribeDate(),
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -113,7 +114,7 @@ Page({
       success: function (sure) {
         if (sure.confirm) {
           wx.request({
-            url: app.globalData.baseUrl + 'app/save/ad_subscribe',
+            url: ApiConst.adSubscribe(),
             data: reqData,
             header: app.globalData.header,
             success: res => {

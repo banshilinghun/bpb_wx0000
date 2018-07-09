@@ -1,4 +1,5 @@
 var util = require("../../utils/util.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 Page({
 	data: {
@@ -22,7 +23,7 @@ Page({
 	},
 	onLoad: function(options) {
 		wx.request({
-			url: app.globalData.baseUrl + 'app/get/citys',
+			url: ApiConst.getCitys(),
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -53,7 +54,7 @@ Page({
 		})
 
 		wx.request({
-			url: app.globalData.baseUrl + 'app/get/user_auth_status',
+			url: ApiConst.getAuthStatus(),
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -103,8 +104,10 @@ Page({
 							bank_abb: res.data.bank
 						})
 						wx.request({
-							url: app.globalData.baseUrl + 'app/get/bank_info?bank_abb=' + res.data.bank,
-							data: {},
+							url: ApiConst.getBankInfo(),
+							data: {
+								bank_abb: res.data.bank
+							},
 							header: app.globalData.header,
 							success: res2 => {
 								if(res2.data.code == 1000) {
@@ -300,7 +303,7 @@ Page({
 				});
 			} else {
 				wx.request({
-					url: app.globalData.baseUrl + 'app/add/user_bankcard',
+					url: ApiConst.addBankcard(),
 					data: formData,
 					header: app.globalData.header,
 					success: res => {

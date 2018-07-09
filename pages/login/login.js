@@ -1,4 +1,5 @@
 var util = require("../../utils/util.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 //console.log(222)
 
@@ -65,7 +66,7 @@ Page({
 		if(flag) {
 			this.setLoginData1();
 				wx.request({
-				url: app.globalData.baseUrl + 'app/user/login',
+				url: ApiConst.loginUrl(),
 				data: loginData,
 				header: {
 					'content-type': 'application/json'

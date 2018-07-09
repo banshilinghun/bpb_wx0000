@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
+const ApiConst = require("../../utils/api/ApiConst.js");
 
 Page({
   data: {
@@ -37,7 +38,7 @@ Page({
   getMyAd: function (reqData) { 
     var z = this;
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/my_ad',
+      url: ApiConst.myAd(),
       data: reqData,
       header: app.globalData.header,
       success: res => {

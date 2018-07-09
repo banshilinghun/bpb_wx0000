@@ -1,4 +1,5 @@
-const app = getApp()
+const app = getApp();
+const ApiConst = require("../../utils/api/ApiConst.js");
 
 Page({
 
@@ -51,7 +52,7 @@ Page({
     //		uidData.user_id = app.globalData.uid;
 
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_auth_status',
+      url: ApiConst.getAuthStatus(),
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -102,7 +103,7 @@ Page({
   followFlag: function () {//查询是否关注公众号
     var that = this;
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_has_subscribe',
+      url: ApiConst.userHasSubcribe(),
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
@@ -138,7 +139,7 @@ Page({
     //		uidData.user_id = app.globalData.uid;
 
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_auth_status',
+      url: ApiConst.getAuthStatus(),
       data: {},
       header: app.globalData.header,
       success: res => {

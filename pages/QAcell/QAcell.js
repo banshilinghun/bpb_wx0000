@@ -1,5 +1,6 @@
 
 const url = '../QAanswer/answer';
+const ApiConst = require("../../utils/api/ApiConst.js");
 var app = getApp();
 Page({
 
@@ -43,7 +44,7 @@ Page({
         title: '奔跑中🚗...',
       })
       wx.request({
-        url: app.globalData.baseUrl + 'app/get/user_auth_status',
+        url: ApiConst.getAuthStatus(),
         data: {},
         header: app.globalData.header,
         success: res => {

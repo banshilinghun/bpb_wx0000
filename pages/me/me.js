@@ -3,8 +3,8 @@ var util = require("../../utils/util.js");
 const Toast = require('../../components/toast/toast');
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
-const Api = require("../../utils/Api.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp();
 //推荐奖励是否关闭
 let shareFlag;
@@ -80,7 +80,7 @@ Page({
       }
     }
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/account_coupon',
+      url: ApiConst.accountCoupon(),
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -316,7 +316,7 @@ Page({
     })
 
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/account',
+      url: ApiConst.userAccount(),
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -350,7 +350,7 @@ Page({
 
     if (loginFlag == 1) {//登录了
       wx.request({
-        url: app.globalData.baseUrl + 'app/get/user_auth_status',
+        url: ApiConst.getAuthStatus(),
         data: {},
         header: app.globalData.header,
         success: res => {
@@ -559,7 +559,7 @@ Page({
   followFlag: function () {//查询是否关注公众号
     var that = this
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_has_subscribe',
+      url: ApiConst.userHasSubcribe(),
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
@@ -640,7 +640,7 @@ Page({
     var couponType = data.type;
     if (loginFlag == 1) {
       wx.request({
-        url: app.globalData.baseUrl + 'app/get/collect_account_coupon',
+        url: ApiConst.collectAccountCoupon(),
         data: couponData,
         header: app.globalData.header,
         success: res => {

@@ -1,10 +1,11 @@
 const util = require("../../utils/util.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 var formatLocation = util.formatLocation;
 var getDistance = util.getDistance;
 const app = getApp();
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
-const ad_server_list = app.globalData.baseUrl + 'app/get/ad_server_list';
+const ad_server_list = ApiConst.adServerList();
 const mapId = 'myMap';
 const defaultScale = 11;
 
@@ -20,7 +21,7 @@ Page({
     showMap: false,
     actionText: '地图',
     //map end
-    joinListUrl: app.globalData.baseUrl + 'app/get/ad_joined_users',
+    joinListUrl: ApiConst.adJoinedUser(),
     banners: [],
     receive: 0,
     expressList: [],
@@ -206,7 +207,7 @@ Page({
   checkUserAuthStatus: function(){
     let that = this;
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_auth_status',
+      url: ApiConst.getAuthStatus(),
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -253,7 +254,7 @@ Page({
     var that = this;
     //console.log(reqData)
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/ad_info',
+      url: ApiConst.getAdInfo(),
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -466,7 +467,7 @@ Page({
     var subscribe_id = this.data.selId;
     var reqData = { subscribe_id: subscribe_id }
     wx.request({
-      url: app.globalData.baseUrl + 'app/cancel/ad_subscribe',
+      url: ApiConst.cancelSubcribe(),
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -502,7 +503,7 @@ Page({
     console.log(that.data.serverId)
     if (app.globalData.login == 1) {
       wx.request({
-        url: app.globalData.baseUrl + 'app/get/user_auth_status',
+        url: ApiConst.getAuthStatus(),
         data: {},
         header: app.globalData.header,
         success: res => {

@@ -1,12 +1,13 @@
 // pages/joinList/joinList.js
 var app = getApp();
+const ApiConst = require("../../utils/api/ApiConst.js");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    joinListUrl: app.globalData.baseUrl + 'app/get/ad_joined_users',
+    joinListUrl: ApiConst.adJoinedUser(),
     userInfo: [],
     adId: '',
     pageIndex: 1,
