@@ -44,8 +44,8 @@ Page({
       {
         done: false,
         current: false,
-        text: '双方各获得',
-        secondText: '30元',
+        text: '即可获得',
+        secondText: '10元',
         thirdText: '奖励'
       }
     ],
@@ -54,7 +54,7 @@ Page({
     //顶部图片
     topImage: {
       imageHeight: 120,
-      imageSrc: 'https://wxapi.benpaobao.com/static/app_img/recommend-icon.png'
+      imageSrc: 'https://wxapi.benpaobao.com/static/app_img/recommend-iconV2.png'
     },
     //一键提醒 view 宽度
     remindWidth: 0,

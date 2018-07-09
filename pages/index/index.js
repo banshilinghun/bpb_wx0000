@@ -76,7 +76,7 @@ Page({
               } else {
                 reqData.avatar = '';
                 reqData.nickname = '';
-                reqData.gender = 0
+                reqData.gender = 0;
               }
               if (recommendId) {
                 reqData.recommender_userid = recommendId;
@@ -93,11 +93,10 @@ Page({
                 success: res => {
                   //console.log(res.data.data)
                   if (res.data.code == 1000) {
-                    //								var param = JSON.stringify(res.data.data);
+                    //var param = JSON.stringify(res.data.data);
                     //app.globalData.session_id = res.data.data.session_id;
                     app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
                     app.globalData.uid = res.data.data.uid;
-                    //								console.log(res.data.data);	 ·
                     app.globalData.checkStaus = res.data.data.status;
                     app.globalData.isFirst = res.data.data.isFirst;
                     app.globalData.recomId = that.data.user_id;
@@ -110,11 +109,9 @@ Page({
                       app.globalData.login = 0;
                     }
                     if (type == 1 || type == 2) {
-                      if (res.data.data.phone) {
-                        that.showMain();
-                      } else {
-                        that.getShareFlag(recommendId);
-                      }
+                      //没有手机号处理,跳转拉新页面（novice）
+                      //if (res.data.data.phone) {}
+                      that.showMain();
                     } else {
                       console.log(type)
                       if (that.data.jump == 'ads') {

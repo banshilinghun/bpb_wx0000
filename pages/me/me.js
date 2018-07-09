@@ -7,7 +7,7 @@ const Api = require("../../utils/Api.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const app = getApp();
 //推荐奖励是否关闭
-const shareFlag = app.globalData.shareFlag;
+let shareFlag;
 Page({
   data: {
     inviteId: '我是邀请人id',
@@ -59,6 +59,7 @@ Page({
   },
 
   onShow: function () {
+    shareFlag = app.globalData.shareFlag;
     //请求判断是否显示红点
     dotHelper.requestDotStatus();
     var loginFlag = app.globalData.login;
@@ -244,6 +245,8 @@ Page({
           //console.log(recommendAmount)
           //console.log(stepList)
           //没有推荐奖励信息且推荐开关已开才显示推荐邀请
+          console.log(recommendList);
+          console.log('shareFlag-------->' + shareFlag);
           if (recommendList.length == 0) {
             if (shareFlag) {
               stepList.push({
@@ -658,7 +661,7 @@ Page({
               that.setData({
                 showGoodsDetail: true,
                 shareTitle: text, 
-                description: shareFlag ? '邀请新用户安装广告，双方还能各拿奖励30元哦!' : '赶快邀请好友一起赚钱！'
+                description: shareFlag ? '邀请新用户安装广告，还能拿奖励10元哦!' : '赶快邀请好友一起赚钱！'
               })
             }
           } else {
