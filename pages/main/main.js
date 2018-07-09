@@ -562,8 +562,8 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-         //res.data.data = false;
           app.globalData.shareFlag = res.data.data;
+          console.log('app---------->' + app.globalData.shareFlag);
           that.setData({
             bannerFlag: that.data.bannerFlag+1,
             showRecommend: res.data.data,
