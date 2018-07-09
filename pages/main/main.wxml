@@ -153,4 +153,4 @@
 
 <bpb-follow shareit='{{shareit}}'></bpb-follow>
 <bpb-reward reward='{{reward}}'></bpb-reward>
- <navigator url="../register/register" style='height:40px;width:40px;'> 2222222</navigator>          
+ <!-- <navigator url="../register/register" style='height:40px;width:40px;'> 2222222</navigator>           -->
