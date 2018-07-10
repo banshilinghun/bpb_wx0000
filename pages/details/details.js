@@ -62,6 +62,8 @@ Page({
     adTime: '',
     adId: '',
     serverId:'',
+    serverName: '',
+    serverAddress: '',
     showShareModel: false,
     showShare:true,
     shareAwardText: '分享',
@@ -497,8 +499,12 @@ Page({
     var that=this;
     console.log(e)
     that.setData({
-      serverId: e.currentTarget.dataset.serverid
+      serverId: e.currentTarget.dataset.serverid,
+      serverName: e.currentTarget.dataset.servername,
+      serverAddress: e.currentTarget.dataset.serveraddress,
     })
+    console.log('serverName-------->' + that.data.serverName);
+    console.log('serverAddress-------->' + that.data.serverAddress);
     console.log(that.data.serverId)
     if (app.globalData.login == 1) {
       wx.request({
@@ -510,10 +516,11 @@ Page({
             //					console.log(res.data)
             if (res.data.data.status == 3) {
               console.log(this.data.isDiDi)
-              if(that.data.isDiDi==1){
+              if (that.data.isDiDi == 1 && !app.globalData.showRuleTip){
                   that.setData({
                     showRule:true
                   })
+                  app.globalData.showRuleTip = true;
               }else{
                 wx.navigateTo({
                   url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
