@@ -23,7 +23,9 @@
     "pages/valuation/valuation",
     "pages/QAservice/service",
     "pages/QAcell/QAcell",
-    "pages/QAanswer/answer"
+    "pages/QAanswer/answer",
+    "pages/switchcity/switchcity",
+    "pages/brandDetail/brandDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

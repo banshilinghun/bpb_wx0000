@@ -1,0 +1,37 @@
+<view>
+  <view class='brand-wrapper'>
+    <image class='brand-logo' src='{{ brandLogo }}'></image>
+    <view class='brand-name'>
+      <text>{{ brandName }}</text>
+    </view>
+  </view>
+  <view class="selection" wx:for="{{ modelList }}" wx:key="{{ item.company_id }}">
+    <view class="item_letter" id="{{ item.initial }}">{{ item.company_name }}</view>
+    <view class="item_brand" wx:for="{{ item.models }}" wx:for-item="model" wx:key="{{ model.model_id }}" data-brand="{{ model }}" bindtap="bindCarModel">
+      <image class='brand-child-logo' src='{{ model.model_logo }}'></image>
+      <view class='brand-child-name'>
+        <text>{{ model.model_name }}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='rule-dialog' wx:if='{{ showDialog }}'>
+  <view class='rule-mask'></view>
+  <view class='root'>
+    <view class='content-wrapper'>
+      <view class='content-root'>
+        <view class='content'>
+          <view class='brand-title'>
+            <text>选择车型款式</text>
+          </view>
+          <scroll-view scroll-y="true" class='brand-scroll-view'>
+
+          </scroll-view>
+        </view>
+      </view>
+      <button class='btn' bindtap='actionListener' data-status='{{ status }}'>{{ btnStr }}</button>
+    </view>
+    <image class="colse" src="../../image/close.png" bindtap="hideDialog"></image>
+  </view>
+</view>

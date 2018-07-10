@@ -1,0 +1,20 @@
+<view class="searchLetter touchClass">
+  <view wx:for="{{ searchLetter }}" class='letter-text' wx:key="index" data-letter="{{ item.name }}" catchtouchend="clickLetter">{{ item.name }}</view>
+</view>
+<!-- 字母toast -->
+<block wx:if="{{ isShowLetter }}">
+  <view class="showSlectedLetter">
+    {{showLetter}}
+  </view>
+</block>
+<scroll-view scroll-y="true" style="height:{{ winHeight }}px" bindscroll="bindScroll" scroll-into-view="{{ scrollTopId }}" scroll-top="{{ scrollTop }}">
+  <view class="selection" wx:for="{{ carList }}" wx:key="{{ item.initial }}">
+    <view class="item_letter" id="{{ item.initial }}">{{ item.initial }}</view>
+    <view class="item_brand" wx:for="{{ item.carInfo }}" wx:for-item="ci" wx:key="{{ ci.id }}" data-brand="{{ ci }}" bindtap="bindCarBrand">
+      <image class='brand-logo' src='{{ ci.logo }}'></image>
+      <view class='brand-name'>
+        <text>{{ ci.name }}</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

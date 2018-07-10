@@ -59,6 +59,16 @@ function getBrands(){
   return baseUrl + 'app/get/brands';
 }
 
+//获取所有车型
+function getAllBrands(){
+  return baseUrl + 'app/get/all_brands';
+}
+
+//获取车型详情
+function getBrandsDetail(){
+  return baseUrl + 'app/get/brand_details';
+}
+
 //上传认证信息
 function authIdentityInfo(){
   return baseUrl + 'app/user/auth_identity_info';
@@ -250,5 +260,7 @@ module.exports = {
   withdraw: withdraw,
   adServerList: adServerList,
   QrCode: QrCode,
-  addBankcard: addBankcard
+  addBankcard: addBankcard,
+  getAllBrands: getAllBrands,
+  getBrandsDetail: getBrandsDetail
 }
