@@ -242,6 +242,7 @@ background: #ccc;
   background-color: #fff;
   border-top: 1rpx solid #ddd;
   color: #333;
+  font-weight: 400;
 }
 
 .btn-cancel{
