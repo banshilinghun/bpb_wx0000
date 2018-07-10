@@ -5,9 +5,9 @@
       <text>{{ brandName }}</text>
     </view>
   </view>
-  <view class="selection" wx:for="{{ modelList }}" wx:key="{{ item.company_id }}">
+  <view class="selection" wx:for="{{ modelList }}" wx:key="item.company_id">
     <view class="item_letter" id="{{ item.initial }}">{{ item.company_name }}</view>
-    <view class="item_brand" wx:for="{{ item.models }}" wx:for-item="model" wx:key="{{ model.model_id }}" data-brand="{{ model }}" bindtap="bindCarModel">
+    <view class="item_brand" wx:for="{{ item.models }}" wx:for-item="model" wx:key="model.model_id" data-brand="{{ model }}" bindtap="bindCarModel">
       <image class='brand-child-logo' src='{{ model.model_logo }}'></image>
       <view class='brand-child-name'>
         <text>{{ model.model_name }}</text>
@@ -26,11 +26,15 @@
             <text>选择车型款式</text>
           </view>
           <scroll-view scroll-y="true" class='brand-scroll-view'>
-
+            <radio-group class="radio-group" bindchange="radioChange">
+                <radio class="radio" wx:for="{{ carModels }}" wx:for-item="item" wx:key="name" value="{{ item.detail_id }}" checked="{{ index === 0 }}">
+                    <text>{{ item.detail_name }}</text>
+                </radio>
+            </radio-group>
           </scroll-view>
         </view>
       </view>
-      <button class='btn' bindtap='actionListener' data-status='{{ status }}'>{{ btnStr }}</button>
+      <button class='btn' bindtap='selectListener'>确认选择</button>
     </view>
     <image class="colse" src="../../image/close.png" bindtap="hideDialog"></image>
   </view>

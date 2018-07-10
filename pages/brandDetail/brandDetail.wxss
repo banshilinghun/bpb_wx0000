@@ -84,7 +84,7 @@
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 3;
-  width: 70%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,11 +105,12 @@
 }
 
 .btn {
-  width: 100%;
-  height: 90rpx;
-  line-height: 90rpx;
+  width: 50%;
+  height: 70rpx;
+  line-height: 70rpx;
   background-color: #ff555c;
-  font-size: 36rpx;
+  padding: 0;
+  font-size: 32rpx;
   border-radius: 8rpx;
   color: #fff;
 }
@@ -157,5 +158,19 @@ button::after {
 }
 
 .brand-scroll-view{
-  height: 300rpx;
+  max-height: 500rpx;
+}
+
+.radio{
+  display: block;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.radio-group{
+  text-align: center;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
 }

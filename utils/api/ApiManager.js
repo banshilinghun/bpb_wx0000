@@ -4,7 +4,7 @@
  */
 const domainAttr = ['release', 'release2', 'debug']
 //api 1
-const domain = domainAttr[2];//1
+const domain = domainAttr[1];//1
 
 const releaseDomain = 'https://wxapi.benpaobao.com/';
 const releaseDomain2 = 'https://wxapi2.benpaobao.com/';

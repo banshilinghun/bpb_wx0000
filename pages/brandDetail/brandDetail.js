@@ -13,7 +13,8 @@ Page({
     brandLogo: '',
     brandName: '',
     modelList: [],
-    showDialog: true
+    showDialog: false,
+    carModels: []
   },
 
   /**
@@ -46,5 +47,37 @@ Page({
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
+
+  bindCarModel: function(event){
+    console.log(event);
+    this.setData({
+      carModels: event.currentTarget.dataset.brand.details
+    })
+    //选择款式
+    if (this.data.carModels && this.data.carModels.length !== 0){
+      this.setData({
+        showDialog: true
+      })
+    }else{
+      this.setData({
+        showDialog: false
+      })
+    }
+  },
+
+  selectListener: function(){
+
+  },
+
+  radioChange: function(event){
+    console.log(event.detail.value);
+    console.log(event.detail.value.detail_id);
+  },
+
+  hideDialog: function(){
+    this.setData({
+      showDialog: false
+    })
+  }
 
 })
