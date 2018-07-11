@@ -69,7 +69,7 @@
                 <view class="weui-label">选择车型</view>
               </view>
               <view class="weui-cell__bd" bindtap="selectBrand">
-                <input class="weui-input" id="brand" name="brand" maxlength='20' type="text" placeholder="请选择车辆品牌/车型" value="{{areaInfo2}}" disabled='disabled' />
+                <input class="weui-input" id="brand" name="brand" maxlength='20' type="text" placeholder="请选择车辆品牌/车型" value="{{ areaInfo2 }}" disabled='disabled' />
               </view>
             </view>
             <view class="weui-cell weui-cell_input">
@@ -125,7 +125,7 @@
               </view>
             </view>
           </view>
-          <!-- <view class="weui-cells my-cells martnone">
+           <view class="weui-cells my-cells martnone">
             <view class="weui-cell">
               <view class="weui-cell__bd">
                 <view class="weui-uploader">
@@ -147,7 +147,7 @@
                 </view>
               </view>
             </view>
-          </view> -->
+          </view> 
         </view>
         <button formType="submit" class='btn-quit'> 提交</button>
       </form>

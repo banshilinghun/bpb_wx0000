@@ -57,7 +57,7 @@
   height: 60rpx;
   width: 100%;
   position: relative;
-  background-color: #e5e5e5;
+  background-color: #F6F6F6;
 }
 
 .no-more-wrapper {
@@ -65,7 +65,7 @@
   height: 100%;
   position: absolute;
   left: 30%;
-  background-color: #e5e5e5;
+  background-color: #F6F6F6;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,5 +91,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e5e5e5;
+  background-color: #F6F6F6;
 }

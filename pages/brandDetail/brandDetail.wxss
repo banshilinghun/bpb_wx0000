@@ -159,6 +159,8 @@ button::after {
 
 .brand-scroll-view{
   max-height: 500rpx;
+  padding-top: 30rpx;
+  margin-bottom: 30rpx;
 }
 
 .radio{

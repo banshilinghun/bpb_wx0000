@@ -5,6 +5,7 @@ const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
+const ApiManager = require("../../utils/api/ApiManager.js");
 var app = getApp()
 const shareFlagUrl = ApiConst.getShareFlag();
 
@@ -31,7 +32,14 @@ Page({
     shareAwardText: '分享',
     isDiDi:0, //是否是滴滴车主
     bannerFlag:0,
-    showDialog:false
+    showDialog:false,
+    isShowLoadingMore: false,
+    showNomore: false,
+    //用于上拉加载
+    sortedKey: '',
+    hasmore: false,
+    pageIndex: 0,
+    count: 6,
   },
 
   onLoad: function (options) {
@@ -75,6 +83,36 @@ Page({
         })
       }
     })
+    //获取用户是否需要补充车型信息
+    this.judgeNeedAddCarModel();
+  },
+
+  judgeNeedAddCarModel: function(){
+    let requestData = {
+      url: ApiConst.needAddCarModel(),
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        console.log(res);
+        //需要补充车型信息
+        app.globalData.needAddCarModel = res;
+        if(res){
+          wx.showModal({
+            title: '车型补充提示',
+            content: '为了保证广告安装和广告计费正常进行，需要您补充完善车型信息',
+            showCancel: false,
+            success: res => {
+              if(res.confirm){
+                wx.navigateTo({
+                  url: '../brandList/brandList?flag=1',
+                })
+              }
+            }
+          })
+        }
+      }
+    };
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -198,48 +236,66 @@ Page({
         z.getMyAd(reqData);
       }
     }
+
+    this.requestAdList(this.data.pageIndex);
+  },
+
+  /**
+   * 加载广告列表
+   */
+  requestAdList: function(currentPageIndex){
+    var that = this;
+    let reqInfo = {
+      page: currentPageIndex,
+      page_count: that.data.count
+    };
+    if (currentPageIndex != 0 && that.data.sorted_key){
+      reqInfo.sorted_key = that.data.sorted_key
+    }
     wx.request({
       url: ApiConst.adListUrl(),
-      data: {},
+      data: reqInfo,
       header: app.globalData.header,
       success: res => {
-        wx.stopPullDownRefresh();
         if (res.data.code == 1000) {
+          //更新pageIndex
+          that.setData({
+            pageIndex: currentPageIndex
+          })
           var nowdate = util.dateToString(new Date());
-          if (res.data.data.length > 0) {
-            //						console.log(res.data.data);
-            for (var i = 0; i < res.data.data.length; i++) {
-              if (res.data.data[i].run_status == 1) {
-                if (nowdate < res.data.data[i].end_date) {
-                  if (res.data.data[i].current_count > 0) {
-                    res.data.data[i].state = 0;//开始的
+          let dataList = res.data.data.ad_list;
+          if (dataList.length > 0) {
+            for (var i = 0; i < dataList.length; i++) {
+              if (dataList[i].run_status == 1) {
+                if (nowdate < dataList[i].end_date) {
+                  if (dataList[i].current_count > 0) {
+                    dataList[i].state = 0;//开始的
                   } else {
-                    res.data.data[i].state = 2;//已经投完
+                    dataList[i].state = 2;//已经投完
                   }
                 } else {
-                  res.data.data[i].state = 3;//已经结束
+                  dataList[i].state = 3;//已经结束
                 }
               } else {
-                res.data.data[i].state = 1;//即将开始
+                dataList[i].state = 1;//即将开始
               }
-
-              res.data.data[i].begin_date = res.data.data[i].begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-              res.data.data[i].end_date = res.data.data[i].end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+              dataList[i].begin_date = dataList[i].begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+              dataList[i].end_date = dataList[i].end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
             }
-
-            var adList = res.data.data;
-
-            //console.log(adList)
-            this.setData({
-              adList: adList
+            if(currentPageIndex != 0){
+              dataList = that.data.adList.concat(dataList);
+            }
+            that.setData({
+              adList: dataList,
+              showNomore: !res.data.data.hasMore,
+              hasmore: res.data.data.hasMore,
+              sorted_key: res.data.data.sortedKey
             })
           } else {
-            this.setData({
+            that.setData({
               adList: []
             })
           }
-
-
         } else {
           wx.showModal({
             title: '提示',
@@ -255,10 +311,44 @@ Page({
           showCancel: false,
           content: '网络错误'
         });
+      },
+      complete: res => {
+        wx.stopPullDownRefresh();
+        that.setData({
+          isShowLoadingMore: false
+        });
       }
     })
-
   },
+
+  onPullDownRefresh: function () {
+    wx.showToast({
+      title: '奔跑中🚗...',
+      icon: 'loading'
+    })
+    this.setData({
+      pageIndex: 0
+    });
+    this.onShow();
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    var that = this;
+    if (!that.data.hasmore || that.data.isShowLoadingMore) {
+      return;
+    }
+    //this.showLoadingToast();
+    that.setData({
+      isShowLoadingMore: true
+    });
+    setTimeout(function () {
+      that.requestAdList(that.data.pageIndex + 1);
+    }, 1000);
+  },
+
   getMyAd:function(reqData){
     var z=this;
     wx.request({
@@ -341,7 +431,6 @@ Page({
                     canCheck: 7
                   })
                 }
-
               }
             }
             res.data.data.begin_date = res.data.data.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
@@ -399,14 +488,7 @@ Page({
     })
 
   },
-  onPullDownRefresh: function () {
-    wx.showToast({
-      title: '奔跑中🚗...',
-      icon: 'loading'
-    })
-    this.onShow();
-  },
-
+  
   check: function (e) {
     wx.navigateTo({
       url: '../check/check?ckData=' + JSON.stringify(e.currentTarget.dataset)

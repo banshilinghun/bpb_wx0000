@@ -24,7 +24,9 @@ App({
     //分享开关
     shareFlag: false,
     //是否已经展示认证弹窗
-    showAuthTip: false
+    showAuthTip: false,
+    //需要补全车型信息
+    needAddCarModel: false
   },
 
 })

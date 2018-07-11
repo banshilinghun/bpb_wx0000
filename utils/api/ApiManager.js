@@ -2,9 +2,9 @@
 /**
  * API 接口管理
  */
-const domainAttr = ['release', 'release2', 'debug']
+const domainArray = ['release', 'release2', 'debug']
 //api 1
-const domain = domainAttr[1];//1
+const domain = domainArray[2];//1
 
 const releaseDomain = 'https://wxapi.benpaobao.com/';
 const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
@@ -15,11 +15,11 @@ const debugDomain = 'http://192.168.1.142:8000/';
  */
 function getBaseUrl() {
   switch (domain) {
-    case domainAttr[0]:
+    case domainArray[0]:
       return releaseDomain;
-    case domainAttr[1]:
+    case domainArray[1]:
       return releaseDomain2;
-    case domainAttr[2]:
+    case domainArray[2]:
       return debugDomain;
     default:
       return releaseDomain;
@@ -32,6 +32,7 @@ class uploadInfo {
     this.filePath = object.filePath;
     this.fileName = object.fileName;
     this.formData = object.formData;
+    this.header = object.header;
     this.success = object.success;
     this.fail = object.fail;
     this.complete = object.complete;
@@ -42,6 +43,7 @@ class requestInfo {
   constructor(object) {
     this.url = object.url;
     this.data = object.data;
+    this.header = object.header;
     this.success = object.success;
     this.fail = object.fail;
     this.complete = object.complete;
@@ -59,6 +61,7 @@ function uploadFile(uploadInfo) {
     url: uploadInfo.url,
     filePath: uploadInfo.filePath,
     name: uploadInfo.fileName,
+    header: uploadInfo.header,
     formData: uploadInfo.formData,
     success: function (res) {
       if (res.statusCode == 200) {
@@ -100,6 +103,7 @@ function sendRequest(requestInfo) {
   wx.request({
     url: requestInfo.url,
     data: requestInfo.data,
+    header: requestInfo.header,
     success: function (res) {
       if (res.statusCode == 200) {
         let dataBean = res.data;

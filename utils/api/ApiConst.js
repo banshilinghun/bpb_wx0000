@@ -219,6 +219,16 @@ function QrCode(){
   return baseUrl + 'app/get/wx_code';
 }
 
+//获取用户是否需要补充车型信息
+function needAddCarModel(){
+  return baseUrl + 'app/get/is_add_car_model';
+}
+
+//添加用户车型信息
+function addCarModel(){
+  return baseUrl + 'app/add/car_model_info';
+}
+
 module.exports = {
   GetDotUrl: GetDotUrl,
   getCitys: getCitys,
@@ -262,5 +272,7 @@ module.exports = {
   QrCode: QrCode,
   addBankcard: addBankcard,
   getAllBrands: getAllBrands,
-  getBrandsDetail: getBrandsDetail
+  getBrandsDetail: getBrandsDetail,
+  needAddCarModel: needAddCarModel,
+  addCarModel: addCarModel
 }

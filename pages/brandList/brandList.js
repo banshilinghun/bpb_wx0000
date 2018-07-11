@@ -1,7 +1,8 @@
-var city = require('city.js');
+
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require('../../utils/api/ApiManager.js');
 var app = getApp()
+
 Page({
   data: {
     searchLetter: [],
@@ -13,23 +14,29 @@ Page({
     isShowLetter: false,
     scrollTop: 0,//置顶高度
     scrollTopId: '',//置顶id
+    flag: 1, //1：表示补充车型，2：表示注册选择车型
   },
 
-  onLoad: function () {
+  onLoad: function (options) {
     // 生命周期函数--监听页面加载
     var sysInfo = wx.getSystemInfoSync();
     var winHeight = sysInfo.windowHeight;
     this.setData({
       winHeight: winHeight
     })
+    this.setData({
+      flag: options.flag || 1
+    })
     this.requestAllBrands();
   },
 
+  //请求所有车型信息
   requestAllBrands: function(){
     var that = this;
     let requestData = {
       url: ApiConst.getAllBrands(),
       data: {},
+      header: app.globalData.header,
       success: res => {
         console.log(res);
         let letterList = that.getLetterList(res);
@@ -46,6 +53,7 @@ Page({
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
+  //首字母列表
   getLetterList: function (targetList) {
     let letterList = this.sortLetter(targetList);
     let tempLetter = [];
@@ -57,6 +65,7 @@ Page({
     return tempLetter;
   },
 
+  //分组
   divideGroup: function(targetList){
     let letterList = this.sortLetter(targetList);
     let tempList = [];
@@ -113,9 +122,11 @@ Page({
 
   //选择车型
   bindCarBrand: function (e) {
+    var that = this;
     console.log(e);
+    //厂商id， 厂商logo，厂商名, flag标识
     wx.navigateTo({
-      url: '../brandDetail/brandDetail?brand_id=' + e.currentTarget.dataset.brand.brandId + '&brand_logo=' + e.currentTarget.dataset.brand.logo + '&brand_name=' + e.currentTarget.dataset.brand.name
+      url: '../brandDetail/brandDetail?brand_id=' + e.currentTarget.dataset.brand.brandId + '&brand_logo=' + e.currentTarget.dataset.brand.logo + '&brand_name=' + e.currentTarget.dataset.brand.name + '&flag=' + that.data.flag
     })
   },
 

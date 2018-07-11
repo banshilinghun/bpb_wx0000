@@ -57,8 +57,12 @@
         <button class="btn-red dh-btn" wx:if="{{canCheck==4}}" bindtap="goMap" data-longitude="{{myAd.subscribe.lng}}" data-latitude="{{myAd.subscribe.lat}}" data-name="{{myAd.subscribe.serviceName}}" data-address="{{myAd.subscribe.address}}"> 已预约{{myAd.subscribe.date}}{{myAd.subscribe.begin_time}}-{{myAd.subscribe.end_time}}
           <view class='yjdh-btn'>一键前往</view>
         </button>
-        <button class="btn-red dh-btn" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 广告检测已开始，请检测 <view class='yjdh-btn'>一键检测</view></button>
-        <button class="btn-red dh-btn" bindtap="check" wx:if="{{canCheck==8}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 广告检测未通过，请重新检测 <view class='yjdh-btn'>一键检测</view></button>
+        <button class="btn-red dh-btn" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 广告检测已开始，请检测
+          <view class='yjdh-btn'>一键检测</view>
+        </button>
+        <button class="btn-red dh-btn" bindtap="check" wx:if="{{canCheck==8}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 广告检测未通过，请重新检测
+          <view class='yjdh-btn'>一键检测</view>
+        </button>
         <button class="btn-gray" wx:if="{{canCheck==0}}"> {{myAd.check.checkDate}}开始广告检测 </button>
         <button class="btn-gray" wx:if="{{canCheck==2}}"> {{myAd.check.checkDate}}开始广告检测 </button>
         <button class="btn-red dh-btn" wx:if="{{canCheck==3}}" bindtap="goMap" data-longitude="{{myAd.check.lng}}" data-latitude="{{myAd.check.lat}}" data-name="{{myAd.check.serviceName}}" data-address="{{myAd.check.address}}">广告检测，请前往服务网点检测
@@ -122,6 +126,19 @@
       </view>
       <view class="line"></view>
     </block>
+    <!--正在加载-->
+    <view class='load-more' hidden='{{ !isShowLoadingMore }}'>
+      <view class="weui-loadmore">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗....</view>
+      </view>
+    </view>
+    <view class='no-more' wx:if='{{ showNomore }}'>
+      <view class='no-more-line'></view>
+      <view class='no-more-wrapper'>
+        <text class='no-more-text'>我可是是有底线的~</text>
+      </view>
+    </view>
   </view>
 </view>
 <!-- 推荐有奖 -->
