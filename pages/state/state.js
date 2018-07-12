@@ -55,7 +55,7 @@ Page({
           if (status == 1){//审核中
             that.setData({
               stateSrc: '../../image/checking-icon.png',
-              stateStr: '您的资料已提交审核，请耐心等待。'
+              stateStr: '您的资料已提交审核，请耐心等待'
             })
           }else if(status == 2){//未通过
             that.setData({

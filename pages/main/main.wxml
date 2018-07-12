@@ -28,7 +28,7 @@
               <text class="title">{{myAd.name}}</text>
             </view>
             <view class="myad-li">
-              <view class="message" wx:if='{{isDiDi!=1}}'>实际收益：
+              <view class="message" wx:if='{{isDiDi!=1}}'>预计收益：
                 <label class="data-text">{{myAd.amount}}元</label>
               </view>
               <view class="message" wx:if='{{isDiDi==1}}'>预计收益：
@@ -46,7 +46,7 @@
               <view bindtap="go" data-name="{{myAd.id}}">
                 <text class="time">剩余{{myAd.current_count}}</text>
               </view>
-              <button data-adName="{{myAd.name}}" data-adId="{{myAd.id}}" data-adImg="{{myAd.img_url}}" class='wtwabt' open-type="share">
+              <button data-adName="{{myAd.name}}" data-adId="{{myAd.id}}" data-adImg="{{myAd.img_url}}" class='wtwabt' open-type="share" wx:if='{{ showShareBtn }}'>
                 <image src='../../image/shareicon.png'></image>
                 <view class='sharetext'>分享有奖</view>
               </button>
@@ -87,14 +87,14 @@
             <text class="title">{{item.name}}</text>
           </view>
           <view class="myad-li">
-            <view class="message" wx:if="{{status==3&&isDiDi!=1}}">实际收益：
+            <view class="message" wx:if="{{status==3&&isDiDi!=1}}">预计收益：
               <label class="data-text">{{item.amount}}元</label>
             </view>
             <view class="message" wx:if="{{status==3&&isDiDi==1}}">预计收益：
               <label class="data-text">300
                 <label class="data-blt">~</label>868元</label>
             </view>
-            <view class="message" wx:if="{{status!=3}}">实际收益：
+            <view class="message" wx:if="{{status!=3}}">预计收益：
               <label class="data-text ywxst">***
                 <text class=''>（身份认证后可查看收益）</text>
               </label>
@@ -106,19 +106,22 @@
           </view>
         </view>
         <view class="item_right">
-          <view wx:if="{{item.state==0}}" bindtap="go" data-name="{{item.id}}">
-            <text class="time">剩余{{item.current_count}}</text>
-          </view>
-          <view wx:if="{{item.state==2}}" bindtap="go" data-name="{{item.id}}">
-            <text class="time timetxt">已投完</text>
-          </view>
-          <view wx:if="{{item.state==3}}" bindtap="go" data-name="{{item.id}}">
-            <text class="time timetxt">已结束</text>
-          </view>
-          <view wx:if="{{item.state==1}}" bindtap="go" data-name="{{item.id}}">
+          <view wx:if="{{item.run_status==0}}" bindtap="go" data-name="{{item.id}}">
             <text class="time timetxt2">即将开始</text>
           </view>
-          <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.share_img}}" class='wtwabt' open-type="share">
+          <view wx:if="{{item.run_status==1}}" bindtap="go" data-name="{{item.id}}">
+            <text class="time">剩余{{item.current_count}}</text>
+          </view>
+          <view wx:if="{{item.run_status==2}}" bindtap="go" data-name="{{item.id}}">
+            <text class="time timetxt2">投放中</text>
+          </view>
+          <view wx:if="{{item.run_status==3}}" bindtap="go" data-name="{{item.id}}">
+            <text class="time timetxt2">检测中</text>
+          </view>
+          <view wx:if="{{item.run_status==4}}" bindtap="go" data-name="{{item.id}}">
+            <text class="time timetxt">已结束</text>
+          </view>
+          <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.share_img}}" class='wtwabt' open-type="share" wx:if='{{ showShareBtn }}'>
             <image src='../../image/shareicon.png'></image>
             <view class='sharetext'>{{ shareAwardText }}</view>
           </button>

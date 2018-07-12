@@ -34,10 +34,9 @@
     </block> 
     <block>
       <view class="profile">
-        <view class="profile-item" wx:if='{{isDiDi!=1}}'>实际收益:</view>
-        <view class="profile-item" wx:if='{{isDiDi==1}}'>预计收益:</view>
-        <view class="right-text red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>{{adInfo.amount}}元</view>
-        <view class="right-text red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>300<label class="data-blt2">~</label>868元<icon type="info" size="16"  color='#ff555c'/></view>
+        <view class="profile-item">预计收益:</view>
+        <view class="right-text red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>￥{{adInfo.amount}}</view>
+        <view class="right-text red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>￥300<label class="data-blt2">~</label>868<icon type="info" size="16"  color='#ff555c'/></view>
         <view class="right-text tasts" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
       </view>
     </block>
@@ -49,9 +48,21 @@
     </block>
     <block>
       <view class="profile">
+        <view class="profile-item">车身颜色:</view>
+        <view class="right-text">{{ carColor }}</view>
+      </view>
+    </block>
+    <block>
+      <view class="profile">
         <view class="profile-item">投放时间:</view>
         <view class="right-text">{{adInfo.begin_date}}
           <label class="data-blt">~</label>{{adInfo.end_date}}</view>
+      </view>
+    </block>
+    <block>
+      <view class="profile">
+        <view class="profile-item">投放城市:</view>
+        <view class="right-text">{{ adServingCity }}</view>
       </view>
     </block>
   </view>
@@ -63,6 +74,7 @@
       </view>
     </view>
   </block>
+  <!-- 参与列表 -->
   <view class='join-list-wrapper' wx:if='{{showJoining}}' bindtap='joinClick'>
     <view class='join-left-layout'>
       <text class='already-join-text'>已参与</text>
@@ -76,6 +88,27 @@
         </view>
       </view>
     </scroll-view>
+    <view>
+      <image class='arrow-image' src='../../image/arrow.png'></image>
+    </view>
+  </view>
+  <!-- 排队中列表 -->
+  <view class='join-list-wrapper queue' wx:if='{{ showWaiting }}' bindtap='queueClick'>
+    <view class='join-left-layout'>
+      <text class='already-join-text'>排队中</text>
+      <text class='already-join-number'>{{ queueCount + '人'}}</text>
+    </view>
+    <view class='join-center-line'></view>
+    <scroll-view class='join-avatar-scroll' scroll-x='true'>
+      <view class='join-avatar-wrapper' wx:for='{{ queueList }}' wx:for-item='item' wx:key='index'>
+        <view class='join-avatar-item'>
+          <image class='join-avatar' src='{{ item.wx_avatar }}'></image>
+        </view>
+      </view>
+    </scroll-view>
+    <view>
+      <image class='arrow-image' src='../../image/arrow.png'></image>
+    </view>
   </view>
   <view class="profile-wrapper protwo">
     <block wx:if="{{service.length>0}}">

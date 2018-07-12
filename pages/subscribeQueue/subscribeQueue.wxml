@@ -1,0 +1,43 @@
+<view class='queue-container'>
+  <view class='queue-header'>
+    <view class='queue-block'>
+      <text>排队序号：{{ queueSerial }}</text>
+    </view>
+    <view class='queue-block'>
+      <text>排队人数：{{ queueCount }}</text>
+    </view>
+  </view>
+  <view class='divider'></view>
+  <view>
+    <view class='queue-list'>
+      <view class='serial-tag'>
+        <text>排队序号</text>
+      </view>
+      <view class='car-user-tag'>
+        <text>车主</text>
+      </view>
+      <view class='queue-time-tag'>
+        <text>预约排队时间</text>
+      </view>
+    </view>
+    <view>
+      <view wx:for='{{ queueList }}' wx:key='queue' class='queue-item'>
+        <view class='item-detail'>
+          <view class='serial-tag-item'>
+            <text class='serial-text'>{{ item.id }}</text>
+          </view>
+          <view class='car-user-tag-item'>
+            <view class='car-user-wrapper'>
+              <image class='queue-user-avatar' src='{{ item.wx_avatar }}'></image>
+              <text class='user-name'>{{ item.nickname }}</text>
+            </view>
+          </view>
+          <view class='queue-time-tag-item'>
+            <text class='queue-start-time'>{{ item.date }}</text>
+          </view>
+        </view>
+        <view class='line'></view>
+      </view>
+    </view>
+  </view>
+</view>

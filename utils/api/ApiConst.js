@@ -229,6 +229,21 @@ function addCarModel(){
   return baseUrl + 'app/add/car_model_info';
 }
 
+//获取广告用户排队列表
+function getQueueUser(){
+  return baseUrl + 'app/get/ad_queue_users';
+}
+
+//用户加入广告排队
+function takePartInQueue(){
+  return baseUrl + 'app/join/user_ad_queue';
+}
+
+//取消用户广告排队
+function cancelQueue(){
+  return baseUrl + 'app/cancel/user_ad_queue';
+}
+
 module.exports = {
   GetDotUrl: GetDotUrl,
   getCitys: getCitys,
@@ -274,5 +289,8 @@ module.exports = {
   getAllBrands: getAllBrands,
   getBrandsDetail: getBrandsDetail,
   needAddCarModel: needAddCarModel,
-  addCarModel: addCarModel
+  addCarModel: addCarModel,
+  getQueueUser: getQueueUser,
+  takePartInQueue: takePartInQueue,
+  cancelQueue: cancelQueue
 }

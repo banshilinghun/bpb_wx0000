@@ -1,5 +1,6 @@
 const util = require("../../utils/util.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
+const ApiManager = require('../../utils/api/ApiManager.js');
 var formatLocation = util.formatLocation;
 var getDistance = util.getDistance;
 const app = getApp();
@@ -81,8 +82,13 @@ Page({
     showAuthDialog: false,
     authStr: '',
     authContent: '',
-    authStatus: ''
+    authStatus: '',
     //end
+    carColor: '', //车身颜色
+    adServingCity: '', //投放城市
+    showWaiting: false, //排队列表
+    queueCount: 0,
+    queueList: [],
   },
 
   onLoad: function (options) {
@@ -202,6 +208,7 @@ Page({
       that.requestAdInfo(reqData);
     }
     that.requestJoinList();
+    that.requestQueueList();
   },
 
   checkUserAuthStatus: function(){
@@ -268,18 +275,15 @@ Page({
           that.setData({
             page: res.data.data.ad_server.page,
             hasMore: res.data.data.ad_server.hasMore,
-            sortedKey: res.data.data.ad_server.sortedKey
+            sortedKey: res.data.data.ad_server.sortedKey,
+            adServingCity: res.data.data.info.city,
+            carColor: (!res.data.data.ad_colors || res.data.data.ad_colors.length == 0)? '不限' : res.data.data.ad_colors.join(',')
           })
           var serviceList = res.data.data.ad_server.servers;
           if (serviceList.length > 0) {
-            //var dis = [];
             for (var j = 0; j < serviceList.length; j++) {
-              //						console.log(serviceList[i])
-              //                          console.log(that.data.latitude)
               serviceList[j].distance = (serviceList[j].distance / 1000).toFixed(2);
               serviceList[j].lista = 1;
-              // serviceList[j].small_logo = serviceList[j].small_logo ? serviceList[j].small_logo :'../../image/noimg.png';
-              //serviceList[j].logo = '../../image/noimg.png';
               if (res.data.data.isRegist) {
                 serviceList[j].lista = 0;
               } else {
@@ -349,7 +353,7 @@ Page({
             shareAvatar: app.globalData.userInfo.avatarUrl,
             shareNickname: app.globalData.userInfo.nickName,
             incomeMoney: adInfoBean.amount,
-            adImageUrl: adInfoBean.img_url,
+            adImageUrl: adInfoBean.img_url || "",
             adName: adInfoBean.name,
             adTime: adInfoBean.begin_date + ' ~ ' + adInfoBean.end_date,
             adId: adInfoBean.id,
@@ -968,5 +972,69 @@ Page({
         url: '../auth/auth',
       })
     }
+  },
+
+  /** 
+   * 排队列表
+   */
+  requestQueueList: function () {
+    let that = this;
+    let dataBean = {
+      ad_id: that.data.adId,
+      page: 0,
+      page_count: 20
+    };
+    let requestData = {
+      url: ApiConst.getQueueUser(),
+      data: dataBean,
+      header: app.globalData.header,
+      success: res => {
+        that.setData({
+          queueList: res.users,
+          queueCount: res.total_count,
+          showWaiting: res.users && res.users.length != 0
+        })
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  /** 预约排队人数 */
+  queueClick: function(){
+    let that = this;
+    console.log('-----' + that.data.adId);
+    wx.navigateTo({
+      url: '../subscribeQueue/subscribeQueue?adId=' + that.data.adId
+    })
+  },
+
+  takeParkInQueue: function(){
+    var that = this;
+    let requestData = {
+      url: ApiConst.takePartInQueue(),
+      data: {
+        ad_id: that.data.adId
+      },
+      header: app.globalData.header,
+      success: res => {
+        
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  cancelQueue: function(){
+    var that = this;
+    let requestData = {
+      url: ApiConst.cancelQueue(),
+      data: {
+        ad_id: that.data.adId
+      },
+      header: app.globalData.header,
+      success: res => {
+        
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   }
 })

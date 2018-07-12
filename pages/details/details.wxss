@@ -896,8 +896,8 @@ button::after {
   height: 80rpx;
   display: flex;
   flex-direction: row;
-  padding-left: 44rpx;
-  padding-right: 44rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
   padding-top: 10rpx;
   padding-bottom: 10rpx;
   background-color: white;
@@ -936,6 +936,7 @@ button::after {
   overflow: hidden;
   margin-left: 10rpx;
   white-space: nowrap;
+  margin-right: 20rpx;
 }
 
 .join-avatar-wrapper {
@@ -1220,4 +1221,13 @@ button {
 }
 .swtwxs{
   color:#666;
+}
+
+.queue{
+  margin-top: 16rpx;
+}
+
+.arrow-image{
+  width: 30rpx;
+  height: 30rpx;
 }

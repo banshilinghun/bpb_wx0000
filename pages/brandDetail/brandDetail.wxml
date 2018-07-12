@@ -8,7 +8,7 @@
   <view class="selection" wx:for="{{ modelList }}" wx:key="item.company_id">
     <view class="item_letter" id="{{ item.initial }}">{{ item.company_name }}</view>
     <view class="item_brand" wx:for="{{ item.models }}" wx:for-item="model" wx:key="model.model_id" data-brand="{{ model }}" bindtap="bindCarModel">
-      <image class='brand-child-logo' src='{{ model.model_logo }}'></image>
+      <image class='brand-child-logo' src='{{ model.model_logo }}' catchtap='previewModelLogo' data-image='{{ model.model_logo }}'></image>
       <view class='brand-child-name'>
         <text>{{ model.model_name }}</text>
       </view>
@@ -16,7 +16,8 @@
   </view>
 </view>
 
-<view class='rule-dialog' wx:if='{{ showDialog }}'>
+<!-- 改变了选择方式 -->
+<!-- <view class='rule-dialog' wx:if='{{ showDialog }}'>
   <view class='rule-mask'></view>
   <view class='root'>
     <view class='content-wrapper'>
@@ -38,4 +39,4 @@
     </view>
     <image class="colse" src="../../image/close.png" bindtap="hideDialog"></image>
   </view>
-</view>
+</view> -->

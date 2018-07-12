@@ -1,0 +1,24 @@
+<view>
+  <view class='model-title'>
+    <text>车辆款式</text>
+  </view>
+  <view class='model-wrapper'>
+    <block wx:for='{{ carModelList }}' wx:key='model'>
+      <view class='model-item'>
+        <view class='model-content-wrapper'>
+          <view class='{{ item.checked? "model-content-clicked" : "model-content" }} model-content' bindtap='modelClickListener' data-model='{{ item }}'>
+            <view class='{{ item.checked? "model-detail-name-clicked" : "model-detail-name" }}'>
+              <text>{{ item.detail_name }}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+<view class='model-action'>
+  <view>
+    <button class='model-back' bindtap='back'>返回</button>
+    <button class='model-sure' bindtap='confirm'>确认选择</button>
+  </view>
+</view>

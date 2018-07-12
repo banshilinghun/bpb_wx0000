@@ -1,4 +1,6 @@
 
+/** 车型列表 */
+
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require('../../utils/api/ApiManager.js');
 var app = getApp()
@@ -33,6 +35,9 @@ Page({
   //请求所有车型信息
   requestAllBrands: function(){
     var that = this;
+    wx.showLoading({
+      title: '奔跑中🚗...'
+    });
     let requestData = {
       url: ApiConst.getAllBrands(),
       data: {},
@@ -47,7 +52,7 @@ Page({
         })
       },
       complete: res => {
-
+        wx.hideLoading();
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));

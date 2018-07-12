@@ -1,0 +1,126 @@
+
+.queue-container{
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.queue-header{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 140rpx;
+  background-color: #fff;
+}
+
+.queue-block{
+  height: 140rpx;
+  text-align: center;
+  flex: 1;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 140rpx;
+}
+
+.divider{
+  height: 20rpx;
+  width: 100%;
+  background-color: #f6f6f6;
+}
+
+.queue-list{
+  width: 100%;
+  height: 60rpx;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1rpx solid #ddd;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.serial-tag{
+  line-height: 60rpx;
+  width: 190rpx;
+  text-align: center;
+}
+
+.car-user-tag{
+  line-height: 60rpx;
+  flex: 1;
+  text-align: center;
+}
+
+.queue-time-tag{
+  line-height: 60rpx;
+  width: 250rpx;
+  text-align: center;
+}
+
+.queue-item{
+  width: 100%;
+  height: 100rpx;
+  position: relative;
+}
+
+
+.item-detail{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.serial-tag-item{
+  line-height: 100rpx;
+  width: 190rpx;
+  text-align: center;
+}
+
+.car-user-tag-item{
+  line-height: 100rpx;
+  flex: 1;
+}
+
+.car-user-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20%;
+}
+
+.queue-time-tag-item{
+  line-height: 100rpx;
+  width: 250rpx;
+  text-align: center;
+}
+
+.queue-user-avatar{
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.serial-text{
+  font-size: 28rpx;
+  color: #666;
+}
+
+.user-name{
+  font-size: 28rpx;
+  color: #666;
+}
+
+.queue-start-time{
+  font-size: 24rpx;
+  color: #999;
+}
+
+.line{
+  width: 95%;
+  height: 1rpx;
+  background-color: #ddd;
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+}
