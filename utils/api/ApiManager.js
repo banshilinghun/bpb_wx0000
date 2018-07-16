@@ -139,6 +139,7 @@ function showModel(content) {
     content = '服务器开小差了\n\r~~~~(>_<)~~~~';
   }
   wx.showModal({
+    title: '提示',
     content: content,
     showCancel: false
   })

@@ -333,7 +333,7 @@ movable-view {
   padding-left: 40rpx;
   position: fixed;
   top: 0;
-  z-index: 999;
+  z-index: 9;
 }
 
 .profile-arrow {
@@ -473,6 +473,7 @@ position:relative;
   border-top: 1rpx solid #D8D8D8;
   color: #D8D8D8;
 }
+
 .navigator:first-child:before {
   display: none;
 }

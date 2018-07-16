@@ -15,7 +15,9 @@ Page({
     pageIndex: 0,
     sorted_key: '',
     adId: '',
-    isShowLoadingMore: false
+    isShowLoadingMore: false,
+    queueWaitNumber: 0,
+    showAction: false
   },
 
   /**
@@ -29,7 +31,7 @@ Page({
     this.requestQueueList(this.data.pageIndex);
   },
 
-  //todo 限制车主名字长度
+  //todo 限制车主名字长度，分页, 需排队数计算
   requestQueueList: function(currentPageIndex){
     let that = this;
     let dataBean = {
@@ -45,12 +47,18 @@ Page({
       data: dataBean,
       header: app.globalData.header,
       success: res => {
+        let users = res.users;
+        let model = users[0];
+        for(let i = 0; i < 10; i++){
+          users.push(model);
+        }
         that.setData({
-          queueList: res.users,
+          queueList: users,//res.users
           hasmore: res.hasMore,
           sorted_key: res.sortedKey,
           queueSerial: res.my_queue.id,
-          queueCount: res.total_count
+          queueCount: res.total_count,
+          showAction: res.my_queue
         })
       }
     }
@@ -62,7 +70,10 @@ Page({
       title: '奔跑中🚗...',
       icon: 'loading'
     })
-    this.commonRequest();
+    this.setData({
+      pageIndex: 0
+    })
+    this.requestQueueList(this.data.pageIndex);
   },
 
   /**
@@ -80,6 +91,52 @@ Page({
     setTimeout(function () {
       that.requestAdList(that.data.pageIndex + 1);
     }, 1000);
+  },
+
+  back: function(){
+    wx.navigateBack({});
+  },
+
+  /**
+   * 取消排队
+   */
+  cancelQueue: function () {
+    var that = this;
+    wx.showModal({
+      title: '取消确认',
+      content: '您确认取消当前排队吗？',
+      confirmText: '确认取消',
+      cancelText: '再想想',
+      success: res => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '奔跑中🚗...',
+          })
+          let requestData = {
+            url: ApiConst.cancelQueue(),
+            data: {
+              ad_id: that.data.adId
+            },
+            header: app.globalData.header,
+            success: res => {
+              wx.showToast({
+                title: '取消排队成功',
+                icon: 'success'
+              });
+              that.setData({
+                showAction: false,
+                pageIndex: 0
+              })
+              that.requestQueueList(that.data.pageIndex);
+            },
+            complete: res => {
+              wx.hideLoading();
+            }
+          }
+          ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+        }
+      }
+    })
   },
 
 })

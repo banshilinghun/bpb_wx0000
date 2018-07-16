@@ -1,1 +1,179 @@
-/* pages/myAd/myAd.wxss */
+page {
+  background-color: #f6f6f6;
+}
+
+.tab-wrapper {
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.ad-scroll-view{
+  width: 100%;
+}
+
+.ad-container {
+  width: 100%;
+  position: relative;
+}
+
+.list-container {
+  width: 100%;
+  position: absolute;
+}
+
+.empty {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-icon {
+  width: 256rpx;
+  height: 256rpx;
+  margin-top: 150rpx;
+}
+
+.empty-text-top {
+  font-size: 36rpx;
+  color: black;
+  margin-top: 40rpx;
+}
+
+.empty-text-bottom {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.empty-container {
+  position: absolute;
+  width: 100%;
+}
+
+/* 已结束 start */
+
+.finish-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  padding: 20rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+  -moz-box-shadow: 0px 0px 6px #eee;
+  -webkit-box-shadow: 0px 0px 6px #eee;
+  box-shadow: 0px 0px 6px #eee;
+}
+
+.ad-image {
+  width: 128rpx;
+  height: 128rpx;
+  background-color: #eee;
+}
+
+.ad-finish-item{
+  width: 100%;
+  margin-left: 20rpx;
+}
+
+.ad-name {
+  color: #444;
+  font-family: "微软雅黑";
+  font-weight: bold;
+  font-size: 30rpx;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+}
+
+.ad-middle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 24rpx;
+  color: #888;
+  position: relative;
+  margin-top: 10rpx;
+  margin-bottom: 5rpx;
+}
+
+.ad-income {
+  display: inline-block;
+}
+
+.ad-money{
+  display: inline-block;
+  color: #ff555c;
+}
+
+.ad-status {
+  font-size: 24rpx;
+  color: #888;
+  position: absolute;
+  right: 0;
+}
+
+.ad-time {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ad-time-title {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.ad-time-detail{
+  color: #ff555c;
+  font-size: 24rpx;
+}
+
+/* 已结束 over */
+
+.prepare-container{
+  box-sizing: border-box;
+  background-color: #fff;
+  padding: 20rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+  -moz-box-shadow: 0px 0px 6px #eee;
+  -webkit-box-shadow: 0px 0px 6px #eee;
+  box-shadow: 0px 0px 6px #eee;
+}
+
+.prepare-item-content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.prepare-action-wrapper{
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20rpx;
+}
+
+.prepare-action{
+  height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 25rpx;
+  padding: 0;
+  width: 150rpx;
+  background-color: #fff;
+  border: 1rpx solid #ff555c;
+  font-size: 28rpx;
+  color: #ff555c;
+  margin: 0;
+}
+
+.theme-color{
+  color: #ff555c;
+}

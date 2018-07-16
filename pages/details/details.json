@@ -10,6 +10,7 @@
     "share-detail": "../../components/share-detail/index",
     "rule-dialog": "../../components/rule-dialog/index",
     "dialog-address": "../../components/dialog-address/index",
-    "dialog-auth": "../../components/dialog-common/index"
+    "dialog-auth": "../../components/dialog-common/index",
+    "explainView": "../../components/explainView/index"
   }
 }

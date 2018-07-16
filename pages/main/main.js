@@ -41,6 +41,10 @@ Page({
     pageIndex: 0,
     count: 6,
     showShareBtn: false, //隐藏显示分享按钮
+    showSubsDialog: false,
+    subscribeContent: '',
+    queue_adId: '',
+    queue_serverId: ''
   },
 
   onLoad: function (options) {
@@ -156,12 +160,35 @@ Page({
     //请求车主认证状态
     if (loginFlag == 1) {
       z.requestAuthStatus(reqData);
+      //确认排队预约信息
+      z.requestQueueInfo();
     }
     //加载广告列表
     this.setData({
       pageIndex: 0
     })
     this.requestAdList(this.data.pageIndex);
+  },
+
+  /**
+   * 查询预约排队信息
+   */
+  requestQueueInfo: function(){
+    let that = this;
+    let requestData = {
+      url: ApiConst.queryQueueInfo(),
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        that.setData({
+          showSubsDialog: res,
+          subscribeContent: '广告名称：' + res.ad_name + '\n网点名称：' + res.server_name + '\n网点地址：' + res.address,
+          queue_adId: res.ad_id,
+          queue_serverId: res.server_id
+        })
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -747,6 +774,48 @@ Page({
     this.setData({
       showDialog:false
     })
+  },
+
+  /**
+   * 不接受预约安排
+   */
+  refuseSystemAssign: function(){
+    let that = this;
+    let requestData = {
+      url: ApiConst.refuseSubsQueue(),
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        
+      },
+      complete: res => {
+        this.setData({
+          showSubsDialog: false
+        })
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  /**
+   * 接受预约安排
+   */
+  acceptSystemAssign: function(){
+    let that = this;
+    let requestData = {
+      url: ApiConst.confirmSubsQueue(),
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        //TODO 跳转到预约页面
+      },
+      complete: res => {
+        this.setData({
+          showSubsDialog: false
+        })
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   }
 
 })

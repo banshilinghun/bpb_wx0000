@@ -2,6 +2,7 @@
 
 page {
   background-color: #f6f6f6;
+  padding-bottom: 100rpx;
 }
 
 .swiper-banner {
@@ -38,6 +39,16 @@ page {
 .right-text {
   font-size: 14px;
   color: #666;
+}
+
+.horizontal-center{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.icon-margin{
+  margin-left: 10rpx;
 }
 
 .protwo {
@@ -705,6 +716,7 @@ button::after {
 }
 
 .wtwabt {
+  flex: 1;
   margin-top: 16rpx;
   background: none;
   line-height: 1.2;
@@ -717,7 +729,7 @@ button::after {
 }
 
 .sharetext {
-  font-size: 20rpx;
+  font-size: 24rpx;
   color: #ff555c;
 }
 
@@ -1156,9 +1168,52 @@ button {
   height: 79rpx;
 }
 
+.service-title-wrapper{
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2rpx solid #eee;
+}
+
+.service-title-wrapper .profile{
+  border-bottom: 0;
+}
+
+.subscribe-action-wrapper{
+  padding-left: 30rpx;
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  align-items: center;
+  box-sizing: border-box; 
+}
+
+.subscribe-action-btn{
+  width: 150rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  color: #fff;
+  font-size: 24rpx;
+  padding: 0;
+  border-radius: 28rpx;
+  background-color: #ff555c;
+  margin: 0;
+}
+
+.subscribe-cancel{
+  background-color: #999;
+}
+
+.explain-icon{
+  height: 100%;
+  padding-left: 30rpx;
+  margin-right: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .profile-wrapper, .account-wrapper {
   background-color: transparent;
-  margin-bottom: 16rpx;
 }
 
 .yy_time {
@@ -1194,12 +1249,6 @@ button {
 
 .list-transform{
   width: 100%;
-  position: absolute;
-  z-index: 4;
-  top: 0;
-  left: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 .map-transform{
@@ -1230,4 +1279,56 @@ button {
 .arrow-image{
   width: 30rpx;
   height: 30rpx;
+}
+
+.time {
+  color: #03d0b7;
+  font-size: 24rpx;
+}
+
+.timetxt {
+  color: #999;
+}
+
+.timetxt2 {
+  color: #ff555c;
+}
+
+.subscribe_immediately{
+  flex: 1;
+  font-size: 24rpx;
+  color: #333;
+  position: relative;
+}
+
+.action_bottom{
+  height: 100rpx;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  background-color: #fff;
+  flex-direction: row;
+  -moz-box-shadow: 0px 0px 8px #ddd;
+  -webkit-box-shadow: 0px 0px 8px #ddd;
+  box-shadow: 0px 0px 8px #ddd;
+  z-index: 7;
+}
+
+.subscribe-image-size{
+  width: 44rpx;
+  height: 44rpx;
+  margin-bottom: 5rpx;
+}
+
+.subcribe-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
 }

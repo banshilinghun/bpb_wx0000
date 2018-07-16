@@ -63,16 +63,16 @@ Page({
     adName: '',
     adTime: '',
     adId: '',
-    serverId:'',
+    serverId: '',
     showShareModel: false,
-    showShare:true,
+    showShare: true,
     shareAwardText: '分享',
     isShowLoadingMore: false,
-    haveLoca:false,
+    haveLoca: false,
     isPreview: false,
-    showRule:false,
+    showRule: false,
     //是否滴滴合法车主
-    isDiDi:0 ,
+    isDiDi: 0,
     //地址弹框 start
     showAddressDialog: false,
     address: '',
@@ -89,9 +89,15 @@ Page({
     showWaiting: false, //排队列表
     queueCount: 0,
     queueList: [],
+    // 预约排队说明和车身颜色说明
+    showExplain: false,
+    explainState: 1,
+    subActionText: '预约排队',
+    //是否正在排队中
+    isQueueing: false,
   },
 
-  onLoad: function (options) {
+  onLoad: function(options) {
     //console.log(options.share);
     var that = this;
     that.setData({
@@ -115,7 +121,7 @@ Page({
     }
     app.globalData.isFirst = false;
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         that.setData({
           windowWidth: res.windowWidth,
           bannerHeight: res.windowWidth * 0.5625,
@@ -126,11 +132,11 @@ Page({
     that.requestLocation();
   },
 
-  onShow: function (n) {
+  onShow: function(n) {
     var that = this;
     //根据 flag 改变分享文案
     wx.showNavigationBarLoading();
-    if (that.data.isPreview){
+    if (that.data.isPreview) {
       that.setData({
         isPreview: false
       })
@@ -144,16 +150,16 @@ Page({
     //注册认证状态
     var loginFlag = app.globalData.login;
     var checkStaus = app.globalData.checkStaus;
-    if (loginFlag != 1) {//没有登录
+    if (loginFlag != 1) { //没有登录
       that.setData({
         loginStaus: 0
       })
-    } else {//已登录
-      if (checkStaus == 0) {//未认证
+    } else { //已登录
+      if (checkStaus == 0) { //未认证
         that.setData({
           loginStaus: 1
         })
-      } else {//登录了且认证了
+      } else { //登录了且认证了
         that.setData({
           loginStaus: 2
         })
@@ -162,7 +168,7 @@ Page({
 
     //检测是否是滴滴车主以及注册认证状态
     that.checkUserAuthStatus();
-    
+
     var pages = getCurrentPages();
     console.log(pages)
     var currPage = pages[pages.length - 1]; //当前页面
@@ -171,7 +177,7 @@ Page({
       if (currPage.data.mydata.share == 1 && n != 0 && that.data.showShare) {
         that.setData({
           showGoodsDetail: true,
-          showShare:false
+          showShare: false
         })
       } else {
         that.setData({
@@ -185,14 +191,14 @@ Page({
     //请求地理位置信息
     wx.getLocation({
       type: 'gcj02',
-      success: function (res) {
+      success: function(res) {
         var latitude = res.latitude
         var longitude = res.longitude
         //				console.log(res.longitude)
         that.setData({
           latitude: latitude,
           longitude: longitude,
-          haveLoca:true
+          haveLoca: true
         })
         reqData.lat = latitude;
         reqData.lng = longitude;
@@ -211,7 +217,7 @@ Page({
     that.requestQueueList();
   },
 
-  checkUserAuthStatus: function(){
+  checkUserAuthStatus: function() {
     let that = this;
     wx.request({
       url: ApiConst.getAuthStatus(),
@@ -232,7 +238,7 @@ Page({
           if (app.globalData.showAuthTip) {
             return;
           }
-          if (that.data.loginStaus == 0 || that.data.loginStaus == 1){
+          if (that.data.loginStaus == 0 || that.data.loginStaus == 1) {
             that.showRequireAuthDialog(that.data.loginStaus);
             app.globalData.showAuthTip = true;
           }
@@ -248,16 +254,16 @@ Page({
     })
   },
 
-  showRequireAuthDialog: function(loginStatus){
+  showRequireAuthDialog: function(loginStatus) {
     this.setData({
       showAuthDialog: true,
-      authStr: loginStatus == 0? '立即注册' : '立即认证',
+      authStr: loginStatus == 0 ? '立即注册' : '立即认证',
       authContent: loginStatus == 0 ? '先注册，抢活快\n广告安装无障碍' : '先认证，抢活快\n广告安装无障碍',
       authStatus: loginStatus
     })
   },
 
-  requestAdInfo: function (reqData) {
+  requestAdInfo: function(reqData) {
     var that = this;
     //console.log(reqData)
     wx.request({
@@ -271,14 +277,25 @@ Page({
           var enddate = res.data.data.info.end_date;
           res.data.data.info.begin_date = res.data.data.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
           res.data.data.info.end_date = res.data.data.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-        
+
           that.setData({
             page: res.data.data.ad_server.page,
             hasMore: res.data.data.ad_server.hasMore,
             sortedKey: res.data.data.ad_server.sortedKey,
             adServingCity: res.data.data.info.city,
-            carColor: (!res.data.data.ad_colors || res.data.data.ad_colors.length == 0)? '不限' : res.data.data.ad_colors.join(',')
+            carColor: (!res.data.data.ad_colors || res.data.data.ad_colors.length == 0) ? '不限' : res.data.data.ad_colors.join(','),
+            isQueueing: res.data.data.ad_queue && JSON.stringify(res.data.data.ad_queue) != '{}'
           })
+          //排队逻辑
+          if (that.data.isQueueing) {
+            that.setData({
+              subActionText: '取消排队'
+            })
+          } else {
+            that.setData({
+              subActionText: '预约排队'
+            })
+          }
           var serviceList = res.data.data.ad_server.servers;
           if (serviceList.length > 0) {
             for (var j = 0; j < serviceList.length; j++) {
@@ -296,7 +313,7 @@ Page({
                     }
                   }
                   if (res.data.data.subscribe != null) {
-                   
+
                     if (res.data.data.subscribe.ad_id == res.data.data.info.id) {
                       if (res.data.data.subscribe.server_id == serviceList[j].id) {
                         serviceList[j].lista = 2;
@@ -383,7 +400,7 @@ Page({
     })
   },
 
-  onReachBottom: function () {
+  onReachBottom: function() {
     var that = this;
     if (!that.data.hasMore) {
       return;
@@ -406,7 +423,7 @@ Page({
   },
 
   /** 请求已参与车主列表 */
-  requestJoinList: function () {
+  requestJoinList: function() {
     var that = this;
     wx.request({
       url: that.data.joinListUrl,
@@ -415,7 +432,7 @@ Page({
         page_no: 1,
         page_size: 20,
       },
-      success: function (res) {
+      success: function(res) {
         console.log(res);
         if (res.data.code == 1000) {
           var dataList = res.data.data.info;
@@ -442,7 +459,7 @@ Page({
           })
         }
       },
-      fail: function (res) {
+      fail: function(res) {
         wx.showModal({
           title: '提示',
           content: '网络错误',
@@ -452,24 +469,26 @@ Page({
     })
   },
 
-  joinClick: function () {
+  joinClick: function() {
     var that = this;
     wx.navigateTo({
       url: '../joinList/joinList?adId=' + that.data.adId,
     })
   },
 
-  formSubmit: function (e) {
+  formSubmit: function(e) {
     var param = e.detail.value;
     this.setData({
       formId: e.detail.formId
     })
     this.receiveAd();
   },
-  cancel: function () {
+  cancel: function() {
     var that = this;
     var subscribe_id = this.data.selId;
-    var reqData = { subscribe_id: subscribe_id }
+    var reqData = {
+      subscribe_id: subscribe_id
+    }
     wx.request({
       url: ApiConst.cancelSubcribe(),
       data: reqData,
@@ -498,8 +517,8 @@ Page({
     })
   },
 
-  arrangement: function (e) {
-    var that=this;
+  arrangement: function(e) {
+    var that = this;
     console.log(e)
     that.setData({
       serverId: e.currentTarget.dataset.serverid
@@ -515,11 +534,11 @@ Page({
             //					console.log(res.data)
             if (res.data.data.status == 3) {
               console.log(this.data.isDiDi)
-              if(that.data.isDiDi==1){
-                  that.setData({
-                    showRule:true
-                  })
-              }else{
+              if (that.data.isDiDi == 1) {
+                that.setData({
+                  showRule: true
+                })
+              } else {
                 wx.navigateTo({
                   url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
                 })
@@ -531,7 +550,7 @@ Page({
                   content: "你没通过身份认证，不能预约广告",
                   confirmText: "立即认证",
                   cancelText: "取消",
-                  success: function (sure) {
+                  success: function(sure) {
                     if (sure.confirm) {
                       wx.navigateTo({
                         url: '../state/state'
@@ -551,7 +570,7 @@ Page({
                   content: "你没进行身份认证，不能预约广告",
                   confirmText: "立即认证",
                   cancelText: "取消",
-                  success: function (sure) {
+                  success: function(sure) {
                     if (sure.confirm) {
                       wx.navigateTo({
                         url: '../auth/auth'
@@ -584,7 +603,7 @@ Page({
         content: "你还没有登录，不能预约广告",
         confirmText: "立即登录",
         cancelText: "取消",
-        success: function (sure) {
+        success: function(sure) {
           if (sure.confirm) {
             wx.navigateTo({
               url: '../register/register'
@@ -595,7 +614,7 @@ Page({
     }
     //console.log(e)
   },
-  goMap: function (e) {
+  goMap: function(e) {
     //		console.log(e.currentTarget.dataset);
     wx.openLocation({
       longitude: Number(e.currentTarget.dataset.longitude),
@@ -608,7 +627,7 @@ Page({
   /**
    * 分享
    */
-  shareDetailListener: function () {
+  shareDetailListener: function() {
     this.setData({
       showSharePop: true
     })
@@ -617,21 +636,21 @@ Page({
   /**
    * 生成图片分享朋友圈
    */
-  shareMomentListener: function () {
+  shareMomentListener: function() {
     console.log('shareMomentListener------------->')
     this.setData({
       showShareModel: true
     })
   },
 
-  dialogClickListener: function () {
+  dialogClickListener: function() {
     this.setData({
       showSharePop: true
     })
   },
 
   //分享
-  onShareAppMessage: function (res) {
+  onShareAppMessage: function(res) {
     //console.log(res)
     var that = this;
     if (res.from == 'button') {
@@ -656,8 +675,8 @@ Page({
       desc: desc,
       path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
-      success: function (res) {
-        setTimeout(function () {
+      success: function(res) {
+        setTimeout(function() {
           that.setData({
             showGoodsDetail: false
           })
@@ -670,8 +689,8 @@ Page({
           mask: true,
         })
       },
-      fail: function () {
-        setTimeout(function () {
+      fail: function() {
+        setTimeout(function() {
           that.setData({
             showGoodsDetail: false
           })
@@ -690,38 +709,38 @@ Page({
   /**
    * 隐藏弹框
    */
-  hideDialogListener: function () {
+  hideDialogListener: function() {
     console.log('hideDialogListener------------->')
     this.setData({
       showGoodsDetail: false
     });
   },
 
-  showGoodsDetail: function () {
+  showGoodsDetail: function() {
     this.setData({
       showGoodsDetail: !this.data.showGoodsDetail
     });
   },
 
-  hideGoodsDetail: function () {
+  hideGoodsDetail: function() {
     this.setData({
       showGoodsDetail: false
     });
   },
 
-  goRegister: function () {
+  goRegister: function() {
     wx.navigateTo({
       url: '../register/register'
     })
   },
 
-  goAuth: function () {
+  goAuth: function() {
     wx.navigateTo({
       url: '../auth/auth'
     })
   },
 
-  backHome: function () {
+  backHome: function() {
     wx.switchTab({
       url: '../main/main'
     })
@@ -730,7 +749,7 @@ Page({
   /**
    * 中间 control 图标
    */
-  createControl: function () {
+  createControl: function() {
     var that = this;
     var controlsWidth = 40;
     var controlsHeight = 48;
@@ -739,7 +758,7 @@ Page({
         id: 1,
         iconPath: '../../image/center-location.png',
         position: {
-          left: (that.data.windowWidth - controlsWidth) / 2 ,
+          left: (that.data.windowWidth - controlsWidth) / 2,
           top: (that.data.mapHeight) / 2 - controlsHeight * 3 / 4,
           width: controlsWidth,
           height: controlsHeight
@@ -750,11 +769,11 @@ Page({
   },
 
   //请求地理位置
-  requestLocation: function () {
+  requestLocation: function() {
     var that = this;
     wx.getLocation({
       type: 'gcj02',
-      success: function (res) {
+      success: function(res) {
         //第一次加载，如果是分享链接点入，需要跳转到指定marker
         that.setData({
           latitude: res.latitude,
@@ -769,7 +788,7 @@ Page({
   /**
    * 移动到中心点
    */
-  moveTolocation: function () {
+  moveTolocation: function() {
     var mapCtx = wx.createMapContext(mapId);
     mapCtx.moveToLocation();
   },
@@ -777,7 +796,7 @@ Page({
   /**
    * 请求服务网点列表
    */
-  requestAllServerList: function () {
+  requestAllServerList: function() {
     var that = this;
     wx.request({
       url: ad_server_list,
@@ -801,7 +820,7 @@ Page({
   /**
    * 创建marker点
    */
-  createMarker: function (serverList) {
+  createMarker: function(serverList) {
     for (let marker of serverList) {
       marker.latitude = marker.lat;
       marker.longitude = marker.lng;
@@ -820,7 +839,7 @@ Page({
   /**
    * marker上的气泡
    */
-  createCallout: function (marker) {
+  createCallout: function(marker) {
     let distance = util.getDistance(this.data.latitude, this.data.longitude, marker.lat, marker.lng);
     let callout = {};
     callout.color = '#ffffff';
@@ -834,7 +853,7 @@ Page({
     return callout;
   },
 
-  createLabel: function (marker) {
+  createLabel: function(marker) {
     let label = {};
     label.color = '#ffffff';
     label.content = distance.toFixed(2) + 'km';
@@ -848,7 +867,7 @@ Page({
     return label;
   },
 
-  showModal: function (msg) {
+  showModal: function(msg) {
     wx.showModal({
       content: msg,
       showCancel: false
@@ -858,7 +877,7 @@ Page({
   /**
    * 点击marker事件
    */
-  bindMarkertap: function (e) {
+  bindMarkertap: function(e) {
     console.log(e);
     for (let marker of this.data.markers) {
       if (e.markerId == marker.id) {
@@ -873,39 +892,39 @@ Page({
   /**
    * 点击control事件
    */
-  controlTap: function () {
+  controlTap: function() {
 
   },
 
   /**
    * 拖动地图事件
    */
-  regionChange: function () {
+  regionChange: function() {
 
   },
 
   /**
    * 点击地图事件
    */
-  bindMapTap: function () {
+  bindMapTap: function() {
 
   },
 
-  moveToSelfLocation: function () {
+  moveToSelfLocation: function() {
     this.setData({
       scale: defaultScale
     })
     this.requestLocation();
   },
 
-  changeListMap: function(){
+  changeListMap: function() {
     var that = this;
     that.setData({
       showMap: !that.data.showMap,
       actionText: that.data.showMap ? '地图' : '列表',
     })
-    if(that.data.showMap){
-      wx.createSelectorQuery().select('#myMap').boundingClientRect(function (rect) {
+    if (that.data.showMap) {
+      wx.createSelectorQuery().select('#myMap').boundingClientRect(function(rect) {
         // 使页面滚动到底部
         wx.pageScrollTo({
           scrollTop: rect.bottom
@@ -914,17 +933,17 @@ Page({
     }
   },
 
-  previewImage: function(e){
+  previewImage: function(e) {
     console.log(e);
     var that = this;
     let image = e.currentTarget.dataset.image;
     let samllImage = e.currentTarget.dataset.samllimage;
-    if(!image||image.indexOf('http') == -1){
+    if (!image || image.indexOf('http') == -1) {
       return;
     }
     wx.previewImage({
       urls: [image],
-      complete: function(){
+      complete: function() {
         that.setData({
           isPreview: true
         })
@@ -932,26 +951,26 @@ Page({
     })
   },
 
-  goValuation: function () {
+  goValuation: function() {
     wx.navigateTo({
       url: '../valuation/valuation',
     })
   },
 
-  iKnow:function(e){
+  iKnow: function(e) {
     wx.navigateTo({
       url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
     })
   },
 
-  goRuleDetail:function(e){
+  goRuleDetail: function(e) {
     console.log(e)
     wx.navigateTo({
       url: '../valuation/valuation?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
     })
   },
 
-  showAddress:function(e){
+  showAddress: function(e) {
     console.log(e);
     this.setData({
       showAddressDialog: true,
@@ -960,7 +979,7 @@ Page({
     })
   },
 
-  handleActionTap: function(event){
+  handleActionTap: function(event) {
     console.log(event);
     let status = event.detail.data.status;
     if (status == 0) {
@@ -977,7 +996,7 @@ Page({
   /** 
    * 排队列表
    */
-  requestQueueList: function () {
+  requestQueueList: function() {
     let that = this;
     let dataBean = {
       ad_id: that.data.adId,
@@ -1000,7 +1019,7 @@ Page({
   },
 
   /** 预约排队人数 */
-  queueClick: function(){
+  queueClick: function() {
     let that = this;
     console.log('-----' + that.data.adId);
     wx.navigateTo({
@@ -1008,8 +1027,26 @@ Page({
     })
   },
 
-  takeParkInQueue: function(){
+  /**
+   * 排队
+   */
+  handleSubcribeQueue: function() {
+    let that = this;
+    if (that.data.isQueueing) {
+      this.cancelQueue();
+    } else {
+      this.takeParkInQueue();
+    }
+  },
+
+  /**
+   * 预约排队
+   */
+  takeParkInQueue: function() {
     var that = this;
+    wx.showLoading({
+      title: '奔跑中🚗...',
+    })
     let requestData = {
       url: ApiConst.takePartInQueue(),
       data: {
@@ -1017,24 +1054,91 @@ Page({
       },
       header: app.globalData.header,
       success: res => {
-        
+        that.setData({
+          isQueueing: true,
+          subActionText: '取消排队'
+        });
+        //todo
+        let content = '排队序号：' + 12 + '\n当前排队人数：' + 12 + '\n需等待人数：' + 11
+        wx.showModal({
+          title: '预约排队确认',
+          content: content,
+          confirmText: '确认排队',
+          cancelText: '再想想',
+          success: function(res){
+            if(res.cancel){
+              that.cancelQueue();
+            }
+          }
+        })
+        that.requestQueueList();
+      },
+      complete: res => {
+        wx.hideLoading();
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
-  cancelQueue: function(){
+  /**
+   * 取消排队
+   */
+  cancelQueue: function() {
     var that = this;
-    let requestData = {
-      url: ApiConst.cancelQueue(),
-      data: {
-        ad_id: that.data.adId
-      },
-      header: app.globalData.header,
+    wx.showModal({
+      title: '取消确认',
+      content: '您确认取消当前排队吗？',
+      confirmText: '确认取消',
+      cancelText: '再想想',
       success: res => {
-        
+        if(res.confirm){
+          wx.showLoading({
+            title: '奔跑中🚗...',
+          })
+          let requestData = {
+            url: ApiConst.cancelQueue(),
+            data: {
+              ad_id: that.data.adId
+            },
+            header: app.globalData.header,
+            success: res => {
+              that.setData({
+                isQueueing: false,
+                subActionText: '预约排队'
+              });
+              wx.showToast({
+                title: '取消排队成功',
+                icon: 'success'
+              });
+              that.requestQueueList();
+            },
+            complete: res => {
+              wx.hideLoading();
+            }
+          }
+          ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+        }
       }
-    }
-    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+    })
+  },
+
+  /**
+   * 车身颜色说明
+   */
+  handleColorExplain: function() {
+    this.setData({
+      showExplain: true,
+      explainState: 2
+    })
+  },
+
+  /**
+   * 预约排队说明
+   */
+  handleSubscribeExplain: function() {
+    this.setData({
+      showExplain: true,
+      explainState: 1
+    })
   }
 })

@@ -1,2 +1,144 @@
-<!--pages/myAd/myAd.wxml-->
-<text>pages/myAd/myAd.wxml</text>
+<view>
+  <view class='tab-wrapper'>
+    <b-tabs current="{{ current }}" color="#ff555c" bindchange="handleChange">
+      <b-tab key="tab1" title="待投放"></b-tab>
+      <b-tab key="tab2" title="投放中"></b-tab>
+      <b-tab key="tab3" title="已结束"></b-tab>
+    </b-tabs>
+  </view>
+  <scroll-view scroll-y='true' class='ad-scroll-view' style='height: {{ scrollHeight }}px'>
+    <view class='ad-container'>
+      <view class='list-container' wx:if='{{ myAdList && myAdList.length !== 0 }}'>
+        <view wx:for='{{ myAdList }}' wx:key='ad' bindtap='showDetail'>
+          <!-- 待投放 -->
+          <view wx:if='{{ current === "tab1" }}'>
+            <view class='prepare-container'>
+              <view class='prepare-item-content'>
+                <view>
+                  <image class='ad-image'></image>
+                </view>
+                <view class='ad-finish-item'>
+                  <view class='ad-name'>
+                    <text>深圳奔跑宝</text>
+                  </view>
+                  <view class='ad-middle'>
+                    <view>
+                      <view class='ad-income'>
+                        <text>预约网点：</text>
+                      </view>
+                      <view class='ad-income'>
+                        <text>一号车库</text>
+                      </view>
+                    </view>
+                    <view class='ad-status theme-color'>
+                      <text>{{ item.stateStr }}</text>
+                    </view>
+                  </view>
+                  <view class='ad-time'>
+                    <view class='ad-time-title'>
+                      <text>已约时间：</text>
+                    </view>
+                    <view class='ad-time-detail'>
+                      <text>07月12日-8月11日</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view class='prepare-action-wrapper'>
+                <button class='prepare-action' catchtap='handlePrepare' data-prepare='{{ item }}'>{{ item.actionStr }}</button>
+              </view>
+            </view>
+          </view>
+
+          <!-- 投放中 -->
+          <view wx:if='{{ current === "tab2" }}'>
+            <view class='prepare-container'>
+              <view class='prepare-item-content'>
+                <view>
+                  <image class='ad-image'></image>
+                </view>
+                <view class='ad-finish-item'>
+                  <view class='ad-name'>
+                    <text>深圳奔跑宝</text>
+                  </view>
+                  <view class='ad-middle'>
+                    <view>
+                      <view class='ad-income'>
+                        <text>预计收益：</text>
+                      </view>
+                      <view class='ad-money'>
+                        <text>￥300~868</text>
+                      </view>
+                    </view>
+                    <view class='ad-status'>
+                      <text>投放中</text>
+                    </view>
+                  </view>
+                  <view class='ad-time'>
+                    <view class='ad-time-title'>
+                      <text>检测时间：</text>
+                    </view>
+                    <view class='ad-time-detail'>
+                      <text>07月12日</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view class='prepare-action-wrapper'  wx:if='{{ item.actionStr }}'>
+                <button class='prepare-action' catchtap='handleRun' data-run='{{ item }}'>{{ item.actionStr }}</button>
+              </view>
+            </view>
+          </view>
+
+          <!-- 已结束 -->
+          <view wx:if='{{ current === "tab3" }}'>
+            <view class='finish-container'>
+              <view>
+                <image class='ad-image'></image>
+              </view>
+              <view class='ad-finish-item'>
+                <view class='ad-name'>
+                  <text>深圳奔跑宝</text>
+                </view>
+                <view class='ad-middle'>
+                  <view>
+                    <view class='ad-income'>
+                      <text>实际收益：</text>
+                    </view>
+                    <view class='ad-money'>
+                      <text>￥800</text>
+                    </view>
+                  </view>
+                  <view class='ad-status'>
+                    <text>已结束</text>
+                  </view>
+                </view>
+                <view class='ad-time'>
+                  <view class='ad-time-title'>
+                    <text>投放时间：</text>
+                  </view>
+                  <view class='ad-time-detail'>
+                    <text>07月12日-8月11日</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 空布局 -->
+      <view class='empty-container' wx:if='{{ !myAdList || myAdList.length === 0 }}'>
+        <view class='empty'>
+          <image class='empty-icon' src='../../image/empty-list-icon.png'></image>
+          <view class='empty-text-top'>
+            <text>您还没有相关的广告</text>
+          </view>
+          <view class='empty-text-bottom'>
+            <text>去广告市场看看吧~</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+</view>

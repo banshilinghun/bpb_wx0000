@@ -244,6 +244,21 @@ function cancelQueue(){
   return baseUrl + 'app/cancel/user_ad_queue';
 }
 
+//查询用户等待确认的预约信息
+function  queryQueueInfo(){
+  return baseUrl + 'app/query/user_waith_confirm_queue';
+}
+
+//确认预约排队信息
+function confirmSubsQueue(){
+  return baseUrl + 'app/confirm/wait_subscribe_info';
+}
+
+//拒绝预约排队信息
+function refuseSubsQueue(){
+  return baseUrl + 'app/refuse/wait_subscribe_info';
+}
+
 module.exports = {
   GetDotUrl: GetDotUrl,
   getCitys: getCitys,
@@ -292,5 +307,8 @@ module.exports = {
   addCarModel: addCarModel,
   getQueueUser: getQueueUser,
   takePartInQueue: takePartInQueue,
-  cancelQueue: cancelQueue
+  cancelQueue: cancelQueue,
+  queryQueueInfo, queryQueueInfo,
+  confirmSubsQueue: confirmSubsQueue,
+  refuseSubsQueue: refuseSubsQueue
 }
