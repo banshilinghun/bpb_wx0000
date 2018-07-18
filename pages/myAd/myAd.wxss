@@ -74,6 +74,7 @@ page {
   width: 128rpx;
   height: 128rpx;
   background-color: #eee;
+  border-radius: 5rpx;
 }
 
 .ad-finish-item{
@@ -153,12 +154,14 @@ page {
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
 }
 
 .prepare-action-wrapper{
   width: 100%;
   box-sizing: border-box;
   margin-top: 20rpx;
+  position: relative
 }
 
 .prepare-action{
@@ -171,7 +174,16 @@ page {
   border: 1rpx solid #ff555c;
   font-size: 28rpx;
   color: #ff555c;
-  margin: 0;
+  margin: 0
+}
+
+.prepare-right-tip{
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff555c;
+  font-size: 26rpx;
 }
 
 .theme-color{

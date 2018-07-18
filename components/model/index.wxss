@@ -1,0 +1,140 @@
+.b-model-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  transition: all 0.2s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.b-model-mask-show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.b-model {
+  position: fixed;
+  overflow: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  outline: 0;
+  align-items: center;
+  justify-content: center;
+  transform: translateZ(1px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.b-model-show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.b-model-main {
+  width: 75%;
+  position: relative;
+}
+
+.b-model-content {
+  border: 0;
+  border-radius: 14rpx;
+  padding-top: 30rpx;
+  position: relative;
+  background-color: #fff;
+  background-clip: padding-box;
+  text-align: center;
+  overflow: hidden;
+}
+
+.b-model-title {
+  padding: 12rpx 30rpx 30rpx;
+  font-size: 36rpx;
+  line-height: 1;
+  color: #333;
+  text-align: center;
+}
+
+.b-model-btn-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.b-model-btn {
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  background-image: none;
+  white-space: nowrap;
+  user-select: none;
+  position: relative;
+  font-size: 28rpx;
+  border-radius: 0;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #fff;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  border: 0 !important
+}
+
+button::after {
+  border: none;
+}
+
+.b-model-grid-item {
+  border-top: 1rpx solid #e9eaec;
+  border-right: 1rpx solid #e9eaec;
+  flex: 1;
+}
+
+.b-model-grid-item-last {
+  flex: 1;
+  border-top: 1rpx solid #e9eaec;
+}
+
+.b-btn-cancel {
+  color: #495060;
+}
+
+.b-btn-confirm {
+  color: #ff555c;
+}
+
+.b-modal-btn-loading {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 12px;
+    height: 12px;
+    background: 0 0;
+    border-radius: 50%;
+    border: 2px solid #e5e5e5;
+    border-color: #666 #e5e5e5 #e5e5e5 #e5e5e5;
+    animation: btn-spin .6s linear;
+    animation-iteration-count: infinite
+}
+
+.b-model-btn-text{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+@keyframes btn-spin {
+    0% {
+        transform: rotate(0)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}

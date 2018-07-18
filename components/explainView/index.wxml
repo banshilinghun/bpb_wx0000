@@ -1,7 +1,7 @@
 <!-- 预约排队说明和车身颜色说明 -->
 <view class='desc-container' wx:if='{{ showExplain }}'>
   <view class='desc-title'>
-    <text>{{ state === 1? '预约排队说明' : '车身颜色说明' }}</text>
+    <text>{{ title }}</text>
   </view>
   <view>
     <view class='desc' wx:for='{{ state === 1? subscribeList : colorExplainList }}' wx:key='explain'>

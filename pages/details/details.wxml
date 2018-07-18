@@ -22,7 +22,7 @@
               <text class="time timetxt2">即将开始</text>
             </view>
             <view wx:if="{{adInfo.run_status==1}}">
-              <text class="time">剩余{{adInfo.current_count}}</text>
+              <text class="time">剩余{{adInfo.current_count}}辆</text>
             </view>
             <view wx:if="{{adInfo.run_status==2}}">
               <text class="time timetxt2">投放中</text>
@@ -33,58 +33,68 @@
             <view wx:if="{{adInfo.run_status==4}}">
               <text class="time timetxt">已结束</text>
             </view>
+            <view>
+              <text class="time timetxt">（共{{ adInfo.total_count }}辆）</text>
+            </view>
           </view>
         </view>
       </block>
       <block>
         <view class="profile">
-          <view class="profile-item">广告类型:</view>
-          <view class="right-text">
-            <label class="data-text swtwxs" wx:if="{{adInfo.type==0}}">车尾</label>
-            <label class="data-text swtwxs" wx:if="{{adInfo.type==1}}">车内</label>
-            <label class="data-text swtwxs" wx:if="{{adInfo.type==2}}">车尾+车内</label>
-            <label class="data-text swtwxs" wx:if="{{adInfo.type==3}}">车内+车外</label>
-            <label class="data-text swtwxs" wx:if="{{adInfo.type==4}}">车外</label>
+          <!-- 预计收益 -->
+          <view class="profile-item">
+            <view class='profole-type'>预计收益:</view>
+            <view class="profole-type-right red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>￥{{adInfo.amount}}</view>
+            <view class="profole-type-right red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>￥300
+              <label class="data-blt2">~</label>868
+              <icon type="info" size="16" color='#ff555c' />
+            </view>
+            <view class="profole-type-right tasts" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
+          </view>
+          <!-- 广告类型 -->
+          <view class='profile-right-item'>
+            <view class="profole-type">
+              <text>广告类型:</text>
+            </view>
+            <view class="profole-type-right">
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==0}}">车尾</label>
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==1}}">车内</label>
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==2}}">车尾+车内</label>
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==3}}">车内+车外</label>
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==4}}">车外</label>
+            </view>
           </view>
         </view>
       </block>
       <block>
         <view class="profile">
-          <view class="profile-item">预计收益:</view>
-          <view class="right-text red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>￥{{adInfo.amount}}</view>
-          <view class="right-text red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>￥300
-            <label class="data-blt2">~</label>868
-            <icon type="info" size="16" color='#ff555c' />
-          </view>
-          <view class="right-text tasts" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
-        </view>
-      </block>
-      <block>
-        <view class="profile">
-          <view class="profile-item">投放车辆:</view>
-          <view class="right-text">{{adInfo.total_count}}辆</view>
-        </view>
-      </block>
-      <block>
-        <view class="profile">
-          <view class="profile-item">车身颜色:</view>
-          <view class="right-text horizontal-center" bindtap='handleColorExplain'>
-            <text>{{ carColor }}</text>
-            <icon class="icon-margin" type="info" size="16" color='#999' />
-          </view>
-        </view>
-      </block>
-      <block>
-        <view class="profile">
-          <view class="profile-item">投放时间:</view>
+          <view class="profile-item">收益时间:</view>
           <view class="right-text">{{adInfo.begin_date}}
             <label class="data-blt">~</label>{{adInfo.end_date}}</view>
         </view>
       </block>
       <block>
         <view class="profile">
-          <view class="profile-item">投放城市:</view>
-          <view class="right-text">{{ adServingCity }}</view>
+          <view class="profile-item">安装时间:</view>
+          <view class="right-text">{{adInfo.begin_date}}
+            <label class="data-blt">~</label>{{adInfo.end_date}}</view>
+        </view>
+      </block>
+      <block>
+        <view class="profile">
+          <view class="profile-item">车辆要求:</view>
+          <view class="right-text horizontal-center" bindtap='handleColorExplain'>
+            <icon class="icon-margin" type="info" size="16" color='#999' />
+            <text wx:if='{{ adInfo.city }}'>{{ adInfo.city}}</text>
+            <text wx:if='{{ carColor }}'>,{{ carColor }}</text>
+          </view>
+        </view>
+      </block>
+      <!-- 预览广告设计效果 -->
+      <block>
+        <view class="b-see-more-detail">
+          <text class='b-see-more-text'>预览广告设计效果</text>
+          <image class=''></image>
         </view>
       </block>
     </view>
@@ -96,6 +106,7 @@
         </view>
       </view>
     </block>
+
     <!-- 参与列表 -->
     <view class='join-list-wrapper' wx:if='{{showJoining}}' bindtap='joinClick'>
       <view class='join-left-layout'>
@@ -133,24 +144,12 @@
       </view>
     </view>
     <!-- 服务网点列表 -->
-    <view class="profile-wrapper protwo">
+    <view class="protwo">
       <block wx:if="{{service.length>0}}">
         <view class='service-title-wrapper'>
           <view class="profile frpro">
             <view class="profile-item cwsfts">预约前往下列服务网点</view>
-            <view class='action-wrapper' bindtap='changeListMap' style='display:none'>
-              <image class='action-image' src='{{ showMap? "../../image/ad-list-icon.png" : "../../image/ad-map-icon.png" }}'></image>
-            </view>
-            <block wx:if='{{ adInfo.current_count == 0 && adInfo.run_status == 1 }}'>
-              <view class='subscribe-action-wrapper'>
-                <view class=' explain-icon' bindtap='handleSubscribeExplain'>
-                  <icon type="info" size="16" color='#999' />
-                </view>
-                <button class='subscribe-action-btn {{ isQueueing? "subscribe-cancel" : "" }}' bindtap='handleSubcribeQueue'>{{ subActionText }}</button>
-              </view>
-            </block>
           </view>
-
         </view>
       </block>
 
@@ -200,19 +199,18 @@
         </view>
       </view>
     </view>
-
   </view>
+  <!-- 底部分享预约按钮 -->
   <view class='action_bottom'>
     <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
-      <image src='../../image/shareicon.png'></image>
-      <view class='sharetext'>{{ shareAwardText }}</view>
+      <view class='share-action-wrapper'>
+        <image src='../../image/shareicon.png'></image>
+        <view class='sharetext'>{{ shareAwardText }}</view>
+      </view>
     </button>
-    <view class='subscribe_immediately'>
+    <view class='subscribe_immediately {{ actionStatus === 1 ? "subscribe-focus" : "subscribe-unfocus" }}' bindtap='handleAction'>
       <view class='subcribe-wrapper'>
-        <image class='subscribe-image-size' src='../../image/subscribe-icon.png'></image>
-        <view>
-          <text>立即预约</text>
-        </view>
+        <text>{{ actionStr }}</text>
       </view>
     </view>
   </view>
@@ -241,8 +239,7 @@
 <dialog-address showAddressDialog='{{ showAddressDialog }}' address='{{ address }}' phone='{{ phone }}'></dialog-address>
 <!-- 注册认证弹框 -->
 <dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ "https://wxapi.benpaobao.com/static/app_img/auth-icon.png" }}' btnStr='{{ authStr }}' status='{{ authStatus }}' content='{{ authContent }}' bind:action='handleActionTap'></dialog-auth>
-<!-- 说明 -->
-<explainView showExplain='{{ showExplain }}' state='{{ explainState }}'></explainView>
+
 <!-- <view class='msite-nav'>
  <button class='msite-a2'  open-type="contact" >
   <image src='../../image/kf_icon.png'></image>

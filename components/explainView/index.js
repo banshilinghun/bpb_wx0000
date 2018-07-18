@@ -12,7 +12,10 @@ Component({
     state: {
       type: Number,
       value: 1,
-
+    },
+    title: {
+      type: String,
+      value: ''
     }
   },
 
@@ -21,7 +24,7 @@ Component({
    */
   data: {
     subscribeList: ["1、若该广告的所有服务网点都已经预约满，系统开放预约排队机制。", "2、参与排队，等待预约。", "3、当有车主取消预约，系统会根据排队顺序依次提示车主确认预约。", "4、车主需在5分钟内确认是否预约；若确认则预约成功。"],
-    colorExplainList: ["1、不同的广告对车身颜色有不同的要求。", "2、预约时系统根据车主车辆颜色判断是否可参加。", "3、请提前核实车辆颜色是否符合要求再进行预约操作。", "4、若有其他疑问，请联系客服。"]
+    colorExplainList: ["1、代表广告对车辆的特定要求，例如（深圳，白色/黑色，双证，家庭轿车；代表该广告需要深圳车牌，白色和黑色车辆，有双证的家庭轿车）。", "2、请提前核实车辆颜色是否符合要求再进行预约操作。", "3、若有其他疑问，请联系客服！"]
   },
 
   ready: function(){
@@ -33,10 +36,11 @@ Component({
    */
   methods: {
 
+//state === 1? '预约排队说明' : '车身颜色说明'
     handleDescClose: function () {
-      this.setData({
-        showExplain: false
-      })
+      wx.navigateBack({
+        delta: 1,
+      });
     }
   }
 })

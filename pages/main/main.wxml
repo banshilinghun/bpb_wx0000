@@ -174,5 +174,16 @@
 <bpb-follow shareit='{{shareit}}'></bpb-follow>
 <bpb-reward reward='{{reward}}'></bpb-reward>
 <!-- 确认预约排队信息 -->
-
+<model visible="{{ visible }}" title="{{ title }}" cancelText="{{ cancelText }}" confirmText="{{ confirmText }}" cancelLoading="{{ cancelLoading }}" confirmLoading="{{ confirmLoading }}" bind:cancel="handleCancel" bind:confirm="handleConfirm">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view>{{ subsAdName }}</view>
+      <view>{{ subsServerName }}</view>
+      <view>{{ subsServerAddress }}</view>
+    </view>
+    <view>系统已为你预约成功，是否接受安排？</view>
+  </view>
+</model>
+<!-- 顶部提示 -->
+<b-message id="message" />
 <!-- <navigator url="../auth/auth" style='height:40px;width:40px;'> 2222222</navigator>          -->

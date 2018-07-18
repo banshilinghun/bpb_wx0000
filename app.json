@@ -28,7 +28,8 @@
     "pages/brandDetail/brandDetail",
     "pages/subscribeQueue/subscribeQueue",
     "pages/myAd/myAd",
-    "pages/choiceCarModel/choiceCarModel"
+    "pages/choiceCarModel/choiceCarModel",
+    "pages/explain/explain"
   ],
   "window": {
     "backgroundTextStyle": "light",

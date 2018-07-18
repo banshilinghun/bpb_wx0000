@@ -1,0 +1,2 @@
+<!-- 说明 -->
+<explainView showExplain='{{ showExplain }}' state='{{ explainState }}' title='{{ title }}'></explainView>

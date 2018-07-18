@@ -2,6 +2,7 @@
   "navigationBarTitleText": "我的广告",
   "usingComponents": {
     "b-tabs": "../../components/tabs/index",
-    "b-tab": "../../components/tab/index"
+    "b-tab": "../../components/tab/index",
+    "b-message": "../../components/message/index"
   }
 }

@@ -1,10 +1,12 @@
 {
-    "navigationBarTitleText": "奔跑宝",
-    "navigationBarTextStyle": "white",
-    "navigationBarBackgroundColor": "#333",
-    "enablePullDownRefresh": true,
-      "usingComponents": {
-        "bpb-follow": "../../components/follow/index",
-        "bpb-reward": "../../components/reward/index"
-      }
+  "navigationBarTitleText": "奔跑宝",
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#333",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "bpb-follow": "../../components/follow/index",
+    "bpb-reward": "../../components/reward/index",
+    "model": "../../components/model/index",
+    "b-message": "../../components/message/index"
+  }
 }

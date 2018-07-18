@@ -11,19 +11,25 @@ page {
 
 .profile, .account {
   display: flex;
-  padding: 24rpx;
   align-items: center;
   flex-direction: row;
-  border-bottom: 2rpx solid #eee;
+  border-bottom: 1rpx solid #eee;
   background: #fff;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
+  padding: 0;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+}
+
+.profile-ad-status{
+  display: flex;
+  flex-direction: row;
 }
 
 .profile-item, .account-item {
   flex: 1;
-  font-size: 14px;
+  font-size: 28rpx;
   color: #666;
+  position: relative;
 }
 
 .profile-arrow, .account-arrow {
@@ -31,13 +37,28 @@ page {
   height: 32rpx;
 }
 
+.profole-type, .profole-type-right{
+  font-size: 28rpx;
+  color: #666;
+  display: inline-block;
+}
+
+.profole-type-right{
+  margin-left: 20rpx;
+}
+
+.profile-right-item{
+  position: absolute;
+  right: 30rpx;
+}
+
 .cwsfts {
-  font-size: 18px;
+  font-size: 36rpx;
   color: #333;
 }
 
 .right-text {
-  font-size: 14px;
+  font-size: 28rpx;
   color: #666;
 }
 
@@ -48,12 +69,13 @@ page {
 }
 
 .icon-margin{
-  margin-left: 10rpx;
+  margin-right: 10rpx;
 }
 
 .protwo {
   margin-top: 16rpx;
   margin-bottom: 0;
+  display: none;
 }
 
 .profile:last-child {
@@ -104,7 +126,7 @@ page {
 }
 
 .title {
-  font-size: 16px;
+  font-size: 32rpx;
   color: #333;
   font-family: "微软雅黑";
   line-height: 20rpx;
@@ -133,7 +155,7 @@ page {
 
 .time {
   color: #333;
-  font-size: 14px;
+  font-size: 28rpx;
 }
 
 .message image {
@@ -717,10 +739,22 @@ button::after {
 
 .wtwabt {
   flex: 1;
-  margin-top: 16rpx;
+  text-align: center;
   background: none;
   line-height: 1.2;
   padding: 0;
+  position: relative;
+}
+
+.share-action-wrapper{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center
 }
 
 .wtwabt image {
@@ -731,6 +765,7 @@ button::after {
 .sharetext {
   font-size: 24rpx;
   color: #ff555c;
+  margin-left: 10rpx;
 }
 
 /*弹窗*/
@@ -1212,8 +1247,14 @@ button {
   justify-content: center;
 }
 
-.profile-wrapper, .account-wrapper {
+.account-wrapper {
   background-color: transparent;
+}
+
+.profile-wrapper{
+  background: #fff;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
 }
 
 .yy_time {
@@ -1228,42 +1269,6 @@ button {
   background: #fff;
 }
 
-/* 翻转动画 start*/
-
-.list-root-wrapper {
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.list-inner {
-  width: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  transition: transform 0.8s;
-}
-
-.list-inner-click {
-  transform: rotateY(-180deg);
-}
-
-.list-transform{
-  width: 100%;
-}
-
-.map-transform{
-  width: 100vw;
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  transform-origin: center center;
-  transform: rotateY(180deg);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* 翻转动画 end */
 .data-blt2{
   padding-left: 6rpx;
   padding-right: 6rpx;
@@ -1297,12 +1302,31 @@ button {
 .subscribe_immediately{
   flex: 1;
   font-size: 24rpx;
-  color: #333;
-  position: relative;
+  color: #fff;
+  position: relative
+}
+
+.subscribe-focus{
+  background: #ff555c
+}
+
+.subscribe-unfocus{
+  background: #ccc;
+}
+
+.subcribe-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
 }
 
 .action_bottom{
-  height: 100rpx;
+  height: 88rpx;
   width: 100%;
   position: fixed;
   left: 0;
@@ -1316,19 +1340,17 @@ button {
   z-index: 7;
 }
 
-.subscribe-image-size{
-  width: 44rpx;
-  height: 44rpx;
-  margin-bottom: 5rpx;
-}
-
-.subcribe-wrapper{
+.b-see-more-detail{
+  min-height: 80rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
+  margin-bottom: 16rpx;
+}
+
+.b-see-more-text{
+  font-size: 28rpx;
+  color: #ff555c;
 }

@@ -6,6 +6,7 @@ const shareUtil = require("../../utils/shareUtil.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
+const { $Message } = require('../../components/base/index');
 var app = getApp()
 const shareFlagUrl = ApiConst.getShareFlag();
 
@@ -41,8 +42,15 @@ Page({
     pageIndex: 0,
     count: 6,
     showShareBtn: false, //隐藏显示分享按钮
-    showSubsDialog: false,
-    subscribeContent: '',
+    visible: false, //预约确认
+    cancelText: '不接受',
+    confirmText: '接受',
+    title: '预约确认',
+    cancelLoading: false,
+    confirmLoading: false,
+    subsAdName: '',
+    subsServerName: '',
+    subsServerAddress: '',
     queue_adId: '',
     queue_serverId: ''
   },
@@ -160,8 +168,8 @@ Page({
     //请求车主认证状态
     if (loginFlag == 1) {
       z.requestAuthStatus(reqData);
-      //确认排队预约信息
-      z.requestQueueInfo();
+      //确认排队预约信息 todo 打开
+      //z.requestQueueInfo();
     }
     //加载广告列表
     this.setData({
@@ -181,8 +189,10 @@ Page({
       header: app.globalData.header,
       success: res => {
         that.setData({
-          showSubsDialog: res,
-          subscribeContent: '广告名称：' + res.ad_name + '\n网点名称：' + res.server_name + '\n网点地址：' + res.address,
+          visible: res,
+          subsAdName: '广告名称：' + res.ad_name,
+          subsServerName: '网点名称：' + res.server_name,
+          subsServerAddress: '网点地址：' + res.address,
           queue_adId: res.ad_id,
           queue_serverId: res.server_id
         })
@@ -777,45 +787,61 @@ Page({
   },
 
   /**
-   * 不接受预约安排
+   * 接受预约安排
    */
-  refuseSystemAssign: function(){
+  handleConfirm(){
     let that = this;
-    let requestData = {
-      url: ApiConst.refuseSubsQueue(),
-      data: {},
-      header: app.globalData.header,
-      success: res => {
-        
-      },
-      complete: res => {
-        this.setData({
-          showSubsDialog: false
-        })
+    that.setData({
+      confirmLoading: true
+    });
+    setTimeout(function () {
+      let requestData = {
+        url: ApiConst.confirmSubsQueue(),
+        data: {},
+        header: app.globalData.header,
+        success: res => {
+          //TODO 跳转到预约页面
+          
+        },
+        complete: res => {
+          that.setData({
+            visible: false,
+            confirmLoading: false
+          });
+        }
       }
-    }
-    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+      ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+    }, 1000);
   },
 
   /**
-   * 接受预约安排
+   * 不接受预约安排
    */
-  acceptSystemAssign: function(){
+  handleCancel(){
     let that = this;
-    let requestData = {
-      url: ApiConst.confirmSubsQueue(),
-      data: {},
-      header: app.globalData.header,
-      success: res => {
-        //TODO 跳转到预约页面
-      },
-      complete: res => {
-        this.setData({
-          showSubsDialog: false
-        })
+    that.setData({
+      cancelLoading: true
+    });
+    setTimeout(function () {
+      let requestData = {
+        url: ApiConst.refuseSubsQueue(),
+        data: {},
+        header: app.globalData.header,
+        success: res => {
+          $Message({
+            content: '你拒绝了预约安排',
+            type: 'success'
+          });
+        },
+        complete: res => {
+          that.setData({
+            visible: false,
+            cancelLoading: false
+          });
+        }
       }
-    }
-    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+      ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+    }, 1000);
   }
 
 })

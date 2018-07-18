@@ -10,18 +10,11 @@ const ad_server_list = ApiConst.adServerList();
 const mapId = 'myMap';
 const defaultScale = 11;
 
+//预约排队状态数组  0:即将开始，1:立即预约，2:已预约（查看我的广告），3:预约排队，4:取消排队
+const ACTION_ARR = [0, 1, 2, 3, 4];
+
 Page({
   data: {
-    //map start
-    mapHeight: 0,
-    longitude: '',
-    latitude: '',
-    scale: defaultScale,
-    markers: [],
-    controls: [],
-    showMap: false,
-    actionText: '地图',
-    //map end
     joinListUrl: ApiConst.adJoinedUser(),
     banners: [],
     receive: 0,
@@ -85,14 +78,9 @@ Page({
     authStatus: '',
     //end
     carColor: '', //车身颜色
-    adServingCity: '', //投放城市
     showWaiting: false, //排队列表
     queueCount: 0,
     queueList: [],
-    // 预约排队说明和车身颜色说明
-    showExplain: false,
-    explainState: 1,
-    subActionText: '预约排队',
     //是否正在排队中
     isQueueing: false,
   },
@@ -129,7 +117,6 @@ Page({
         })
       }
     })
-    that.requestLocation();
   },
 
   onShow: function(n) {
@@ -263,9 +250,11 @@ Page({
     })
   },
 
+  /**
+   * 请求广告信息
+   */
   requestAdInfo: function(reqData) {
     var that = this;
-    //console.log(reqData)
     wx.request({
       url: ApiConst.getAdInfo(),
       data: reqData,
@@ -274,37 +263,65 @@ Page({
         console.log(res.data)
         if (res.data.code == 1000) {
           console.log(res.data)
-          var enddate = res.data.data.info.end_date;
-          res.data.data.info.begin_date = res.data.data.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-          res.data.data.info.end_date = res.data.data.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+          let dataBean = res.data.data;
+          var enddate = dataBean.info.end_date;
+          dataBean.info.begin_date = dataBean.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+          dataBean.info.end_date = dataBean.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
 
           that.setData({
-            page: res.data.data.ad_server.page,
-            hasMore: res.data.data.ad_server.hasMore,
-            sortedKey: res.data.data.ad_server.sortedKey,
-            adServingCity: res.data.data.info.city,
-            carColor: (!res.data.data.ad_colors || res.data.data.ad_colors.length == 0) ? '不限' : res.data.data.ad_colors.join(','),
-            isQueueing: res.data.data.ad_queue && JSON.stringify(res.data.data.ad_queue) != '{}'
+            page: dataBean.ad_server.page,
+            hasMore: dataBean.ad_server.hasMore,
+            sortedKey: dataBean.ad_server.sortedKey,
+            carColor: (!dataBean.ad_colors || dataBean.ad_colors.length == 0) ? '' : dataBean.ad_colors.join('/'),
+            isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
+
           })
-          //排队逻辑
-          if (that.data.isQueueing) {
+          //预约排队逻辑 运行状态过滤
+          if (dataBean.info.run_status == 1) {
+            // 剩余数过滤
+            if (dataBean.info.current_count != 0) {
+              //是否预约过滤
+              if (dataBean.subscribe) {
+                that.setData({
+                  actionStr: '查看我的广告',
+                  actionStatus: ACTION_ARR[2]
+                })
+              } else {
+                that.setData({
+                  actionStr: '立即预约',
+                  actionStatus: ACTION_ARR[1]
+                })
+              }
+            } else {
+              //是否排队中过滤
+              if (that.data.isQueueing) {
+                that.setData({
+                  actionStr: '取消排队',
+                  actionStatus: ACTION_ARR[4]
+                })
+              } else {
+                that.setData({
+                  actionStr: '预约排队',
+                  actionStatus: ACTION_ARR[3]
+                })
+              }
+            }
+          } else if (dataBean.info.run_status == 0){ //即将开始
             that.setData({
-              subActionText: '取消排队'
-            })
-          } else {
-            that.setData({
-              subActionText: '预约排队'
+              actionStr: '即将开始',
+              actionStatus: ACTION_ARR[0]
             })
           }
-          var serviceList = res.data.data.ad_server.servers;
+
+          var serviceList = dataBean.ad_server.servers;
           if (serviceList.length > 0) {
             for (var j = 0; j < serviceList.length; j++) {
               serviceList[j].distance = (serviceList[j].distance / 1000).toFixed(2);
               serviceList[j].lista = 1;
-              if (res.data.data.isRegist) {
+              if (dataBean.isRegist) {
                 serviceList[j].lista = 0;
               } else {
-                if (res.data.data.info.current_count > 0) {
+                if (dataBean.info.current_count > 0) {
                   if (serviceList[j].ad_count - serviceList[j].subscribe_count <= 0) {
                     serviceList[j].lista = 0;
                   } else {
@@ -312,16 +329,16 @@ Page({
                       serviceList[j].lista = 0;
                     }
                   }
-                  if (res.data.data.subscribe != null) {
+                  if (dataBean.subscribe != null) {
 
-                    if (res.data.data.subscribe.ad_id == res.data.data.info.id) {
-                      if (res.data.data.subscribe.server_id == serviceList[j].id) {
+                    if (dataBean.subscribe.ad_id == dataBean.info.id) {
+                      if (dataBean.subscribe.server_id == serviceList[j].id) {
                         serviceList[j].lista = 2;
                         that.setData({
-                          selServerId: res.data.data.subscribe.server_id,
-                          selDate: res.data.data.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日"),
-                          selTime: res.data.data.subscribe.begin_time + "-" + res.data.data.subscribe.end_time,
-                          selId: res.data.data.subscribe.id
+                          selServerId: dataBean.subscribe.server_id,
+                          selDate: dataBean.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日"),
+                          selTime: dataBean.subscribe.begin_time + "-" + dataBean.subscribe.end_time,
+                          selId: dataBean.subscribe.id
                         })
                       } else {
                         serviceList[j].lista = 0;
@@ -339,33 +356,32 @@ Page({
             }
           }
           console.log(serviceList)
-          if (res.data.data.ad_server.page == 0) {
+          if (dataBean.ad_server.page == 0) {
             that.setData({
               service: serviceList,
-              joinCount: res.data.data.info.total_count - res.data.data.info.current_count
+              joinCount: dataBean.info.total_count - dataBean.info.current_count
             })
           } else {
             var serviceList = that.data.service.concat(serviceList)
             that.setData({
               service: serviceList,
-              joinCount: res.data.data.info.total_count - res.data.data.info.current_count
+              joinCount: dataBean.info.total_count - dataBean.info.current_count
             })
           }
 
-
-          if (res.data.data.imgs.length == 0) {
+          if (dataBean.imgs.length == 0) {
             that.setData({
-              adInfo: res.data.data.info,
+              adInfo: dataBean.info,
               banners: ['../../image/bpb.png']
             })
           } else {
             that.setData({
-              adInfo: res.data.data.info,
-              banners: res.data.data.imgs
+              adInfo: dataBean.info,
+              banners: dataBean.imgs
             })
           }
           //赋值分享图数据
-          let adInfoBean = res.data.data.info;
+          let adInfoBean = dataBean.info;
           that.setData({
             shareAvatar: app.globalData.userInfo.avatarUrl,
             shareNickname: app.globalData.userInfo.nickName,
@@ -637,7 +653,6 @@ Page({
    * 生成图片分享朋友圈
    */
   shareMomentListener: function() {
-    console.log('shareMomentListener------------->')
     this.setData({
       showShareModel: true
     })
@@ -746,191 +761,11 @@ Page({
     })
   },
 
-  /**
-   * 中间 control 图标
-   */
-  createControl: function() {
-    var that = this;
-    var controlsWidth = 40;
-    var controlsHeight = 48;
-    that.setData({
-      controls: [{
-        id: 1,
-        iconPath: '../../image/center-location.png',
-        position: {
-          left: (that.data.windowWidth - controlsWidth) / 2,
-          top: (that.data.mapHeight) / 2 - controlsHeight * 3 / 4,
-          width: controlsWidth,
-          height: controlsHeight
-        },
-        clickable: false
-      }]
-    })
-  },
-
-  //请求地理位置
-  requestLocation: function() {
-    var that = this;
-    wx.getLocation({
-      type: 'gcj02',
-      success: function(res) {
-        //第一次加载，如果是分享链接点入，需要跳转到指定marker
-        that.setData({
-          latitude: res.latitude,
-          longitude: res.longitude,
-        })
-        that.moveTolocation();
-        that.requestAllServerList();
-      },
-    })
-  },
-
-  /**
-   * 移动到中心点
-   */
-  moveTolocation: function() {
-    var mapCtx = wx.createMapContext(mapId);
-    mapCtx.moveToLocation();
-  },
-
-  /**
-   * 请求服务网点列表
-   */
-  requestAllServerList: function() {
-    var that = this;
-    wx.request({
-      url: ad_server_list,
-      data: {
-        ad_id: that.data.adId
-      },
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          that.createMarker(res.data.data);
-        } else {
-          that.showModal(res.data.msg);
-        }
-      },
-      fail: res => {
-        that.showModal('网络错误');
-      }
-    })
-  },
-
-  /**
-   * 创建marker点
-   */
-  createMarker: function(serverList) {
-    for (let marker of serverList) {
-      marker.latitude = marker.lat;
-      marker.longitude = marker.lng;
-      marker.width = 40;
-      marker.height = 40;
-      marker.iconPath = '../../image/server-map-icon.png';
-      marker.callout = this.createCallout(marker);
-      //marker.label = this.createLabel(marker);
-    }
-    console.log(serverList);
-    this.setData({
-      markers: serverList
-    })
-  },
-
-  /**
-   * marker上的气泡
-   */
-  createCallout: function(marker) {
-    let distance = util.getDistance(this.data.latitude, this.data.longitude, marker.lat, marker.lng);
-    let callout = {};
-    callout.color = '#ffffff';
-    callout.content = marker.name + '\n' + marker.address + '\n' + '距离我 ' + distance.toFixed(2) + ' km';
-    callout.fontSize = 13;
-    callout.borderRadius = 5;
-    callout.bgColor = '#6E707c';
-    callout.padding = 5;
-    callout.textAlign = 'left';
-    callout.display = 'BYCLICK';
-    return callout;
-  },
-
-  createLabel: function(marker) {
-    let label = {};
-    label.color = '#ffffff';
-    label.content = distance.toFixed(2) + 'km';
-    label.fontSize = 10;
-    label.borderRadius = 5;
-    label.borderWidth = 1;
-    label.borderColor = '#ffffff';
-    label.bgColor = '#6E707c';
-    label.padding = 5;
-    label.textAlign = 'left';
-    return label;
-  },
-
   showModal: function(msg) {
     wx.showModal({
       content: msg,
       showCancel: false
     })
-  },
-
-  /**
-   * 点击marker事件
-   */
-  bindMarkertap: function(e) {
-    console.log(e);
-    for (let marker of this.data.markers) {
-      if (e.markerId == marker.id) {
-        this.setData({
-          longitude: marker.longitude,
-          latitude: marker.latitude
-        })
-      }
-    }
-  },
-
-  /**
-   * 点击control事件
-   */
-  controlTap: function() {
-
-  },
-
-  /**
-   * 拖动地图事件
-   */
-  regionChange: function() {
-
-  },
-
-  /**
-   * 点击地图事件
-   */
-  bindMapTap: function() {
-
-  },
-
-  moveToSelfLocation: function() {
-    this.setData({
-      scale: defaultScale
-    })
-    this.requestLocation();
-  },
-
-  changeListMap: function() {
-    var that = this;
-    that.setData({
-      showMap: !that.data.showMap,
-      actionText: that.data.showMap ? '地图' : '列表',
-    })
-    if (that.data.showMap) {
-      wx.createSelectorQuery().select('#myMap').boundingClientRect(function(rect) {
-        // 使页面滚动到底部
-        wx.pageScrollTo({
-          scrollTop: rect.bottom
-        })
-      }).exec()
-    }
   },
 
   previewImage: function(e) {
@@ -1028,18 +863,6 @@ Page({
   },
 
   /**
-   * 排队
-   */
-  handleSubcribeQueue: function() {
-    let that = this;
-    if (that.data.isQueueing) {
-      this.cancelQueue();
-    } else {
-      this.takeParkInQueue();
-    }
-  },
-
-  /**
    * 预约排队
    */
   takeParkInQueue: function() {
@@ -1056,7 +879,7 @@ Page({
       success: res => {
         that.setData({
           isQueueing: true,
-          subActionText: '取消排队'
+          actionStr: '取消排队'
         });
         //todo
         let content = '排队序号：' + 12 + '\n当前排队人数：' + 12 + '\n需等待人数：' + 11
@@ -1065,8 +888,8 @@ Page({
           content: content,
           confirmText: '确认排队',
           cancelText: '再想想',
-          success: function(res){
-            if(res.cancel){
+          success: function(res) {
+            if (res.cancel) {
               that.cancelQueue();
             }
           }
@@ -1091,7 +914,7 @@ Page({
       confirmText: '确认取消',
       cancelText: '再想想',
       success: res => {
-        if(res.confirm){
+        if (res.confirm) {
           wx.showLoading({
             title: '奔跑中🚗...',
           })
@@ -1104,7 +927,7 @@ Page({
             success: res => {
               that.setData({
                 isQueueing: false,
-                subActionText: '预约排队'
+                actionStr: '预约排队'
               });
               wx.showToast({
                 title: '取消排队成功',
@@ -1126,19 +949,41 @@ Page({
    * 车身颜色说明
    */
   handleColorExplain: function() {
-    this.setData({
-      showExplain: true,
-      explainState: 2
-    })
+    wx.navigateTo({
+      url: '../explain/explain?state=2'
+    });
   },
 
   /**
    * 预约排队说明
    */
   handleSubscribeExplain: function() {
-    this.setData({
-      showExplain: true,
-      explainState: 1
-    })
+    wx.navigateTo({
+      url: '../explain/explain?state=1'
+    });
+  },
+
+  handleAction: function() {
+    console.log('handleAction---------->')
+    let that = this;
+    switch (that.data.actionStatus) {
+      case ACTION_ARR[0]: //即将开始
+        //nothing
+        break;
+      case ACTION_ARR[1]: //立即预约
+        
+        break;
+      case ACTION_ARR[2]: //查看我的广告
+        wx.switchTab({
+          url: '../myAd/myAd'
+        })
+        break;
+      case ACTION_ARR[3]: //预约排队
+        that.takeParkInQueue();
+        break;
+      case ACTION_ARR[4]: //取消排队
+        that.cancelQueue();
+        break;
+    }
   }
 })

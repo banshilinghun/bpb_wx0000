@@ -259,6 +259,11 @@ function refuseSubsQueue(){
   return baseUrl + 'app/refuse/wait_subscribe_info';
 }
 
+//获取用户个人广告列表
+function getUserPersonalAdList(){
+  return baseUrl + 'app/get/user_personal_adlist';
+}
+
 module.exports = {
   GetDotUrl: GetDotUrl,
   getCitys: getCitys,
@@ -310,5 +315,6 @@ module.exports = {
   cancelQueue: cancelQueue,
   queryQueueInfo, queryQueueInfo,
   confirmSubsQueue: confirmSubsQueue,
-  refuseSubsQueue: refuseSubsQueue
+  refuseSubsQueue: refuseSubsQueue,
+  getUserPersonalAdList: getUserPersonalAdList
 }

@@ -1,8 +1,7 @@
-
 @import '../joinList/joinList.wxss';
 
 page {
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
 }
 
 .message_list {
@@ -125,10 +124,9 @@ page {
   color: #fff;
   font-size: 28rpx;
   height: 90rpx;
-  line-height:90rpx;
-  padding-left:30rpx;
-padding-right:30rpx;
-
+  line-height: 90rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
 }
 
 .btn-gray {
@@ -138,30 +136,32 @@ padding-right:30rpx;
   color: #fff;
   font-size: 28rpx;
   height: 90rpx;
-  line-height:90rpx;
-   padding-left:30rpx;
-padding-right:30rpx;
+  line-height: 90rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
 }
 
 button::after {
   content: none;
 }
-.dh-btn{
+
+.dh-btn {
   text-align: left;
   position: relative;
 }
-.yjdh-btn{
+
+.yjdh-btn {
   position: absolute;
   top: 17rpx;
   right: 30rpx;
-  width:148rpx;
-height:56rpx;
-box-shadow:0rpx 0rpx 4rpx 0rpx rgba(161,17,0,1);
-border-radius:8rpx;
-background: #fff;
-color: #FB523E;
-line-height: 56rpx;
-text-align: center;
+  width: 148rpx;
+  height: 56rpx;
+  box-shadow: 0rpx 0rpx 4rpx 0rpx rgba(161, 17, 0, 1);
+  border-radius: 8rpx;
+  background: #fff;
+  color: #fb523e;
+  line-height: 56rpx;
+  text-align: center;
 }
 
 .watwx {
@@ -266,6 +266,7 @@ text-align: center;
   background-size: 100% 100%;
   width: 100%;
 }
+
 .banner3 {
   position: relative;
   align-items: center;
@@ -375,30 +376,33 @@ movable-view {
   overflow: hidden;
 }
 
-.title0{
+.title0 {
   text-align: center;
-  font-size:36rpx;
-  color: #FF555C;
-  padding-top:20rpx;
+  font-size: 36rpx;
+  color: #ff555c;
+  padding-top: 20rpx;
 }
-.title1{
+
+.title1 {
   text-align: right;
 }
-.title1 image{
+
+.title1 image {
   width: 48rpx;
   height: 48rpx;
 }
+
 .title2 {
   font-size: 32rpx;
   color: #333;
   margin-top: 20rpx;
   text-align: center;
 }
-.goodsdetail .title2 {
-padding:5rpx 60rpx;
-color:#333;
-font-size:32rpx;
 
+.goodsdetail .title2 {
+  padding: 5rpx 60rpx;
+  color: #333;
+  font-size: 32rpx;
 }
 
 .goodsdetail .title4 {
@@ -408,54 +412,60 @@ font-size:32rpx;
   color: #3c3c3c;
 }
 
-.wtwabt2{
+.wtwabt2 {
   background: #ff555c;
   color: #fff;
   width: 88%;
   margin: 0 auto;
 }
-.colse{
+
+.colse {
   width: 80rpx;
   height: 80rpx;
   position: fixed;
-  bottom:30%;
+  bottom: 30%;
   left: 50%;
   z-index: 99;
   margin-left: -40rpx;
 }
 
 .kind-list-item-bd-show {
-height:auto;
-overflow:hidden;
+  height: auto;
+  overflow: hidden;
 }
-.navigator-box-show{
-  position:relative;
-background-color:#FFFFFF;
-line-height:1.41176471;
-font-size:34rpx;
+
+.navigator-box-show {
+  position: relative;
+  background-color: #fff;
+  line-height: 1.41176471;
+  font-size: 34rpx;
 }
-.navigator{
-  padding:20rpx 30rpx;
-position:relative;
-display:flex;
-align-items:center;
-height:auto;
-width:auto;
+
+.navigator {
+  padding: 20rpx 30rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: auto;
+  width: auto;
 }
-.navigator-text{
-  flex:1;
+
+.navigator-text {
+  flex: 1;
 }
-.navigator-arrow{
-  padding-right:26rpx;
-position:relative;
+
+.navigator-arrow {
+  padding-right: 26rpx;
+  position: relative;
 }
+
 .navigator-arrow:after {
   content: " ";
   display: inline-block;
   height: 18rpx;
   width: 18rpx;
   border-width: 2rpx 2rpx 0 0;
-  border-color: #888888;
+  border-color: #888;
   border-style: solid;
   transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
   position: absolute;
@@ -463,6 +473,7 @@ position:relative;
   margin-top: -8rpx;
   right: 28rpx;
 }
+
 .navigator:before {
   content: " ";
   position: absolute;
@@ -470,10 +481,28 @@ position:relative;
   top: 0;
   right: 30rpx;
   height: 1px;
-  border-top: 1rpx solid #D8D8D8;
-  color: #D8D8D8;
+  border-top: 1rpx solid #d8d8d8;
+  color: #d8d8d8;
 }
 
 .navigator:first-child:before {
   display: none;
+}
+
+.subscribe-wrapper {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.subscribe-body {
+  width: auto;
+  margin-bottom: 30rpx;
+  text-align: left;
+  box-sizing: content-box;
 }
