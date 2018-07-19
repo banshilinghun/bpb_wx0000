@@ -1381,3 +1381,8 @@ button {
 .b-queue-model-item{
   margin-bottom: 10rpx;
 }
+
+.b-queue-notify-text{
+  font-size: 24rpx;
+  color: #666;
+}

@@ -929,9 +929,9 @@ Page({
     var that = this;
     wx.showModal({
       title: '取消确认', 
-      content: '您确认取消当前排队吗？',
+      content: '取消后，需重新参加排队\n您确认取消当前排队吗？',
       confirmText: '确认取消',
-      cancelText: '再想想',
+      cancelText: '暂不取消',
       success: res => {
         if (res.confirm) {
           that.cancelQueueRequest();

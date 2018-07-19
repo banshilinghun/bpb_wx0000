@@ -30,7 +30,8 @@
     "pages/myAd/myAd",
     "pages/choiceCarModel/choiceCarModel",
     "pages/explain/explain",
-    "pages/design/design"
+    "pages/design/design",
+    "pages/test/test"
   ],
   "window": {
     "backgroundTextStyle": "light",

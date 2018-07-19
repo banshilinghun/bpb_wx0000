@@ -1,0 +1,4 @@
+<!-- 底部弹出框 -->
+<popup show="{{ showPop }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
+  
+</popup>
