@@ -1,4 +1,10 @@
 <!-- 底部弹出框 -->
 <popup show="{{ showPop }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
-  
+  <view>
+    <view></view>
+    <view></view>
+    <view>
+      <button class=''>确认预约</button>
+    </view>
+  </view>
 </popup>
