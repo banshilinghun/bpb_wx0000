@@ -409,7 +409,7 @@ Page({
 
   check: function (e) {
     wx.navigateTo({
-      url: '../check/check?ckData=' + JSON.stringify(e.currentTarget.dataset)
+      url: '../checkCourse/checkCourse?ckData=' + JSON.stringify(e.currentTarget.dataset)
     })
   },
 
@@ -467,6 +467,8 @@ Page({
       address: e.currentTarget.dataset.address
     })
   },
+
+
   selCheck:function(e){
     this.setData({
       showDialog: true,
@@ -491,7 +493,7 @@ Page({
   selfCheck:function(e){
     var that=this;
     wx.navigateTo({
-      url: '../check/check?ckData=' + JSON.stringify(e.currentTarget.dataset)
+      url: '../checkCourse/checkCourse?ckData=' + JSON.stringify(e.currentTarget.dataset)
     })
     that.setData({
       showDialog: false

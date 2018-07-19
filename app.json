@@ -23,7 +23,8 @@
     "pages/valuation/valuation",
     "pages/QAservice/service",
     "pages/QAcell/QAcell",
-    "pages/QAanswer/answer"
+    "pages/QAanswer/answer",
+    "pages/checkCourse/checkCourse"
   ],
   "window": {
     "backgroundTextStyle": "light",
