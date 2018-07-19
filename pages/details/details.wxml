@@ -92,9 +92,9 @@
       </block>
       <!-- 预览广告设计效果 -->
       <block>
-        <view class="b-see-more-detail">
+        <view class="b-see-more-detail" bindtap='handlePreviewDesign'>
           <text class='b-see-more-text'>预览广告设计效果</text>
-          <image class=''></image>
+          <image class='b-see-more-arrow' src=''></image>
         </view>
       </block>
     </view>
@@ -240,12 +240,16 @@
 <!-- 注册认证弹框 -->
 <dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ "https://wxapi.benpaobao.com/static/app_img/auth-icon.png" }}' btnStr='{{ authStr }}' status='{{ authStatus }}' content='{{ authContent }}' bind:action='handleActionTap'></dialog-auth>
 
-<!-- <view class='msite-nav'>
- <button class='msite-a2'  open-type="contact" >
-  <image src='../../image/kf_icon.png'></image>
-  <text>客服</text>
- </button>
-  <view class='msite-a'>
-  <text>分享</text>
- </view>
-</view>  -->
+<!-- 预约排队 -->
+<model visible="{{ visible }}" title="预约排队确认" cancelText="再想想" confirmText="确认排队" cancelLoading="{{ cancelLoading }}" confirmLoading="{{ confirmLoading }}" bind:cancel="handleCancel" bind:confirm="handleConfirm">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view class='b-queue-model-item'>排队序号: {{ serial_number }}</view>
+      <view class='b-queue-model-item'>当前排队人数: {{ queue_count }}</view>
+      <view class='b-queue-model-item'>需等待人数: {{ position }}</view>
+    </view>
+  </view>
+</model>
+
+<!-- 顶部提示 -->
+<b-message id="message" />

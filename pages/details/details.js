@@ -6,11 +6,12 @@ var getDistance = util.getDistance;
 const app = getApp();
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
+const { $Message } = require('../../components/base/index');
 const ad_server_list = ApiConst.adServerList();
 const mapId = 'myMap';
 const defaultScale = 11;
 
-//预约排队状态数组  0:即将开始，1:立即预约，2:已预约（查看我的广告），3:预约排队，4:取消排队
+//预约排队状态数组  0:即将开始，1:立即预约，2:已预约或者当前已接广告（查看我的广告），3:预约排队，4:取消排队
 const ACTION_ARR = [0, 1, 2, 3, 4];
 
 Page({
@@ -83,6 +84,10 @@ Page({
     queueList: [],
     //是否正在排队中
     isQueueing: false,
+    //预约排队弹窗
+    visible: false,
+    cancelLoading: false,
+    confirmLoading: false
   },
 
   onLoad: function(options) {
@@ -276,41 +281,46 @@ Page({
             isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
 
           })
-          //预约排队逻辑 运行状态过滤
-          if (dataBean.info.run_status == 1) {
-            // 剩余数过滤
-            if (dataBean.info.current_count != 0) {
-              //是否预约过滤
-              if (dataBean.subscribe) {
-                that.setData({
-                  actionStr: '查看我的广告',
-                  actionStatus: ACTION_ARR[2]
-                })
-              } else {
+          //预约过滤
+          if (dataBean.subscribe){
+            that.setData({
+              actionStr: '查看我的广告',
+              actionStatus: ACTION_ARR[2]
+            });
+          } else {
+            //运行状态过滤
+            if (dataBean.info.run_status == 1) {
+              // 剩余数过滤
+              if (dataBean.info.current_count != 0) {
                 that.setData({
                   actionStr: '立即预约',
                   actionStatus: ACTION_ARR[1]
                 })
-              }
-            } else {
-              //是否排队中过滤
-              if (that.data.isQueueing) {
-                that.setData({
-                  actionStr: '取消排队',
-                  actionStatus: ACTION_ARR[4]
-                })
               } else {
-                that.setData({
-                  actionStr: '预约排队',
-                  actionStatus: ACTION_ARR[3]
-                })
+                //是否排队中过滤
+                if (that.data.isQueueing) {
+                  that.setData({
+                    actionStr: '取消排队',
+                    actionStatus: ACTION_ARR[4]
+                  })
+                } else {
+                  that.setData({
+                    actionStr: '预约排队',
+                    actionStatus: ACTION_ARR[3]
+                  })
+                }
               }
+            } else if (dataBean.info.run_status == 0) { //即将开始
+              that.setData({
+                actionStr: '即将开始',
+                actionStatus: ACTION_ARR[0]
+              })
+            } else{
+              that.setData({
+                actionStr: '查看我的广告',
+                actionStatus: ACTION_ARR[2]
+              });
             }
-          } else if (dataBean.info.run_status == 0){ //即将开始
-            that.setData({
-              actionStr: '即将开始',
-              actionStatus: ACTION_ARR[0]
-            })
           }
 
           var serviceList = dataBean.ad_server.servers;
@@ -879,22 +889,15 @@ Page({
       success: res => {
         that.setData({
           isQueueing: true,
+          actionStatus: ACTION_ARR[4],
           actionStr: '取消排队'
         });
-        //todo
-        let content = '排队序号：' + 12 + '\n当前排队人数：' + 12 + '\n需等待人数：' + 11
-        wx.showModal({
-          title: '预约排队确认',
-          content: content,
-          confirmText: '确认排队',
-          cancelText: '再想想',
-          success: function(res) {
-            if (res.cancel) {
-              that.cancelQueue();
-            }
-          }
+        that.setData({
+          position: res.position,
+          queue_count: res.queue_count,
+          serial_number: res.serial_number,
+          visible: true
         })
-        that.requestQueueList();
       },
       complete: res => {
         wx.hideLoading();
@@ -903,46 +906,67 @@ Page({
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
+  handleCancel() {
+    let that = this;
+    that.setData({
+      cancelLoading: true
+    })
+    that.cancelQueueRequest();
+  },
+
+  handleConfirm() {
+    let that = this;
+    that.setData({
+      visible: false
+    });
+    that.requestQueueList();
+  },
+
   /**
    * 取消排队
    */
   cancelQueue: function() {
     var that = this;
     wx.showModal({
-      title: '取消确认',
+      title: '取消确认', 
       content: '您确认取消当前排队吗？',
       confirmText: '确认取消',
       cancelText: '再想想',
       success: res => {
         if (res.confirm) {
-          wx.showLoading({
-            title: '奔跑中🚗...',
-          })
-          let requestData = {
-            url: ApiConst.cancelQueue(),
-            data: {
-              ad_id: that.data.adId
-            },
-            header: app.globalData.header,
-            success: res => {
-              that.setData({
-                isQueueing: false,
-                actionStr: '预约排队'
-              });
-              wx.showToast({
-                title: '取消排队成功',
-                icon: 'success'
-              });
-              that.requestQueueList();
-            },
-            complete: res => {
-              wx.hideLoading();
-            }
-          }
-          ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+          that.cancelQueueRequest();
         }
       }
     })
+  },
+
+  /**
+   * 发起排队请求
+   */
+  cancelQueueRequest(){
+    let that = this;
+    let requestData = {
+      url: ApiConst.cancelQueue(),
+      data: {
+        ad_id: that.data.adId
+      },
+      header: app.globalData.header,
+      success: res => {
+        that.setData({
+          isQueueing: false,
+          actionStatus: ACTION_ARR[3],
+          actionStr: '预约排队', 
+          cancelLoading: false,
+          visible: false
+        });
+        $Message({
+          content: '取消成功',
+          type: 'success'
+        });
+        that.requestQueueList();
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -985,5 +1009,15 @@ Page({
         that.cancelQueue();
         break;
     }
+  },
+
+  /**
+   * 预览广告设计效果
+   */
+  handlePreviewDesign(){
+    wx.navigateTo({
+      url: '../design/design'
+    })
   }
+
 })

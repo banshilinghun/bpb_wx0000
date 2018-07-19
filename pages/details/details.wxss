@@ -1350,7 +1350,34 @@ button {
   margin-bottom: 16rpx;
 }
 
+.b-see-more-arrow{
+  width: 40rpx;
+  height: 40rpx;
+}
+
 .b-see-more-text{
   font-size: 28rpx;
   color: #ff555c;
+}
+
+.subscribe-wrapper {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.subscribe-body {
+  width: auto;
+  margin-bottom: 30rpx;
+  text-align: left;
+  box-sizing: content-box;
+}
+
+.b-queue-model-item{
+  margin-bottom: 10rpx;
 }

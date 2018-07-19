@@ -238,6 +238,7 @@ Page({
           that.setData({
             prepareTip: ''
           });
+          that.requestPrepareList();
         }
       } else {
         that.setData({
