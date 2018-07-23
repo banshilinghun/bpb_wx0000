@@ -1,4 +1,4 @@
-// pages/test/test.js
+
 Page({
 
   /**
@@ -51,8 +51,8 @@ Page({
       }
     ],
     colorList: [],
-    dateList: [{ date: '2018-7-18' }, { date: '2018-7-19' }, { date: '2018-7-20' }, { date: '2018-7-21' }],
-    timeList: [{ time: '8:00-9:00' }, { time: '9:00-10:00' }, { time: '10:00-11:00' }, { time: '11:00-12:00' }]
+    dateList: [{ date: '2018-7-18', enable: true }, { date: '2018-7-19', enable: false }, { date: '2018-7-20', enable: true}, { date: '2018-7-21', enable: false}],
+    timeList: [{ time: '8:00-9:00', enable: false }, { time: '9:00-10:00', enable: true }, { time: '10:00-11:00', enable: true }, { time: '11:00-12:00', enable: true }]
   },
 
   /**
@@ -136,45 +136,20 @@ Page({
         selectServerIndex: index,
         hasSeverSelect: true
       })
+      let serverList = that.data.serverList;
+      that.setRemainCount(serverList[index].remain);
     }else{
       that.setData({
         selectServerIndex: -1,
-        hasSeverSelect: false
+        hasSeverSelect: false,
+        selectDateIndex: -1,
+        hasDateSelect: false,
+        selectTimeIndex: -1,
+        hasTimeSelect: false
       })
+      that.setRemainCount(that.data.totalCount);
     }
     that.initSelectStatus();
-
-    // let serverList = that.data.serverList;
-    // //选中状态
-    // let hasSelect = false;
-    // let server = null;
-    // serverList.forEach(element => {
-    //   if(element.select){
-    //     hasSelect = true;
-    //   }
-    // });
-    // for(let i = 0; i < serverList.length; i++){
-    //   // 1、全部没有选中，点击后只显示选中的服务网点；2、已选中一个网点，点击后取消选中状态，将所有网点显示出来
-    //   let serverObj = serverList[i];
-    //   if(i === index){
-    //     if (!hasSelect){
-    //       serverObj.select = true;
-    //       hasSelect = true;
-    //       that.setRemainCount(serverObj.remain);
-    //     } else {
-    //       serverObj.select = false;
-    //       hasSelect = false;
-    //       that.setRemainCount(that.data.totalCount);
-    //     }
-    //   } else {
-    //     serverObj.select = false;
-    //   }
-    // }
-    // console.log(that.data.serverList);
-    // that.setData({
-    //   hasSeverSelect: hasSelect,
-    //   serverList: serverList
-    // })
   },
 
   /** 更新剩余数量 */
@@ -198,7 +173,9 @@ Page({
     } else {
       that.setData({
         selectDateIndex: -1,
-        hasDateSelect: false
+        hasDateSelect: false,
+        selectTimeIndex: -1,
+        hasTimeSelect: false
       })
     }
     that.initSelectStatus();
@@ -234,7 +211,7 @@ Page({
     let timeList = that.data.timeList;
     if (selectServerIndex !== -1 && selectDateIndex !== -1 && selectTimeIndex !== -1) { //全选
       that.setData({
-        selectStatusStr: '已选: ' + "\"" + serverList[selectServerIndex].name + "\" " + "\"" + dateList[selectDateIndex] + "\" " + "\"" + timeList[selectTimeIndex] + "\" "
+        selectStatusStr: '已选: ' + "\"" + serverList[selectServerIndex].name + "\" " + "\"" + dateList[selectDateIndex].date + "\" " + "\"" + timeList[selectTimeIndex].time + "\" " + "\"" + that.data.carColor + "\""
       })
     } else { //有选项未选择
       that.setData({
@@ -246,6 +223,9 @@ Page({
   /** 确认预约 */
   handleConfirmSubscribe(){
     let that = this;
+    if(!that.data.isEnable){
+      return;
+    }
     let selectServerIndex = that.data.selectServerIndex;
     let selectDateIndex = that.data.selectDateIndex;
     let selectTimeIndex = that.data.selectTimeIndex;

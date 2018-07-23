@@ -6,8 +6,6 @@
   flex-direction: column;
   border-top-right-radius: 20rpx;
   border-top-left-radius: 20rpx;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
   box-sizing: border-box;
   position: relative
 }
@@ -16,7 +14,9 @@
   position: relative;
   width: 100%;
   min-height: 220rpx;
-  border-bottom: 1rpx solid #ddd
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid #eee;
+  box-sizing: border-box
 }
 
 .b-header-abs{
@@ -79,13 +79,35 @@
 
 .b-scroll-body{
   height: 750rpx;
-  width: 100%;
+}
+
+.b-scroll-content{
+  height: 100%;
+  padding: 0 30rpx;
+  box-sizing: border-box
 }
 
 .b-body-title{
-  margin-top: 40rpx;
+  margin-top: 20rpx;
   font-size: 28rpx;
-  color: black
+  color: black;
+  border-bottom: 1rpx solid #eee
+}
+
+.b-body-title-color{
+  border-bottom: none
+}
+
+.b-title-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.b-title-stauts{
+  color: #ff555c;
+  font-size: 20rpx;
+  margin-left: 20rpx;
 }
 
 .b-body-server{
@@ -105,12 +127,12 @@
 }
 
 .b-server-select{
-  background: #FFF7F7;
+  background: rgba(255, 247, 247, 0.5);
   border: 1rpx solid #ff555c
 }
 
 .b-server-normal{
-  background: #f6f6f6;
+  background: rgba(241, 241, 241, 1)
 }
 
 .b-server-logo{
@@ -179,7 +201,6 @@
 
 .b-color-cell{
   font-size: 24rpx;
-  color: #999;
   text-align: center;
   padding-top: 15rpx;
   border-radius: 10rpx;
@@ -188,19 +209,19 @@
 
 .b-cell-select{
   border: 1rpx solid #ff555c;
-  background: rgb(255, 250, 250);
+  background: rgba(255, 247, 247, 0.5);
   color: #ff555c
 }
 
 .b-cell-normal{
-  background: #f6f6f6;
-  color: #999
+  background: rgba(241, 241, 241, 1);
+  color: #ccc
 }
 
 .b-btn-wrapper{
   box-sizing: border-box;
   width: 100%;
-  padding: 15rpx 0
+  padding: 15rpx 30rpx
 }
 
 .b-subscribe-btn{
@@ -221,10 +242,12 @@ button::after{
 
 .btn-enable{
   background: linear-gradient(45deg, #FB653D, #ff555c);
+  opacity: 1
 }
 
 .btn-disenable{
-  background: #ccc
+  background: linear-gradient(45deg, #FB653D, #ff555c);
+  opacity: 0.5
 }
 
 .b-body-date{
@@ -237,7 +260,6 @@ button::after{
 
 .b-date-cell{
   font-size: 24rpx;
-  color: #999;
   text-align: center;
   padding-top: 15rpx;
   border-radius: 10rpx;
@@ -246,4 +268,12 @@ button::after{
 
 .theme-color{
   color: #ff555c
+}
+
+.normal-color{
+  color: #333
+}
+
+.gray-color{
+  color: #ccc
 }
