@@ -1,9 +1,249 @@
 
-.b-subscribe-btn-enable{
-  font-size: 32rpx;
-  color: #fff;
+.b-subscribe-container{
+  width: 100vw;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 20rpx;
+  border-top-left-radius: 20rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+  position: relative
 }
 
-.b-subscribe-btn-disenable{
+.b-subscribe-header{
+  position: relative;
+  width: 100%;
+  min-height: 220rpx;
+  border-bottom: 1rpx solid #ddd
+}
 
+.b-header-abs{
+  position: absolute;
+}
+
+.b-header-wrapper{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx
+}
+
+.b-subscribe-logo{
+  width: 160rpx;
+  height: 160rpx;
+  background: #ccc;
+  border-radius: 2rpx
+}
+
+.b-header-right{
+  margin-left: 30rpx;
+  flex: 1;
+  position: relative
+}
+
+.b-header-info{
+  position: absolute;
+  bottom: 0
+}
+
+.b-header-money{
+  font-size: 32rpx;
+  color: #ff555c;
+  font-weight: 450;
+}
+
+.b-header-remain{
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 5rpx;
+  margin-bottom: 10rpx
+}
+
+.b-close{
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  padding: 0 0 10rpx 10rpx
+}
+
+.b-close-image{
+  width: 35rpx;
+  height: 35rpx
+}
+
+.b-header-select{
+  font-size: 24rpx;
+  color: #333
+}
+
+.b-scroll-body{
+  height: 750rpx;
+  width: 100%;
+}
+
+.b-body-title{
+  margin-top: 40rpx;
+  font-size: 28rpx;
+  color: black
+}
+
+.b-body-server{
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 30rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx
+}
+
+.b-server-cell{
+  border-radius: 10rpx;
+  box-sizing: border-box;
+  padding: 15rpx;
+  display: flex;
+  flex-direction: row
+}
+
+.b-server-select{
+  background: #FFF7F7;
+  border: 1rpx solid #ff555c
+}
+
+.b-server-normal{
+  background: #f6f6f6;
+}
+
+.b-server-logo{
+  width: 120rpx;
+  height: 120rpx;
+  background: #eee;
+}
+
+.b-server-right{
+  flex: 1;
+  position: relative;
+  margin-left: 20rpx
+}
+
+.b-server-right-top{
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.b-right-name{
+  font-size: 28rpx;
+  color: #333;
+  flex: 1
+}
+
+.b-right-distance{
+  font-size: 24rpx;
+  color: #666
+}
+
+.b-right-address-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0
+}
+
+.b-right-location-icon{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 5rpx;
+}
+
+.b-right-address{
+  font-size: 24rpx;
+  color: #999
+}
+
+.b-body-wrapper{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20rpx;
+  flex-wrap: wrap
+}
+
+.b-body-color-item{
+  width: 25%;
+  margin-top: 30rpx;
+  padding-left: 10rpx;
+  box-sizing: border-box;
+  padding-right: 10rpx
+}
+
+.b-color-cell{
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+  padding-top: 15rpx;
+  border-radius: 10rpx;
+  padding-bottom: 15rpx
+}
+
+.b-cell-select{
+  border: 1rpx solid #ff555c;
+  background: rgb(255, 250, 250);
+  color: #ff555c
+}
+
+.b-cell-normal{
+  background: #f6f6f6;
+  color: #999
+}
+
+.b-btn-wrapper{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15rpx 0
+}
+
+.b-subscribe-btn{
+  width: 100%;
+  font-size: 32rpx;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  line-height: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-weight: 500
+}
+
+button::after{
+  border: none
+}
+
+.btn-enable{
+  background: linear-gradient(45deg, #FB653D, #ff555c);
+}
+
+.btn-disenable{
+  background: #ccc
+}
+
+.b-body-date{
+  width: 50%;
+  margin-top: 30rpx;
+  padding-left: 10rpx;
+  box-sizing: border-box;
+  padding-right: 10rpx
+}
+
+.b-date-cell{
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+  padding-top: 15rpx;
+  border-radius: 10rpx;
+  padding-bottom: 15rpx
+}
+
+.theme-color{
+  color: #ff555c
 }

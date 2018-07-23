@@ -1,10 +1,78 @@
 <!-- 底部弹出框 -->
-<popup show="{{ showPop }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
-  <view>
-    <view></view>
-    <view></view>
+<button bindtap='handleSubscribe'>立即预约</button>
+<popup show="{{ visibleSubscribe }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
+  <view class='b-subscribe-container'>
+    <view class='b-subscribe-header'>
+      <view class='b-header-wrapper'>
+        <image class='b-subscribe-logo' src=''></image>
+        <view class='b-header-right'>
+          <view class='b-header-info'>
+            <view class='b-header-money'>￥300~868</view>
+            <view class='b-header-remain'>剩余{{ remainCount }}辆</view>
+            <view class='b-header-select'>{{ selectStatusStr }}</view>
+          </view>
+        </view>
+      </view>
+    </view>
     <view>
-      <button class='b-subscribe-btn'>确认预约</button>
+      <scroll-view scroll-y="true" class='b-scroll-body'>
+        <view>
+          <!-- 服务网点 -->
+          <view class='b-body-title'>
+            <view class='b-body-color-title'>服务网点</view>
+            <view class='b-body-wrapper'>
+              <view class='b-body-server' wx:for="{{ serverList }}" wx:key="server" wx:if="{{ !hasSeverSelect || (hasSeverSelect &&  index === selectServerIndex) }}">
+                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}' bindtap='handleServerClick' data-index='{{ index }}'>
+                  <image class='b-server-logo'></image>
+                  <view class='b-server-right'>
+                    <view class='b-server-right-top'>
+                      <view class='b-right-name'>{{ item.name }}</view>
+                      <view class='b-right-distance'>{{ item.distance }}</view>
+                    </view>
+                    <view class='b-right-address-wrapper'>
+                      <image class='b-right-location-icon' src='../../image/dw.png'></image>
+                      <view class='b-right-address'>{{ item.address }}</view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 预约日期 -->
+          <view class='b-body-title'>
+            <view class='b-body-wrapper'>
+              <view class='b-body-date' wx:for="{{ dateList }}" wx:key="date" wx:if="{{ !hasDateSelect || (hasDateSelect &&  index === selectDateIndex) }}">
+                <view class='b-date-cell {{ index === selectDateIndex? "b-server-select theme-color" : "b-server-normal" }}' bindtap="handleDateClick" data-index='{{ index }}'>{{ item.date }}</view>
+              </view>
+            </view>
+          </view>
+          <!-- 预约某个日期的时间段 -->
+          <view class='b-body-title'>
+            <view class='b-body-wrapper'>
+              <view class='b-body-date' wx:for="{{ timeList }}" wx:key="date" wx:if="{{ !hasTimeSelect || (hasTimeSelect &&  index === selectTimeIndex) }}">
+                <view class='b-date-cell {{ index === selectTimeIndex? "b-server-select theme-color" : "b-server-normal" }}' bindtap="handleTimeClick" data-index='{{ index }}'>{{ item.time }}</view>
+              </view>
+
+            </view>
+          </view>
+          <!-- 车身颜色 -->
+          <view class='b-body-title'>
+            <view class='b-body-color-title'>车身颜色</view>
+            <view class='b-body-wrapper'>
+              <view wx:for="{{ colorList }}" wx:key="color" class='b-body-color-item'>
+                <view class='b-color-cell {{ item.select? "b-cell-select" : "b-cell-normal" }}'>{{ item.color }}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class='b-btn-wrapper'>
+      <button class='b-subscribe-btn {{ isEnable? "btn-enable" : "btn-disenable" }}' bindtap='handleConfirmSubscribe'>确认预约</button>
+    </view>
+    <!-- 关闭按钮 -->
+    <view class='b-close' bindtap='handleSubscribeClose'>
+      <image class='b-close-image' src='https://wxapi.benpaobao.com/static/app_img/close-gray.png'></image>
     </view>
   </view>
 </popup>
