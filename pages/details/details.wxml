@@ -186,7 +186,7 @@
                   <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
                     <image src='../../image/dh.png'></image>导航
                   </view>
-                  <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
+                  <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}" data-serverName='{{ item.name }}' data-serverAddress='{{ item.address }}'> 预约</view>
                   <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
                   <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
                 </view>
@@ -234,7 +234,7 @@
   </view>
 </view>
 <!-- 规则弹框 -->
-<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail' data-adId="{{adId}}" data-serverId="{{serverId}}"></rule-dialog>
+<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail'  data-adId="{{ adId }}" data-serverId="{{ serverId }}" data-serverName='{{ serverName }}' data-serverAddress='{{ serverAddress }}'></rule-dialog>
 <!-- 地址弹框 -->
 <dialog-address showAddressDialog='{{ showAddressDialog }}' address='{{ address }}' phone='{{ phone }}'></dialog-address>
 <!-- 注册认证弹框 -->

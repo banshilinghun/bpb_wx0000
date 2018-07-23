@@ -24,6 +24,7 @@
     "pages/QAservice/service",
     "pages/QAcell/QAcell",
     "pages/QAanswer/answer",
+    "pages/checkCourse/checkCourse",
     "pages/brandList/brandList",
     "pages/brandDetail/brandDetail",
     "pages/subscribeQueue/subscribeQueue",

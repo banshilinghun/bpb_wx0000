@@ -41,7 +41,7 @@
 					"id": 1,
 					"name": "公众号",
 					"pathName": "pages/index/index",
-					"query": "pages=register",
+					"query": "ad_id=30",
 					"scene": "1035",
 					"referrerInfo": {
 						"appId": "wx3e6177ae9634cc11"

@@ -6,7 +6,6 @@ Page({
    */
   data: {
     visibleSubscribe: false,
-    isEnable: true,
     hasSeverSelect: false, 
     selectServerIndex: -1, //默认下标-1，表示未选择服务网点
     hasDateSelect: false,
@@ -16,7 +15,7 @@ Page({
     totalCount: 0, //剩余总数
     remainCount: 0, //选择条件过滤后的剩余数
     selectStatusStr: '',
-    carColor: '白色',
+    carColor: '绿色',
     serverList: [{
         logo: '',
         name: '奔跑宝',
@@ -84,14 +83,19 @@ Page({
       })
     });
     let colorArray = [];
+    let containColor = false;
     colorList.forEach(color => {
       let colorObj = {};
       colorObj.color = color;
+      if (color === that.data.carColor){
+        containColor = true;
+      }
       colorObj.select = (color === that.data.carColor)
       colorArray.push(colorObj);
     })
     that.setData({
-      colorList: colorArray
+      colorList: colorArray,
+      carColorOk: containColor
     })
   },
 
@@ -223,7 +227,8 @@ Page({
   /** 确认预约 */
   handleConfirmSubscribe(){
     let that = this;
-    if(!that.data.isEnable){
+    //车身颜色不满足
+    if(!that.data.carColorOk){
       return;
     }
     let selectServerIndex = that.data.selectServerIndex;

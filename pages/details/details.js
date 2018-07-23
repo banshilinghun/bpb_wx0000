@@ -58,6 +58,9 @@ Page({
     adTime: '',
     adId: '',
     serverId: '',
+    serverId:'',
+    serverName: '',
+    serverAddress: '',
     showShareModel: false,
     showShare: true,
     shareAwardText: '分享',
@@ -547,7 +550,9 @@ Page({
     var that = this;
     console.log(e)
     that.setData({
-      serverId: e.currentTarget.dataset.serverid
+      serverId: e.currentTarget.dataset.serverid,
+      serverName: e.currentTarget.dataset.servername,
+      serverAddress: e.currentTarget.dataset.serveraddress,
     })
     console.log(that.data.serverId)
     if (app.globalData.login == 1) {
@@ -557,14 +562,18 @@ Page({
         header: app.globalData.header,
         success: res => {
           if (res.data.code == 1000) {
-            //					console.log(res.data)
             if (res.data.data.status == 3) {
               console.log(this.data.isDiDi)
               if (that.data.isDiDi == 1) {
                 that.setData({
                   showRule: true
                 })
-              } else {
+              } else if (that.data.isDiDi == 1 && !app.globalData.showRuleTip){
+                  that.setData({
+                    showRule:true
+                  })
+                  app.globalData.showRuleTip = true;
+              }else{
                 wx.navigateTo({
                   url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
                 })
@@ -605,7 +614,6 @@ Page({
                   }
                 })
               }
-
             }
           } else {
             wx.showModal({
@@ -838,7 +846,7 @@ Page({
     }
   },
 
-  /** 
+  /**
    * 排队列表
    */
   requestQueueList: function() {
@@ -928,7 +936,7 @@ Page({
   cancelQueue: function() {
     var that = this;
     wx.showModal({
-      title: '取消确认', 
+      title: '取消确认',
       content: '取消后，需重新参加排队\n您确认取消当前排队吗？',
       confirmText: '确认取消',
       cancelText: '暂不取消',
@@ -955,7 +963,7 @@ Page({
         that.setData({
           isQueueing: false,
           actionStatus: ACTION_ARR[3],
-          actionStr: '预约排队', 
+          actionStr: '预约排队',
           cancelLoading: false,
           visible: false
         });
@@ -995,7 +1003,9 @@ Page({
         //nothing
         break;
       case ACTION_ARR[1]: //立即预约
-        
+        wx.navigateTo({
+          url: '../test/test',
+        })
         break;
       case ACTION_ARR[2]: //查看我的广告
         wx.switchTab({

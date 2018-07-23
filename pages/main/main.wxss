@@ -1,7 +1,7 @@
 @import '../joinList/joinList.wxss';
 
 page {
-  background-color: #f6f6f6;
+  background-color: #F6F6F6;
 }
 
 .message_list {
@@ -487,6 +487,10 @@ movable-view {
 
 .navigator:first-child:before {
   display: none;
+}
+
+.blod{
+  font-weight: 500;
 }
 
 .subscribe-wrapper {

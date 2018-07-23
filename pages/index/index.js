@@ -6,7 +6,8 @@ const shareFlagUrl = ApiConst.getShareFlag();
 
 Page({
   data: {
-    showDialog: false
+    showDialog: false,
+    go_adId:''
   },
   //事件处理函数
   onLoad: function (options) {
@@ -18,8 +19,13 @@ Page({
         jump: options.pages
       })
     }
+    if (options.ad_id){
+      that.setData({
+        go_adId: options.ad_id
+      })
+    }
     if (options.scene) {
-      console.log(decodeURIComponent(options.scene));
+      //console.log(decodeURIComponent(options.scene));
       var scene = decodeURIComponent(options.scene);
       function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -114,7 +120,8 @@ Page({
                       //if (res.data.data.phone) {}
                       that.showMain();
                     } else {
-                      console.log(type)
+                      //console.log(type)
+                    
                       if (that.data.jump == 'ads') {
                         that.showMain();
                       } else if (that.data.jump == 'regist') {
@@ -136,7 +143,14 @@ Page({
                           })
                         }, 1500);
                       } else {
-                        that.showMain();
+                        if (that.data.go_adId) {
+                          console.log(that.data.go_adId)
+                          wx.redirectTo({
+                            url: '../details/details?adId=' + that.data.go_adId
+                          })
+                        }else{
+                          that.showMain();
+                        }
                       }
                     }
                   } else {
