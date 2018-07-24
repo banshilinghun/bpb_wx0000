@@ -4,7 +4,7 @@ const app = getApp();
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
 const {
-  $Message
+  $Toast
 } = require('../../components/base/index');
 
 //1：排队中，可以取消排队，排队中
@@ -380,7 +380,7 @@ Page({
             },
             header: app.globalData.header,
             success: res => {
-              $Message({
+              $Toast({
                 content: '取消成功',
                 type: 'success'
               });
@@ -430,7 +430,7 @@ Page({
         },
         header: app.globalData.header,
         success: res => {
-          $Message({
+          $Toast({
             content: '取消成功',
             type: 'success'
           });

@@ -45,9 +45,12 @@
           <view class="profile-item">
             <view class='profole-type'>预计收益:</view>
             <view class="profole-type-right red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>￥{{adInfo.amount}}</view>
-            <view class="profole-type-right red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>￥300
-              <label class="data-blt2">~</label>868
-              <icon type="info" size="16" color='#ff555c' />
+            <view class="profole-type-right red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>
+              <view class='b-income-explain-wrapper'>
+                <view>￥300
+                  <label class="data-blt2">~</label>868</view>
+                <image class='b-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/explain-theme-icon.png'></image>
+              </view>
             </view>
             <view class="profole-type-right tasts" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
           </view>
@@ -84,7 +87,7 @@
         <view class="profile">
           <view class="profile-item">车辆要求:</view>
           <view class="right-text horizontal-center" bindtap='handleColorExplain'>
-            <icon class="icon-margin" type="info" size="16" color='#999' />
+            <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/explain-gray-icon.png'></image>
             <text wx:if='{{ adInfo.city }}'>{{ adInfo.city}}</text>
             <text wx:if='{{ carColor }}'>,{{ carColor }}</text>
           </view>
@@ -234,7 +237,7 @@
   </view>
 </view>
 <!-- 规则弹框 -->
-<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail'  data-adId="{{ adId }}" data-serverId="{{ serverId }}" data-serverName='{{ serverName }}' data-serverAddress='{{ serverAddress }}'></rule-dialog>
+<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail' data-adId="{{ adId }}" data-serverId="{{ serverId }}" data-serverName='{{ serverName }}' data-serverAddress='{{ serverAddress }}'></rule-dialog>
 <!-- 地址弹框 -->
 <dialog-address showAddressDialog='{{ showAddressDialog }}' address='{{ address }}' phone='{{ phone }}'></dialog-address>
 <!-- 注册认证弹框 -->
@@ -252,5 +255,5 @@
   </view>
 </model>
 
-<!-- 顶部提示 -->
-<b-message id="message" />
+<!-- 轻提示 -->
+<b-toast id="toast"></b-toast>

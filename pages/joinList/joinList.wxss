@@ -1,8 +1,13 @@
 /* pages/joinList/joinList.wxss */
 @import '../../weui.wxss';
 
+page{
+  background: #F6F6F6
+}
+
 .root-container {
   width: 100%;
+  background: #fff;
 }
 
 .join-wrapper {

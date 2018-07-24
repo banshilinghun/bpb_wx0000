@@ -32,7 +32,7 @@ function requestDotStatus() {
 function showTabBarRedDot() {
   if (wx.canIUse('showTabBarRedDot')) {
     wx.showTabBarRedDot({
-      index: 2,
+      index: 3,
     })
   }
 }
@@ -43,7 +43,7 @@ function showTabBarRedDot() {
 function hideTabBarRedDot() {
   if (wx.canIUse('hideTabBarRedDot')) {
     wx.hideTabBarRedDot({
-      index: 2,
+      index: 3,
     })
   }
 }

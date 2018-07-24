@@ -14,7 +14,7 @@ Page({
     count: 20,
     hasmore: false,
     showNomore: false,
-    isShowLoadingMore: false,
+    isShowLoadingMore: false
   },
 
   /**

@@ -1,6 +1,6 @@
 // me.js
 var util = require("../../utils/util.js");
-const Toast = require('../../components/toast/toast');
+const { $Toast } = require('../../components/base/index');
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
@@ -12,21 +12,21 @@ Page({
   data: {
     inviteId: '我是邀请人id',
     userInfo: {},
-    myProfile: [
-    {
-      "desc": "新手教程",
-      "id": "teaching",
-      'url': 'teaching/teaching',
-      "icon": '../../image/tech.png',
-      'deposit': 0
-    },
-    {
-      "desc": "注册认证",
-      "id": "identity",
-      'url': 'auth/auth',
-      "icon": '../../image/card.png',
-      'deposit': 0
-    }],
+    myProfile: [{
+        "desc": "新手教程",
+        "id": "teaching",
+        'url': 'teaching/teaching',
+        "icon": '../../image/tech.png',
+        'deposit': 0
+      },
+      {
+        "desc": "注册认证",
+        "id": "identity",
+        'url': 'auth/auth',
+        "icon": '../../image/card.png',
+        'deposit': 0
+      }
+    ],
     total: "0.00",
     amount: '0.00',
     total: '0.00',
@@ -48,7 +48,7 @@ Page({
     positionStatus: 'absolute',
     shareTitle: '',
     showRecommend: false,
-    isDiDi: 0  //是否是滴滴车主
+    isDiDi: 0 //是否是滴滴车主
   },
 
   onLoad: function () {
@@ -99,7 +99,7 @@ Page({
           var claimAmoun = 0;
           var stepList = [];
           for (var i = 0; i < arr.length; i++) {
-            if (arr[i].type == 2) {//推荐奖励
+            if (arr[i].type == 2) { //推荐奖励
               recommendList.push(arr[i])
               recommendAmount += Number(arr[i].amount);
               //console.log(arr[i].status)
@@ -108,7 +108,7 @@ Page({
                 recommendIdList.push(arr[i].coupon_id)
                 claimAmoun += Number(arr[i].amount)
               }
-            } else if (arr[i].type == 1) {//新手礼包
+            } else if (arr[i].type == 1) { //新手礼包
               if (arr[i].status == 1) {
                 stepList.push({
                   current: false,
@@ -134,7 +134,7 @@ Page({
                   amount: arr[i].amount
                 })
               }
-            } else if (arr[i].type == 3) {//广告收益
+            } else if (arr[i].type == 3) { //广告收益
               if (arr[i].phase > 0) {
                 if (arr[i].status == 1) {
                   stepList.push({
@@ -188,7 +188,7 @@ Page({
                   })
                 }
               }
-            } else if (arr[i].type == 5) {//安装补贴劵
+            } else if (arr[i].type == 5) { //安装补贴劵
               if (arr[i].status == 1) {
                 stepList.push({
                   current: false,
@@ -214,7 +214,7 @@ Page({
                   amount: arr[i].amount
                 })
               }
-            } else if (arr[i].type == 6) {//抢活补贴
+            } else if (arr[i].type == 6) { //抢活补贴
               if (arr[i].status == 1) {
                 stepList.push({
                   current: false,
@@ -348,7 +348,7 @@ Page({
       }
     })
 
-    if (loginFlag == 1) {//登录了
+    if (loginFlag == 1) { //登录了
       wx.request({
         url: ApiConst.getAuthStatus(),
         data: {},
@@ -447,8 +447,7 @@ Page({
             wx.navigateTo({
               url: '../QA/index'
             })
-          }
-          else {
+          } else {
 
             if (that.data.loginFlag == 1) {
               wx.navigateTo({
@@ -556,7 +555,7 @@ Page({
       }
     }
   },
-  followFlag: function () {//查询是否关注公众号
+  followFlag: function () { //查询是否关注公众号
     var that = this
     wx.request({
       url: ApiConst.userHasSubcribe(),
@@ -625,12 +624,12 @@ Page({
           })
         }
       },
-      fail: function (res) { },
-      complete: function (res) { },
+      fail: function (res) {},
+      complete: function (res) {},
     })
   },
 
-  coupon: function (data) {//领取现金劵
+  coupon: function (data) { //领取现金劵
     var that = this;
     var loginFlag = app.globalData.login;
     var couponData = {};
@@ -660,7 +659,7 @@ Page({
             if (couponType != 5 && couponType != 6) {
               that.setData({
                 showGoodsDetail: true,
-                shareTitle: text, 
+                shareTitle: text,
                 description: shareFlag ? '邀请新用户安装广告，还能拿奖励10元哦!' : '赶快邀请好友一起赚钱！'
               })
             }
@@ -728,11 +727,11 @@ Page({
   },
 
   showToast(text) {
-    console.log(text)
-    Toast.setDefaultOptions({
-      selector: '#zan-toast-test'
+    console.log(text);
+    $Toast({
+      content: text,
+      type: 'success'
     });
-    Toast(text);
   },
   goValuation: function () {
     wx.navigateTo({

@@ -32,7 +32,9 @@
     "pages/choiceCarModel/choiceCarModel",
     "pages/explain/explain",
     "pages/design/design",
-    "pages/test/test"
+    "pages/test/test",
+    "pages/new/new",
+    "pages/withdrawRecord/withdrawRecord"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -2,7 +2,11 @@ page {
   background-color: #f2f2f2;
   padding-bottom:20rpx;
 }
-
+/* new start */
+.b-me-container{
+  
+}
+/* new end */
 .userinfo {
   display: flex;
   flex-direction: column;

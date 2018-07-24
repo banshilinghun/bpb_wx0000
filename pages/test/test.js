@@ -1,4 +1,6 @@
 
+const { $Toast } = require('../../components/base/index');
+
 Page({
 
   /**
@@ -15,7 +17,7 @@ Page({
     totalCount: 0, //剩余总数
     remainCount: 0, //选择条件过滤后的剩余数
     selectStatusStr: '',
-    carColor: '绿色',
+    carColor: '黑色',
     serverList: [{
         logo: '',
         name: '奔跑宝',
@@ -235,24 +237,24 @@ Page({
     let selectDateIndex = that.data.selectDateIndex;
     let selectTimeIndex = that.data.selectTimeIndex;
     if (selectServerIndex === -1){
-      wx.showModal({
-        title: '提示',
+      $Toast({
         content: '请选择 服务网点',
-      })
+        type: 'warning'
+      });
       return;
     }
     if (selectDateIndex === -1) {
-      wx.showModal({
-        title: '提示',
+      $Toast({
         content: '请选择 预约日期',
-      })
+        type: 'warning'
+      });
       return;
     }
     if (selectTimeIndex === -1) {
-      wx.showModal({
-        title: '提示',
+      $Toast({
         content: '请选择 预约时间段',
-      })
+        type: 'warning'
+      });
       return;
     }
   }

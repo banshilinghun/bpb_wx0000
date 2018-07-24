@@ -7,6 +7,6 @@
     "bpb-follow": "../../components/follow/index",
     "bpb-reward": "../../components/reward/index",
     "model": "../../components/model/index",
-    "b-message": "../../components/message/index"
+    "b-toast": "../../components/toast/index"
   }
 }

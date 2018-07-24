@@ -6,7 +6,7 @@ var getDistance = util.getDistance;
 const app = getApp();
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
-const { $Message } = require('../../components/base/index');
+const { $Toast } = require('../../components/base/index');
 const ad_server_list = ApiConst.adServerList();
 const mapId = 'myMap';
 const defaultScale = 11;
@@ -967,7 +967,7 @@ Page({
           cancelLoading: false,
           visible: false
         });
-        $Message({
+        $Toast({
           content: '取消成功',
           type: 'success'
         });

@@ -1,4 +1,4 @@
-//index.js
+
 //获取应用实例
 const app = getApp();
 const ApiConst = require("../../utils/api/ApiConst.js");
@@ -223,11 +223,14 @@ Page({
   },
 
   showMain: function(){
-    setTimeout(function () {
-      wx.switchTab({
-        url: '../main/main'
-      })
-    }, 1500);
+    // setTimeout(function () {
+    //   wx.switchTab({
+    //     url: '../main/main'
+    //   })
+    // }, 1500);
+    wx.redirectTo({
+      url: '../new/new'
+    })
   },
 
   getUserInfo: function (e) {

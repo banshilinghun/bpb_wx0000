@@ -143,5 +143,5 @@
   </scroll-view>
 </view>
 
-<!-- 顶部提示 -->
-<b-message id="message" />
+<!-- 轻提示 -->
+<b-toast id="toast"></b-toast>

@@ -89,3 +89,5 @@
     </view>
   </view>
 </popup>
+<!-- 轻提示 -->
+<b-toast id="toast"></b-toast>

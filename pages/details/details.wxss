@@ -1386,3 +1386,21 @@ button {
   font-size: 24rpx;
   color: #666;
 }
+
+.b-explain-icon{
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 10rpx
+}
+
+.b-income-explain-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.b-car-require{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx
+}

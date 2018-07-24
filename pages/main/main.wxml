@@ -180,7 +180,6 @@
     <view>系统已为你预约成功，是否接受安排？</view>
   </view>
 </model>
-<!-- 顶部提示 -->
-<b-message id="message" />
+<!-- 轻提示 -->
+<b-toast id="toast"></b-toast>
 <!-- <navigator url="../auth/auth" style='height:40px;width:40px;'> 2222222</navigator>          -->
- <!-- <navigator url="../register/register" style='height:40px;width:40px;'> 2222222</navigator>           -->

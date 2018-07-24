@@ -6,7 +6,7 @@ const shareUtil = require("../../utils/shareUtil.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
-const { $Message } = require('../../components/base/index');
+const { $Toast } = require('../../components/base/index');
 var app = getApp()
 const shareFlagUrl = ApiConst.getShareFlag();
 
@@ -830,7 +830,7 @@ Page({
         data: {},
         header: app.globalData.header,
         success: res => {
-          $Message({
+          $Toast({
             content: '你拒绝了预约安排',
             type: 'success'
           });
