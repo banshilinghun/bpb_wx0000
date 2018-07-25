@@ -1,0 +1,54 @@
+<view class='b-earning-container'>
+  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
+    <!-- 待收收益 -->
+  <view>
+    <view class='b-earning-title'>待收收益</view>
+    <view class='step-container'>
+      <view wx:if='{{ stepsList && stepsList.length != 0 }}'>
+        <amount-steps type="vertical" hasDesc steps="{{ stepsList }}" bind:action='actionClickListener' bind:tip='goTip' openType='{{ openType }}'></amount-steps>
+      </view>
+      <view class='step-empty' wx:if='{{ !stepsList || stepsList.length == 0 }}'>
+        <image class='step-empty-image' src='../../image/award-empty.png'></image>
+        <text class='step-empty-text'>暂无可领取收益</text>
+      </view>
+    </view>
+    <view class='b-divider'></view>
+  </view>
+  <!-- 收益时间、收益金额、收益来源 -->
+  <!-- title -->
+  <view class='b-record-title'>
+    <view class='b-record-title-item' wx:for='{{ titleArray }}' wx:key='title'>
+      <text>{{ item }}</text>
+    </view>
+  </view>
+  <!-- 列表 body -->
+  <view>
+    <view class='b-record-body' wx:for='{{ earningRecords }}' wx:key='body'>
+      <view class='b-body-item'>
+        <view class='b-body-common'>
+          <text>{{ item.date }}</text>
+        </view>
+        <view class='b-body-common'>
+          <text>￥{{ item.money }}</text>
+        </view>
+        <view class='b-body-common'>
+          <text wx:if='{{ item.type == 1 }}'>推荐奖励</text>
+          <text wx:if='{{ item.type == 2 }}'>新手奖励</text>
+          <text wx:if='{{ item.type == 3 }}'>广告任务奖励</text>
+        </view>
+      </view>
+      <view class='b-item-line' wx:if='{{ index !== earningRecords.length - 1 }}'></view>
+    </view>
+    <!-- 空视图 -->
+  </view>
+  </scroll-view>
+  <!-- 总结 -->
+  <view class='b-record-footer'>
+    <view class='b-record-footer-item'>
+      <text>收益次数: {{ count }}</text>
+    </view>
+    <view class='b-record-footer-item'>
+      <text>收益总金额: ￥{{ totalMoney }}</text>
+    </view>
+  </view>
+</view>

@@ -584,14 +584,6 @@ Page({
       }
     })
   },
-  /**
-   * 推荐好友
-   */
-  recommendFriendListener: function () {
-    wx.navigateTo({
-      url: '../recommend/recommend?flag=recommend'
-    })
-  },
 
   /**
    * 待收收益里面的按钮

@@ -1,0 +1,58 @@
+
+.b-record-title{
+  display: flex;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #ddd
+}
+
+.b-record-title-item{
+  flex: 1;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 28rpx;
+  color: black
+}
+
+.b-record-body{
+  position: relative;
+}
+
+.b-body-item{
+  display: flex;
+}
+
+.b-body-common{
+  flex: 1;
+  color: #999;
+  font-size: 24rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center
+}
+
+.b-item-line{
+  position: absolute;
+  bottom: 0;
+  left: 40rpx;
+  box-sizing: border-box;
+  right: 0;
+  height: 1rpx;
+  background: #ddd;
+  visibility: visible
+}
+
+.b-record-footer{
+  background: linear-gradient(45deg, #ff555c, #FB653D);
+  display: flex
+}
+
+.b-record-footer-item{
+  flex: 1;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 500
+}

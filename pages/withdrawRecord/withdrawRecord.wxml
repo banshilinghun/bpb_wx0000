@@ -1,0 +1,35 @@
+<view class='b-record-container'>
+  <!-- title -->
+  <view class='b-record-title'>
+    <view class='b-record-title-item' wx:for='{{ titleArray }}' wx:key='title'>
+      <text>{{ item }}</text>
+    </view>
+  </view>
+  <!-- 列表 body -->
+  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
+    <view class='b-record-body' wx:for='{{ withdrawRecords }}' wx:key='body'>
+      <view class='b-body-item'>
+        <view class='b-body-common'>
+          <text>{{ item.date }}</text>
+        </view>
+        <view class='b-body-common'>
+          <text>￥{{ item.money }}</text>
+        </view>
+        <view class='b-body-common'>
+          <text>{{ item.type == 1? '未到账' : '已到账' }}</text>
+        </view>
+      </view>
+      <view class='b-item-line' wx:if='{{ index !== withdrawRecords.length - 1 }}'></view>
+    </view>
+    <!-- 空视图 -->
+  </scroll-view>
+  <!-- footer -->
+  <view class='b-record-footer'>
+    <view class='b-record-footer-item'>
+      <text>提现次数: {{ count }}</text>
+    </view>
+    <view class='b-record-footer-item'>
+      <text>总提现金额: ￥{{ totalMoney }}</text>
+    </view>
+  </view>
+</view>

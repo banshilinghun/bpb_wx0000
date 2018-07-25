@@ -34,7 +34,9 @@
     "pages/design/design",
     "pages/test/test",
     "pages/new/new",
-    "pages/withdrawRecord/withdrawRecord"
+    "pages/withdrawRecord/withdrawRecord",
+    "pages/earningRecord/earningRecord",
+    "pages/declare/declare"
   ],
   "window": {
     "backgroundTextStyle": "light",
