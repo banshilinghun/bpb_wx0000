@@ -7,21 +7,26 @@
   </view>
   <!-- 列表 body -->
   <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
-    <view class='b-record-body' wx:for='{{ withdrawRecords }}' wx:key='body'>
-      <view class='b-body-item'>
-        <view class='b-body-common'>
-          <text>{{ item.date }}</text>
+    <block wx:if='{{ withdrawRecords && withdrawRecords.length !== 0 }}'>
+      <view class='b-record-body' wx:for='{{ withdrawRecords }}' wx:key='body'>
+        <view class='b-body-item'>
+          <view class='b-body-common'>
+            <text>{{ item.date }}</text>
+          </view>
+          <view class='b-body-common'>
+            <text>￥{{ item.money }}</text>
+          </view>
+          <view class='b-body-common'>
+            <text>{{ item.type == 1? '未到账' : '已到账' }}</text>
+          </view>
         </view>
-        <view class='b-body-common'>
-          <text>￥{{ item.money }}</text>
-        </view>
-        <view class='b-body-common'>
-          <text>{{ item.type == 1? '未到账' : '已到账' }}</text>
-        </view>
+        <view class='b-item-line' wx:if='{{ index !== withdrawRecords.length - 1 }}'></view>
       </view>
-      <view class='b-item-line' wx:if='{{ index !== withdrawRecords.length - 1 }}'></view>
-    </view>
-    <!-- 空视图 -->
+    </block>
+    <block wx:else>
+      <!-- 空视图 -->
+      <emptyView title='您还没有相关的提现记录' content='赶紧努力吧~' topMargin='50' />
+    </block>
   </scroll-view>
   <!-- footer -->
   <view class='b-record-footer'>

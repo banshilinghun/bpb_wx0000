@@ -33,7 +33,6 @@
     "pages/explain/explain",
     "pages/design/design",
     "pages/test/test",
-    "pages/new/new",
     "pages/withdrawRecord/withdrawRecord",
     "pages/earningRecord/earningRecord",
     "pages/declare/declare"
@@ -49,7 +48,7 @@
   "tabBar": {
     "color": "#7A7E83",
     "selectedColor": "#ff555c",
-    "borderStyle": "white",
+    "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
       {

@@ -10,20 +10,25 @@ const Api = require("../../utils/api/ApiConst.js");
  * 改变红点状态
  */
 function requestDotStatus() {
-  wx.request({
-    url: Api.GetDotUrl(),
-    header: app.globalData.header,
-    success: function (res) {
-      let dataBean = res.data;
-      if (dataBean.code == 1000) {
-        if (dataBean.data) {
-          showTabBarRedDot();
-        } else {
-          hideTabBarRedDot();
+  let promise = new Promise(function(resolve, reject){
+    wx.request({
+      url: Api.GetDotUrl(),
+      header: app.globalData.header,
+      success: function (res) {
+        let dataBean = res.data;
+        if (dataBean.code == 1000) {
+          if (dataBean.data) {
+            showTabBarRedDot();
+            resolve(true);
+          } else {
+            hideTabBarRedDot();
+            reject(false);
+          }
         }
       }
-    }
-  })
+    });
+  });
+  return promise;
 }
 
 /**

@@ -1,104 +1,110 @@
-<view>
-  <button class='mpweixin' wx:if='{{ !isFollow && showRecommend }}' open-type="contact" session-from='{"nickName":"{{userInfo.nickName}}" ,"avatarUrl":"{{userInfo.avatarUrl}}"}'>
-    <text class='profile-text'> 关注公众号，开启奖励提醒。点击进入客服回复数字1</text>
-    <image class='profile-arrow' src='/image/gomp2.png'></image>
-  </button>
-  <view class='hr' wx:if='{{isFollow}}'></view>
-  <view class="amount">
-    <view class="message__list">
-      <block>
-        <view class="item2 item3 item4">
-          <view class="item-middle wxataws">
-            <view>
-              <text class="title">待收收益</text>
+<view class="b-me-container">
+  <view class='b-me-header'>
+    <view class='b-header-wrapper'>
+      <view class='b-header-user'>
+        <image class='b-header-avatar' src='{{ userInfo.avatarUrl }}'></image>
+        <view class='b-header-detail'>
+          <view class='b-user-name'>
+            <text>{{ real_name? real_name : userInfo.nickName }}</text>
+          </view>
+          <view class='b-user-palte'>
+            <text wx:if='{{ loginFlag == 0 }}'>未绑定手机号</text>
+            <text wx:elif='{{ status == 0 }}'>未认证</text>
+            <text wx:elif='{{ status == 1 }}'>认证审核中</text>
+            <text wx:elif='{{ status == 2 }}'>认证审核失败，请重新认证</text>
+            <text wx:elif='{{ status == 3 }}'>{{ plate_no }}</text>
+          </view>
+        </view>
+        <image class='b-header-auth-status' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://upload-images.jianshu.io/upload_images/4240944-dcc9ec1d8bfed7e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'></image>
+        <image class='b-header-auth-status' wx:if='{{ status == 2 }}' src='https://upload-images.jianshu.io/upload_images/4240944-a875c93fac25d7da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'></image>
+        <image class='b-header-auth-status' wx:if='{{ status == 3 }}' src='https://upload-images.jianshu.io/upload_images/4240944-02a665fd79318c2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'></image>
+      </view>
+      <!-- 余额、待收收益、累计收益 -->
+      <view class='b-header-income'>
+        <view class='b-user-balance'>
+          <view class='b-balance-wrapper'>
+            <view class='b-balance-title'>
+              <text>余额</text>
             </view>
-            <view class='atwxsd' wx:if='{{isDiDi==1}}' bindtap='goValuation'>
-              <view class='tasdxs'>
-                计价规则
-                <icon type="info" size="16" color='#ff555c' />
-              </view>
+            <view class='b-balance-number'>
+              <text>￥{{ amount }}</text>
             </view>
           </view>
         </view>
-      </block>
-      <view class="twxtawd">
-        <view class='step-container' wx:if='{{ stepsList && stepsList.length != 0 }}'>
-          <amount-steps type="vertical" hasDesc steps="{{ stepsList }}" bind:action='actionClickListener' bind:tip='goTip' openType='{{ openType }}'></amount-steps>
+        <view class='b-user-balance' bindtap='handleIncomeClick'>
+          <view class='b-balance-wrapper'>
+            <view class='b-balance-title'>
+              <text>待收收益</text>
+            </view>
+            <view class='b-balance-number'>
+              <text>￥0.00</text>
+            </view>
+            <view class='b-red-dot' wx:if='{{ dotVisible }}'></view>
+          </view>
         </view>
-        <view class='step-empty' wx:if='{{ !stepsList || stepsList.length == 0 }}'>
-          <image class='step-empty-image' src='../../image/award-empty.png'></image>
-          <text class='step-empty-text'>暂无可领取收益</text>
+        <view class='b-user-balance'>
+          <view class='b-balance-wrapper'>
+            <view class='b-balance-title'>
+              <text>累计收益</text>
+            </view>
+            <view class='b-balance-number'>
+              <text>￥{{ total }}</text>
+            </view>
+          </view>
         </view>
       </view>
-      <view class="line"></view>
-      <block>
-        <view class="item2 item3">
-          <view class="item-middle">
-            <view>
-              <text class="title">余额</text>
-            </view>
-            <view class="myad-li">
-              <view class="message">
-                <label class="data-text">¥ {{amount}}</label>
-              </view>
-            </view>
-          </view>
-          <view class="item_right item_right1">
-            <button class='wtwabt wtwabt2' bindtap="withdraw">
-              <text> 提 现</text>
-            </button>
-          </view>
-        </view>
-        <view class="line"></view>
-      </block>
-      <block>
-        <view class="item2 item3">
-          <view class="item-middle">
-            <view>
-              <text class="title">累计收益</text>
-            </view>
-            <view class="myad-li">
-              <view class="message">
-                <label class="data-text">¥ {{total}}</label>
-              </view>
-            </view>
-          </view>
-          <view class="item_right1 item_right2">
-            <text>超过了{{rate}}%的车主</text>
-          </view>
-        </view>
-        <view class="line"></view>
-      </block>
     </view>
   </view>
-  <view class="profile-wrapper" catchtap="loadProfile">
-    <block wx:if='{{ showRecommend }}'>
-      <button bindtap='recommendFriendListener' class='share-button'>
-        <image class='itemicon' src='../../image/shmgc.png'></image>
-        <text class='profile-item'>推荐有奖</text>
-        <image class='profile-arrow' src='/image/arrow.png'>
-        </image>
-      </button>
-    </block>
-    <block wx:for="{{myProfile}}" wx:key="item.id">
-      <view class="profile" id="{{item.id}}" bindtap="kindToggle">
-        <image class="itemicon" src="{{item.icon}}"></image>
-        <view class="profile-item"> {{item.desc}} </view>
-        <view class="deposit-text" wx:if="{{item.deposit==1}}">
-          <text wx:if="{{haveDeposit==1}}">已缴纳</text>
-          <text wx:if="{{haveDeposit==0}}">未缴纳</text>
-        </view>
-        <image wx:if="{{item.deposit==0}}" class="profile-arrow" src="/image/arrow.png"></image>
+  <!-- 收益（提现、提现记录、收益记录 ）-->
+  <view class='b-me-income'>
+    <view class='b-me-panel'>
+      <view class='b-panel-title'>
+        <text>收益</text>
       </view>
-    </block>
+      <view class='b--panel-right'>
+        <text>超过了{{ rate }}%的车主</text>
+      </view>
+    </view>
+    <view class='b-me-cell'>
+      <view class='b-cell-item' wx:for="{{ incomeCells }}"  wx:key='{{ income }}'   wx:if='{{ item.visible }}'  bindtap='handleAction' data-item='{{ item }}'>
+        <view class='b-cell-wrapper'>
+          <image class='b-cell-image' src='{{ item.icon }}'></image>
+          <view class='b-cell-action'>
+            <text>{{ item.text }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
-  <!-- <button class="btn-quit" bindtap="exit"> <text wx:if="{{loginFlag==1}}">退出当前账户</text> <text wx:if="{{loginFlag==0}}">登录</text></button> -->
+  <!-- 异常处理（损坏申报、掉漆申报、违章申报） -->
+  <view class='b-me-income'>
+    <view class='b-me-panel'>
+      <view class='b-panel-title'>
+        <text>异常处理</text>
+      </view>
+    </view>
+    <view class='b-me-cell'>
+      <view class='b-cell-item' wx:for="{{ ExceptionCells }}" wx:key='{{ exception }}'  wx:if='{{ item.visible }}'  bindtap='handleAction' data-item='{{ item }}'>
+        <view class='b-cell-wrapper'>
+          <image class='b-cell-image' src='{{ item.icon }}'></image>
+          <view class='b-cell-action'>
+            <text>{{ item.text }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- action（推荐有奖、新手教程、注册认证） -->
+  <view class='b-me-income'>
+    <view class='b-me-cell'>
+      <view class='b-cell-item' wx:for="{{ actionCells }}"  wx:key='{{ action }}'  wx:if='{{ item.visible }}'  bindtap='handleAction' data-item='{{ item }}'>
+        <view class='b-cell-wrapper'>
+          <image class='b-cell-image' src='{{ item.icon }}'></image>
+          <view class='b-cell-action'>
+            <text>{{ item.text }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
-<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='{{shareTitle}}' description='{{ description }}' btnText='邀请好友' />
-<!-- 轻提示 -->
-<b-toast id="toast"></b-toast>
-
-<share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener'></share-popup>
-
-<share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showShareModel }}' bind:hideDialog='hideDialogListener' positionStatus='{{ positionStatus }}'></share-award>
-

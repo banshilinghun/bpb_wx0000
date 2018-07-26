@@ -33,7 +33,7 @@
     <!-- 推荐结果 -->
     <view wx:if='{{ !isRule }}'>
       <view class='recommend-result'>
-        <view class='recommend-success rule-one-text dark-color'>
+        <view class='rule-one-text dark-color recommend-success'>
           <text>我成功推荐了</text>
           <text>{{ successRecommendCount }}个</text>
           <text>好友，累计领取奖励</text>

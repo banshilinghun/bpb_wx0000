@@ -1,0 +1,30 @@
+
+
+.empty {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx
+}
+
+.empty-text-top {
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 40rpx;
+}
+
+.empty-text-bottom {
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.empty-container {
+  position: absolute;
+  width: 100%;
+}

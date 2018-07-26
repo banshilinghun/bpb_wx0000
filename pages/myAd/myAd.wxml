@@ -8,53 +8,93 @@
   </view>
   <scroll-view scroll-y='true' class='ad-scroll-view' style='height: {{ scrollHeight }}px'>
     <view class='ad-container'>
-      <view class='list-container' wx:if='{{ myAdList && myAdList.length !== 0 }}'>
-        <view wx:for='{{ myAdList }}' wx:key='ad' bindtap='handleDetail' data-item='{{ item }}'>
-          <!-- 待投放 -->
-          <view wx:if='{{ current === "tab1" }}'>
-            <view class='prepare-container'>
-              <view class='prepare-item-content'>
-                <view>
-                  <image class='ad-image' src='{{ item.adLogo }}'></image>
-                </view>
-                <view class='ad-finish-item'>
-                  <view class='ad-name'>
-                    <text>{{ item.adName }}</text>
+      <block  wx:if='{{ myAdList && myAdList.length !== 0 }}'>
+        <view class='list-container'>
+          <view wx:for='{{ myAdList }}' wx:key='ad' bindtap='handleDetail' data-item='{{ item }}'>
+            <!-- 待投放 -->
+            <view wx:if='{{ current === "tab1" }}'>
+              <view class='prepare-container'>
+                <view class='prepare-item-content'>
+                  <view>
+                    <image class='ad-image' src='{{ item.adLogo }}'></image>
                   </view>
-                  <view class='ad-middle'>
-                    <view>
-                      <view class='ad-income'>
-                        <text>预约网点：</text>
+                  <view class='ad-finish-item'>
+                    <view class='ad-name'>
+                      <text>{{ item.adName }}</text>
+                    </view>
+                    <view class='ad-middle'>
+                      <view>
+                        <view class='ad-income'>
+                          <text>预约网点：</text>
+                        </view>
+                        <view class='ad-income'>
+                          <text>{{ item.serviceName }}</text>
+                        </view>
                       </view>
-                      <view class='ad-income'>
-                        <text>{{ item.serviceName }}</text>
+                      <view class='ad-status theme-color'>
+                        <text>{{ item.statusObj.stateStr }}</text>
                       </view>
                     </view>
-                    <view class='ad-status theme-color'>
-                      <text>{{ item.statusObj.stateStr }}</text>
-                    </view>
-                  </view>
-                  <view class='ad-time'>
-                    <view class='ad-time-title'>
-                      <text>已约时间：</text>
-                    </view>
-                    <view class='ad-time-detail'>
-                      <text>{{ item.statusObj.target_time }}</text>
+                    <view class='ad-time'>
+                      <view class='ad-time-title'>
+                        <text>已约时间：</text>
+                      </view>
+                      <view class='ad-time-detail'>
+                        <text>{{ item.statusObj.target_time }}</text>
+                      </view>
                     </view>
                   </view>
                 </view>
-              </view>
-              <view class='prepare-action-wrapper'>
-                <button class='prepare-action' catchtap='handlePrepare' data-prepare='{{ item }}'>{{ item.statusObj.actionStr }}</button>
-                <view class='prepare-right-tip' wx:if='{{ prepareTip }}'>{{ prepareTip }}</view>
+                <view class='prepare-action-wrapper'>
+                  <button class='prepare-action' catchtap='handlePrepare' data-prepare='{{ item }}'>{{ item.statusObj.actionStr }}</button>
+                  <view class='prepare-right-tip' wx:if='{{ prepareTip }}'>{{ prepareTip }}</view>
+                </view>
               </view>
             </view>
-          </view>
 
-          <!-- 投放中 -->
-          <view wx:if='{{ current === "tab2" }}'>
-            <view class='prepare-container'>
-              <view class='prepare-item-content'>
+            <!-- 投放中 -->
+            <view wx:if='{{ current === "tab2" }}'>
+              <view class='prepare-container'>
+                <view class='prepare-item-content'>
+                  <view>
+                    <image class='ad-image' src='{{ item.adLogo }}'></image>
+                  </view>
+                  <view class='ad-finish-item'>
+                    <view class='ad-name'>
+                      <text>{{ item.adName }}</text>
+                    </view>
+                    <view class='ad-middle'>
+                      <view>
+                        <view class='ad-income'>
+                          <text>预计收益：</text>
+                        </view>
+                        <view class='ad-money'>
+                          <text>￥300~868</text>
+                        </view>
+                      </view>
+                      <view class='ad-status'>
+                        <text>{{ item.statusObj.stateStr }}</text>
+                      </view>
+                    </view>
+                    <view class='ad-time'>
+                      <view class='ad-time-title'>
+                        <text>检测时间：</text>
+                      </view>
+                      <view class='ad-time-detail'>
+                        <text>{{ item.dateTime }}</text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+                <view class='prepare-action-wrapper' wx:if='{{ item.actionStr }}'>
+                  <button class='prepare-action' catchtap='handleRun' data-run='{{ item }}'>{{ item.actionStr }}</button>
+                </view>
+              </view>
+            </view>
+
+            <!-- 已结束 -->
+            <view wx:if='{{ current === "tab3" }}'>
+              <view class='finish-container'>
                 <view>
                   <image class='ad-image' src='{{ item.adLogo }}'></image>
                 </view>
@@ -65,80 +105,34 @@
                   <view class='ad-middle'>
                     <view>
                       <view class='ad-income'>
-                        <text>预计收益：</text>
+                        <text>实际收益：</text>
                       </view>
                       <view class='ad-money'>
-                        <text>￥300~868</text>
+                        <text>{{  }}</text>
                       </view>
                     </view>
                     <view class='ad-status'>
-                      <text>{{ item.statusObj.stateStr }}</text>
+                      <text>已结束</text>
                     </view>
                   </view>
                   <view class='ad-time'>
                     <view class='ad-time-title'>
-                      <text>检测时间：</text>
+                      <text>投放时间：</text>
                     </view>
                     <view class='ad-time-detail'>
-                      <text>{{ item.dateTime }}</text>
-                    </view>
-                  </view>
-                </view>
-              </view>
-              <view class='prepare-action-wrapper'  wx:if='{{ item.actionStr }}'>
-                <button class='prepare-action' catchtap='handleRun' data-run='{{ item }}'>{{ item.actionStr }}</button>
-              </view>
-            </view>
-          </view>
-
-          <!-- 已结束 -->
-          <view wx:if='{{ current === "tab3" }}'>
-            <view class='finish-container'>
-              <view>
-                <image class='ad-image' src='{{ item.adLogo }}'></image>
-              </view>
-              <view class='ad-finish-item'>
-                <view class='ad-name'>
-                  <text>{{ item.adName }}</text>
-                </view>
-                <view class='ad-middle'>
-                  <view>
-                    <view class='ad-income'>
-                      <text>实际收益：</text>
-                    </view>
-                    <view class='ad-money'>
                       <text>{{  }}</text>
                     </view>
                   </view>
-                  <view class='ad-status'>
-                    <text>已结束</text>
-                  </view>
-                </view>
-                <view class='ad-time'>
-                  <view class='ad-time-title'>
-                    <text>投放时间：</text>
-                  </view>
-                  <view class='ad-time-detail'>
-                    <text>{{  }}</text>
-                  </view>
                 </view>
               </view>
             </view>
           </view>
         </view>
-      </view>
+      </block>
       <!-- 空布局 -->
-      <view class='empty-container' wx:if='{{ !myAdList || myAdList.length === 0 }}'>
-        <view class='empty'>
-          <image class='empty-icon' src='../../image/empty-list-icon.png'></image>
-          <view class='empty-text-top'>
-            <text>您还没有相关的广告</text>
-          </view>
-          <view class='empty-text-bottom'>
-            <text>去广告市场看看吧~</text>
-          </view>
-        </view>
-      </view>
+      <block wx:else>
+        <emptyView title='您还没有相关的广告' content='去广告市场看看吧~' topMargin='80' />
+      </block>
     </view>
   </scroll-view>
 </view>

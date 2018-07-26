@@ -1,13 +1,3 @@
 {
-  "navigationBarTitleText": "个人中心",
-  "enablePullDownRefresh": true,
-  "navigationBarTextStyle": "white",
-  "navigationBarBackgroundColor": "#333",
-  "usingComponents": {
-    "amount-steps": "../../components/amount-steps/index",
-    "share-popup": "../../components/share-popup/index",
-    "dialog": "../../components/dialog/bpb-dialog",
-    "b-toast": "../../components/toast/index",
-    "share-award": "../../components/share-award/index"
-  }
+  "navigationBarTitleText": "个人中心"
 }

@@ -3,6 +3,7 @@
   "usingComponents": {
     "b-tabs": "../../components/tabs/index",
     "b-tab": "../../components/tab/index",
-    "b-toast": "../../components/toast/index"
+    "b-toast": "../../components/toast/index",
+    "emptyView": "../../components/emptyView/index"
   }
 }

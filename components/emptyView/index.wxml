@@ -1,0 +1,12 @@
+<!-- 空视图 -->
+<view class='empty-container'>
+  <view class='empty'>
+    <image class='empty-icon' src='{{ emptySrc }}' style='margin-top: {{ topMargin }}px'></image>
+    <view class='empty-text-top'>
+      <text>{{ title }}</text>
+    </view>
+    <view class='empty-text-bottom'>
+      <text>{{ content }}</text>
+    </view>
+  </view>
+</view>

@@ -9,29 +9,7 @@ Page({
     scrollHeight: 0,
     count: 8,
     totalMoney: 1080,
-    withdrawRecords: [{
-      date: '2018-8-9', money: '888', type: 2
-    }, {
-        date: '2018-8-9', money: '888', type: 2
-      }, {
-        date: '2018-8-9', money: '888', type: 1
-      }, {
-        date: '2018-8-9', money: '888', type: 2
-      }, {
-        date: '2018-8-9', money: '888', type: 1
-      }, {
-        date: '2018-8-9', money: '888', type: 2
-      }, {
-        date: '2018-8-9', money: '888', type: 2
-      }, {
-        date: '2018-8-9', money: '888', type: 1
-      }, {
-        date: '2018-8-9', money: '888', type: 1
-      }, {
-        date: '2018-8-9', money: '888', type: 1
-      }, {
-        date: '2018-8-9', money: '888', type: 1
-      }]
+    withdrawRecords: []
   },
 
   /**

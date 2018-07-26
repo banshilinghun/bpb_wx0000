@@ -1,4 +1,4 @@
-@import "../me/me.wxss";
+@import "../../common/ui/common.wxss";
 
 page {
   background-color: #f6f6f6;

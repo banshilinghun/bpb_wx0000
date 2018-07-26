@@ -4,9 +4,9 @@
     class="zan-steps__step {{ hasDesc ? 'zan-steps__step--db-title' : '' }} {{ index == 0 ? 'zan-steps__step--first-child' : '' }} {{ index == steps.length - 1 ? 'zan-steps__step--last-child' : '' }} {{ step.done ? 'zan-steps__step--done' : '' }} {{ step.current ? 'zan-steps__step--cur' : '' }}"
   >
     <view class="zan-steps__title">
-      <text style='font-size:34rpx;color:#333'>{{ step.text }}</text>
-      <text style='font-size:34rpx;color:#ff555c'>{{ step.secondText }}</text>
-      <text style='font-size:34rpx;color:#333'>{{ step.thirdText }}</text>
+      <text style='font-size:28rpx;color:#333'>{{ step.text }}</text>
+      <text style='font-size:28rpx;color:#ff555c'>{{ step.secondText }}</text>
+      <text style='font-size:28rpx;color:#333'>{{ step.thirdText }}</text>
     </view>
     <view wx:if="{{ hasDesc && step.desc }}" class="zan-steps__title zan-steps__title--desc">{{ step.desc }}</view>
     <view class="zan-steps__icons">

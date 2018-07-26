@@ -1,327 +1,179 @@
-// me.js
+const app = getApp();
 var util = require("../../utils/util.js");
-const { $Toast } = require('../../components/base/index');
+const {
+  $Toast
+} = require('../../components/base/index');
 const Constant = require("../../utils/Constant.js");
 const shareUtil = require("../../utils/shareUtil.js");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
-const app = getApp();
+
+//1:提现，2:提现记录 3:收益记录 4:损坏申报 5:掉漆申报 6:违章申报 7:推荐有奖 8:新手教程 9:注册认证
+const CELL_TYPE = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 //推荐奖励是否关闭
 let shareFlag;
+
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    inviteId: '我是邀请人id',
-    userInfo: {},
-    myProfile: [{
-        "desc": "新手教程",
-        "id": "teaching",
-        'url': 'teaching/teaching',
-        "icon": '../../image/tech.png',
-        'deposit': 0
+    incomeCells: [{
+        type: 1,
+        text: '提现',
+        icon: 'https://upload-images.jianshu.io/upload_images/4240944-2ae97187059b243b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        url: '../withdraw/withdraw',
+        visible: true
       },
       {
-        "desc": "注册认证",
-        "id": "identity",
-        'url': 'auth/auth',
-        "icon": '../../image/card.png',
-        'deposit': 0
+        type: 2,
+        text: '提现记录',
+        icon: 'https://upload-images.jianshu.io/upload_images/4240944-c787785ebf84d971.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        url: '../withdrawRecord/withdrawRecord',
+        visible: true
+      }, {
+        type: 3,
+        text: '收益记录',
+        icon: 'https://upload-images.jianshu.io/upload_images/4240944-90fb413fc672c3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        url: '../earningRecord/earningRecord',
+        visible: true
       }
     ],
-    total: "0.00",
+    ExceptionCells: [{
+        type: 4,
+        text: '损坏申报',
+        icon: 'https://upload-images.jianshu.io/upload_images/4240944-23ef57a41ce19448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        url: '../declare/declare?type=damage',
+        visible: true
+      },
+      {
+        type: 5,
+        text: '掉漆申报',
+        icon: 'https://upload-images.jianshu.io/upload_images/4240944-51f84e196a11b983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        url: '../declare/declare?type=drop',
+        visible: true
+      }, {
+        type: 6,
+        text: '违章申报',
+        icon: 'https://upload-images.jianshu.io/upload_images/4240944-d6d2717348a94b1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        url: '../declare/declare?type=violate',
+        visible: true
+      }
+    ],
+    actionCells: [{
+        type: 7,
+        text: '推荐有奖',
+        icon: '../../image/shmgc.png',
+        url: '../recommend/recommend?flag=recommend',
+        visible: true
+      },
+      {
+        type: 8,
+        text: '新手教程',
+        icon: 'https://upload-images.jianshu.io/upload_images/4240944-9d66c194774e98c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        url: '../teaching/teaching',
+        visible: true
+      }, {
+        type: 9,
+        text: '注册认证',
+        icon: '../../image/card.png',
+        url: '../auth/auth',
+        visible: true
+      }
+    ],
+    avatar: '',
+    userInfo: {},
     amount: '0.00',
     total: '0.00',
     rate: 0,
-    stepsList: [],
-    showGoodsDetail: false,
-    description: '',
-    isShowToast: false,
-    showSharePop: false,
-    //分享朋友圈数据
-    shareInfo: {
-      shareAvatar: '',
-      shareNickname: '',
-      awardMoney: '',
-      awardType: ''
-    },
-    showShareModel: false,
-    shareFriendType: 'normal',
-    positionStatus: 'absolute',
-    shareTitle: '',
     showRecommend: false,
+    dotVisible: false,
+    loginFlag: 0,
     isDiDi: 0 //是否是滴滴车主
   },
 
-  onLoad: function () {
-    var that = this;
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    let that = this;
     that.setData({
       userInfo: app.globalData.userInfo
     })
+    console.log(that.data.userInfo);
   },
 
   onShow: function () {
+    let that = this;
     shareFlag = app.globalData.shareFlag;
-    //请求判断是否显示红点
-    dotHelper.requestDotStatus();
-    var loginFlag = app.globalData.login;
-    this.followFlag()
-    this.setData({
-      loginFlag: loginFlag,
-    })
+    //todo 删掉这段代码
+    shareFlag = true;
     //是否显示推荐有奖
+    let actionCells = that.data.actionCells;
+    actionCells[0].visible = shareFlag;
     this.setData({
-      showRecommend: app.globalData.shareFlag
+      loginFlag: app.globalData.login,
+      actionCells: actionCells
     })
+    //请求判断是否显示红点(有可领取奖励)
+    dotHelper.requestDotStatus().then((result) => {
+      that.setData({
+        dotVisible: result
+      });
+    }).catch((err) => {
+      that.setData({
+        dotVisible: err
+      });
+    });
+    //请求账户余额等
+    that.requestUserAccount();
+    //车主认证状态信息
+    that.requestAuthStatus();
+  },
 
-    function compare(property) {
-      return function (a, b) {
-        var value1 = a[property];
-        var value2 = b[property];
-        return value2 - value1;
-      }
-    }
+  /**
+   * 查询是否关注公众号
+   */
+  followFlag: function () {
+    var that = this
     wx.request({
-      url: ApiConst.accountCoupon(),
-      data: {},
+      url: ApiConst.userHasSubcribe(),
       header: app.globalData.header,
       success: res => {
-        wx.stopPullDownRefresh();
         if (res.data.code == 1000) {
-          //console.log(res)
-          var arr = res.data.data.coupon_info;
-          //console.log(arr)
-          //type券类型 (1注册券 2邀请券 3广告收益)
-          //status 推荐状态 1未激活 2已激活未领取 3已领取 4过期
-          var recommendAmount = 0;
-          var recommendList = [];
-          var recommendHasAward = false;
-          //var recommendShow = 1;
-          var recommendIdList = [];
-          var claimAmoun = 0;
-          var stepList = [];
-          for (var i = 0; i < arr.length; i++) {
-            if (arr[i].type == 2) { //推荐奖励
-              recommendList.push(arr[i])
-              recommendAmount += Number(arr[i].amount);
-              //console.log(arr[i].status)
-              if (arr[i].status == 2) {
-                recommendHasAward = true;
-                recommendIdList.push(arr[i].coupon_id)
-                claimAmoun += Number(arr[i].amount)
-              }
-            } else if (arr[i].type == 1) { //新手礼包
-              if (arr[i].status == 1) {
-                stepList.push({
-                  current: false,
-                  text: '新手奖励',
-                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                  hasAward: false,
-                  tip: '安装广告后可领取',
-                  type: arr[i].type,
-                  status: 5,
-                  amount: arr[i].amount
-                })
-              } else if (arr[i].status == 2) {
-                stepList.push({
-                  current: false,
-                  text: '新手奖励',
-                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                  hasAward: true,
-                  idList: [arr[i].coupon_id],
-                  btnType: 1,
-                  action: '领 取',
-                  type: arr[i].type,
-                  status: 6,
-                  amount: arr[i].amount
-                })
-              }
-            } else if (arr[i].type == 3) { //广告收益
-              if (arr[i].phase > 0) {
-                if (arr[i].status == 1) {
-                  stepList.push({
-                    current: false,
-                    text: '广告任务' + arr[i].phase + '期奖励',
-                    desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                    hasAward: false,
-                    tip: '检测广告后可领取',
-                    type: arr[i].type,
-                    status: arr[i].status,
-                    amount: arr[i].amount
-                  })
-                } else if (arr[i].status == 2) {
-                  stepList.push({
-                    current: false,
-                    text: '广告任务' + arr[i].phase + '期奖励',
-                    desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                    hasAward: true,
-                    idList: [arr[i].coupon_id],
-                    btnType: 1,
-                    action: '领 取',
-                    type: arr[i].type,
-                    status: arr[i].status,
-                    amount: arr[i].amount
-                  })
-                }
-              } else {
-                if (arr[i].status == 1) {
-                  stepList.push({
-                    current: false,
-                    text: '广告任务奖励',
-                    desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                    hasAward: false,
-                    tip: '检测广告后可领取',
-                    type: arr[i].type,
-                    status: arr[i].status,
-                    amount: arr[i].amount
-                  })
-                } else if (arr[i].status == 2) {
-                  stepList.push({
-                    current: false,
-                    text: '广告任务奖励',
-                    desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                    hasAward: true,
-                    idList: [arr[i].coupon_id],
-                    btnType: 1,
-                    action: '领 取',
-                    type: arr[i].type,
-                    status: arr[i].status,
-                    amount: arr[i].amount
-                  })
-                }
-              }
-            } else if (arr[i].type == 5) { //安装补贴劵
-              if (arr[i].status == 1) {
-                stepList.push({
-                  current: false,
-                  text: '安装补贴奖励',
-                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                  hasAward: false,
-                  tip: '检测广告后可领取',
-                  type: arr[i].type,
-                  status: arr[i].status,
-                  amount: arr[i].amount
-                })
-              } else if (arr[i].status == 2) {
-                stepList.push({
-                  current: false,
-                  text: '安装补贴奖励',
-                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                  hasAward: true,
-                  idList: [arr[i].coupon_id],
-                  btnType: 1,
-                  action: '领 取',
-                  type: arr[i].type,
-                  status: arr[i].status,
-                  amount: arr[i].amount
-                })
-              }
-            } else if (arr[i].type == 6) { //抢活补贴
-              if (arr[i].status == 1) {
-                stepList.push({
-                  current: false,
-                  text: '抢活补贴奖励',
-                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                  hasAward: false,
-                  tip: '检测广告后可领取',
-                  type: arr[i].type,
-                  status: arr[i].status,
-                  amount: arr[i].amount
-                })
-              } else if (arr[i].status == 2) {
-                stepList.push({
-                  current: false,
-                  text: '抢活补贴奖励',
-                  desc: '¥ ' + util.toDecimal2(arr[i].amount),
-                  hasAward: true,
-                  idList: [arr[i].coupon_id],
-                  btnType: 1,
-                  action: '领 取',
-                  type: arr[i].type,
-                  status: arr[i].status,
-                  amount: arr[i].amount
-                })
-              }
-            }
-          }
-          //console.log(recommendAmount)
-          //console.log(stepList)
-          //没有推荐奖励信息且推荐开关已开才显示推荐邀请
-          console.log(recommendList);
-          console.log('shareFlag-------->' + shareFlag);
-          if (recommendList.length == 0) {
-            if (shareFlag) {
-              stepList.push({
-                current: false,
-                text: '推荐奖励',
-                desc: '¥ 0.00',
-                hasAward: true,
-                btnType: 0,
-                action: '邀请好友',
-                status: 4
-              })
-            }
-          } else {
-            if (recommendHasAward) {
-              stepList.push({
-                current: false,
-                text: '推荐奖励',
-                desc: '¥ ' + util.toDecimal2(recommendAmount),
-                hasAward: recommendHasAward,
-                idList: recommendIdList,
-                btnType: 1,
-                action: '领 取',
-                type: '2',
-                status: 4,
-                amount: claimAmoun
-              })
-            } else {
-              stepList.push({
-                current: false,
-                text: '推荐奖励',
-                desc: '¥ ' + util.toDecimal2(recommendAmount),
-                hasAward: true,
-                tip2: '有' + (recommendList.length - recommendIdList.length) + '个好友未安装广告',
-                type: '2',
-                status: 3,
-                amount: claimAmoun,
-                action: '邀请好友',
-                btnType: 0,
-                openType: shareFlag ? '' : 'share'
-              })
-            }
-
-          }
-          //console.log(recommendHasAward)
-          //console.log(recommendIdList)
-          //console.log(stepList)
-          this.setData({
-            stepsList: stepList.sort(compare('status'))
-          });
-          //					console.log(res.data);
+          that.setData({
+            isFollow: res.data.data
+          })
         } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
+          that.showModel(res.data.msg);
         }
       },
       fail: res => {
-        wx.stopPullDownRefresh();
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
+        that.showModel('网络错误');
       }
     })
+  },
 
+  showModel(msg) {
+    wx.showModal({
+      title: '提示',
+      showCancel: false,
+      content: msg
+    });
+  },
+
+  /**
+   * 请求余额等信息
+   */
+  requestUserAccount() {
+    let that = this;
     wx.request({
       url: ApiConst.userAccount(),
       data: {},
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-          //console.log(res)
           if (res.data.data != null) {
             this.setData({
               amount: util.toDecimal2(res.data.data.amount),
@@ -329,204 +181,133 @@ Page({
               rate: (res.data.data.rate) * 100
             });
           }
-
-          //					console.log(res.data);
         } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
+          that.showModal(res.data.msg);
         }
       },
       fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
+        that.showModal('网络错误');
       }
     })
+  },
 
-    if (loginFlag == 1) { //登录了
+  /**
+   * 车主认证状态
+   */
+  requestAuthStatus() {
+    let that = this;
+    console.log(Boolean(0));
+    if (that.data.loginFlag == 1) { //登录了
       wx.request({
         url: ApiConst.getAuthStatus(),
         data: {},
         header: app.globalData.header,
         success: res => {
+          let dataBean = res.data.data;
           if (res.data.code == 1000) {
-            //					console.log(res.data)
             this.setData({
-              status: res.data.data.status,
-              isDiDi: res.data.data.user_type //是否是滴滴合法车主
+              status: dataBean.status,
+              isDiDi: dataBean.user_type //是否是滴滴合法车主
             })
+            if (dataBean.status == 3) {
+              that.setData({
+                plate_no: dataBean.plate_no,
+                real_name: dataBean.real_name
+              })
+            }
           } else {
-            wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: res.data.msg
-            });
+            that.showModal(res.data.msg);
           }
         },
         fail: res => {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '网络错误'
-          });
+          that.showModal('网络错误');
         }
       })
-
     }
-
   },
-  loadProfile: function (e) {
-    //      console.log(e.target)
-  },
-  kindToggle: function (e) {
-    //		console.log(e);
-    var that = this;
-    var id = e.currentTarget.id,
-      myProfile = this.data.myProfile;
-    for (var i = 0, len = myProfile.length; i < len; ++i) {
-      if (myProfile[i].id == id) {
-        if (i == 1) {
-          if (that.data.loginFlag == 1) {
-            if (this.data.status == 0) {
-              wx.navigateTo({
-                url: '../auth/auth'
-              })
-            } else {
-              wx.navigateTo({
-                url: '../state/state'
-              })
-            }
-          } else {
-            wx.showModal({
-              title: "提示",
-              content: "你还没有登录",
-              confirmText: "立即登录",
-              cancelText: "取消",
-              success: function (sure) {
-                if (sure.confirm) {
-                  wx.navigateTo({
-                    url: '../register/register'
-                  })
-                }
-              }
-            })
+
+  handleAction(event) {
+    console.log(event);
+    let that = this;
+    let item = event.currentTarget.dataset.item;
+    //判断车主是否登录，推荐有奖无需登录
+    if ((item.type != CELL_TYPE[6] || item.type != CELL_TYPE[7]) && that.data.loginFlag == 0) {
+      wx.showModal({
+        title: '登录提示',
+        content: '你还没有登录',
+        cancelText: '取消',
+        confirmText: '立即登录',
+        success: res => {
+          if (res.confirm) {
+            that.navigateTo('../register/register');
           }
-        } else {
-          if (myProfile[i].id == 'address') {
-            if (wx.chooseAddress) {
-              wx.chooseAddress({
-                success: function (res) {
-                  wx.switchTab({
-                    url: '../me/me'
-                  })
-                },
-                fail: function (res) {
-                  // fail
-                },
-                complete: function (res) {
-                  // complete
-                }
-              })
-            } else {
-              // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
-              wx.showModal({
-                title: '提示',
-                content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
-              })
-            }
-          } else if (myProfile[i].id == 'teaching') {
-            wx.navigateTo({
-              url: '../teaching/teaching'
-            })
-          } else if (myProfile[i].id == 'qa') {
-            wx.navigateTo({
-              url: '../QA/index'
-            })
-          } else {
-
-            if (that.data.loginFlag == 1) {
-              wx.navigateTo({
-                url: '../' + myProfile[i].url
-              })
-            } else {
-              wx.showModal({
-                title: "提示",
-                content: "你还没有登录",
-                confirmText: "立即登录",
-                cancelText: "取消",
-                success: function (sure) {
-                  if (sure.confirm) {
-                    wx.navigateTo({
-                      url: '../register/register'
-                    })
-                  }
-                }
-              })
-            }
-
-          }
-
         }
-
-      }
+      })
+      return;
     }
-
-    this.setData({
-      myProfile: myProfile
-    });
+    switch (Number(item.type)) {
+      case CELL_TYPE[0]: //提现
+      case CELL_TYPE[1]: //提现记录
+      case CELL_TYPE[2]: //收益记录
+      case CELL_TYPE[3]: //损坏申报
+      case CELL_TYPE[4]: //掉漆申报
+      case CELL_TYPE[5]: //违章申报
+      case CELL_TYPE[6]: //推荐有奖
+      case CELL_TYPE[7]: //新手教程
+        that.navigateTo(item.url);
+        break;
+      case CELL_TYPE[8]: //注册认证
+        if (this.data.status == 0) {
+          that.navigateTo(item.url);
+        } else {
+          //审核中、审核失败、审核成功 跳转到状态页面
+          that.navigateTo('../state/state');
+        }
+        break;
+      default:
+        break;
+    }
   },
+
+  navigateTo(url) {
+    wx.navigateTo({
+      url: url,
+    })
+  },
+
+  /**
+   * 计价规则
+   */
+  goValuation() {
+    this.navigateTo('../valuation/valuation');
+  },
+
+  /**
+   * 待收收益
+   */
+  handleIncomeClick() {
+    this.navigateTo('../earningRecord/earningRecord');
+  },
+
+  /**
+   * 下拉刷新
+   */
   onPullDownRefresh: function () {
     wx.showToast({
       title: '奔跑中🚗...',
       icon: 'loading'
     })
     this.onShow();
-
   },
-  withdraw: function () {
-    var that = this;
-    if (that.data.loginFlag == 1) {
-      wx.navigateTo({
-        url: '../withdraw/withdraw'
-      })
-    } else {
-      wx.showModal({
-        title: "提示",
-        content: "你还没有登录",
-        confirmText: "立即登录",
-        cancelText: "取消",
-        success: function (sure) {
-          if (sure.confirm) {
-            wx.navigateTo({
-              url: '../register/register'
-            })
-          }
-        }
-      })
-    }
 
-  },
   //分享
   onShareAppMessage: function (res) {
     var that = this;
-    if (res.from == 'button' && !res.target.dataset.step) {
-      var shareTitle = shareUtil.getShareAwardTitle(that.data.shareInfo.awardMoney, that.data.shareInfo.awardType);
-      var adid = -1;
-      var adimg = '../../image/share-award.png';
-      var desc = '拉上好友一起赚钱～';
-      var shareType = Constant.shareAward;
-    } else {
-      var shareTitle = shareUtil.getShareNormalTitle();
-      var adid = -1;
-      var adimg = '../../image/share-normal.png';
-      var desc = '拉上好友一起赚钱～';
-      var shareType = Constant.shareNormal;
-    }
+    var shareTitle = shareUtil.getShareNormalTitle();
+    var adid = -1;
+    var adimg = '../../image/share-normal.png';
+    var desc = '拉上好友一起赚钱～';
+    var shareType = Constant.shareNormal;
     return {
       title: shareTitle,
       desc: desc,
@@ -539,10 +320,7 @@ Page({
           image: '',
           duration: 0,
           mask: true,
-        })
-        that.setData({
-          showGoodsDetail: false
-        })
+        });
       },
       fail: function () {
         wx.showToast({
@@ -554,180 +332,6 @@ Page({
         })
       }
     }
-  },
-  followFlag: function () { //查询是否关注公众号
-    var that = this
-    wx.request({
-      url: ApiConst.userHasSubcribe(),
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          //console.log(res.data)
-          that.setData({
-            isFollow: res.data.data
-          })
-        } else {
-          //					console.log(res.data)
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
-  },
-
-  /**
-   * 待收收益里面的按钮
-   */
-  actionClickListener: function (e) {
-    var that = this;
-    //console.log(e.detail.step)
-    if (e.detail.step.btnType == 1) {
-      that.coupon(e.detail.step)
-    } else {
-      wx.navigateTo({
-        url: '../recommend/recommend?flag=recommend'
-      })
-    }
-  },
-
-  //查看推荐奖励不可领原因
-  goTip: function (e) {
-    wx.showModal({
-      title: '',
-      content: e.detail.step.tip2 + '\r\n好友安装广告后方可领取奖励',
-      confirmText: shareFlag ? '查看' : '我知道了',
-      cancelText: "取消",
-      showCancel: shareFlag,
-      cancelColor: '#999',
-      success: function (res) {
-        if (res.confirm && shareFlag) {
-          wx.navigateTo({
-            url: '../recommend/recommend?flag=recommend'
-          })
-        }
-      },
-      fail: function (res) {},
-      complete: function (res) {},
-    })
-  },
-
-  coupon: function (data) { //领取现金劵
-    var that = this;
-    var loginFlag = app.globalData.login;
-    var couponData = {};
-    couponData.coupon_id_list = data.idList;
-    var text = "奖励" + data.amount + "元已放入余额里";
-    console.log(data.type)
-    var couponType = data.type;
-    if (loginFlag == 1) {
-      wx.request({
-        url: ApiConst.collectAccountCoupon(),
-        data: couponData,
-        header: app.globalData.header,
-        success: res => {
-          if (res.data.code == 1000) {
-            //请求红点状态
-            dotHelper.requestDotStatus();
-            that.setData({
-              shareInfo: {
-                shareAvatar: app.globalData.userInfo.avatarUrl,
-                shareNickname: app.globalData.userInfo.nickName,
-                awardMoney: data.amount,
-                awardType: data.type
-              },
-            })
-            that.onShow();
-            //分享弹框
-            if (couponType != 5 && couponType != 6) {
-              that.setData({
-                showGoodsDetail: true,
-                shareTitle: text,
-                description: shareFlag ? '邀请新用户安装广告，还能拿奖励10元哦!' : '赶快邀请好友一起赚钱！'
-              })
-            }
-          } else {
-            wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: res.data.msg
-            });
-          }
-        },
-        fail: res => {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '网络错误'
-          });
-        }
-      })
-    } else {
-      wx.showModal({
-        title: "提示",
-        content: "你还没有登录",
-        confirmText: "立即登录",
-        cancelText: "取消",
-        success: function (sure) {
-          if (sure.confirm) {
-            wx.navigateTo({
-              url: '../register/register'
-            })
-          }
-        }
-      })
-    }
-  },
-
-  /**
-   * 领取奖励后分享
-   */
-  dialogClickListener: function () {
-    this.setData({
-      showSharePop: true
-    })
-  },
-
-  shareMomentListener: function () {
-    this.setData({
-      showShareModel: true
-    })
-  },
-
-  QAListener: function () {
-    wx.navigateTo({
-      url: '../QA/index',
-    })
-  },
-
-  /**
-   * 隐藏奖励弹框
-   */
-  hideDialogListener: function () {
-    this.setData({
-      showGoodsDetail: false
-    })
-  },
-
-  showToast(text) {
-    console.log(text);
-    $Toast({
-      content: text,
-      type: 'success'
-    });
-  },
-  goValuation: function () {
-    wx.navigateTo({
-      url: '../valuation/valuation',
-    })
   }
+
 })
