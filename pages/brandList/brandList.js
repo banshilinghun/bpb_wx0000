@@ -39,7 +39,7 @@ Page({
       title: '奔跑中🚗...'
     });
     let requestData = {
-      url: ApiConst.getAllBrands(),
+      url: ApiConst.GET_ALL_BRANDS,
       data: {},
       header: app.globalData.header,
       success: res => {

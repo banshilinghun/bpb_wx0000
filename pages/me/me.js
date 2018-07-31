@@ -199,7 +199,7 @@ Page({
     console.log(Boolean(0));
     if (that.data.loginFlag == 1) { //登录了
       wx.request({
-        url: ApiConst.getAuthStatus(),
+        url: ApiConst.GET_AUTH_STATUS,
         data: {},
         header: app.globalData.header,
         success: res => {

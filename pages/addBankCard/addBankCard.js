@@ -23,7 +23,7 @@ Page({
 	},
 	onLoad: function(options) {
 		wx.request({
-			url: ApiConst.getCitys(),
+			url: ApiConst.GET_CITYS,
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -54,7 +54,7 @@ Page({
 		})
 
 		wx.request({
-			url: ApiConst.getAuthStatus(),
+			url: ApiConst.GET_AUTH_STATUS,
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -104,7 +104,7 @@ Page({
 							bank_abb: res.data.bank
 						})
 						wx.request({
-							url: ApiConst.getBankInfo(),
+							url: ApiConst.GET_BANK_INFO,
 							data: {
 								bank_abb: res.data.bank
 							},
@@ -303,7 +303,7 @@ Page({
 				});
 			} else {
 				wx.request({
-					url: ApiConst.addBankcard(),
+					url: ApiConst.ADD_BANKCARD,
 					data: formData,
 					header: app.globalData.header,
 					success: res => {

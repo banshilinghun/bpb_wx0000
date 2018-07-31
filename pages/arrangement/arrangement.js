@@ -43,7 +43,7 @@ Page({
       server_id: server_id
     }
     wx.request({
-      url: ApiConst.getSubscribeDate(),
+      url: ApiConst.GET_SUBSCRIBE_DATE,
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -127,7 +127,7 @@ Page({
     var reqData = {};
     reqData.time_id = this.data.time_id;
     wx.request({
-      url: ApiConst.adSubscribe(),
+      url: ApiConst.AD_SUBSCRIBE,
       data: reqData,
       header: app.globalData.header,
       success: res => {

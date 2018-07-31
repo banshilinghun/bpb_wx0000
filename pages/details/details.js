@@ -215,7 +215,7 @@ Page({
   checkUserAuthStatus: function() {
     let that = this;
     wx.request({
-      url: ApiConst.getAuthStatus(),
+      url: ApiConst.GET_AUTH_STATUS,
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -519,7 +519,7 @@ Page({
       subscribe_id: subscribe_id
     }
     wx.request({
-      url: ApiConst.cancelSubcribe(),
+      url: ApiConst.CANCEL_SUBSCRIBE,
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -557,7 +557,7 @@ Page({
     console.log(that.data.serverId)
     if (app.globalData.login == 1) {
       wx.request({
-        url: ApiConst.getAuthStatus(),
+        url: ApiConst.GET_AUTH_STATUS,
         data: {},
         header: app.globalData.header,
         success: res => {

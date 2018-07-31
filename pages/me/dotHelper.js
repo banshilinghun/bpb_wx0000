@@ -12,7 +12,7 @@ const Api = require("../../utils/api/ApiConst.js");
 function requestDotStatus() {
   let promise = new Promise(function(resolve, reject){
     wx.request({
-      url: Api.GetDotUrl(),
+      url: Api.GET_DOT_URL,
       header: app.globalData.header,
       success: function (res) {
         let dataBean = res.data;

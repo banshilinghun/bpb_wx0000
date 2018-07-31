@@ -6,64 +6,40 @@ let baseUrl = ApiManager.getBaseUrl();
 
 
 // 红点显示
-function GetDotUrl(){
-  return baseUrl + 'app/get/bonus_flag';
-}
+export const GET_DOT_URL = baseUrl + 'app/get/bonus_flag';
 
 //获取城市
-function getCitys(){
-  return baseUrl + 'app/get/citys';
-}
+export const GET_CITYS = baseUrl + 'app/get/citys';
 
 //认证状态
-function getAuthStatus(){
-  return baseUrl + 'app/get/user_auth_status';
-}
+export const GET_AUTH_STATUS = baseUrl + 'app/get/user_auth_status';
 
 //添加银行卡
-function addBankcard() { 
-  return baseUrl + 'app/add/user_bankcard';
-}
+export const ADD_BANKCARD = baseUrl + 'app/add/user_bankcard';
 
 //银行卡信息
-function getBankInfo(){
-  return baseUrl + 'app/get/bank_info';
-}
+export const GET_BANK_INFO = baseUrl + 'app/get/bank_info';
 
 //自主检测
-function uploadUserAd(){
-  return baseUrl + 'app/regist/user_ad';
-}
+export const UPLOAD_USER_AD = baseUrl + 'app/regist/user_ad';
 
 //上传图片
-function uploadImg(){
-  return baseUrl + 'app/regist/upload_img'
-}
+export const UPLOAD_IMG = baseUrl + 'app/regist/upload_img';
 
 //预约时间
-function getSubscribeDate(){
-  return baseUrl + 'app/get/subscribe_dates';
-}
+export const GET_SUBSCRIBE_DATE = baseUrl + 'app/get/subscribe_dates';
 
 //预约
-function adSubscribe(){
-  return baseUrl + 'app/save/ad_subscribe';
-}
+export const AD_SUBSCRIBE = baseUrl + 'app/save/ad_subscribe';
 
 //取消预约
-function cancelSubcribe(){
-  return baseUrl + 'app/cancel/ad_subscribe';
-}
+export const CANCEL_SUBSCRIBE = baseUrl + 'app/cancel/ad_subscribe';
 
 //车型
-function getBrands(){
-  return baseUrl + 'app/get/brands';
-}
+export const GET_BRANDS = baseUrl + 'app/get/brands';
 
 //获取所有车型
-function getAllBrands(){
-  return baseUrl + 'app/get/all_brands';
-}
+export const GET_ALL_BRANDS = baseUrl + 'app/get/all_brands';
 
 //获取车型详情
 function getBrandsDetail(){
@@ -264,15 +240,6 @@ function getUserPersonalAdList(){
 }
 
 module.exports = {
-  GetDotUrl: GetDotUrl,
-  getCitys: getCitys,
-  getAuthStatus: getAuthStatus,
-  getBankInfo: getBankInfo,
-  uploadUserAd: uploadUserAd,
-  uploadImg: uploadImg,
-  getSubscribeDate: getSubscribeDate,
-  adSubscribe: adSubscribe,
-  getBrands: getBrands,
   authIdentityInfo: authIdentityInfo,
   uploadIdentityImg: uploadIdentityImg,
   midCheck: midCheck,
@@ -284,7 +251,6 @@ module.exports = {
   depositSendback: depositSendback,
   adJoinedUser: adJoinedUser,
   getAdInfo: getAdInfo,
-  cancelSubcribe: cancelSubcribe,
   wxLogin: wxLogin,
   loginUrl: loginUrl,
   adListUrl: adListUrl,
@@ -303,8 +269,6 @@ module.exports = {
   withdraw: withdraw,
   adServerList: adServerList,
   QrCode: QrCode,
-  addBankcard: addBankcard,
-  getAllBrands: getAllBrands,
   getBrandsDetail: getBrandsDetail,
   needAddCarModel: needAddCarModel,
   addCarModel: addCarModel,

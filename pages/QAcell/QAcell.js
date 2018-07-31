@@ -44,7 +44,7 @@ Page({
         title: '奔跑中🚗...',
       })
       wx.request({
-        url: ApiConst.getAuthStatus(),
+        url: ApiConst.GET_AUTH_STATUS,
         data: {},
         header: app.globalData.header,
         success: res => {

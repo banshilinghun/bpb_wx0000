@@ -76,7 +76,7 @@ Page({
         });
       } else {
         wx.request({
-          url: ApiConst.uploadUserAd(),
+          url: ApiConst.UPLOAD_USER_AD,
           data: formData,
           header: app.globalData.header,
           success: res => {
@@ -126,7 +126,7 @@ Page({
       }
       if (cartPhoto != undefined && carnPhoto != undefined) {
         wx.request({
-          url: ApiConst.uploadUserAd(),
+          url: ApiConst.UPLOAD_USER_AD,
           header: app.globalData.header,
           data: formData,
           success: res => {
@@ -175,7 +175,7 @@ Page({
       }
       if (carnPhoto != undefined && carwPhoto != undefined) {
         wx.request({
-          url: ApiConst.uploadUserAd(),
+          url: ApiConst.UPLOAD_USER_AD,
           data: formData,
           header: app.globalData.header,
           success: res => {
@@ -220,7 +220,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: ApiConst.uploadImg(),
+          url: ApiConst.UPLOAD_IMG,
           filePath: res.tempFilePaths[0],
           name: 'behind_car',
           header: {
@@ -277,7 +277,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: ApiConst.uploadImg(),
+          url: ApiConst.UPLOAD_IMG,
           filePath: res.tempFilePaths[0],
           name: 'inside_car',
           header: {
@@ -333,7 +333,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: ApiConst.uploadImg(),
+          url: ApiConst.UPLOAD_IMG,
           filePath: res.tempFilePaths[0],
           name: 'front_car',
           header: {
