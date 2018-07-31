@@ -7,8 +7,7 @@ const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
 const { $Toast } = require('../../components/base/index');
-var app = getApp()
-const shareFlagUrl = ApiConst.getShareFlag();
+var app = getApp();
 
 Page({
   data: {
@@ -683,7 +682,7 @@ Page({
   getShareFlag: function(){
     var that = this;
     wx.request({
-      url: shareFlagUrl,
+      url: ApiConst.GET_SHARE_FLAG,
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {

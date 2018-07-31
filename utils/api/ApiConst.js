@@ -4,6 +4,7 @@
 let ApiManager = require('../api/ApiManager.js');
 let baseUrl = ApiManager.getBaseUrl();
 
+
 // 红点显示
 function GetDotUrl(){
   return baseUrl + 'app/get/bonus_flag';
@@ -125,9 +126,7 @@ function getAdInfo(){
 }
 
 //获取推荐开关状态
-function getShareFlag(){
-  return baseUrl + 'app/get/share_flag';
-}
+export const GET_SHARE_FLAG = baseUrl + 'app/get/share_flag';
 
 //微信登录
 function wxLogin(){
@@ -286,7 +285,6 @@ module.exports = {
   adJoinedUser: adJoinedUser,
   getAdInfo: getAdInfo,
   cancelSubcribe: cancelSubcribe,
-  getShareFlag: getShareFlag,
   wxLogin: wxLogin,
   loginUrl: loginUrl,
   adListUrl: adListUrl,

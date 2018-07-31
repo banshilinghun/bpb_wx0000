@@ -2,7 +2,6 @@
 //获取应用实例
 const app = getApp();
 const ApiConst = require("../../utils/api/ApiConst.js");
-const shareFlagUrl = ApiConst.getShareFlag();
 
 Page({
   data: {
@@ -195,7 +194,7 @@ Page({
   getShareFlag: function (recommendId) {
     var that = this;
     wx.request({
-      url: shareFlagUrl,
+      url: ApiConst.GET_SHARE_FLAG,
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
