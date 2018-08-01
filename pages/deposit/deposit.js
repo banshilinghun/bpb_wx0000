@@ -1,6 +1,6 @@
 //main.js
 //获取应用实例
-var md5 = require("../../utils/md5.js");
+var md5 = require("../../utils/entrypt/md5");
 const ApiConst = require("../../utils/api/ApiConst.js");
 var app = getApp()
 Page({
@@ -22,7 +22,7 @@ Page({
 	},
 	onShow: function() {
 		wx.request({
-			url: ApiConst.userDepositIspaid(),
+			url: ApiConst.USER_DEPOSIT_ISPAID,
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -61,7 +61,7 @@ Page({
 					//console.log(res.code)
 					//发起网络请求
 					wx.request({
-						url: ApiConst.payUserDesposit(),
+						url: ApiConst.PAY_USER_DESPOSIT,
 						data: {
 							wx_code: res.code
 						},
@@ -122,7 +122,7 @@ Page({
 	},
 	returnDeposit: function() {
 		wx.request({
-			url: ApiConst.checkAdFinsih(),
+			url: ApiConst.CHECK_AD_FINISH,
 			data: {},
 			header: app.globalData.header,
 			success: obj => {
@@ -144,7 +144,7 @@ Page({
 							success: function(res) {
 								if(res.cancel) {
 									wx.request({
-										url: ApiConst.depositSendback(),
+										url: ApiConst.DESPOSIT_SENDBACK,
 										data: {},
 										header: app.globalData.header,
 										success: res2 => {

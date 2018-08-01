@@ -1,5 +1,5 @@
 var app = getApp()
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
 const ApiConst = require("../../utils/api/ApiConst.js");
 Page({
 	data: {
@@ -10,7 +10,7 @@ Page({
 	},
 	onShow: function() {
 		wx.request({
-			url: ApiConst.userBancard(),
+			url: ApiConst.USER_BBANCARD,
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -48,7 +48,7 @@ Page({
 		})
 
 		wx.request({
-			url: ApiConst.getUserAccount(),
+			url: ApiConst.GET_USER_ACCOUNT,
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -155,7 +155,7 @@ Page({
 						success: function(res) {
 							if(res.confirm) {
 								wx.request({
-									url: ApiConst.withdraw(),
+									url: ApiConst.WITHDRAW,
 									data: reqdata,
 									header: app.globalData.header,
 									success: res => {

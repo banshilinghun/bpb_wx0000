@@ -4,7 +4,7 @@
  */
 
 const app = getApp();
-const stringUtil = require('../../utils/stringUtil.js');
+const stringUtil = require('../../utils/string/stringUtil');
 const ApiConst = require("../../utils/api/ApiConst.js");
 
 var windowWidth;
@@ -42,7 +42,7 @@ const bpbScale = 0.91 + temp * 2;
 //识别文字
 const decodeScale = 0.935 + temp * 2;
 //二维码地址
-const QR_CODE_URL = ApiConst.QrCode();
+const QR_CODE_URL = ApiConst.QR_CODE;
 
 Component({
   /**

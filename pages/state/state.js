@@ -103,7 +103,7 @@ Page({
   followFlag: function () {//查询是否关注公众号
     var that = this;
     wx.request({
-      url: ApiConst.userHasSubcribe(),
+      url: ApiConst.USER_HAS_SUBCRIBE,
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {

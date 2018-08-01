@@ -40,7 +40,7 @@ Page({
       title: '奔跑中🚗...'
     });
     let requestData = {
-      url: ApiConst.getBrandsDetail(),
+      url: ApiConst.GET_BRANDS_DETAIL,
       data: {
         brand_id: brandId
       },

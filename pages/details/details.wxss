@@ -1,8 +1,8 @@
-@import "../../common/ui/common.wxss";
+@import "../../style/common.wxss";
 
 page {
   background-color: #f6f6f6;
-  padding-bottom: 100rpx;
+  padding-bottom: 0
 }
 
 .swiper-banner {
@@ -38,7 +38,7 @@ page {
 }
 
 .profole-type, .profole-type-right{
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #666;
   display: inline-block;
 }
@@ -1327,17 +1327,8 @@ button {
 
 .action_bottom{
   height: 88rpx;
-  width: 100%;
-  position: fixed;
-  left: 0;
-  bottom: 0;
   display: flex;
   background-color: #fff;
-  flex-direction: row;
-  -moz-box-shadow: 0px 0px 8px #ddd;
-  -webkit-box-shadow: 0px 0px 8px #ddd;
-  box-shadow: 0px 0px 8px #ddd;
-  z-index: 7;
 }
 
 .b-see-more-detail{

@@ -1,7 +1,7 @@
 var app = getApp()
-var util = require("../../utils/util.js");
-const Constant = require("../../utils/Constant.js");
-const shareUtil = require("../../utils/shareUtil.js");
+var util = require("../../utils/common/util");
+const Constant = require("../../utils/constant/Constant");
+const shareUtil = require("../../utils/module/shareUtil");
 const ApiConst = require("../../utils/api/ApiConst.js");
 Page({
   data: {
@@ -105,7 +105,7 @@ Page({
     if (flag) {
       this.setregistData1();
       wx.request({
-        url: ApiConst.regist(),
+        url: ApiConst.REGIST,
         data: registData,
         header: app.globalData.header,
         success: res => {
@@ -217,7 +217,7 @@ Page({
     }, 1000);
 
     wx.request({
-      url: ApiConst.registVerifyWx(),
+      url: ApiConst.REGIST_VERRIFY_WX,
       data: rqData,
       header: app.globalData.header,
       success: res => {
@@ -251,7 +251,7 @@ Page({
     var reqData={};
     reqData.recommender_id=recommender_id;
     wx.request({
-      url: ApiConst.recommendRewardList(),
+      url: ApiConst.RECOMMEND_REWARD_LIST,
       data: reqData,
       header: {
         'content-type': 'application/json'

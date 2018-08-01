@@ -38,7 +38,7 @@ Page({
   getMyAd: function (reqData) { 
     var z = this;
     wx.request({
-      url: ApiConst.myAd(),
+      url: ApiConst.MY_AD,
       data: reqData,
       header: app.globalData.header,
       success: res => {

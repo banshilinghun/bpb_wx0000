@@ -1,8 +1,8 @@
 //main.js
 //获取应用实例
-var util = require("../../utils/util.js");
-const Constant = require("../../utils/Constant.js");
-const shareUtil = require("../../utils/shareUtil.js");
+var util = require("../../utils/common/util");
+const Constant = require("../../utils/constant/Constant");
+const shareUtil = require("../../utils/module/shareUtil");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
@@ -101,7 +101,7 @@ Page({
 
   judgeNeedAddCarModel: function(){
     let requestData = {
-      url: ApiConst.needAddCarModel(),
+      url: ApiConst.NEED_ADD_CAR_MODEL,
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -183,7 +183,7 @@ Page({
   requestQueueInfo: function(){
     let that = this;
     let requestData = {
-      url: ApiConst.queryQueueInfo(),
+      url: ApiConst.QUERY_QUEUE_INFO,
       data: {},
       header: app.globalData.header,
       success: res => {
@@ -213,7 +213,7 @@ Page({
       reqInfo.sorted_key = that.data.sorted_key
     }
     wx.request({
-      url: ApiConst.adListUrl(),
+      url: ApiConst.AD_LIST_URL,
       data: reqInfo,
       header: app.globalData.header,
       success: res => {
@@ -392,7 +392,7 @@ Page({
   getMyAd:function(reqData){
     var z=this;
     wx.request({
-      url: ApiConst.myAd(),
+      url: ApiConst.MY_AD,
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -649,7 +649,7 @@ Page({
   followFlag: function () {//查询是否关注公众号
     var that = this
     wx.request({
-      url: ApiConst.userHasSubcribe(),
+      url: ApiConst.USER_HAS_SUBCRIBE,
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
@@ -797,7 +797,7 @@ Page({
     });
     setTimeout(function () {
       let requestData = {
-        url: ApiConst.confirmSubsQueue(),
+        url: ApiConst.CONFIRM_SUBS_QUEUE,
         data: {},
         header: app.globalData.header,
         success: res => {
@@ -825,7 +825,7 @@ Page({
     });
     setTimeout(function () {
       let requestData = {
-        url: ApiConst.refuseSubsQueue(),
+        url: ApiConst.REGUSE_SUBS_QUEUE,
         data: {},
         header: app.globalData.header,
         success: res => {

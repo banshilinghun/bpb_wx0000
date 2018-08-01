@@ -1,8 +1,8 @@
 // pages/recommend/recommend.js
 const app = getApp();
-const timeUtil = require('../../utils/timeUtil.js');
-const Constant = require("../../utils/Constant.js");
-const shareUtil = require("../../utils/shareUtil.js");
+const timeUtil = require('../../utils/time/timeUtil');
+const Constant = require("../../utils/constant/Constant");
+const shareUtil = require("../../utils/module/shareUtil");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
 
@@ -10,13 +10,13 @@ const ApiConst = require("../../utils/api/ApiConst.js");
 //active:活动，recommend:推荐，rule:活动规则，mp:公众号跳转
 const FLAG_ARRAY = ['active', 'recommend', 'rule', 'mp'];
 //二维码地址
-const QR_CODE_URL = ApiConst.QrCode();
+const QR_CODE_URL = ApiConst.QR_CODE;
 //推荐地址
-const RECOMMEND_URL = ApiConst.recommendationUser();
+const RECOMMEND_URL = ApiConst.RECOMMENDDATION_USER;
 //领取奖励
-const COUPON_URL = ApiConst.collectAccountCoupon();
+const COUPON_URL = ApiConst.COLLECT_ACCOUNT_COUPON;
 //发送一键邀请通知
-const NOTIFY_URL = ApiConst.recommenderNotify();
+const NOTIFY_URL = ApiConst.RECOMMENDER_NOTIFY;
 
 Page({
 

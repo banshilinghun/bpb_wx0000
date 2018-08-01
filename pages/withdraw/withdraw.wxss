@@ -1,4 +1,4 @@
-@import "../../common/ui/common.wxss";
+@import "../../style/common.wxss";
 @import "../main/main.wxss";
 
 .container {

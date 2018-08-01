@@ -1,4 +1,4 @@
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 var sourceType = [
@@ -425,7 +425,7 @@ Page({
       }
       //发起提交认证请求
       wx.request({
-        url: ApiConst.authIdentityInfo(),
+        url: ApiConst.AUTH_IDENTITY_INFO,
         data: formData,
         header: app.globalData.header,
         success: res => {
@@ -490,7 +490,7 @@ Page({
         console.log(res)
         var wxres = res;
         wx.uploadFile({
-          url: ApiConst.uploadIdentityImg(), //仅为示例，非真实的接口地址
+          url: ApiConst.UPLOAD_IDENTITY_IMG, //仅为示例，非真实的接口地址
           filePath: res.tempFilePaths[0],
           name: 'car',
           header: {
@@ -537,7 +537,7 @@ Page({
         console.log(res)
         var wxres = res;
         wx.uploadFile({
-          url: ApiConst.uploadIdentityImg(),
+          url: ApiConst.UPLOAD_IDENTITY_IMG,
           filePath: res.tempFilePaths[0],
           name: 'license',
           header: {

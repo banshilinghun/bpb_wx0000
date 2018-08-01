@@ -7,7 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    joinListUrl: ApiConst.adJoinedUser(),
     userInfo: [],
     adId: '',
     pageIndex: 1,
@@ -45,7 +44,7 @@ Page({
   requestJoinList: function (currentPageIndex) {
     let that = this;
     wx.request({
-      url: that.data.joinListUrl,
+      url: ApiConst.AD_JOINED_USER,
       header: app.globalData.header,
       data: {
         ad_id: that.data.adId,

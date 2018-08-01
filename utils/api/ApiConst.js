@@ -4,7 +4,6 @@
 let ApiManager = require('../api/ApiManager.js');
 let baseUrl = ApiManager.getBaseUrl();
 
-
 // 红点显示
 export const GET_DOT_URL = baseUrl + 'app/get/bonus_flag';
 
@@ -42,241 +41,121 @@ export const GET_BRANDS = baseUrl + 'app/get/brands';
 export const GET_ALL_BRANDS = baseUrl + 'app/get/all_brands';
 
 //获取车型详情
-function getBrandsDetail(){
-  return baseUrl + 'app/get/brand_details';
-}
+export const GET_BRANDS_DETAIL = baseUrl + 'app/get/brand_details';
 
 //上传认证信息
-function authIdentityInfo(){
-  return baseUrl + 'app/user/auth_identity_info';
-}
+export const AUTH_IDENTITY_INFO = baseUrl + 'app/user/auth_identity_info';
 
 //上传认证照片
-function uploadIdentityImg(){
-  return baseUrl + 'app/user/upload_identity_img';
-}
+export const UPLOAD_IDENTITY_IMG = baseUrl + 'app/user/upload_identity_img';
 
 //期中检测
-function midCheck(){
-  return baseUrl + 'app/commit/mid_check';
-}
+export const MID_CHECK = baseUrl + 'app/commit/mid_check';
 
 //期中检测图片上传
-function midCheckImg(){
-  return baseUrl + 'app/upload/mid_check_img';
-}
+export const MID_CHECK_IMG = baseUrl + 'app/upload/mid_check_img';
 
 //广告检测计划
-function adCheckPlans(){
-  return baseUrl + 'app/find/ad_check_plans';
-}
+export const AD_CHECK_PLANS = baseUrl + 'app/find/ad_check_plans';
 
 //押金
-function userDepositIspaid(){
-  return baseUrl + 'app/get/user_deposit_ispaid';
-}
+export const USER_DEPOSIT_ISPAID = baseUrl + 'app/get/user_deposit_ispaid';
 
 //交押金
-function payUserDesposit(){
-  return baseUrl + 'app/commit/pay_user_deposit';
-}
+export const PAY_USER_DESPOSIT = baseUrl + 'app/commit/pay_user_deposit';
 
 //退押金信息查询
-function checkAdFinsih(){
-  return baseUrl + 'app/get/user_not_finish_ad';
-}
+export const CHECK_AD_FINISH = baseUrl + 'app/get/user_not_finish_ad';
 
 //退押金
-function depositSendback(){
-  return baseUrl + 'app/commit/deposit_sendback';
-}
+export const DESPOSIT_SENDBACK = baseUrl + 'app/commit/deposit_sendback';
 
 // 广告参加列表
-function adJoinedUser(){
-  return baseUrl + 'app/get/ad_joined_users';
-}
+export const AD_JOINED_USER = baseUrl + 'app/get/ad_joined_users';
 
 //广告信息
-function getAdInfo(){
-  return baseUrl + 'app/get/ad_info'
-}
+export const GET_AD_INFO = baseUrl + 'app/get/ad_info';
 
 //获取推荐开关状态
 export const GET_SHARE_FLAG = baseUrl + 'app/get/share_flag';
 
 //微信登录
-function wxLogin(){
-  return baseUrl + 'app/user/wx_login';
-}
+export const WX_LOGIN = baseUrl + 'app/user/wx_login';
 
 //登录
-function loginUrl(){
-  return baseUrl + 'app/user/login';
-}
+export const LOGIN_URL = baseUrl + 'app/user/login';
 
 //广告列表
-function adListUrl(){
-  return baseUrl + 'app/get/ad_list';
-}
+export const AD_LIST_URL = baseUrl + 'app/get/ad_list';
 
 //我的广告
-function myAd(){
-  return baseUrl + 'app/get/my_ad';
-}
+export const MY_AD = baseUrl + 'app/get/my_ad';
 
 //查询是否关注公众号
-function userHasSubcribe(){
-  return baseUrl + 'app/get/user_has_subscribe';
-}
+export const USER_HAS_SUBCRIBE = baseUrl + 'app/get/user_has_subscribe';
 
 //待收收益
-function accountCoupon() { 
-  return baseUrl + 'app/get/account_coupon';
-}
+export const ACCOUNT_COUPON = baseUrl + 'app/get/account_coupon';
 
 //账户信息
-function userAccount(){
-  return baseUrl + 'app/get/account';
-}
+export const USER_ACCOUNT = baseUrl + 'app/get/account';
 
 //余额
-function collectAccountCoupon(){
-  return baseUrl + 'app/get/collect_account_coupon';
-}
+export const COLLECT_ACCOUNT_COUPON = baseUrl + 'app/get/collect_account_coupon';
 
 //注册
-function regist(){
-  return baseUrl + 'app/user/regist';
-}
+export const REGIST = baseUrl + 'app/user/regist';
 
 //发送验证码
-function registVerifyWx(){
-  return baseUrl + 'app/get/regist_verify_wx';
-}
+export const REGIST_VERRIFY_WX = baseUrl + 'app/get/regist_verify_wx';
 
 //邀请奖励列表
-function recommendRewardList(){
-  return baseUrl + 'app/get/recommend_reward_list';
-}
+export const RECOMMEND_REWARD_LIST = baseUrl + 'app/get/recommend_reward_list';
 
 //推荐用户列表
-function recommendationUser(){
-  return baseUrl + 'app/get/recommendation_user';
-}
+export const RECOMMENDDATION_USER = baseUrl + 'app/get/recommendation_user';
 
 //发送邀请通知
-function recommenderNotify(){
-  return baseUrl + 'app/send/recommender_notify';
-}
+export const RECOMMENDER_NOTIFY = baseUrl + 'app/send/recommender_notify';
 
 //获取银行卡列表
-function userBancard(){
-  return baseUrl + 'app/get/user_bancard';
-}
+export const USER_BBANCARD = baseUrl + 'app/get/user_bancard';
 
 //账户信息
-function getUserAccount(){
-  return baseUrl + 'app/get/user_account';
-}
+export const GET_USER_ACCOUNT = baseUrl + 'app/get/user_account';
 
 //提现
-function withdraw(){
-  return baseUrl + 'app/commit/user_withdraw';
-}
+export const WITHDRAW = baseUrl + 'app/commit/user_withdraw';
 
 //服务网点列表
-function adServerList(){
-  return baseUrl + 'app/get/ad_server_list';
-}
+export const AD_SERVER_LIST = baseUrl + 'app/get/ad_server_list';
 
 //获取二维码
-function QrCode(){
-  return baseUrl + 'app/get/wx_code';
-}
+export const QR_CODE = baseUrl + 'app/get/wx_code';
 
 //获取用户是否需要补充车型信息
-function needAddCarModel(){
-  return baseUrl + 'app/get/is_add_car_model';
-}
+export const NEED_ADD_CAR_MODEL = baseUrl + 'app/get/is_add_car_model';
 
 //添加用户车型信息
-function addCarModel(){
-  return baseUrl + 'app/add/car_model_info';
-}
+export const ADD_CAR_MODEL_INFO = baseUrl + 'app/add/car_model_info';
 
 //获取广告用户排队列表
-function getQueueUser(){
-  return baseUrl + 'app/get/ad_queue_users';
-}
+export const GET_QUEUE_USER = baseUrl + 'app/get/ad_queue_users';
 
 //用户加入广告排队
-function takePartInQueue(){
-  return baseUrl + 'app/join/user_ad_queue';
-}
+export const TAKE_PART_IN_QUEUE = baseUrl + 'app/join/user_ad_queue';
 
 //取消用户广告排队
-function cancelQueue(){
-  return baseUrl + 'app/cancel/user_ad_queue';
-}
+export const CANCEL_QUEUE = baseUrl + 'app/cancel/user_ad_queue';
 
 //查询用户等待确认的预约信息
-function  queryQueueInfo(){
-  return baseUrl + 'app/query/user_waith_confirm_queue';
-}
+export const QUERY_QUEUE_INFO = baseUrl + 'app/query/user_waith_confirm_queue';
 
 //确认预约排队信息
-function confirmSubsQueue(){
-  return baseUrl + 'app/confirm/wait_subscribe_info';
-}
+export const CONFIRM_SUBS_QUEUE = baseUrl + 'app/confirm/wait_subscribe_info';
 
 //拒绝预约排队信息
-function refuseSubsQueue(){
-  return baseUrl + 'app/refuse/wait_subscribe_info';
-}
+export const REGUSE_SUBS_QUEUE = baseUrl + 'app/refuse/wait_subscribe_info';
 
 //获取用户个人广告列表
-function getUserPersonalAdList(){
-  return baseUrl + 'app/get/user_personal_adlist';
-}
-
-module.exports = {
-  authIdentityInfo: authIdentityInfo,
-  uploadIdentityImg: uploadIdentityImg,
-  midCheck: midCheck,
-  midCheckImg: midCheckImg,
-  adCheckPlans: adCheckPlans,
-  userDepositIspaid: userDepositIspaid,
-  payUserDesposit: payUserDesposit,
-  checkAdFinsih: checkAdFinsih,
-  depositSendback: depositSendback,
-  adJoinedUser: adJoinedUser,
-  getAdInfo: getAdInfo,
-  wxLogin: wxLogin,
-  loginUrl: loginUrl,
-  adListUrl: adListUrl,
-  myAd: myAd,
-  userHasSubcribe: userHasSubcribe,
-  accountCoupon: accountCoupon,
-  userAccount: userAccount,
-  collectAccountCoupon: collectAccountCoupon,
-  regist: regist,
-  registVerifyWx: registVerifyWx,
-  recommendRewardList: recommendRewardList,
-  recommendationUser: recommendationUser,
-  recommenderNotify: recommenderNotify,
-  userBancard: userBancard,
-  getUserAccount: getUserAccount,
-  withdraw: withdraw,
-  adServerList: adServerList,
-  QrCode: QrCode,
-  getBrandsDetail: getBrandsDetail,
-  needAddCarModel: needAddCarModel,
-  addCarModel: addCarModel,
-  getQueueUser: getQueueUser,
-  takePartInQueue: takePartInQueue,
-  cancelQueue: cancelQueue,
-  queryQueueInfo, queryQueueInfo,
-  confirmSubsQueue: confirmSubsQueue,
-  refuseSubsQueue: refuseSubsQueue,
-  getUserPersonalAdList: getUserPersonalAdList
-}
+export const GET_USER_PERSONAL_AD_LIST = baseUrl + 'app/get/user_personal_adlist';

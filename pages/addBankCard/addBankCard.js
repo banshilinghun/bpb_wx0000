@@ -1,4 +1,4 @@
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 Page({

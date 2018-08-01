@@ -4,11 +4,11 @@
  */
 const domainArray = ['release', 'release2', 'debug']
 //api 1
-const domain = domainArray[0];//1
+const domain = domainArray[2];//1
 
 const releaseDomain = 'https://wxapi.benpaobao.com/';
 const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
-const debugDomain = 'http://192.168.1.142:8000/';
+const debugDomain = 'http://192.168.2.172:8000/';
 
 /**
  * 加载域名

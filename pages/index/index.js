@@ -91,7 +91,7 @@ Page({
               console.log(reqData);
               //发起网络请求
               wx.request({
-                url: ApiConst.wxLogin(),
+                url: ApiConst.WX_LOGIN,
                 data: reqData,
                 header: {
                   'content-type': 'application/json'
@@ -260,7 +260,7 @@ Page({
       var nickname = e.detail.userInfo.nickName;
       var gender = e.detail.userInfo.gender;
       wx.request({
-        url: ApiConst.wxLogin(),
+        url: ApiConst.WX_LOGIN,
         data: {
           wx_code: wx_code,
           avatar: avatarUrl,

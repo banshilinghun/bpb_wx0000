@@ -1,4 +1,4 @@
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 Page({
@@ -69,7 +69,7 @@ Page({
     if (flag) {
       this.setregistData1();
       wx.request({
-        url: ApiConst.regist(),
+        url: ApiConst.REGIST,
         data: registData,
         header: app.globalData.header,
         success: res => {
@@ -208,7 +208,7 @@ Page({
     }, 1000);
 
     wx.request({
-      url: ApiConst.registVerifyWx(),
+      url: ApiConst.REGIST_VERRIFY_WX,
       data: rqData,
       header: app.globalData.header,
       success: res => {

@@ -1,7 +1,7 @@
 /** 分享工具类 */
 
 const app = getApp();
-const stringUtil = require('stringUtil.js');
+const stringUtil = require('../string/stringUtil');
 
 /**
  * 普通拉新分享title

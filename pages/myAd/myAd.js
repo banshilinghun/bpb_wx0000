@@ -95,7 +95,7 @@ Page({
   requestPrepareList: function() {
     let that = this;
     let requestData = {
-      url: ApiConst.getUserPersonalAdList(),
+      url: ApiConst.GET_USER_PERSONAL_AD_LIST,
       data: {
         type: TYPE[0]
       },
@@ -254,7 +254,7 @@ Page({
   requestRunList: function() {
     let that = this;
     let requestData = {
-      url: ApiConst.getUserPersonalAdList(),
+      url: ApiConst.GET_USER_PERSONAL_AD_LIST,
       data: {
         type: TYPE[1]
       },
@@ -317,7 +317,7 @@ Page({
   requestFinishList: function() {
     let that = this;
     let requestData = {
-      url: ApiConst.getUserPersonalAdList(),
+      url: ApiConst.GET_USER_PERSONAL_AD_LIST,
       data: {
         type: TYPE[2]
       },
@@ -374,7 +374,7 @@ Page({
             title: '奔跑中🚗...',
           })
           let requestData = {
-            url: ApiConst.cancelQueue(),
+            url: ApiConst.CANCEL_QUEUE,
             data: {
               ad_id: adId
             },

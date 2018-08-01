@@ -107,7 +107,7 @@ Page({
   addCarModelInfo: function (checkedModel) {
     let that = this;
     let requestData = {
-      url: ApiConst.addCarModel(),
+      url: ApiConst.ADD_CAR_MODEL_INFO,
       data: {
         car_model: checkedModel.detail_id
       },

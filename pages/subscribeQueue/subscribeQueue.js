@@ -43,7 +43,7 @@ Page({
       dataBean.sorted_key = that.data.sorted_key;
     }
     let requestData = {
-      url: ApiConst.getQueueUser(),
+      url: ApiConst.GET_QUEUE_USER,
       data: dataBean,
       header: app.globalData.header,
       success: res => {
@@ -113,7 +113,7 @@ Page({
             title: '奔跑中🚗...',
           })
           let requestData = {
-            url: ApiConst.cancelQueue(),
+            url: ApiConst.CANCEL_QUEUE,
             data: {
               ad_id: that.data.adId
             },

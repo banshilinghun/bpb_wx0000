@@ -1,10 +1,10 @@
 const app = getApp();
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
 const {
   $Toast
 } = require('../../components/base/index');
-const Constant = require("../../utils/Constant.js");
-const shareUtil = require("../../utils/shareUtil.js");
+const Constant = require("../../utils/constant/Constant");
+const shareUtil = require("../../utils/module/shareUtil");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
 
@@ -138,7 +138,7 @@ Page({
   followFlag: function () {
     var that = this
     wx.request({
-      url: ApiConst.userHasSubcribe(),
+      url: ApiConst.USER_HAS_SUBCRIBE,
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
@@ -169,7 +169,7 @@ Page({
   requestUserAccount() {
     let that = this;
     wx.request({
-      url: ApiConst.userAccount(),
+      url: ApiConst.USER_ACCOUNT,
       data: {},
       header: app.globalData.header,
       success: res => {
