@@ -13,6 +13,7 @@
   flex-direction: row;
   font-size: 28rpx;
   color: #333;
+  box-shadow: 0 2px 2px #eee
 }
 
 .serial-tag {
@@ -31,7 +32,7 @@
 }
 
 .queue-item {
-  height: 80rpx;
+  height: 100rpx;
   position: relative;
 }
 
@@ -44,15 +45,14 @@
 .serial-tag-item {
   width: 20%;
   text-align: center;
-  line-height: 80rpx
+  line-height: 100rpx
 }
 
 .b-user-item {
   width: 40%;
   text-align: left;
-  padding: 30rpx;
   box-sizing: border-box;
-  line-height: 80rpx
+  line-height: 100rpx
 }
 
 .b-user-wrapper {
@@ -65,7 +65,7 @@
 .queue-time-tag-item {
   width: 40%;
   text-align: center;
-  line-height: 80rpx
+  line-height: 100rpx
 }
 
 .queue-user-avatar {
@@ -95,16 +95,17 @@
 }
 
 .line {
-  width: 95%;
+  width: 90%;
   height: 1rpx;
   background-color: #ddd;
   position: absolute;
   bottom: 0;
   left: 5%;
+  right: 5%
 }
 
 .model-action {
-  min-height: 150rpx;
+  height: 150rpx;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -139,7 +140,7 @@ button::after {
 }
 
 .b-queue-container {
-  margin: 40rpx 0;
+  padding: 40rpx 0;
 }
 
 .b-queue-cell {

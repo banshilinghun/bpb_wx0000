@@ -222,11 +222,14 @@ Page({
   },
 
   showMain: function(){
-    setTimeout(function () {
-      wx.switchTab({
-        url: '../main/main'
-      })
-    }, 1500);
+    // setTimeout(function () {
+    //   wx.switchTab({
+    //     url: '../main/main'
+    //   })
+    // }, 1500);
+    wx.redirectTo({
+      url: '../subscribeQueue/subscribeQueue'
+    })
   },
 
   getUserInfo: function (e) {

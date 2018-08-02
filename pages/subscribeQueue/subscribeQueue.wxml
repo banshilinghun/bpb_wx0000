@@ -1,7 +1,7 @@
 <view class='queue-container'>
   <!-- 排队信息 -->
-  <view id='b-queue-header' wx:if='{{ showAction }}'>
-    <view class='b-queue-container'>
+  <view id='b-queue-header'>
+    <view class='b-queue-container' wx:if='{{ showAction }}'>
       <view class='b-queue-wait'>
         <view class='b-queue-title'>
           <text>需等待人数</text>
@@ -63,14 +63,12 @@
           <text class='queue-start-time'>{{ item.date }}</text>
         </view>
       </view>
-      <view class='line'></view>
+      <view class='line' wx:if='{{ index !== queueList.length - 1 }}'></view>
     </view>
   </scroll-view>
   <!-- 底部action -->
   <view id='model-action' class='model-action' wx:if='{{ showAction }}'>
-    <view>
-      <button class='model-sure' bindtap='cancelQueue'>取消排队</button>
-      <button class='model-back' bindtap='back'>确认</button>
-    </view>
+    <button class='model-sure' bindtap='cancelQueue'>取消排队</button>
+    <button class='model-back' bindtap='back'>确认</button>
   </view>
 </view>

@@ -18,7 +18,7 @@ Page({
     adId: '',
     isShowLoadingMore: false,
     queueWaitNumber: 0,
-    showAction: false,
+    showAction: true,
     scrollHeight: 0
   },
 
@@ -34,19 +34,28 @@ Page({
     this.setScrollHeight();
   },
 
-  setScrollHeight(){
+  setScrollHeight() {
     let that = this;
     let proSystem = viewUtil.getSystemInfo();
     console.log(proSystem);
     let proHeader = viewUtil.getViewHeight('#b-queue-header');
     console.log(proHeader);
-    let proAction = viewUtil.getViewHeight('#model-action');
-    console.log(proAction);
-    Promise.all([proSystem, proHeader, proAction]).then(results => {
-      that.setData({
-        scrollHeight: results[0].windowHeight - results[1].height - results[2].height
-      });
-    })
+    //处理已参加排队和未参加当前广告排队的情况
+    if(that.data.showAction){
+      let proAction = viewUtil.getViewHeight('#model-action');
+      console.log(proAction);
+      Promise.all([proSystem, proHeader, proAction]).then(results => {
+        that.setData({
+          scrollHeight: results[0].windowHeight - results[1].height - results[2].height
+        });
+      })
+    } else {
+      Promise.all([proSystem, proHeader]).then(results => {
+        that.setData({
+          scrollHeight: results[0].windowHeight -  results[1].height
+        });
+      })
+    }
   },
 
   //todo 限制车主名字长度，分页, 需排队数计算
@@ -57,6 +66,7 @@ Page({
       page: currentPageIndex,
       page_count: 20
     };
+
     if(!that.data.pageIndex == 0 || that.data.sorted_key){
       dataBean.sorted_key = that.data.sorted_key;
     }
