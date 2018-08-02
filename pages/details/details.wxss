@@ -27,8 +27,8 @@ page {
 
 .profile-item, .account-item {
   flex: 1;
-  font-size: 28rpx;
   color: #666;
+  font-weight: normal;
   position: relative;
 }
 
@@ -38,13 +38,13 @@ page {
 }
 
 .profole-type, .profole-type-right{
-  font-size: 32rpx;
   color: #666;
   display: inline-block;
 }
 
 .profole-type-right{
   margin-left: 20rpx;
+  font-weight: 500
 }
 
 .profile-right-item{
@@ -58,7 +58,7 @@ page {
 }
 
 .right-text {
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #666;
 }
 
@@ -153,9 +153,8 @@ page {
   text-align: right;
 }
 
-.time {
-  color: #333;
-  font-size: 28rpx;
+.b-total-count{
+  margin-left: 15rpx
 }
 
 .message image {
@@ -576,7 +575,7 @@ button::after {
   align-items: flex-start;
 }
 
-.items-list .lists .time {
+.items-list .lists{
   width: 140rpx;
   font-size: 24rpx;
   color: #222;
@@ -741,20 +740,13 @@ button::after {
   flex: 1;
   text-align: center;
   background: none;
-  line-height: 1.2;
   padding: 0;
-  position: relative;
-}
-
-.share-action-wrapper{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  margin: 0;
+  line-height: 1.2;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 }
 
 .wtwabt image {
@@ -763,9 +755,10 @@ button::after {
 }
 
 .sharetext {
-  font-size: 24rpx;
-  color: #ff555c;
-  margin-left: 10rpx;
+  font-size: 20rpx;
+  color: #333333;
+  margin-top: 10rpx;
+  margin-left: 10rpx
 }
 
 /*弹窗*/
@@ -949,6 +942,7 @@ button::after {
   padding-bottom: 10rpx;
   background-color: white;
   align-items: center;
+  margin: 20rpx 0
 }
 
 .join-left-layout {
@@ -961,7 +955,7 @@ button::after {
 
 .already-join-text {
   font-size: 32rpx;
-  color: #333;
+  color: #666;
 }
 
 .already-join-number {
@@ -1152,36 +1146,6 @@ button {
   z-index: 6;
 }
 
-/* map start */
-
-.map-wrapper {
-  width: 100%;
-  position: relative;
-}
-
-.map {
-  height: 100%;
-  width: 100%;
-}
-
-.cover-layout {
-  width: 100rpx;
-  height: 100rpx;
-  position: absolute;
-  bottom: 40rpx;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.self-location {
-  width: 60rpx;
-  height: 60rpx;
-}
-
-/* map end */
-
 .action-wrapper {
   height: 100%;
   display: flex;
@@ -1273,6 +1237,11 @@ button {
   padding-left: 6rpx;
   padding-right: 6rpx;
 }
+
+.data-text{
+  font-weight: normal
+}
+
 .swtwxs{
   color:#666;
 }
@@ -1288,7 +1257,7 @@ button {
 
 .time {
   color: #03d0b7;
-  font-size: 24rpx;
+  font-size: 28rpx;
 }
 
 .timetxt {
@@ -1300,18 +1269,19 @@ button {
 }
 
 .subscribe_immediately{
-  flex: 1;
+  flex: 2;
   font-size: 24rpx;
   color: #fff;
   position: relative
 }
 
 .subscribe-focus{
-  background: #ff555c
+  background: linear-gradient(45deg, #FB653D, #ff555c);
 }
 
 .subscribe-unfocus{
-  background: #ccc;
+  background: linear-gradient(45deg, #FB653D, #ff555c);
+  opacity: 0.8
 }
 
 .subcribe-wrapper{
@@ -1326,7 +1296,7 @@ button {
 }
 
 .action_bottom{
-  height: 88rpx;
+  height: 98rpx;
   display: flex;
   background-color: #fff;
 }
@@ -1395,3 +1365,74 @@ button {
   height: 30rpx;
   margin-right: 10rpx
 }
+
+/* 广告样式 start */
+
+.b-design-container{
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  background: #fff
+}
+
+.b-ad-introduce-title {
+  font-size: 36rpx;
+  color: #000;
+  text-align: left;
+  padding-top: 40rpx;
+  padding-bottom: 15rpx;
+}
+
+.b-ad-introduce-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.b-design-divider{
+  height: 10rpx;
+  width: 100%;
+}
+
+.b-ad-design-title {
+  font-size: 36rpx;
+  color: #000;
+  margin-top: 40rpx;
+}
+
+.b-design-wrapper {
+  margin-top: 20rpx;
+  padding-top: 10rpx;
+  padding-bottom: 20rpx;
+}
+
+.b-design-wrapper:last-child{
+  border-bottom: none
+}
+
+.b-design-item-title {
+  font-size: 28rpx;
+  color: #666;
+  font-weight: bold;
+}
+
+.b-design-effect {
+  margin-top: 20rpx;
+  text-align: center;
+  box-shadow: 0rpx 0rpx 20rpx #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+
+.b-design-effect-image {
+  border-radius: 5rpx;
+  width: 100%;
+  background: #f6f6f6;
+}
+
+.b-design-effect-type {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 广告样式 end */

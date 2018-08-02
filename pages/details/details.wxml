@@ -14,6 +14,7 @@
           </block>
         </swiper>
       </view>
+      <!-- 广告状态 -->
       <view class="profile-wrapper">
         <block>
           <view class="profile frpro">
@@ -37,7 +38,7 @@
                 <text class="time timetxt">已结束</text>
               </view>
               <view>
-                <text class="time timetxt">（共{{ adInfo.total_count }}辆）</text>
+                <text class="time timetxt b-total-count">(共{{ adInfo.total_count }}辆)</text>
               </view>
             </view>
           </view>
@@ -47,28 +48,30 @@
             <!-- 预计收益 -->
             <view class="profile-item">
               <view class='profole-type'>预计收益:</view>
-              <view class="profole-type-right red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>￥{{adInfo.amount}}</view>
-              <view class="profole-type-right red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>
-                <view class='b-income-explain-wrapper'>
-                  <view>￥300
-                    <label class="data-blt2">~</label>868</view>
-                  <image class='b-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/explain-theme-icon.png'></image>
-                </view>
-              </view>
-              <view class="profole-type-right tasts" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
             </view>
-            <!-- 广告类型 -->
-            <view class='profile-right-item'>
-              <view class="profole-type">
-                <text>广告类型:</text>
+            <view class="profole-type-right red-text" wx:if='{{ adInfo.amount != null && isDiDi != 1 }}'>￥{{ adInfo.amount }}</view>
+            <view class="profole-type-right red-text" bindtap='goValuation' wx:elif='{{ isDiDi == 1 }}'>
+              <view class='b-income-explain-wrapper'>
+                <view>￥300
+                  <label class="data-blt2">~ </label>868</view>
+                <image class='b-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/explain-theme-icon.png'></image>
               </view>
-              <view class="profole-type-right">
-                <label class="data-text swtwxs" wx:if="{{adInfo.type==0}}">车尾</label>
-                <label class="data-text swtwxs" wx:if="{{adInfo.type==1}}">车内</label>
-                <label class="data-text swtwxs" wx:if="{{adInfo.type==2}}">车尾+车内</label>
-                <label class="data-text swtwxs" wx:if="{{adInfo.type==3}}">车内+车外</label>
-                <label class="data-text swtwxs" wx:if="{{adInfo.type==4}}">车外</label>
-              </view>
+            </view>
+            <view class="profole-type-right tasts" wx:elif='{{ adInfo.amount == null }}'>身份认证后可查看收益</view>
+          </view>
+        </block>
+        <!-- 广告类型 -->
+        <block>
+          <view class='profile'>
+            <view class="profile-item">
+              <text>广告类型:</text>
+            </view>
+            <view class="right-text">
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==0}}">车尾</label>
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==1}}">车内</label>
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==2}}">车尾+车内</label>
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==3}}">车内+车外</label>
+              <label class="data-text swtwxs" wx:if="{{adInfo.type==4}}">车外</label>
             </view>
           </view>
         </block>
@@ -90,21 +93,20 @@
           <view class="profile">
             <view class="profile-item">车辆要求:</view>
             <view class="right-text horizontal-center" bindtap='handleColorExplain'>
-              <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/explain-gray-icon.png'></image>
               <text wx:if='{{ adInfo.city }}'>{{ adInfo.city}}</text>
-              <text wx:if='{{ carColor }}'>,{{ carColor }}</text>
+            </view>
+          </view>
+        </block>
+        <block>
+          <view class="profile">
+            <view class="profile-item">车辆颜色:</view>
+            <view class="right-text horizontal-center" bindtap='handleColorExplain'>
+              <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/explain-gray-icon.png'></image>
+              <text>{{ carColor }}</text>
             </view>
           </view>
         </block>
       </view>
-      <block wx:if="{{checkPlan}}">
-        <view class="profile-wrapper" bindtap="checkPlan" data-adId="{{adInfo.id}}">
-          <view class="profile frpro">
-            <view class="profile-item cwsfts">检测计划</view>
-            <image class="profile-arrow" src="/image/arrow.png"></image>
-          </view>
-        </view>
-      </block>
 
       <!-- 参与列表 -->
       <view class='join-list-wrapper' wx:if='{{showJoining}}' bindtap='joinClick'>
@@ -198,16 +200,44 @@
           </view>
         </view>
       </view>
+      <!-- 广告介绍和设计样式预览 -->
+      <view class='b-design-container'>
+        <view class='b-design-introduce'>
+          <view class='b-ad-introduce-title'>广告介绍</view>
+          <view class='b-ad-introduce-content'>
+            <text>爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣。</text>
+          </view>
+        </view>
+        <view>
+          <view class='b-ad-design-title'>广告设计预览</view>
+          <view>
+            <view wx:for="{{ designList }}" wx:for-item='design' class='b-design-wrapper' wx:key='design.id'>
+              <view class='b-design-item-title'>{{ design.title }}</view>
+              <view wx:for="{{ design.effect }}" class='b-design-effect' wx:for-item='effect' wx:key='effect.id'>
+                <image class='b-design-effect-image' src='{{ effect.src }}' bindtap='handlePreview' data-effect='{{ design.effect }}' data-index='{{ index }}' mode='widthFix'></image>
+                <view class='b-design-effect-type'>{{ effect.type }}</view>
+              </view>
+              <view class='b-design-divider'></view>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
   </scroll-view>
+
   <!-- 底部分享预约按钮 -->
   <view class='action_bottom' id="b-detail-bottom">
-    <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
-      <view class='share-action-wrapper'>
-        <image src='../../image/shareicon.png'></image>
-        <view class='sharetext'>{{ shareAwardText }}</view>
-      </view>
+    <!-- 分享 -->
+    <button class='wtwabt' open-type='contact'>
+      <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_message_icon.png'></image>
+      <view class='sharetext'>在线客服</view>
     </button>
+    <!-- 分享 -->
+    <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
+      <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_share_icon.png'></image>
+      <view class='sharetext'>{{ shareAwardText }}</view>
+    </button>
+    <!-- 预约排队 -->
     <view class='subscribe_immediately {{ actionStatus === 1 ? "subscribe-focus" : "subscribe-unfocus" }}' bindtap='handleAction'>
       <view class='subcribe-wrapper'>
         <text>{{ actionStr }}</text>
@@ -216,6 +246,7 @@
   </view>
 </view>
 
+<!-- 预约成功弹框 -->
 <dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!' btnText='分享微信好友' />
 <view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
   <view class="count">
@@ -223,9 +254,12 @@
 </view>
 <bpb-reward reward='{{reward}}'></bpb-reward>
 <share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener' adId="{{ adInfo.id }}"></share-popup>
+
+<!-- 朋友圈分享 -->
 <share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}' joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
   adId='{{adId}}' bind:hideDialog='hideDialogListener'>
 </share-detail>
+
 <!--正在加载-->
 <view class='load-more' hidden='{{!isShowLoadingMore}}'>
   <view class="weui-loadmore">
@@ -233,10 +267,13 @@
     <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗...</view>
   </view>
 </view>
+
 <!-- 规则弹框 -->
 <rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail' data-adId="{{ adId }}" data-serverId="{{ serverId }}" data-serverName='{{ serverName }}' data-serverAddress='{{ serverAddress }}'></rule-dialog>
+
 <!-- 地址弹框 -->
 <dialog-address showAddressDialog='{{ showAddressDialog }}' address='{{ address }}' phone='{{ phone }}'></dialog-address>
+
 <!-- 注册认证弹框 -->
 <dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ "https://wxapi.benpaobao.com/static/app_img/auth-icon.png" }}' btnStr='{{ authStr }}' status='{{ authStatus }}' content='{{ authContent }}' bind:action='handleActionTap'></dialog-auth>
 

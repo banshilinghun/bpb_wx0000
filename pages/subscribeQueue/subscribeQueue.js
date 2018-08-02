@@ -2,6 +2,7 @@
 const app = getApp();
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require('../../utils/api/ApiManager.js');
+const viewUtil = require('../../utils/common/viewUtil.js');
 
 Page({
 
@@ -17,7 +18,8 @@ Page({
     adId: '',
     isShowLoadingMore: false,
     queueWaitNumber: 0,
-    showAction: false
+    showAction: false,
+    scrollHeight: 0
   },
 
   /**
@@ -29,6 +31,22 @@ Page({
       adId: options.adId
     })
     this.requestQueueList(this.data.pageIndex);
+    this.setScrollHeight();
+  },
+
+  setScrollHeight(){
+    let that = this;
+    let proSystem = viewUtil.getSystemInfo();
+    console.log(proSystem);
+    let proHeader = viewUtil.getViewHeight('#b-queue-header');
+    console.log(proHeader);
+    let proAction = viewUtil.getViewHeight('#model-action');
+    console.log(proAction);
+    Promise.all([proSystem, proHeader, proAction]).then(results => {
+      that.setData({
+        scrollHeight: results[0].windowHeight - results[1].height - results[2].height
+      });
+    })
   },
 
   //todo 限制车主名字长度，分页, 需排队数计算
@@ -50,6 +68,7 @@ Page({
         let users = res.users;
         let model = users[0];
         for(let i = 0; i < 10; i++){
+          model.nickname = '杨正树zz'
           users.push(model);
         }
         that.setData({

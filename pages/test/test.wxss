@@ -26,12 +26,13 @@
 .b-header-wrapper{
   display: flex;
   flex-direction: row;
-  margin-top: 30rpx
+  margin-top: 30rpx;
+  margin-bottom: 30rpx
 }
 
 .b-subscribe-logo{
-  width: 160rpx;
-  height: 160rpx;
+  width: 200rpx;
+  height: 200rpx;
   background: #ccc;
   border-radius: 2rpx
 }
@@ -48,9 +49,16 @@
 }
 
 .b-header-money{
-  font-size: 32rpx;
-  color: #ff555c;
   font-weight: 450;
+}
+
+.b-money-symbol{
+  font-size: 32rpx
+}
+
+.b-money-number{
+  font-size: 48rpx;
+  font-weight: bold
 }
 
 .b-header-remain{
@@ -74,7 +82,7 @@
 
 .b-header-select{
   font-size: 24rpx;
-  color: #333
+  color: #666
 }
 
 .b-scroll-body{
@@ -88,9 +96,8 @@
 }
 
 .b-body-title{
-  margin-top: 20rpx;
-  font-size: 28rpx;
-  color: black;
+  padding: 20rpx 0;
+  font-size: 32rpx;
   border-bottom: 1rpx solid #eee
 }
 
@@ -98,28 +105,32 @@
   border-bottom: none
 }
 
+.b-body-color-title{
+  color: #666;
+  font-weight: 500;
+  display: inline-block
+}
+
 .b-title-wrapper{
-  display: flex;
-  flex-direction: row;
-  align-items: center
+  display: table-cell;
+  vertical-align: bottom
 }
 
 .b-title-stauts{
   color: #ff555c;
-  font-size: 20rpx;
+  font-size: 24rpx;
   margin-left: 20rpx;
+  display: inline-block
 }
 
 .b-body-server{
   width: 100%;
   box-sizing: border-box;
-  margin-top: 30rpx;
-  padding-left: 10rpx;
-  padding-right: 10rpx
+  margin-top: 20rpx
 }
 
 .b-server-cell{
-  border-radius: 10rpx;
+  border-radius: 8rpx;
   box-sizing: border-box;
   padding: 15rpx;
   display: flex;
@@ -147,30 +158,37 @@
   margin-left: 20rpx
 }
 
+.b-server-right-middle{
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
 .b-server-right-top{
   display: flex;
   flex-direction: row;
-  align-items: center
+  align-items: center;
+  margin-bottom: 10rpx
 }
 
 .b-right-name{
-  font-size: 28rpx;
   color: #333;
-  flex: 1
+  flex: 1;
+  font-size: 32rpx;
+  font-weight: 500
 }
 
 .b-right-distance{
-  font-size: 24rpx;
-  color: #666
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500
 }
 
 .b-right-address-wrapper{
   display: flex;
   flex-direction: row;
   align-items: center;
-  position: absolute;
-  bottom: 0;
-  left: 0
 }
 
 .b-right-location-icon{
@@ -180,7 +198,7 @@
 }
 
 .b-right-address{
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: #999
 }
 
@@ -232,8 +250,9 @@
   margin: 0;
   line-height: 80rpx;
   height: 80rpx;
-  border-radius: 40rpx;
-  font-weight: 500
+  border-radius: 10rpx;
+  font-weight: 500;
+  outline: none
 }
 
 button::after{
@@ -262,7 +281,7 @@ button::after{
   font-size: 24rpx;
   text-align: center;
   padding-top: 15rpx;
-  border-radius: 10rpx;
+  border-radius: 8rpx;
   padding-bottom: 15rpx
 }
 

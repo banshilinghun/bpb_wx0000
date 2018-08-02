@@ -1,52 +1,76 @@
 <view class='queue-container'>
-  <view class='queue-header' wx:if='{{ showAction }}'>
-    <view class='queue-block'>
-      <text>排队序号：{{ queueSerial }}</text>
-    </view>
-    <view class='queue-block'>
-      <text>排队人数：{{ queueCount }}</text>
-    </view>
-    <view class='queue-block'>
-      <text>需等待人数：{{ queueWaitNumber }}</text>
-    </view>
-  </view>
-  <view class='divider'></view>
-  <view>
-    <view class='queue-list'>
-      <view class='serial-tag'>
-        <text>排队序号</text>
+  <!-- 排队信息 -->
+  <view id='b-queue-header' wx:if='{{ showAction }}'>
+    <view class='b-queue-container'>
+      <view class='b-queue-wait'>
+        <view class='b-queue-title'>
+          <text>需等待人数</text>
+        </view>
+        <view class='b-queue-wait-number b-theme-color'>
+          <text>{{ queueWaitNumber }}</text>
+        </view>
       </view>
-      <view class='car-user-tag'>
-        <text>车主</text>
-      </view>
-      <view class='queue-time-tag'>
-        <text>预约排队时间</text>
-      </view>
-    </view>
-    <view>
-      <view wx:for='{{ queueList }}' wx:key='queue' class='queue-item'>
-        <view class='item-detail'>
-          <view class='serial-tag-item'>
-            <text class='serial-text'>{{ item.id }}</text>
+      <view>
+        <view class='b-queue-cell'>
+          <view class='b-queue-title'>
+            <text>排队序号</text>
           </view>
-          <view class='car-user-tag-item'>
-            <view class='car-user-wrapper'>
-              <image class='queue-user-avatar' src='{{ item.wx_avatar }}'></image>
-              <text class='user-name'>{{ item.nickname }}</text>
-            </view>
-          </view>
-          <view class='queue-time-tag-item'>
-            <text class='queue-start-time'>{{ item.date }}</text>
+          <view class='b-queue-normal-number'>
+            <text>{{ queueSerial }}</text>
           </view>
         </view>
-        <view class='line'></view>
+        <view class='b-queue-cell'>
+          <view class='b-queue-title'>
+            <text>排队人数</text>
+          </view>
+          <view class='b-queue-normal-number'>
+            <text>{{ queueCount }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='divider'></view>
+    <view>
+      <view class='queue-list'>
+        <view class='serial-tag'>
+          <text>序号</text>
+        </view>
+        <view class='car-user-tag'>
+          <text>车主</text>
+        </view>
+        <view class='queue-time-tag'>
+          <text>预约排队时间</text>
+        </view>
       </view>
     </view>
   </view>
-</view>
-<view class='model-action' wx:if='{{ showAction }}'>
-  <view>
-    <button class='model-back' bindtap='back'>返回</button>
-    <button class='model-sure' bindtap='cancelQueue'>取消排队</button>
+  <!-- 列表 -->
+  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
+    <view wx:for='{{ queueList }}' wx:key='queue' class='queue-item'>
+      <view class='item-detail'>
+        <view class='serial-tag-item'>
+          <text class='serial-text'>{{ item.id }}</text>
+        </view>
+        <view class='b-user-item'>
+          <view class='b-user-wrapper'>
+            <image class='queue-user-avatar' src='{{ item.wx_avatar }}'></image>
+            <view class='user-name'>
+              <text>{{ item.nickname }}</text>
+            </view>
+          </view>
+        </view>
+        <view class='queue-time-tag-item'>
+          <text class='queue-start-time'>{{ item.date }}</text>
+        </view>
+      </view>
+      <view class='line'></view>
+    </view>
+  </scroll-view>
+  <!-- 底部action -->
+  <view id='model-action' class='model-action' wx:if='{{ showAction }}'>
+    <view>
+      <button class='model-sure' bindtap='cancelQueue'>取消排队</button>
+      <button class='model-back' bindtap='back'>确认</button>
+    </view>
   </view>
 </view>

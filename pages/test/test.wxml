@@ -7,7 +7,10 @@
         <image class='b-subscribe-logo' src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5ae973ba514144940f868c9d3758eb35&auto=format&fit=crop&w=800&q=60' mode='aspectFill'></image>
         <view class='b-header-right'>
           <view class='b-header-info'>
-            <view class='b-header-money'>￥300~868</view>
+            <view class='b-header-money b-theme-color'>
+              <text class='b-money-symbol'>￥</text>
+              <text class='b-money-number'>300~868</text>
+            </view>
             <view class='b-header-remain'>剩余{{ remainCount }}辆</view>
             <view class='b-header-select'>{{ selectStatusStr }}</view>
           </view>
@@ -28,13 +31,15 @@
                 <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}' bindtap='handleServerClick' data-index='{{ index }}'>
                   <image class='b-server-logo'></image>
                   <view class='b-server-right'>
-                    <view class='b-server-right-top'>
-                      <view class='b-right-name'>{{ item.name }}</view>
-                      <view class='b-right-distance'>{{ item.distance }}</view>
-                    </view>
-                    <view class='b-right-address-wrapper'>
-                      <image class='b-right-location-icon' src='../../image/dw.png'></image>
-                      <view class='b-right-address'>{{ item.address }}</view>
+                    <view class='b-server-right-middle'>
+                      <view class='b-server-right-top'>
+                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.name }}</view>
+                        <view class='b-right-distance'>{{ item.distance }}</view>
+                      </view>
+                      <view class='b-right-address-wrapper'>
+                        <image class='b-right-location-icon' src='../../image/dw.png'></image>
+                        <view class='b-right-address'>{{ item.address }}</view>
+                      </view>
                     </view>
                   </view>
                 </view>

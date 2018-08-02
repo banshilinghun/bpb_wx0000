@@ -10,3 +10,13 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+
+/* 主题色 */
+.b-theme-color{
+  color: #ff555c !important
+}
+
+/* 背景渐变 */
+.b-bg-linear-gradient{
+  background: linear-gradient(45deg, #FB653D, #ff555c);
+}
