@@ -747,6 +747,7 @@ button::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-top: 1rpx solid #ddd
 }
 
 .wtwabt image {
@@ -1329,12 +1330,18 @@ button {
   flex-direction: column;
   align-items: center;
   font-size: 28rpx;
-  color: #666;
+  color: #333;
 }
 
 .subscribe-body {
   width: auto;
   margin-bottom: 30rpx;
+  text-align: left;
+  box-sizing: content-box;
+}
+
+.b-cancel-queue-tip{
+  width: auto;
   text-align: left;
   box-sizing: content-box;
 }
@@ -1345,12 +1352,12 @@ button {
 
 .b-queue-notify-text{
   font-size: 24rpx;
-  color: #666;
+  color: #333;
 }
 
 .b-explain-icon{
-  width: 30rpx;
-  height: 30rpx;
+  width: 35rpx;
+  height: 35rpx;
   margin-left: 10rpx
 }
 
@@ -1361,8 +1368,8 @@ button {
 }
 
 .b-car-require{
-  width: 30rpx;
-  height: 30rpx;
+  width: 35rpx;
+  height: 35rpx;
   margin-right: 10rpx
 }
 
@@ -1436,3 +1443,41 @@ button {
 }
 
 /* 广告样式 end */
+
+/* 补充年检信息弹窗 start */
+.b-annual-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40rpx 20rpx 40rpx;
+}
+
+.b-annual-left{
+  color: #999;
+  font-size: 32rpx;
+}
+
+.b-pick-item{
+  line-height: 50px;
+  text-align: center
+}
+
+.b-picker-view{
+  flex: 1;
+  height: 150px;
+  margin-left: 20rpx
+}
+/* 补充年检信息弹窗 end */
+
+.b-temp-click{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  color: #fff;
+  background: #ff555c;
+  font-size: 24rpx;
+  position: fixed;
+  top: 100rpx;
+  left: 0
+}

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "popup": "../../components/popup/index",
-    "b-toast": "../../components/toast/index"
+    "b-toast": "../../components/toast/index",
+    "model": "../../components/model/index"
   }
 }

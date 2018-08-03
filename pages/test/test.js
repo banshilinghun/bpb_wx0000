@@ -53,7 +53,8 @@ Page({
     ],
     colorList: [],
     dateList: [{ date: '2018-7-18', enable: true }, { date: '2018-7-19', enable: false }, { date: '2018-7-20', enable: true}, { date: '2018-7-21', enable: false}],
-    timeList: [{ time: '8:00-9:00', enable: false }, { time: '9:00-10:00', enable: true }, { time: '10:00-11:00', enable: true }, { time: '11:00-12:00', enable: true }]
+    timeList: [{ time: '8:00-9:00', enable: false }, { time: '9:00-10:00', enable: true }, { time: '10:00-11:00', enable: true }, { time: '11:00-12:00', enable: true }],
+    visibleAnnual: true
   },
 
   /**

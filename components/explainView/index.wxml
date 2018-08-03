@@ -9,6 +9,6 @@
     </view>
   </view>
   <view class='desc-close-wrapper' bindtap='handleDescClose'>
-    <image class='desc-close' src='../../image/theme-close.png'></image>
+    <image class='desc-close' src='https://wxapi.benpaobao.com/static/app_img/v2/b-explain-close.png'></image>
   </view>
 </view>

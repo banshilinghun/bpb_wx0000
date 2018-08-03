@@ -296,3 +296,5 @@ button::after{
 .gray-color{
   color: #ccc
 }
+
+

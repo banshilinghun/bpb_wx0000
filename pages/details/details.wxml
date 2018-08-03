@@ -54,7 +54,7 @@
               <view class='b-income-explain-wrapper'>
                 <view>￥300
                   <label class="data-blt2">~ </label>868</view>
-                <image class='b-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/explain-theme-icon.png'></image>
+                <image class='b-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
               </view>
             </view>
             <view class="profole-type-right tasts" wx:elif='{{ adInfo.amount == null }}'>身份认证后可查看收益</view>
@@ -101,7 +101,7 @@
           <view class="profile">
             <view class="profile-item">车辆颜色:</view>
             <view class="right-text horizontal-center" bindtap='handleColorExplain'>
-              <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/explain-gray-icon.png'></image>
+              <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
               <text>{{ carColor }}</text>
             </view>
           </view>
@@ -278,16 +278,45 @@
 <dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ "https://wxapi.benpaobao.com/static/app_img/auth-icon.png" }}' btnStr='{{ authStr }}' status='{{ authStatus }}' content='{{ authContent }}' bind:action='handleActionTap'></dialog-auth>
 
 <!-- 预约排队 -->
-<model visible="{{ visible }}" title="预约排队确认" cancelText="暂不排队" confirmText="确认排队" cancelLoading="{{ cancelLoading }}" confirmLoading="{{ confirmLoading }}" bind:cancel="handleCancel" bind:confirm="handleConfirm">
+<model visible="{{ visible }}" title="预约排队确认" cancelText="暂不排队" confirmText="确认排队" cancelLoading="{{ cancelLoading }}" confirmLoading="{{ confirmLoading }}" bind:cancel="handleQueueCancel" bind:confirm="handleQueueConfirm" explain='排队说明' bind:explain="handleModelExplain">
   <view class='subscribe-wrapper'>
     <view class='subscribe-body'>
       <view class='b-queue-model-item'>排队序号: {{ serial_number }}</view>
       <view class='b-queue-model-item'>当前排队人数: {{ queue_count }}</view>
       <view class='b-queue-model-item'>需等待人数: {{ position }}</view>
     </view>
-    <view class='b-queue-notify-text'>请及时关注公众号通知，查看排队情况</view>
+    <view class='b-queue-notify-text'>请及时关注公众号通知，查看排队情况。</view>
+  </view>
+</model>
+
+<!-- 取消排队 -->
+<model visible="{{ visibleUndo }}" title="取消确认" cancelText="暂不取消" confirmText="确认取消" confirmLoading="{{ doLoading }}" bind:cancel="handleUndoCancel" bind:confirm="handleConfirmCancel">
+  <view class='subscribe-wrapper'>
+    <view class='b-cancel-queue-tip'>
+      <view class='b-queue-model-item'>取消后，需重新参加排队，</view>
+      <view class='b-queue-model-item'>您确认取消当前排队吗？</view>
+    </view>
+  </view>
+</model>
+
+<!-- 年检弹窗 -->
+<model visible="{{ visibleAnnual }}" title="完善车辆年检日期" cancelText="取消" confirmText="保存" confirmLoading="{{ annualLoading }}" bind:cancel="handleAnnualCancel" bind:confirm="handleAnnualConfirm">
+  <view class='b-annual-container'>
+    <view class='b-annual-left'>
+      <text>年检日期: </text>
+    </view>
+    <picker-view indicator-style="height: 50px;" class='b-picker-view' value="{{value}}" bindchange="bindAnnualChange">
+    <picker-view-column>
+      <view wx:for="{{months}}" wx:key='item.id' class='b-pick-item'>{{item}}月</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{days}}" wx:key='item.id' class='b-pick-item'>{{item}}日</view>
+    </picker-view-column>
+  </picker-view>
   </view>
 </model>
 
 <!-- 轻提示 -->
 <b-toast id="toast"></b-toast>
+
+<view class='b-temp-click' bindtap='handleAnnual'></view>

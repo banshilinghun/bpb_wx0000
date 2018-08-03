@@ -943,7 +943,8 @@ Page({
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
-  handleCancel() {
+  /** 暂不排队 */
+  handleQueueCancel() {
     let that = this;
     that.setData({
       cancelLoading: true
@@ -951,12 +952,28 @@ Page({
     that.cancelQueueRequest();
   },
 
-  handleConfirm() {
+  /** 确认排队 */
+  handleQueueConfirm() {
     let that = this;
     that.setData({
       visible: false
     });
     that.requestQueueList();
+  },
+
+  /** 暂不取消 */
+  handleUndoCancel(){
+    this.setData({
+      visibleUndo: false
+    });
+  },
+
+  /** 确认取消 */
+  handleConfirmCancel(){
+    this.setData({
+      doLoading: true
+    });
+    this.cancelQueueRequest();
   },
 
   /**
@@ -994,7 +1011,9 @@ Page({
           actionStatus: ACTION_ARR[3],
           actionStr: '预约排队',
           cancelLoading: false,
-          visible: false
+          visible: false,
+          visibleUndo: false,
+          doLoading: false
         });
         $Toast({
           content: '取消成功',
@@ -1015,13 +1034,44 @@ Page({
     });
   },
 
-  /**
-   * 预约排队说明
-   */
-  handleSubscribeExplain: function () {
+  /** 排队说明 */
+  handleModelExplain() {
     wx.navigateTo({
       url: '../explain/explain?state=1'
     });
+  },
+
+  /** 取消完善年检信息 */
+  handleAnnualCancel(){
+    this.setData({
+      visibleAnnual: false
+    })
+  },
+
+  /** 保存年检信息 */
+  handleAnnualConfirm() {
+    //todo 删除测试数据
+    let that = this;
+    that.setData({
+      annualLoading: true
+    })
+    setTimeout(() => {
+      that.setData({
+        annualLoading: false,
+        visibleAnnual: false
+      })
+      $Toast({
+        content: '选择了' + that.data.selectMonth + '月和' + that.data.selectDay + '日',
+        type: 'success'
+      })
+    }, 1000);
+  },
+
+  bindAnnualChange(event) {
+    this.setData({
+      selectMonth: this.data.months[event.detail.value[0]],
+      selectDay: this.data.days[event.detail.value[1]]
+    })
   },
 
   handleAction: function () {
@@ -1045,7 +1095,9 @@ Page({
         that.takeParkInQueue();
         break;
       case ACTION_ARR[4]: //取消排队
-        that.cancelQueue();
+        that.setData({
+          visibleUndo: true,
+        })
         break;
     }
   },
@@ -1067,9 +1119,23 @@ Page({
     })
   },
 
-  /** 客服 */
-  handleService(){
-
+  //todo
+  handleAnnual(){
+    let months = [];
+    for(let i = 1; i <= 12; i++){
+      months.push(i);
+    }
+    let days = [];
+    for(let j = 1; j <= 31; j++){
+      days.push(j);
+    }
+    this.setData({
+      visibleAnnual: true,
+      months: months,
+      days: days,
+      selectMonth: months[0],
+      selectDay: days[0]
+    })
   }
 
 })

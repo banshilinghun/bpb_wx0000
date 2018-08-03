@@ -1,4 +1,4 @@
-// components/model/index.js
+
 Component({
   /**
    * 组件的属性列表
@@ -44,6 +44,10 @@ Component({
       type: String,
       value: ''
     },
+    explain: {
+      type: String,
+      value: ''
+    }
   },
 
   /**
@@ -64,6 +68,10 @@ Component({
 
     handleClickConfirm() {
       this.triggerEvent('confirm');
+    },
+
+    handleExplainClick(){
+      this.triggerEvent('explain');
     }
   }
 })

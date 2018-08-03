@@ -107,8 +107,6 @@ Page({
   onShow: function () {
     let that = this;
     shareFlag = app.globalData.shareFlag;
-    //todo 删掉这段代码
-    shareFlag = true;
     //是否显示推荐有奖
     let actionCells = that.data.actionCells;
     actionCells[0].visible = shareFlag;

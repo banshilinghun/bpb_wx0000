@@ -2,6 +2,12 @@
 <view class="b-model {{ visible ? 'b-model-show' : '' }}">
   <view class='b-model-main'>
     <view class='b-model-content'>
+      <view class='b-model-explain-wrapper' wx:if='{{ explain }}' bindtap='handleExplainClick'>
+        <view class='b-model-explain'>
+          <view class='b-model-explain-text'>{{ explain }}</view>
+          <image class='b-model-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
+        </view>
+      </view>
       <view class='b-model-title' wx:if="{{ title }}">{{ title }}</view>
       <view class='b-model-body'>
         <slot></slot>
