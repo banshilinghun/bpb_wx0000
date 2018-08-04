@@ -1,0 +1,114 @@
+<view class='b-task-container'>
+  <block wx:if="{{ task.finishList && task.finishList.length !== 0 }}">
+    <!-- 进行中任务列表 -->
+    <block>
+      <view class='b-task-title'>
+        <text>进行中</text>
+      </view>
+      <view class='b-task-content'>
+        <view class='b-cotnent-detail'>
+          <!-- 待安装 -->
+          <view>
+            <view class='b-task-status-title'>
+              <view class='b-task-tip'>
+                <text>请在规定时间前往安装</text>
+              </view>
+              <view class='b-task-status'>
+                <text>待安装</text>
+              </view>
+            </view>
+            <!-- 未签到 -->
+            <view class='b-need-sign'>
+              <view class='b-subscribe-info'>
+                <view class='b-describe-time'>
+                  <image class='b-time-image' src=''></image>
+                  <view class='b-time-text'>
+                    <text>07月08日 09:00-10:00</text>
+                  </view>
+                </view>
+                <!-- 导航 -->
+                <view class='b-go-map'>
+                  <image class='b-map-image' src='../../image/dh.png'></image>
+                  <view class='b-map-text'>
+                    <text>导航</text>
+                  </view>
+                </view>
+              </view>
+              <view></view>
+            </view>
+            <!-- 已签到未安装 -->
+            <view class='b-signed-wait-install'>
+              <view></view>
+              <view></view>
+            </view>
+          </view>
+
+          <!-- 等待投放审核、投放审核未通过、等待检测审核、检测审核未通过-->
+          <view></view>
+        </view>
+
+        <!-- 广告公共部分 -->
+        <view class='b-task-ad-container'>
+          <image class='b-task-image' src=''></image>
+          <view class='b-task-ad-info'>
+            <view class='b-info-name'>
+              <text>麦当劳(深圳)</text>
+            </view>
+            <view class='b-info-date'>
+              <text>投放时间:5月1日~5月31日</text>
+            </view>
+          </view>
+          <!-- action button -->
+          <view class='b-task-action'>
+            <button class='b-action-btn b-action-cancel'>取消预约</button>
+            <button class='b-action-btn' bindtap='handleAction'>签到</button>
+          </view>
+        </view>
+      </view>
+    </block>
+    <!-- 已完成任务列表 -->
+    <block wx:if='{{ task.finishList && task.finishList.length !== 0 }}'>
+      <view class='b-task-title'>
+        <text>已完成</text>
+      </view>
+      <view class='finish-container' wx:for='{{ task.finishList }}' wx:for-item='finish' wx:key='finish.id'>
+        <view>
+          <image class='ad-image' src='{{ finish.adLogo }}'></image>
+        </view>
+        <view class='ad-finish-item'>
+          <view class='ad-name'>
+            <text>{{ finish.adName }}</text>
+          </view>
+          <view class='ad-middle'>
+            <view class='b-ad-middle-left'>
+              <view class='ad-income'>
+                <text>实际收益：</text>
+              </view>
+              <view class='ad-money'>
+                <text>{{ finish.income }}</text>
+              </view>
+            </view>
+            <view class='ad-status'>
+              <text>已结束</text>
+            </view>
+          </view>
+          <view class='ad-time'>
+            <view class='ad-time-title'>
+              <text>投放时间：</text>
+            </view>
+            <view class='ad-time-detail'>
+              <text>{{ finish.date }}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </block>
+  <!-- 空布局 -->
+  <block wx:else>
+    <emptyView title='您还没有相关的任务' content='去广告市场看看吧~' topMargin='80' />
+  </block>
+</view>
+
+<!-- 轻提示 -->
+<b-toast id="toast"></b-toast>

@@ -1,0 +1,223 @@
+.b-task-container {
+  width: 100%;
+  background: #fff;
+}
+
+.b-task-content {
+  margin: 30rpx;
+  box-shadow: 0 0 20rpx #ddd;
+  border-radius: 8rpx;
+}
+
+.b-cotnent-detail{
+  padding: 40rpx
+}
+
+.b-task-status-title{
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.b-task-tip{
+  flex: 1;
+  color: #333;
+  font-size: 36rpx;
+  font-weight: 500
+}
+
+.b-task-status{
+  color: #ff555c;
+  font-size: 36rpx;
+  font-weight: 500
+}
+
+.b-need-sign{
+  margin-top: 40rpx
+}
+
+.b-subscribe-info{
+  position: relative;
+  height: 60rpx
+}
+
+.sb-describe-time{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+.b-time-image{
+  width: 35rpx;
+  height: 35rpx;
+  background: #f6f6f6
+}
+
+.b-time-text{
+  color: #666;
+  font-size: 24rpx;
+  margin-left: 10rpx
+}
+
+.b-go-map{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+.b-map-image{
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 5rpx
+}
+
+.b-map-text{
+  color: #ff5a39;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.b-task-ad-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20rpx;
+  border-top: 1rpx solid #ddd;
+}
+
+.b-task-image {
+  width: 80rpx;
+  height: 80rpx;
+  background: #f6f6f6;
+}
+
+.b-task-ad-info {
+  flex: 1;
+  margin-left: 20rpx
+}
+
+.b-info-name {
+  color: #666;
+  font-size: 28rpx;
+}
+
+.b-info-date {
+  margin-top: 5rpx;
+  color: #999;
+  font-size: 24rpx;
+}
+
+.b-action-btn {
+  display: inline-block;
+  padding: 0 20rpx;
+  outline: none;
+  margin: 0;
+  background: #eee;
+  color: #333;
+  font-family: "微软雅黑";
+  font-size: 26rpx
+}
+
+.b-action-cancel{
+  margin-right: 10rpx
+}
+
+button::after{
+  border: none
+}
+
+/* 已结束 start */
+
+.b-task-title {
+  color: #333;
+  font-size: 40rpx;
+  font-weight: 500;
+  padding: 30rpx 0 0 30rpx;
+}
+
+.finish-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  padding: 30rpx;
+}
+
+.ad-image {
+  width: 128rpx;
+  height: 128rpx;
+  background-color: #eee;
+  border-radius: 5rpx;
+}
+
+.ad-finish-item {
+  width: 100%;
+  margin-left: 20rpx;
+}
+
+.ad-name {
+  color: #333;
+  font-family: "微软雅黑";
+  font-weight: bold;
+  font-size: 36rpx;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap;
+  max-width: 65%;
+}
+
+.ad-middle {
+  font-size: 24rpx;
+  color: #888;
+  margin-top: 10rpx;
+  margin-bottom: 5rpx;
+  position: relative;
+}
+
+.b-ad-middle-left {
+  flex: 1;
+}
+
+.ad-income {
+  display: inline-block;
+}
+
+.ad-money {
+  display: inline-block;
+  color: #ff555c;
+}
+
+.ad-status {
+  position: absolute;
+  right: 0;
+  font-size: 24rpx;
+  color: #999;
+  display: inline-block;
+}
+
+.ad-time {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ad-time-title {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.ad-time-detail {
+  color: #ff555c;
+  font-size: 24rpx;
+}
+
+/* 已结束 over */
