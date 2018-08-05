@@ -105,7 +105,8 @@
               <block wx:elif="{{ status === 'installFail' || status === 'checkfail' }}">
                 <view class='b-content-margin'>
                   <view class='b-audit-fail'>
-                    <text>广告画面安装不合格，请重新返回网点；签到后等待网点重新安装</text>
+                    <text wx:if='{{ status === "installFail" }}'>广告画面安装不合格，请重新返回网点；签到后等待重新安装</text>
+                    <text wx:if='{{ status === "checkfail" }}'>广告画面检测不合格，请拍照重新检测</text>
                   </view>
                 </view>
               </block>
@@ -130,13 +131,33 @@
                 <text>投放周期结束后您可以在待收收益中领取广告奖励</text>
               </view>
               <view class='b-run-detail'>
-                <view class='b-run-item'>
-                  <view class='b-run-top'>
-                    <view class='b-run-item-left'>8.2</view>
-                    <view class='b-run-item-right'>时</view>
+                <!-- 滴滴双证车主 -->
+                <block wx:if="{{ isDiDi }}">
+                  <view class='b-run-item'>
+                    <view class='b-run-top'>
+                      <view class='b-run-item-left'>8.2</view>
+                      <view class='b-run-item-right'>时</view>
+                    </view>
+                    <view class='b-run-item-bottom'>昨日在线时长</view>
                   </view>
-                  <view class='b-run-item-bottom'>昨日在线时长</view>
-                </view>
+                  <view class='b-run-item'>
+                    <view class='b-run-top'>
+                      <view class='b-run-item-left'>18</view>
+                      <view class='b-run-item-right'>元</view>
+                    </view>
+                    <view class='b-run-item-bottom'>昨日收益</view>
+                  </view>
+                </block>
+                <!-- 非滴滴双证车主 -->
+                <block wx:else>
+                  <view class='b-run-item'>
+                    <view class='b-run-top'>
+                      <view class='b-run-item-left'>18</view>
+                      <view class='b-run-item-right'>天</view>
+                    </view>
+                    <view class='b-run-item-bottom'>累计投放天数</view>
+                  </view>
+                </block>
               </view>
             </view>
           </block>
@@ -155,8 +176,19 @@
           </view>
           <!-- action button -->
           <view class='b-task-action'>
-            <button class='b-action-btn b-action-cancel'>取消预约</button>
-            <button class='b-action-btn' bindtap='handleAction'>签到</button>
+            <button class='b-action-btn b-action-cancel' wx:if='{{ status === "subscribed" }}'>取消预约</button>
+            <block wx:if='{{ status === "subscribed" || status === "installFail" }}'>
+              <button class='b-action-btn' bindtap='handleAction'>签到</button>
+            </block>
+            <block wx:elif='{{ status === "signed" || status === "installed" }}'>
+              <button class='b-action-btn' bindtap='handleAction'>上画登记</button>
+            </block>
+            <block wx:elif='{{ status === "needCheck" }}'>
+              <button class='b-action-btn' bindtap='handleAction'>下画检测</button>
+            </block>
+            <block wx:elif='{{ status === "checkfail" }}'>
+              <button class='b-action-btn' bindtap='handleAction'>重新检测</button>
+            </block>
           </view>
         </view>
       </view>

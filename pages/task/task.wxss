@@ -24,12 +24,14 @@
   color: #333;
   font-size: 36rpx;
   font-weight: 500;
+  font-family:"微软雅黑";
 }
 
 .b-task-status {
   color: #ff555c;
   font-size: 36rpx;
   font-weight: 500;
+  font-family:"微软雅黑";
 }
 
 .b-content-margin{
@@ -91,7 +93,7 @@
 .b-overtime-tip{
   color: #ff555c;
   font-size: 24rpx;
-  text-align: right;
+  text-align: left;
   padding: 30rpx 0 0 0
 }
 
@@ -123,14 +125,14 @@
 .b-audit-fail{
   font-size: 28rpx;
   color: #ff555c;
-  margin-right: 150rpx;
   text-align: left
 }
 
 .b-run-tip{
   color: #333;
   font-size: 36rpx;
-  font-weight: 500
+  font-weight: 500;
+  font-family:"微软雅黑";
 }
 
 .b-run-income{
@@ -166,21 +168,21 @@
 
 .b-run-item-left{
   color: #ff555c;
-  font-size: 80rpx;
+  font-size: 60rpx;
   line-height: 1;
   font-weight: 600
 }
 
 .b-run-item-right{
   color: #ff555c;
-  font-size: 24rpx;
-  margin-left: 20rpx
+  font-size: 26rpx;
+  margin-left: 10rpx
 }
 
 .b-run-item-bottom{
-  font-size: 32rpx;
-  color: #333;
-  margin-top: 20rpx
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 5rpx
 }
 
 /* 已完成 */
@@ -223,6 +225,7 @@
   color: #333;
   font-family: "微软雅黑";
   font-size: 26rpx;
+  font-weight: 500
 }
 
 .b-action-cancel {
@@ -238,7 +241,8 @@ button::after {
 .b-task-title {
   color: #333;
   font-size: 40rpx;
-  font-weight: 500;
+  font-weight: 600;
+  font-family:"微软雅黑";
   padding: 30rpx 0 0 30rpx;
 }
 

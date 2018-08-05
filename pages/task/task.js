@@ -1,6 +1,6 @@
 
 //subscribed: 已预约未签到 | signed: 已签到未安装 | installed: 安装完成待上画
-const STATUS = ['subscribed', 'signed', 'installed', 'installAudit', 'installFail', 'runing', 'needCheck', 'checkAudit', 'checkfail', 'finish'];
+const STATUS = ['subscribed', 'signed', 'installed', 'installAudit', 'installFail', 'runing', 'needCheck', 'checkAudit', 'checkfail'];
 
 Page({
 
@@ -17,7 +17,7 @@ Page({
         date: '07月12日-8月11日'
       }]
     },
-    status: STATUS[5], //请确认等待广告安装完毕或提醒安装人员确认安装结束
+    status: STATUS[8], //请确认等待广告安装完毕或提醒安装人员确认安装结束
     isDiDi: false
   },
 
