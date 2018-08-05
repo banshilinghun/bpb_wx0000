@@ -8,7 +8,7 @@ Page({
     task: {
       finishList: [{
         adLogo: '',
-        adName: '麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳',
+        adName: '麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳',
         income: '565',
         date: '07月12日-8月11日'
       }]

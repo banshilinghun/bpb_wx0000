@@ -9,82 +9,87 @@
   border-radius: 8rpx;
 }
 
-.b-cotnent-detail{
-  padding: 40rpx
+.b-cotnent-detail {
+  padding: 40rpx;
 }
 
-.b-task-status-title{
+.b-task-status-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.b-task-tip {
+  flex: 1;
+  color: #333;
+  font-size: 36rpx;
+  font-weight: 500;
+}
+
+.b-task-status {
+  color: #ff555c;
+  font-size: 36rpx;
+  font-weight: 500;
+}
+
+.b-need-sign {
+  margin-top: 40rpx;
+}
+
+.b-subscribe-info {
   display: flex;
   flex-direction: row;
   align-items: center
 }
 
-.b-task-tip{
+.b-time-image {
+  width: 24rpx;
+  height: 24rpx;
+  background: #f6f6f6;
+}
+
+.b-time-text {
   flex: 1;
-  color: #333;
-  font-size: 36rpx;
-  font-weight: 500
-}
-
-.b-task-status{
-  color: #ff555c;
-  font-size: 36rpx;
-  font-weight: 500
-}
-
-.b-need-sign{
-  margin-top: 40rpx
-}
-
-.b-subscribe-info{
-  position: relative;
-  height: 60rpx
-}
-
-.sb-describe-time{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%)
-}
-
-.b-time-image{
-  width: 35rpx;
-  height: 35rpx;
-  background: #f6f6f6
-}
-
-.b-time-text{
   color: #666;
   font-size: 24rpx;
-  margin-left: 10rpx
+  margin-left: 10rpx;
+  overflow: hidden; /*自动隐藏文字*/
+  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap;
+  margin-right: 40rpx
 }
 
-.b-go-map{
+.b-go-map {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%)
+  align-items: center
 }
 
-.b-map-image{
+.b-map-image {
   width: 28rpx;
   height: 28rpx;
-  margin-right: 5rpx
+  margin-right: 5rpx;
 }
 
-.b-map-text{
+.b-map-text {
   color: #ff5a39;
   font-size: 28rpx;
   font-weight: 500;
 }
 
+.b-address{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 8rpx
+}
+
+.b-location-distance{
+  color: #666;
+  font-size: 24rpx
+}
+
+/* 已完成 */
 .b-task-ad-container {
   display: flex;
   flex-direction: row;
@@ -101,7 +106,7 @@
 
 .b-task-ad-info {
   flex: 1;
-  margin-left: 20rpx
+  margin-left: 20rpx;
 }
 
 .b-info-name {
@@ -123,15 +128,15 @@
   background: #eee;
   color: #333;
   font-family: "微软雅黑";
-  font-size: 26rpx
+  font-size: 26rpx;
 }
 
-.b-action-cancel{
-  margin-right: 10rpx
+.b-action-cancel {
+  margin-right: 10rpx;
 }
 
-button::after{
-  border: none
+button::after {
+  border: none;
 }
 
 /* 已结束 start */
@@ -172,7 +177,7 @@ button::after{
   overflow: hidden; /*自动隐藏文字*/
   text-overflow: ellipsis; /*文字隐藏后添加省略号*/
   white-space: nowrap;
-  max-width: 65%;
+  max-width: 400rpx;
 }
 
 .ad-middle {
@@ -184,7 +189,7 @@ button::after{
 }
 
 .b-ad-middle-left {
-  flex: 1;
+  display: inline-block;
 }
 
 .ad-income {

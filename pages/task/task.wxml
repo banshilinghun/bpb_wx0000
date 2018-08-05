@@ -20,21 +20,27 @@
             <!-- 未签到 -->
             <view class='b-need-sign'>
               <view class='b-subscribe-info'>
-                <view class='b-describe-time'>
-                  <image class='b-time-image' src=''></image>
-                  <view class='b-time-text'>
-                    <text>07月08日 09:00-10:00</text>
-                  </view>
+                <image class='b-time-image' src=''></image>
+                <view class='b-time-text'>
+                  <text>07月08日 09:00-10:00</text>
                 </view>
                 <!-- 导航 -->
-                <view class='b-go-map'>
+                <view class='b-go-map '>
                   <image class='b-map-image' src='../../image/dh.png'></image>
                   <view class='b-map-text'>
                     <text>导航</text>
                   </view>
                 </view>
               </view>
-              <view></view>
+              <view class='b-address'>
+                <image class='b-time-image' src='../../image/dw.png'></image>
+                <view class='b-time-text'>
+                  <text>一号车库一号车库一号车库一号车库一号车库一号车库一号车库</text>
+                </view>
+                <view class='b-location-distance'>
+                  <text>13.68km</text>
+                </view>
+              </view>
             </view>
             <!-- 已签到未安装 -->
             <view class='b-signed-wait-install'>
