@@ -19,6 +19,11 @@ Component({
     shareFriendType: {
       type: String,
       value: 'normal'
+    },
+
+    isOpen: {
+      type: Boolean,
+      value: true
     }
   },
 

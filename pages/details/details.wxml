@@ -158,7 +158,7 @@
   </view>
 </view>
 <bpb-reward reward='{{reward}}'></bpb-reward>
-<share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener' adId="{{ adInfo.id }}"></share-popup>
+<share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener' adId="{{ adInfo.id }}" isOpen='{{ isMomentOpen }}'></share-popup>
 <share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}' joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
   adId='{{adId}}' bind:hideDialog='hideDialogListener'>
 </share-detail>

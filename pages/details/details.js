@@ -82,8 +82,9 @@ Page({
     showAuthDialog: false,
     authStr: '',
     authContent: '',
-    authStatus: ''
+    authStatus: '',
     //end
+    isMomentOpen: true
   },
 
   onLoad: function (options) {
@@ -134,6 +135,7 @@ Page({
     }
     that.setData({
       shareAwardText: app.globalData.shareFlag ? '分享有奖' : '分享',
+      isMomentOpen: app.globalData.shareFlag,
       showRule: false
     })
     //注册认证状态
