@@ -497,11 +497,12 @@ Page({
 
   arrangement: function (e) {
     var that=this;
-    console.log(e)
+    console.log(e);
+    let dataset = e.currentTarget.dataset;
     that.setData({
-      serverId: e.currentTarget.dataset.serverid,
-      serverName: e.currentTarget.dataset.servername,
-      serverAddress: e.currentTarget.dataset.serveraddress,
+      serverId: dataset.serverid,
+      serverName: dataset.servername,
+      serverAddress: dataset.serveraddress,
     })
     console.log('serverName-------->' + that.data.serverName);
     console.log('serverAddress-------->' + that.data.serverAddress);
@@ -513,17 +514,17 @@ Page({
         header: app.globalData.header,
         success: res => {
           if (res.data.code == 1000) {
-            //					console.log(res.data)
             if (res.data.data.status == 3) {
               console.log(this.data.isDiDi)
-              if (that.data.isDiDi == 1 && !app.globalData.showRuleTip){
+              //计价规则弹窗
+              if (!app.globalData.showRuleTip && that.data.adInfo.use_didi == 1){
                   that.setData({
                     showRule:true
                   })
                   app.globalData.showRuleTip = true;
               }else{
                 wx.navigateTo({
-                  url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
+                  url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(dataset)
                 })
               }
             } else {

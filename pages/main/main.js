@@ -17,7 +17,7 @@ Page({
     haveMyAd: false,
     //测试数据
     userList: [],
-    background: ['banner3','banner1','banner2'],
+    background: [],
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -149,7 +149,8 @@ Page({
               if (z.data.showRecommend) {//可以显示推荐朋友圈
                 if (z.data.isDiDi==1) {//滴滴合法车主
                   z.setData({
-                    background: ['banner3', 'banner1', 'banner2']
+                    //background: ['banner3', 'banner1', 'banner2']
+                    background: ['banner1', 'banner2']
                   })
                 } else {//不是滴滴合法车主
                   z.setData({
@@ -159,7 +160,7 @@ Page({
               } else {//不显示推荐朋友圈
                 if (z.data.isDiDi==1) {//滴滴合法车主
                   z.setData({
-                    background: ['banner3', 'banner1']
+                    background: ['banner1']
                   })
                 } else {//不是滴滴合法车主
                   z.setData({
