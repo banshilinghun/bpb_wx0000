@@ -146,7 +146,7 @@ Page({
             //if (z.data.bannerFlag==2&&)
             //console.log(z.data.bannerFlag);
             if (z.data.bannerFlag == 2) {
-              if (z.data.showRecommend) {//可以显示推荐朋友圈
+              if (z.data.showRecommend) {//可以显示推荐
                 if (z.data.isDiDi==1) {//滴滴合法车主
                   z.setData({
                     //background: ['banner3', 'banner1', 'banner2']
@@ -157,7 +157,7 @@ Page({
                     background: ['banner1', 'banner2']
                   })
                 }
-              } else {//不显示推荐朋友圈
+              } else {//不显示推荐
                 if (z.data.isDiDi==1) {//滴滴合法车主
                   z.setData({
                     background: ['banner1']
@@ -556,7 +556,7 @@ Page({
   },
 
   /**
-   * 查询是否显示朋友圈
+   * 查询是否显示推荐等
    */
   getShareFlag: function(){
     var that = this;
@@ -575,7 +575,7 @@ Page({
           })
           //console.log(that.data.bannerFlag);
           if (that.data.bannerFlag==2){
-            if (that.data.showRecommend){//可以显示推荐朋友圈
+            if (that.data.showRecommend){
               if(that.data.isDiDi==1){//滴滴合法车主
                 that.setData({
                   background: ['banner3','banner1', 'banner2']
@@ -585,7 +585,7 @@ Page({
                   background: ['banner1', 'banner2']
                 })
               }
-            }else{//不显示推荐朋友圈
+            }else{//不显示推荐
               if (that.data.isDiDi==1) {//滴滴合法车主
                 that.setData({
                   background: ['banner3', 'banner1']

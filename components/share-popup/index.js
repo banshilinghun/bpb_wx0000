@@ -48,9 +48,6 @@ Component({
       })
     },
 
-    /**
-     * 分享到朋友圈
-     */
     toggleShareMoments: function(){
       this.setData({
         showPop: false

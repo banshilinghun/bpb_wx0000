@@ -103,7 +103,7 @@
   <view class='share-wrapper' bindtap='shareMomentNormalClick'>
     <view class='share-layout'>
       <image class='share-icon' src='../../image/moment.png'></image>
-      <text class='share-text share-color'>分享到朋友圈</text>
+      <text class='share-text share-color'>生成分享卡片</text>
     </view>
   </view>
 </view>

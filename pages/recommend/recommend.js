@@ -27,7 +27,7 @@ Page({
       {
         current: false,
         done: false,
-        text: '分享小程序给好友，或转发朋友圈'
+        text: '分享小程序给好友'
       },
       {
         done: false,
@@ -234,7 +234,7 @@ Page({
   },
 
   /**
-   * 分享到朋友圈
+   * 分享
    */
   shareMomentNormalClick: function () {
     this.setData({

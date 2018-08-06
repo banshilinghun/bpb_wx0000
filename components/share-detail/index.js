@@ -201,7 +201,7 @@ Component({
       }
     },
     /**
-     * 生成分享图到朋友圈
+     * 分享
      */
     shareMoments: function () {
       var that = this;
@@ -603,11 +603,6 @@ Component({
       wx.saveImageToPhotosAlbum({
         filePath: that.data.targetSharePath,
         success: function () {
-          wx.showModal({
-            title: '',
-            content: '✌️图片保存成功，\n快去分享到朋友圈吧',
-            showCancel: false
-          })
           that.hideDialog();
         }
       })

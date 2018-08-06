@@ -11,7 +11,7 @@
     <view class='split-line'></view>
     <button class="bpb-btn" catchtap="toggleShareMoments" wx:if="{{ isOpen }}">
       <image class='moment' src='../../image/moments.png'></image>
-      <text class='share-content'>生成分享图到朋友圈邀请好友加入</text>
+      <text class='share-content'>生成分享卡片到相册</text>
       <image class='arrow' src='../../image/right-arrow.png'></image>
     </button>
     <view class='divider'></view>

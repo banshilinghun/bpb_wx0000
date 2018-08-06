@@ -36,7 +36,7 @@ Page({
     description: '',
     isShowToast: false,
     showSharePop: false,
-    //分享朋友圈数据
+    //分享
     shareInfo: {
       shareAvatar: '',
       shareNickname: '',
