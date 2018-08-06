@@ -1086,9 +1086,9 @@ Page({
           url: '../test/test',
         })
         break;
-      case ACTION_ARR[2]: //查看我的广告
+      case ACTION_ARR[2]: //查看我的任务
         wx.switchTab({
-          url: '../myAd/myAd'
+          url: '../task/task'
         })
         break;
       case ACTION_ARR[3]: //预约排队

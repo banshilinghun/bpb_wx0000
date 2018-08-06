@@ -4,13 +4,13 @@
 }
 
 .b-task-content {
-  margin: 30rpx;
-  box-shadow: 0 0 20rpx #ddd;
-  border-radius: 8rpx;
+  margin: 30rpx 30rpx 0 30rpx;
+  box-shadow: 0 0 30rpx #ddd;
+  border-radius: 16rpx
 }
 
 .b-cotnent-detail {
-  padding: 40rpx;
+  padding: 30rpx;
 }
 
 .b-task-status-title {
@@ -45,15 +45,15 @@
 }
 
 .b-time-image {
-  width: 24rpx;
-  height: 24rpx
+  width: 32rpx;
+  height: 32rpx
 }
 
 .b-time-text {
   flex: 1;
   color: #666;
-  font-size: 24rpx;
-  margin-left: 10rpx;
+  font-size: 28rpx;
+  margin-left: 12rpx;
   overflow: hidden; /*自动隐藏文字*/
   text-overflow: ellipsis; /*文字隐藏后添加省略号*/
   white-space: nowrap;
@@ -73,7 +73,7 @@
 }
 
 .b-map-text {
-  color: #ff5a39;
+  color: #4A90E2;
   font-size: 28rpx;
   font-weight: 500;
 }
@@ -125,7 +125,7 @@
 .b-audit-fail{
   font-size: 28rpx;
   color: #ff555c;
-  text-align: left
+  text-align: center
 }
 
 .b-run-tip{
@@ -137,21 +137,22 @@
 
 .b-run-income{
   flex: 1;
-  font-size: 32rpx;
+  font-size: 36rpx;
   color: #ff555c;
-  margin-left: 20rpx
+  margin-left: 20rpx;
+  font-weight: 500
 }
 
 .b-run-income-tip{
   color: #999;
   font-size: 24rpx;
-  margin-top: 10rpx
+  margin-top: 5rpx
 }
 
 .b-run-detail{
   display: flex;
   flex-direction: row;
-  padding: 30rpx 0
+  padding: 30rpx 0 0 0
 }
 
 .b-run-item{
@@ -180,9 +181,13 @@
 }
 
 .b-run-item-bottom{
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #666;
   margin-top: 5rpx
+}
+
+.b-install-fail-content{
+  margin-top: 20rpx
 }
 
 /* 已完成 */
@@ -197,7 +202,7 @@
 .b-task-image {
   width: 80rpx;
   height: 80rpx;
-  background: #f6f6f6;
+  background: #F2F2F2;
 }
 
 .b-task-ad-info {
@@ -206,8 +211,9 @@
 }
 
 .b-info-name {
-  color: #666;
+  color: #333;
   font-size: 28rpx;
+  font-weight: 500
 }
 
 .b-info-date {
@@ -216,24 +222,37 @@
   font-size: 24rpx;
 }
 
+.b-task-action{
+  line-height: 1
+}
+
 .b-action-btn {
   display: inline-block;
   padding: 0 20rpx;
   outline: none;
   margin: 0;
-  background: #eee;
-  color: #333;
+  background: linear-gradient(45deg, #ff555c, #FB653D);
+  color: #fff;
   font-family: "微软雅黑";
-  font-size: 26rpx;
-  font-weight: 500
+  font-size: 24rpx;
+  font-weight: 500;
+  box-shadow: 0 0 16rpx #ccc
 }
 
 .b-action-cancel {
   margin-right: 10rpx;
+  background: #F2F2F2;
+  color: #333
 }
 
 button::after {
   border: none;
+}
+
+.b-need-check-content{
+  font-size: 28rpx;
+  color: #666;
+  text-align: center
 }
 
 /* 已结束 start */
@@ -253,24 +272,24 @@ button::after {
   align-items: center;
   background-color: #fff;
   padding: 30rpx;
+  position: relative
 }
 
 .ad-image {
   width: 128rpx;
   height: 128rpx;
-  background-color: #eee;
-  border-radius: 5rpx;
+  background-color: #eee
 }
 
 .ad-finish-item {
-  width: 100%;
-  margin-left: 20rpx;
+  flex: 1;
+  margin-left: 20rpx
 }
 
 .ad-name {
   color: #333;
   font-family: "微软雅黑";
-  font-weight: bold;
+  font-weight: 500;
   font-size: 36rpx;
   overflow: hidden; /*自动隐藏文字*/
   text-overflow: ellipsis; /*文字隐藏后添加省略号*/
@@ -321,6 +340,15 @@ button::after {
 .ad-time-detail {
   color: #ff555c;
   font-size: 24rpx;
+}
+
+.b-task-line{
+  position: absolute;
+  bottom: 0;
+  left: 30rpx;
+  right: 30rpx;
+  background: #ddd;
+  height: 1rpx
 }
 
 /* 已结束 over */

@@ -18,7 +18,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showSignCancel: false,
     task: {
       runList: [{}],
       finishList: [{
@@ -26,9 +25,15 @@ Page({
         adName: '麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳',
         income: '565',
         date: '07月12日-8月11日'
-      }]
+      },
+        {
+          adLogo: 'https://images.unsplash.com/photo-1506666488651-1b443be39878?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c929314485c6745507b81314b5e7608&auto=format&fit=crop&w=800&q=60',
+          adName: '奈雪的茶',
+          income: '565',
+          date: '07月12日-8月11日'
+        }]
     },
-    status: STATUS[0], //请确认等待广告安装完毕或提醒安装人员确认安装结束
+    status: STATUS[6], //请确认等待广告安装完毕或提醒安装人员确认安装结束
     isDiDi: false
   },
 
@@ -79,27 +84,24 @@ Page({
   /**
    * 取消预约
    */
-  handleCancelSubscribe(){
+  handleUnSubscribe(){
     let that = this;
+    //todo
+    let element = {
+      date: '2018-8-6',
+      begin_time: '12:00',
+      subscribe_id: '1000000000'
+    }
     //判断距离预约时间截止是否大于3小时，否则不可取消
     //预约截止时间
     let date = new Date(element.date + ' ' + element.begin_time);
     let targetTime = date.getTime();
     //当前时间
     let currentTime = new Date().getTime();
+    console.log('remain------------>' + (targetTime - currentTime) / 1000);
     if ((targetTime - currentTime) / 1000 < 3600 * 3) {
-      wx.showModal({
-        title: '取消提示',
-        content: '您已错过取消时间，\n可联系客服协助处理！',
-        cancelText: '联系客服',
-        confirmText: '我知道了',
-        success: res => {
-          if (res.cancel) {
-            wx.switchTab({
-              url: '../QAservice/service'
-            })
-          }
-        }
+      that.setData({
+        visibleSubTip: true
       })
     } else {
       that.showLoading();
@@ -114,7 +116,6 @@ Page({
             content: '取消成功',
             type: 'success'
           });
-          that.requestPrepareList();
         },
         complete: res => {
           that.hideLoading();
@@ -128,16 +129,16 @@ Page({
    * 处理按钮点击事件
    */
   handleAction(){
+    console.log('handleAction---------->');
     let that = this;
     switch (that.data.status){
       case 'subscribed':  //需要签到
+      case 'installFail': //安装审核不合格，需重新上画
         that.sign();
        break;
       case 'signed':      //待上画
       case 'installed':
        break;
-      case 'installFail': //安装审核不合格，需重新上画
-        break;
       case 'needCheck':   //待检测
         break;
       case 'checkfail':   //检测审核不合格，需重新拍照检测
@@ -175,9 +176,69 @@ Page({
     })
   },
 
+  /**
+   * 关闭签到距离提示弹窗
+   */
   handleSignTipdConfirm(){
     this.setData({
       visibleSign: false
+    })
+  },
+
+  /**
+   * 联系客服
+   */
+  handleCancelSubscribeTip(){
+    wx.switchTab({
+      url: '../QAservice/service'
+    })
+  },
+
+  /**
+   * 超时不可取消确认
+   */
+  handleConfirmSubscribeTip(){
+    this.setData({
+      visibleSubTip: false
+    })
+  },
+
+  /**
+   * 导航
+   */
+  handleNavigation(){
+    wx.openLocation({
+      longitude: Number('113.932713'),
+      latitude: Number('22.538789'),
+      name: '奔跑宝',
+      address: '田夏金牛大厦'
+    })
+  },
+
+  /**
+   * 显示完整地址
+   */
+  handleShowAddress(event){
+    this.showModal('网点地址确认', event.currentTarget.dataset.address, '我知道了');
+  },
+
+  showLoading: function () {
+    wx.showLoading({
+      title: '加载中🚗...',
+    })
+  },
+
+  hideLoading: function () {
+    wx.hideLoading();
+  },
+
+  showModal(title, content, confirm){
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirm,
+      showCancel: false,
+      confirmColor: '#ff555c'
     })
   }
 

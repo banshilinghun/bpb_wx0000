@@ -58,10 +58,10 @@
         "text": "广告市场"
       },
       {
-        "pagePath": "pages/myAd/myAd",
+        "pagePath": "pages/task/task",
         "iconPath": "image/icon_ad.png",
         "selectedIconPath": "image/icon_ad_HL.png",
-        "text": "我的广告"
+        "text": "我的任务"
       },
       {
         "pagePath": "pages/QAservice/service",

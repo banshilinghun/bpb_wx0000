@@ -16,13 +16,13 @@
       </view>
       <view class='b-model-actions' wx:else>
         <view class='b-model-btn-wrapper' wx:if="{{ showCancel || showConfirm }}">
-          <view class='b-model-grid-item'>
+          <view class='b-model-grid-item' wx:if="{{ showCancel }}">
             <button class='b-model-btn b-btn-cancel' bindtap='handleCilckCancel'>
               <view class='b-modal-btn-loading' wx:if='{{ cancelLoading }}'></view>
               <view class='b-model-btn-text' style='{{ cancelTextColor ? "color:" + cancelTextColor : "" }}'>{{ cancelText }}</view>
             </button>
           </view>
-          <view class='b-model-grid-item-last'>
+          <view class='b-model-grid-item-last' wx:if="{{ showConfirm }}">
             <button class='b-model-btn b-btn-confirm' bindtap='handleClickConfirm'>
               <view class='b-modal-btn-loading' wx:if='{{ confirmLoading }}'></view>
               <view class='b-model-btn-text' style='{{ confirmTextColor ? "color:" + confirmTextColor : "" }}'>{{ confirmText }}</view>
