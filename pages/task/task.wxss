@@ -324,3 +324,35 @@ button::after {
 }
 
 /* 已结束 over */
+
+/* model start */
+
+.subscribe-wrapper {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.subscribe-body {
+  width: auto;
+  margin-bottom: 30rpx;
+  text-align: left;
+  box-sizing: content-box;
+}
+
+.b-cancel-queue-tip{
+  width: auto;
+  text-align: center;
+  box-sizing: content-box;
+}
+
+.b-queue-model-item{
+  margin-bottom: 10rpx;
+}
+
+/* model end */

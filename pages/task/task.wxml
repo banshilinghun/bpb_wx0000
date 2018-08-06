@@ -176,7 +176,7 @@
           </view>
           <!-- action button -->
           <view class='b-task-action'>
-            <button class='b-action-btn b-action-cancel' wx:if='{{ status === "subscribed" }}'>取消预约</button>
+            <button class='b-action-btn b-action-cancel' wx:if='{{ status === "subscribed" }}' bindtap='handleCancelSubscribe'>取消预约</button>
             <block wx:if='{{ status === "subscribed" || status === "installFail" }}'>
               <button class='b-action-btn' bindtap='handleAction'>签到</button>
             </block>
@@ -239,3 +239,13 @@
 
 <!-- 轻提示 -->
 <b-toast id="toast"></b-toast>
+
+<!-- 取消排队 -->
+<model visible="{{ visibleSign }}" title="签到提示" confirmText="我知道了" showCancel='{{ showSignCancel }}' bind:confirm="handleSignTipdConfirm">
+  <view class='subscribe-wrapper'>
+    <view class='b-cancel-queue-tip'>
+      <view class='b-queue-model-item'>您未到达签到范围，</view>
+      <view class='b-queue-model-item'>请在距离网点500m内签到！</view>
+    </view>
+  </view>
+</model>
