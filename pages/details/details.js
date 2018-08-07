@@ -6,6 +6,7 @@ var getDistance = util.getDistance;
 const app = getApp();
 const Constant = require("../../utils/constant/Constant");
 const shareUtil = require("../../utils/module/shareUtil");
+const viewUtil = require("../../utils/common/viewUtil.js");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -91,11 +92,11 @@ Page({
     designList: [
       {
         title: '设计效果1',
-        effect: [{ src: 'https://images.unsplash.com/photo-1448376561459-dbe8868fa34c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=361907f0deaaf183ac4ce6b62551dfb3&auto=format&fit=crop&w=800&q=60', type: '车身左侧效果' }, { src: 'https://images.unsplash.com/photo-1494260629490-28c1e8e6f388?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=886e20939894ef5dafc54e0cf0cae59d&auto=format&fit=crop&w=800&q=60', type: '车身左侧效果' }, { src: 'https://images.unsplash.com/photo-1497350166004-48ec9adb78bb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fdfe84a326fba9000c444d1ab73d7d18&auto=format&fit=crop&w=800&q=60', type: '车身左侧效果' }]
+        effect: [{ src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner1.jpg', type: '车身左侧效果' }, { src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner2.jpg', type: '车身左侧效果' }, { src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner3.jpg', type: '车身左侧效果' }]
       },
       {
         title: '设计效果2',
-        effect: [{ src: 'https://images.unsplash.com/photo-1515052945961-bbb80118b74b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e24e067ea99c9f433d838baae5bdfa13&auto=format&fit=crop&w=800&q=60', type: '车身左侧效果' }, { src: 'https://images.unsplash.com/photo-1486016006115-74a41448aea2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=55cc23bc93a290d1cb4c651856d28c7a&auto=format&fit=crop&w=800&q=60', type: '车身左侧效果' }, { src: 'https://images.unsplash.com/photo-1497202379478-3998ceb0b40c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=63a774d57b88b71b2a24fb479536e3f5&auto=format&fit=crop&w=800&q=60', type: '车身左侧效果' }]
+        effect: [{ src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner1.jpg', type: '车身左侧效果' }, { src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner2.jpg', type: '车身左侧效果' }, { src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner3.jpg', type: '车身左侧效果' }]
       }]
   },
 
@@ -120,6 +121,7 @@ Page({
     }
     app.globalData.isFirst = false;
     that.setScrollHeight();
+    that.setDesignImageHeight();
   },
 
   setScrollHeight() {
@@ -153,6 +155,15 @@ Page({
       that.setData({
         scrollHeight: results[0].windowHeight - results[1].height - results[2].height
       });
+    })
+  },
+
+  setDesignImageHeight(){
+    let that = this;
+    viewUtil.getViewHeight("#effect-image").then(rect => {
+      that.setData({
+        designHeight: rect.width * 9 / 16
+      })
     })
   },
 
@@ -1103,7 +1114,7 @@ Page({
   },
 
   /** 预览设计效果图 */
-  handlePreview(event) {
+  handlePreviewDesign(event) {
     console.log(event);
     let imageList = [];
     let effect = event.currentTarget.dataset.effect;
@@ -1114,7 +1125,7 @@ Page({
       imageList.push(element.src);
     });
     wx.previewImage({
-      current: imageList[event.currentTarget.dataset.index],
+      current: event.currentTarget.dataset.current,
       urls: imageList
     })
   },

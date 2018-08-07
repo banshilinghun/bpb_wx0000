@@ -1376,8 +1376,6 @@ button {
 /* 广告样式 start */
 
 .b-design-container{
-  padding-left: 30rpx;
-  padding-right: 30rpx;
   background: #fff
 }
 
@@ -1405,12 +1403,13 @@ button {
   font-size: 36rpx;
   color: #000;
   margin-top: 40rpx;
+  padding: 0 30rpx;
+  font-weight: 500
 }
 
 .b-design-wrapper {
   margin-top: 20rpx;
-  padding-top: 10rpx;
-  padding-bottom: 20rpx;
+  margin-bottom: 10rpx
 }
 
 .b-design-wrapper:last-child{
@@ -1420,7 +1419,7 @@ button {
 .b-design-item-title {
   font-size: 28rpx;
   color: #666;
-  font-weight: bold;
+  padding: 0 30rpx
 }
 
 .b-design-effect {
@@ -1440,6 +1439,26 @@ button {
 .b-design-effect-type {
   font-size: 26rpx;
   color: #666;
+}
+
+.b-design-introduce{
+  padding: 0 30rpx
+}
+
+.b-effect-wrapper{
+  display: flex;
+  flex-direction: row;
+  padding: 20rpx 22rpx 0 22rpx
+}
+
+.b-effect-image-wrapper{
+  flex: 1;
+  padding: 0 8rpx
+}
+
+.b-effect-image{
+  width: 100%;
+  box-shadow: 0 0 8rpx #ddd
 }
 
 /* 广告样式 end */

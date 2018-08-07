@@ -213,11 +213,11 @@
           <view>
             <view wx:for="{{ designList }}" wx:for-item='design' class='b-design-wrapper' wx:key='design.id'>
               <view class='b-design-item-title'>{{ design.title }}</view>
-              <view wx:for="{{ design.effect }}" class='b-design-effect' wx:for-item='effect' wx:key='effect.id'>
-                <image class='b-design-effect-image' src='{{ effect.src }}' bindtap='handlePreview' data-effect='{{ design.effect }}' data-index='{{ index }}' mode='widthFix'></image>
-                <view class='b-design-effect-type'>{{ effect.type }}</view>
+              <view class='b-effect-wrapper'>
+                <view id='effect-image' class='b-effect-image-wrapper' wx:for='{{ design.effect }}' wx:for-item='effect' wx:key='effect.id'>
+                  <image class='b-effect-image' src='{{ effect.src }}' style='height: {{ designHeight }}px' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}' data-current='{{ effect.src }}'></image>
+                </view>
               </view>
-              <view class='b-design-divider'></view>
             </view>
           </view>
         </view>
@@ -306,13 +306,13 @@
       <text>年检日期: </text>
     </view>
     <picker-view indicator-style="height: 50px;" class='b-picker-view' value="{{value}}" bindchange="bindAnnualChange">
-    <picker-view-column>
-      <view wx:for="{{months}}" wx:key='item.id' class='b-pick-item'>{{item}}月</view>
-    </picker-view-column>
-    <picker-view-column>
-      <view wx:for="{{days}}" wx:key='item.id' class='b-pick-item'>{{item}}日</view>
-    </picker-view-column>
-  </picker-view>
+      <picker-view-column>
+        <view wx:for="{{months}}" wx:key='item.id' class='b-pick-item'>{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" wx:key='item.id' class='b-pick-item'>{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
   </view>
 </model>
 

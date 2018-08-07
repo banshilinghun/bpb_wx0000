@@ -12,8 +12,6 @@
     "dialog-address": "../../components/dialog-address/index",
     "dialog-auth": "../../components/dialog-common/index",
     "model": "../../components/model/index",
-    "b-toast": "../../components/toast/index",
-    "b-col": "../../components/col/index",
-    "b-row": "../../components/row/index"
+    "b-toast": "../../components/toast/index"
   }
 }

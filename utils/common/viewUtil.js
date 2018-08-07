@@ -7,7 +7,6 @@ function getViewHeight(viewParams){
     let query = wx.createSelectorQuery();
     //选择id
     query.select(viewParams).boundingClientRect(rect => {
-      console.log(rect)
       resolve(rect);
     }).exec();
   })
