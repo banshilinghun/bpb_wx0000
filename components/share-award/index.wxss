@@ -1,2 +1,2 @@
 /* components/share-arawd/index.wxss */
-@import '../share-moment/index.wxss';
+@import '../share-normal/index.wxss';

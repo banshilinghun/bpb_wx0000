@@ -8,7 +8,7 @@
     "dialog": "../../components/dialog/bpb-dialog",
     "share-popup": "../../components/share-popup/index",
     "bpb-steps": "../../components/steps/index",
-    "share-moment": "../../components/share-moment/index",
+    "share-normal": "../../components/share-normal/index",
     "share-award": "../../components/share-award/index"
   }
 }

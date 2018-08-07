@@ -51,7 +51,6 @@ Page({
     joinCount: 0,
     reward: false,
     showSharePop: false,
-    //生成分享图片
     shareAvatar: '',
     shareNickname: '',
     incomeMoney: 0,
@@ -619,9 +618,6 @@ Page({
     })
   },
 
-  /**
-   * 生成图片
-   */
   shareListener: function () {
     this.setData({
       showShareModel: true

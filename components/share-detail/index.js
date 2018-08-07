@@ -184,9 +184,6 @@ Component({
    */
   methods: {
 
-    /**
-     * 控件显示并且没有生成图片时，使用 canvas 生成图片
-     */
     _propertyChange: function (newVal, oldVal) {
       console.log('_propertyChange---------->' + newVal);
       console.log('targetSharePath------------->' + this.data.targetSharePath);
@@ -542,9 +539,6 @@ Component({
       }, this)
     },
 
-    /**
-     * 保存到相册
-     */
     saveImageTap: function () {
       var that = this;
       that.requestAlbumScope();
@@ -552,7 +546,7 @@ Component({
 
 
     /**
-     * 检测相册权限
+     * 检测权限
      */
     requestAlbumScope: function () {
       var that = this;
@@ -571,7 +565,7 @@ Component({
               fail() {
                 wx.showModal({
                   title: '提示',
-                  content: '你需要授权才能保存图片到相册',
+                  content: '你需要授权才能保存图片',
                   success: function (res) {
                     if (res.confirm) {
                       wx.openSetting({

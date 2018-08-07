@@ -366,9 +366,6 @@ Page({
     })
   },
 
-  /**
-   * 生成分享图片
-   */
   shareListener: function () {
     this.shareAction();
   },
@@ -385,9 +382,6 @@ Page({
     this.getRecommendInfo();
   },
 
-  /**
-   * 点击生成分享图片按钮事件回调，图片保存成功隐藏奖励弹出框
-   */
   hideDialogListener: function () {
     this.setData({
       showDialog: false

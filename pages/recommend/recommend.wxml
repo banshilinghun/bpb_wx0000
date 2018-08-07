@@ -104,7 +104,7 @@
 <dialog showDialog='{{ showDialog }}' bind:btnclick='dialogClickListener' title='{{ shareTitle }}' description='邀请新用户安装广告，还能拿奖励10元哦!' btnText='邀请好友' />
 
 <!-- 拉新 -->
-<share-moment avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' showShareModel='{{ showNewShare }}'></share-moment>
+<share-normal avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' showShareModel='{{ showNewShare }}'></share-normal>
 
 <!-- 奖励 -->
 <share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showAwardModel }}' bind:hideDialog='hideDialogListener'></share-award>
