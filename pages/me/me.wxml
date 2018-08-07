@@ -97,6 +97,6 @@
 <dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='{{shareTitle}}' description='{{ description }}' btnText='邀请好友' />
 <zan-toast id="zan-toast-test"></zan-toast>
 
-<share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener'></share-popup>
+<share-popup showPop='{{ showSharePop }}' bind:shareAction='shareListener'></share-popup>
 
 <share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showShareModel }}' bind:hideDialog='hideDialogListener' positionStatus='{{ positionStatus }}'></share-award>

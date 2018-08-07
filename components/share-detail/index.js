@@ -192,7 +192,7 @@ Component({
       console.log('targetSharePath------------->' + this.data.targetSharePath);
       if (newVal) {
         if (!this.data.targetSharePath) {
-          this.shareMoments();
+          this.share();
         } else {
           this.setData({
             realShow: true
@@ -200,10 +200,8 @@ Component({
         }
       }
     },
-    /**
-     * 分享
-     */
-    shareMoments: function () {
+
+    share: function () {
       var that = this;
       that.showLoading();
       that.getQRCode();

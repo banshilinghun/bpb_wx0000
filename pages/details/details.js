@@ -134,7 +134,7 @@ Page({
       return;
     }
     that.setData({
-      shareAwardText: app.globalData.shareFlag ? '分享有奖' : '分享',
+      shareAwardText: '分享',
       isMomentOpen: app.globalData.shareFlag,
       showRule: false
     })
@@ -622,8 +622,7 @@ Page({
   /**
    * 生成图片
    */
-  shareMomentListener: function () {
-    console.log('shareMomentListener------------->')
+  shareListener: function () {
     this.setData({
       showShareModel: true
     })

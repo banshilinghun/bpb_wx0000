@@ -48,7 +48,7 @@
               </view>
               <button data-adName="{{myAd.name}}" data-adId="{{myAd.id}}" data-adImg="{{myAd.img_url}}" class='wtwabt' open-type="share">
                 <image src='../../image/shareicon.png'></image>
-                <view class='sharetext'>分享有奖</view>
+                <view class='sharetext'>分享</view>
               </button>
             </view>
 

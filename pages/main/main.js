@@ -414,7 +414,6 @@ Page({
     })
   },
 
-  //分享
   onShareAppMessage: function (res) {
     if (res.from == 'button') {
       console.log(res);
@@ -571,7 +570,7 @@ Page({
             bannerFlag: that.data.bannerFlag+1,
             showRecommend: res.data.data,
             background: res.data.data ? ['banner1', 'banner2'] : ['banner1'],
-            shareAwardText: res.data.data ? '分享有奖' : '分享',
+            shareAwardText: '分享',
           })
           //console.log(that.data.bannerFlag);
           if (that.data.bannerFlag==2){

@@ -32,7 +32,6 @@ App({
     checkStaus: '',
     baseUrl: releaseDomain,
     isFirst:false,
-    //分享开关
     shareFlag: false,
     //是否已经展示认证弹窗
     showAuthTip: false,

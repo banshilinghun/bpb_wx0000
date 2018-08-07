@@ -36,7 +36,6 @@ Page({
     description: '',
     isShowToast: false,
     showSharePop: false,
-    //分享
     shareInfo: {
       shareAvatar: '',
       shareNickname: '',
@@ -512,7 +511,7 @@ Page({
     }
 
   },
-  //分享
+  
   onShareAppMessage: function (res) {
     var that = this;
     if (res.from == 'button' && !res.target.dataset.step) {
@@ -656,7 +655,6 @@ Page({
               },
             })
             that.onShow();
-            //分享弹框
             if (couponType != 5 && couponType != 6) {
               that.setData({
                 showGoodsDetail: true,
@@ -697,16 +695,13 @@ Page({
     }
   },
 
-  /**
-   * 领取奖励后分享
-   */
   dialogClickListener: function () {
     this.setData({
       showSharePop: true
     })
   },
 
-  shareMomentListener: function () {
+  shareListener: function () {
     this.setData({
       showShareModel: true
     })

@@ -29,7 +29,6 @@ const nicknameHeightScale = 0.615;
 //邀请加入
 const inviteTextScale = 0.187;
 const inviteTextHeightScale = 0.27;
-//分享内容
 const adAwardHeightScale = 0.338;
 const adAwardWidthScale = 0.187;
 const contentHeightScale = 0.38;
@@ -136,14 +135,11 @@ Component({
     _propertyChange: function (newVal, oldVal) {
       console.log('_propertyChange---------->' + newVal);
       if (newVal) {
-        this.shareMoments();
+        this.share();
       }
     },
 
-    /**
-     * 分享
-     */
-    shareMoments: function () {
+    share: function () {
       var that = this;
       that.showLoading();
       that.getQRCode();

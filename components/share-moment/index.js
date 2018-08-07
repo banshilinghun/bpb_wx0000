@@ -27,7 +27,6 @@ const avatarStrokeWidth = 4;
 const nicknameHeightScale = 0.34 + 5 * temp;
 //第一行文字高度
 const topTextScale = 0.515 + 3 * temp;
-//分享内容
 const contentScale = 0.585 + 3 * temp;
 const contentScale2 = 0.620 + 3 * temp;
 //二维码直径
@@ -114,7 +113,7 @@ Component({
       console.log('_propertyChange---------->' + newVal);
       if (newVal) {
         if (!this.data.targetSharePath) {
-          this.shareMoments();
+          this.share();
         } else {
           this.setData({
             realShow: true
@@ -123,10 +122,7 @@ Component({
       }
     },
 
-    /**
-     * 分享
-     */
-    shareMoments: function () {
+    share: function () {
       var that = this;
       //先用 canvas 生成，否则直接预览
       if (that.data.targetSharePath) {
