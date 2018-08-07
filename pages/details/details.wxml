@@ -227,7 +227,7 @@
 
   <!-- 底部分享预约按钮 -->
   <view class='action_bottom' id="b-detail-bottom">
-    <!-- 分享 -->
+    <!-- 客服 -->
     <button class='wtwabt' open-type='contact'>
       <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_message_icon.png'></image>
       <view class='sharetext'>在线客服</view>

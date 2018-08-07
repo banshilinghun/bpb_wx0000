@@ -59,17 +59,18 @@ page{
 }
 
 .no-more {
-  height: 60rpx;
+  height: 100rpx;
   width: 100%;
   position: relative;
   background-color: #F6F6F6;
 }
 
 .no-more-wrapper {
-  width: 40%;
+  padding: 0 30rpx;
   height: 100%;
   position: absolute;
-  left: 30%;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #F6F6F6;
   display: flex;
   justify-content: center;
@@ -87,7 +88,7 @@ page{
   top: 50%;
   left: 10%;
   height: 1rpx;
-  background-color: #999;
+  background-color: #ccc;
 }
 
 .load-more {
