@@ -95,8 +95,8 @@
               <view class="item {{item.lista==2?'curitemList':''}}">
                 <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
                 <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
-                <image wx:if='{{item.small_logo!=null}}' src='{{item.small_logo}}' class='sev_logo' catchtap='previewImage' data-image='{{ item.logo }}' data-samllImage='{{item.small_logo}}'></image>
-                <image wx:if='{{item.small_logo==null}}' src='../../image/noimg.png' class='sev_logo'></image>
+                <image wx:if='{{ item.small_logo }}' src='{{item.small_logo}}' class='sev_logo' catchtap='previewImage' data-image='{{ item.logo }}' data-samllImage='{{ item.small_logo }}'></image>
+                <image wx:if='{{ !item.small_logo }}' src='../../image/noimg.png' class='sev_logo'></image>
                 <view class="item-middle">
                   <view>
                     <text class="title">{{item.name}}</text>
