@@ -1,1 +1,9 @@
-/* pages/test/test.wxss */
+
+.b-subscribe-btn-enable{
+  font-size: 32rpx;
+  color: #fff;
+}
+
+.b-subscribe-btn-disenable{
+
+}
