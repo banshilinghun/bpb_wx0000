@@ -54,3 +54,23 @@ overflow:hidden;
   display: block;
   line-height: 1;
 }
+
+.carwimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/check-carw.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.carnimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/check-carn.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.carleftimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/car_left-check.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.carrightimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/car_right-check.jpg) no-repeat;
+  background-size: 100% 100%;
+}
