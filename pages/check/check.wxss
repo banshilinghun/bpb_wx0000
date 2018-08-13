@@ -20,3 +20,37 @@ overflow:hidden;
 .weui-input{
   color:#999
 }
+
+.weui-cells{
+  margin-top: 0;
+}
+
+.check-help-wrapper{
+  width: 100%;
+  position: relative;
+  height: 35px
+}
+
+.check-image-wrapper{
+  right: 20rpx;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-help-image{
+  width: 35rpx;
+  height: 35rpx;
+  margin-right: 10rpx;
+}
+
+.check-help-text{
+  font-size: 26rpx;
+  color: #ff555c;
+  display: block;
+  line-height: 1;
+}

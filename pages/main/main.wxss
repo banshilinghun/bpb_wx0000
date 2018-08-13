@@ -470,3 +470,7 @@ position:relative;
 .navigator:first-child:before {
   display: none;
 }
+
+.blod{
+  font-weight: 500;
+}

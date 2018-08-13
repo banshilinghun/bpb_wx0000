@@ -2,7 +2,7 @@
   <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
     <image class='b-check-image' mode='widthFix' src='{{ checkImageSrc }}'></image>
   </scroll-view>
-  <view class='b-check-btn-wrapper'>
+  <view class='b-check-btn-wrapper' wx:if='{{ flag == 1 }}'>
     <button class='b-check-btn' bindtap='handleCheck'>立即检测</button>
   </view>
 </view>

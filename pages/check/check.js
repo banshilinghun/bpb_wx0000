@@ -33,11 +33,13 @@ Page({
 		show1: true,
 		show2: true,
 		show3: true,
-    show4: true
+    show4: true,
+    scrollHeight: 0
 	},
 	onLoad: function(options) {
 		var adData = JSON.parse(options.ckData);
-		console.log(adData)
+		console.log(adData);
+    let that = this;
 		this.setData({
 			ckId: adData.checkid,
 			type: adData.type
@@ -56,7 +58,14 @@ Page({
         carTail: true
 			})
 		}
-
+    //设置scrollView 高度
+    wx.getSystemInfo({
+      success: function(res) {
+        that.setData({
+          scrollHeight: res.windowHeight - 35
+        })
+      }
+    })
 	},
 
 	formSubmit: function(e) {
@@ -362,5 +371,14 @@ Page({
 			current: current,
 			urls: this.data.imageList3
 		})
-	}
+	},
+
+  /**
+   * 自主检测帮助
+   */
+  handleHelp(){
+    wx.navigateTo({
+      url: '../checkCourse/checkCourse?flag=2'
+    })
+  }
 })

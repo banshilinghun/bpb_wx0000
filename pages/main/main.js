@@ -409,7 +409,7 @@ Page({
 
   check: function (e) {
     wx.navigateTo({
-      url: '../checkCourse/checkCourse?ckData=' + JSON.stringify(e.currentTarget.dataset)
+      url: '../checkCourse/checkCourse?ckData=' + JSON.stringify(e.currentTarget.dataset) + '&flag=1'
     })
   },
 
@@ -493,7 +493,7 @@ Page({
   selfCheck:function(e){
     var that=this;
     wx.navigateTo({
-      url: '../checkCourse/checkCourse?ckData=' + JSON.stringify(e.currentTarget.dataset)
+      url: '../checkCourse/checkCourse?ckData=' + JSON.stringify(e.currentTarget.dataset) + '&flag=1'
     })
     that.setData({
       showDialog: false
