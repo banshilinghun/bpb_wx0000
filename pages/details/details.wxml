@@ -394,11 +394,11 @@
           <view class='b-body-title b-body-title-color'>
             <view class='b-title-wrapper'>
               <view class='b-body-color-title'>车身颜色</view>
-              <view class='b-title-stauts' wx:if='{{ !carColorOk }}'>{{ '抱歉！您的车身颜色为' + carColor + '，不符合广告要求' }}</view>
+              <view class='b-title-stauts' wx:if='{{ !carColorOk }}'>{{ '抱歉！您的车身颜色为' + userCarColor + '，不符合广告要求' }}</view>
             </view>
             <view class='b-body-wrapper'>
               <view wx:for="{{ colorList }}" wx:key="color" class='b-body-color-item'>
-                <view class='b-color-cell {{ item.select? "b-cell-select" : "b-cell-normal" }}'>{{ item.color }}</view>
+                <view class='b-color-cell {{ item == userCarColor? "b-cell-select" : "b-cell-normal" }}'>{{ item }}</view>
               </view>
             </view>
           </view>

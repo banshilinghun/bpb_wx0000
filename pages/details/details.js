@@ -100,7 +100,7 @@ Page({
     totalCount: 0, //剩余总数
     remainCount: 0, //选择条件过滤后的剩余数
     selectStatusStr: '',
-    carColor: '黑色',
+    userCarColor: '', //当前车主的车身颜色
     serverList: [{
         logo: '',
         name: '奔跑宝',
@@ -1120,6 +1120,7 @@ Page({
         console.log(that.data.adInfo);
         if(that.data.adInfo.color_limit.indexOf(res.car_color) == -1) {
           that.setData({
+            userCarColor: res.car_color,
             actionStatus: ACTION_ARR[2],
             actionStr: '立即预约',
             errorComment: '您的车身颜色为'+ res.car_color + ',\n暂不满足广告要求'
@@ -1149,41 +1150,6 @@ Page({
   },
   
   /**
-   * 颜色去重
-   */
-  mergeColor() {
-    let that = this;
-    let colorList = [];
-    that.data.serverList.forEach(element => {
-      element.colors.forEach(color => {
-        //不存在数组则添加
-        console.log(color);
-        console.log(colorList.indexOf(color) === -1);
-        if (colorList.indexOf(color) === -1) {
-          colorList.push(color);
-        } else {
-          //do nothing
-        }
-      })
-    });
-    let colorArray = [];
-    let containColor = false;
-    colorList.forEach(color => {
-      let colorObj = {};
-      colorObj.color = color;
-      if (color === that.data.carColor){
-        containColor = true;
-      }
-      colorObj.select = (color === that.data.carColor)
-      colorArray.push(colorObj);
-    })
-    that.setData({
-      colorList: colorArray,
-      carColorOk: containColor
-    })
-  },
-
-  /**
    * 预约剩余数
    */
   changeRemainCount(){
@@ -1201,7 +1167,8 @@ Page({
 
   handleSubscribe() {
     this.setData({
-      visibleSubscribe: true
+      visibleSubscribe: true,
+      colorList: that.data.adInfo.color_limit
     })
   },
 
