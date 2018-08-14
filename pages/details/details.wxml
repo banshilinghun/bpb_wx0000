@@ -241,7 +241,7 @@
       <view class='sharetext'>{{ shareAwardText }}</view>
     </button>
     <!-- 预约排队 -->
-    <view class='subscribe_immediately {{ actionStatus === "start_subscribe" ? "b-start-subscribe" : "" }} {{ actionStatus === "not_begin"? "" : "" }}' bindtap='handleAction'>
+    <view class='subscribe_immediately {{ actionStatus === "start_subscribe" ? "b-start-subscribe" : "" }} {{ actionStatus === "not_begin"? "b-not-begin" : "" }} {{ actionStatus === "reject_error"? "b-reject-error" : "" }}' bindtap='handleAction'>
       <view class='subcribe-wrapper'>
         <text>{{ actionStr }}</text>
       </view>

@@ -1281,6 +1281,11 @@ button {
   opacity: 0.8
 }
 
+.b-reject-error{
+  background: linear-gradient(90deg, #FB653D, #ff555c);
+  opacity: 0.8
+}
+
 .subcribe-wrapper{
   display: flex;
   flex-direction: column;

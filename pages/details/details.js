@@ -1067,6 +1067,7 @@ Page({
    * 不可预约处理
    */
   rejectSubscribe(){
+    const that = this;
     wx.showModal({
       title: '提示',
       showCancel: false,
