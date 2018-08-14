@@ -7,12 +7,13 @@ const app = getApp();
 const Constant = require("../../utils/constant/Constant");
 const shareUtil = require("../../utils/module/shareUtil");
 const viewUtil = require("../../utils/common/viewUtil.js");
+const RunStatus = require("../main/runStatus");
 const {
   $Toast
 } = require('../../components/base/index');
 
-//预约排队状态数组  0:即将开始，1:立即预约，2:已预约或者当前已接广告（查看我的广告），3:预约排队，4:取消排队
-const ACTION_ARR = [0, 1, 2, 3, 4];
+//预约排队状态数组  
+const ACTION_ARR = ['not_begin', 'start_subscribe', 'reject_error', 'own_ad', 'queue', 'cancel_queue'];
 
 Page({
   data: {
@@ -32,7 +33,6 @@ Page({
     obj: {},
     expressChangeList: [],
     title: "",
-    amount: 1,
     isTop: false,
     isNeedKey: false,
     showMenu: true,
@@ -55,7 +55,6 @@ Page({
     adName: '',
     adTime: '',
     adId: '',
-    serverId: '',
     serverId: '',
     serverName: '',
     serverAddress: '',
@@ -89,15 +88,55 @@ Page({
     visible: false,
     cancelLoading: false,
     confirmLoading: false,
-    designList: [
-      {
-        title: '设计效果1',
-        effect: [{ src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner1.jpg', type: '车身左侧效果' }, { src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner2.jpg', type: '车身左侧效果' }, { src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner3.jpg', type: '车身左侧效果' }]
+    designList: [],
+    //预约 data
+    visibleSubscribe: false,
+    hasSeverSelect: false, 
+    selectServerIndex: -1, //默认下标-1，表示未选择服务网点
+    hasDateSelect: false,
+    selectDateIndex: -1, //默认下标-1，表示未选择日期
+    hasTimeSelect: false,
+    selectTimeIndex: -1, //默认下标-1，表示未选择时间段
+    totalCount: 0, //剩余总数
+    remainCount: 0, //选择条件过滤后的剩余数
+    selectStatusStr: '',
+    carColor: '黑色',
+    serverList: [{
+        logo: '',
+        name: '奔跑宝',
+        distance: '12.78km',
+        address: '深圳市南山区腾讯大厦',
+        remain: 8,
+        colors: ['白色', '红色']
       },
       {
-        title: '设计效果2',
-        effect: [{ src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner1.jpg', type: '车身左侧效果' }, { src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner2.jpg', type: '车身左侧效果' }, { src: 'https://wxapi.benpaobao.com/static/origin/ad_info/banner/myx_banner3.jpg', type: '车身左侧效果' }]
-      }]
+        logo: '',
+        name: '奔跑宝',
+        distance: '12.78km',
+        address: '深圳市南山区腾讯大厦',
+        remain: 3,
+        colors: ['白色', '黑色']
+      },
+      {
+        logo: '',
+        name: '奔跑宝',
+        distance: '12.78km',
+        address: '深圳市南山区腾讯大厦',
+        remain: 4,
+        colors: ['蓝色', '红色']
+      },
+      {
+        logo: '',
+        name: '奔跑宝',
+        distance: '12.78km',
+        address: '深圳市南山区腾讯大厦',
+        remain: 0,
+        colors: ['白色', '橘色']
+      }
+    ],
+    colorList: [],
+    dateList: [{ date: '2018-7-18', enable: true }, { date: '2018-7-19', enable: false }, { date: '2018-7-20', enable: true}, { date: '2018-7-21', enable: false}],
+    timeList: [{ time: '8:00-9:00', enable: false }, { time: '9:00-10:00', enable: true }, { time: '10:00-11:00', enable: true }, { time: '11:00-12:00', enable: true }],
   },
 
   onLoad: function (options) {
@@ -121,7 +160,6 @@ Page({
     }
     app.globalData.isFirst = false;
     that.setScrollHeight();
-    that.setDesignImageHeight();
   },
 
   setScrollHeight() {
@@ -158,7 +196,7 @@ Page({
     })
   },
 
-  setDesignImageHeight(){
+  setDesignImageHeight() {
     let that = this;
     viewUtil.getViewHeight("#effect-image").then(rect => {
       that.setData({
@@ -203,11 +241,15 @@ Page({
 
     //检测是否是滴滴车主以及注册认证状态
     that.checkUserAuthStatus();
+    that.getLocation();
+    //请求广告信息
+    that.requestAdInfo();
+    that.requestJoinList();
+    //that.requestQueueList(); 
 
     var pages = getCurrentPages();
     console.log(pages)
     var currPage = pages[pages.length - 1]; //当前页面
-    //console.log(currPage.data.mydata) //就可以看到data里mydata的值了
     if (currPage.data.mydata != undefined) {
       if (currPage.data.mydata.share == 1 && n != 0 && that.data.showShare) {
         that.setData({
@@ -220,36 +262,23 @@ Page({
         })
       }
     }
+  },
 
-    var reqData = {};
-    reqData.ad_id = that.data.adId;
-    //请求地理位置信息
+  /** 请求地理位置信息 */
+  getLocation(){
+    const that = this;
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
-        var latitude = res.latitude
-        var longitude = res.longitude
-        //				console.log(res.longitude)
+        var latitude = res.latitude;
+        var longitude = res.longitude;
         that.setData({
           latitude: latitude,
           longitude: longitude,
           haveLoca: true
         })
-        reqData.lat = latitude;
-        reqData.lng = longitude;
-        that.requestAdInfo(reqData);
       }
     })
-    //请求广告信息
-    if (that.data.latitude == null) {
-      that.requestAdInfo(reqData);
-    } else {
-      reqData.lat = that.data.latitude;
-      reqData.lng = that.data.longitude;
-      that.requestAdInfo(reqData);
-    }
-    that.requestJoinList();
-    that.requestQueueList();
   },
 
   checkUserAuthStatus: function () {
@@ -301,150 +330,58 @@ Page({
   /**
    * 请求广告信息
    */
-  requestAdInfo: function (reqData) {
+  requestAdInfo: function () {
     var that = this;
     wx.request({
       url: ApiConst.GET_AD_INFO,
-      data: reqData,
+      data: {
+        ad_id: that.data.adId
+      },
       header: app.globalData.header,
       success: res => {
         console.log(res.data)
         if (res.data.code == 1000) {
-          console.log(res.data)
           let dataBean = res.data.data;
-          var enddate = dataBean.info.end_date;
-          dataBean.info.begin_date = dataBean.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-          dataBean.info.end_date = dataBean.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-
-          that.setData({
-            page: dataBean.ad_server.page,
-            hasMore: dataBean.ad_server.hasMore,
-            sortedKey: dataBean.ad_server.sortedKey,
-            carColor: (!dataBean.ad_colors || dataBean.ad_colors.length == 0) ? '不限' : dataBean.ad_colors.join('/'),
-            isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
-
-          })
+          dataBean.info.run_status = RunStatus.getRunStatus(dataBean.info);
+          dataBean.info.begin_date = dataBean.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          dataBean.info.end_date = dataBean.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          dataBean.info.reserve_date.start_date = dataBean.info.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          dataBean.info.reserve_date.last_date = dataBean.info.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
           //预约过滤
-          if (dataBean.subscribe) {
-            that.setData({
-              actionStr: '查看我的广告',
-              actionStatus: ACTION_ARR[2]
-            });
-          } else {
-            //运行状态过滤
-            if (dataBean.info.run_status == 1) {
-              // 剩余数过滤
-              if (dataBean.info.current_count != 0) {
-                that.setData({
-                  actionStr: '立即预约',
-                  actionStatus: ACTION_ARR[1]
-                })
-              } else {
-                //是否排队中过滤
-                if (that.data.isQueueing) {
-                  that.setData({
-                    actionStr: '取消排队',
-                    actionStatus: ACTION_ARR[4]
-                  })
-                } else {
-                  that.setData({
-                    actionStr: '预约排队',
-                    actionStatus: ACTION_ARR[3]
-                  })
-                }
-              }
-            } else if (dataBean.info.run_status == 0) { //即将开始
-              that.setData({
-                actionStr: '即将开始',
-                actionStatus: ACTION_ARR[0]
-              })
-            } else {
-              that.setData({
-                actionStr: '查看我的广告',
-                actionStatus: ACTION_ARR[2]
-              });
-            }
-          }
-
-          var serviceList = dataBean.ad_server.servers;
-          if (serviceList.length > 0) {
-            for (var j = 0; j < serviceList.length; j++) {
-              serviceList[j].distance = (serviceList[j].distance / 1000).toFixed(2);
-              serviceList[j].lista = 1;
-              if (dataBean.isRegist) {
-                serviceList[j].lista = 0;
-              } else {
-                if (dataBean.info.current_count > 0) {
-                  if (serviceList[j].ad_count - serviceList[j].subscribe_count <= 0) {
-                    serviceList[j].lista = 0;
-                  } else {
-                    if (serviceList[j].is_sub == 1) {
-                      serviceList[j].lista = 0;
-                    }
-                  }
-                  if (dataBean.subscribe != null) {
-
-                    if (dataBean.subscribe.ad_id == dataBean.info.id) {
-                      if (dataBean.subscribe.server_id == serviceList[j].id) {
-                        serviceList[j].lista = 2;
-                        that.setData({
-                          selServerId: dataBean.subscribe.server_id,
-                          selDate: dataBean.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日"),
-                          selTime: dataBean.subscribe.begin_time + "-" + dataBean.subscribe.end_time,
-                          selId: dataBean.subscribe.id
-                        })
-                      } else {
-                        serviceList[j].lista = 0;
-                      }
-
-                    } else {
-                      serviceList[j].lista = 0;
-                    }
-
-                  }
-                } else {
-                  serviceList[j].lista = 0;
-                }
-              }
-            }
-          }
-          console.log(serviceList)
-          if (dataBean.ad_server.page == 0) {
-            that.setData({
-              service: serviceList,
-              joinCount: dataBean.info.total_count - dataBean.info.current_count
+          that.resolveAction(dataBean);
+          //广告效果图
+          dataBean.design_list.forEach(element => {
+            let effect_list = [];
+            effect_list.push(element.left_img);
+            effect_list.push(element.right_img);
+            effect_list.push(element.inner_img);
+            //过滤空值
+            effect_list = effect_list.filter((item) => {
+              return Boolean(item.trim()) === true;
             })
-          } else {
-            var serviceList = that.data.service.concat(serviceList)
-            that.setData({
-              service: serviceList,
-              joinCount: dataBean.info.total_count - dataBean.info.current_count
-            })
-          }
-
-          if (dataBean.imgs.length == 0) {
-            that.setData({
-              adInfo: dataBean.info,
-              banners: ['../../image/bpb.png']
-            })
-          } else {
-            that.setData({
-              adInfo: dataBean.info,
-              banners: dataBean.imgs
-            })
-          }
-          //赋值分享图数据
-          let adInfoBean = dataBean.info;
+            console.log(effect_list);
+            element.effect = effect_list;
+          })
           that.setData({
+            adInfo: dataBean.info,
+            designList: dataBean.design_list,
+            joinCount: dataBean.info.total_count - dataBean.info.current_count,
+            carColor: (!dataBean.info.color_limit || dataBean.info.color_limit.length == 0) ? '不限' : dataBean.info.color_limit.join('/'),
+            //isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
+            banners: dataBean.design_list.length == 0? [ '../../image/bpb.png' ] : [ dataBean.design_list[0].left_img ],
+            //赋值分享图数据
             shareAvatar: app.globalData.userInfo.avatarUrl,
             shareNickname: app.globalData.userInfo.nickName,
-            incomeMoney: adInfoBean.amount,
-            adImageUrl: adInfoBean.img_url || "",
-            adName: adInfoBean.name,
-            adTime: adInfoBean.begin_date + ' ~ ' + adInfoBean.end_date,
-            adId: adInfoBean.id,
-            joinNumber: adInfoBean.total_count - adInfoBean.current_count
+            incomeMoney: dataBean.info.predict_amount,
+            adImageUrl: dataBean.info.img_url || "",
+            adName: dataBean.info.ad_name,
+            adTime: dataBean.info.begin_date + ' ~ ' + dataBean.info.end_date,
+            adId: dataBean.info.id,
+            joinNumber: dataBean.info.total_count - dataBean.info.current_count
           })
+          that.setDesignImageHeight();
+          that.getUserCarInfo();
+          that.getAdStationList();
         } else {
           wx.showModal({
             title: '提示',
@@ -469,26 +406,44 @@ Page({
     })
   },
 
-  onReachBottom: function () {
-    var that = this;
-    if (!that.data.hasMore) {
-      return;
+  /**
+   * 处理按钮状态
+   */
+  resolveAction(dataBean){
+    const that = this;
+    if (dataBean.current_reserve || dataBean.current_ad) {
+      that.setData({
+        actionStr: '查看我的广告',
+        actionStatus: ACTION_ARR[3]
+      });
+    } else {
+      //运行状态过滤
+      if (dataBean.info.run_status == 1) {
+        // 剩余数过滤
+        if (dataBean.info.current_count != 0) {
+          that.setData({
+            actionStr: '立即预约',
+            actionStatus: ACTION_ARR[1]
+          })
+        } else {
+          that.setData({
+            actionStr: '立即预约',
+            actionStatus: ACTION_ARR[2],
+            errorComment: '当前广告已被预约完，\n下次记得早点来预约哦~'
+          })
+        }
+      } else if (dataBean.info.run_status == 0) { //即将开始
+        that.setData({
+          actionStr: '即将开始',
+          actionStatus: ACTION_ARR[0]
+        })
+      } else {
+        that.setData({
+          actionStr: '查看我的广告',
+          actionStatus: ACTION_ARR[3]
+        });
+      }
     }
-    that.setData({
-      isShowLoadingMore: true
-    });
-    var reqData = {};
-    reqData.ad_id = that.data.adId;
-    reqData.page = that.data.page + 1;
-    reqData.sorted_key = that.data.sortedKey;
-    that.requestAdInfo(reqData);
-    //this.showLoadingToast();
-    // that.setData({
-    //   isShowLoadingMore: true
-    // });
-    // setTimeout(function () {
-    //   that.requestJoinList(that.data.pageIndex + 1);
-    // }, 1000);
   },
 
   /** 请求已参与车主列表 */
@@ -504,7 +459,7 @@ Page({
       success: function (res) {
         console.log(res);
         if (res.data.code == 1000) {
-          var dataList = res.data.data.info;
+          var dataList = res.data.data.ad_list;
           var tempAvatarList = [];
           for (var key in dataList) {
             var dataBean = dataList[key];
@@ -686,10 +641,9 @@ Page({
         }
       })
     }
-    //console.log(e)
   },
+
   goMap: function (e) {
-    //		console.log(e.currentTarget.dataset);
     wx.openLocation({
       longitude: Number(e.currentTarget.dataset.longitude),
       latitude: Number(e.currentTarget.dataset.latitude),
@@ -724,7 +678,6 @@ Page({
 
   //分享
   onShareAppMessage: function (res) {
-    //console.log(res)
     var that = this;
     if (res.from == 'button') {
       var shareTitle = shareUtil.getShareAdTitle(that.data.adInfo.name);
@@ -740,8 +693,6 @@ Page({
       var desc = '拉上好友一起赚钱～';
       var shareType = Constant.shareNormal;
     }
-    //console.log(res);
-    //console.log(this)
     var that = this
     return {
       title: shareTitle,
@@ -783,7 +734,6 @@ Page({
    * 隐藏弹框
    */
   hideDialogListener: function () {
-    console.log('hideDialogListener------------->')
     this.setData({
       showGoodsDetail: false
     });
@@ -937,7 +887,7 @@ Page({
       success: res => {
         that.setData({
           isQueueing: true,
-          actionStatus: ACTION_ARR[4],
+          actionStatus: ACTION_ARR[5],
           actionStr: '取消排队'
         });
         that.setData({
@@ -973,14 +923,14 @@ Page({
   },
 
   /** 暂不取消 */
-  handleUndoCancel(){
+  handleUndoCancel() {
     this.setData({
       visibleUndo: false
     });
   },
 
   /** 确认取消 */
-  handleConfirmCancel(){
+  handleConfirmCancel() {
     this.setData({
       doLoading: true
     });
@@ -1019,7 +969,7 @@ Page({
       success: res => {
         that.setData({
           isQueueing: false,
-          actionStatus: ACTION_ARR[3],
+          actionStatus: ACTION_ARR[4],
           actionStr: '预约排队',
           cancelLoading: false,
           visible: false,
@@ -1053,7 +1003,7 @@ Page({
   },
 
   /** 取消完善年检信息 */
-  handleAnnualCancel(){
+  handleAnnualCancel() {
     this.setData({
       visibleAnnual: false
     })
@@ -1086,26 +1036,26 @@ Page({
   },
 
   handleAction: function () {
-    console.log('handleAction---------->')
     let that = this;
     switch (that.data.actionStatus) {
       case ACTION_ARR[0]: //即将开始
         //nothing
         break;
       case ACTION_ARR[1]: //立即预约
-        wx.navigateTo({
-          url: '../test/test',
-        })
+        that.handleSubscribe();
         break;
-      case ACTION_ARR[2]: //查看我的任务
+      case ACTION_ARR[2]: //不满足广告要求
+        that.rejectSubscribe();
+        break;
+      case ACTION_ARR[3]: //查看我的任务
         wx.switchTab({
           url: '../task/task'
         })
         break;
-      case ACTION_ARR[3]: //预约排队
+      case ACTION_ARR[4]: //预约排队
         that.takeParkInQueue();
         break;
-      case ACTION_ARR[4]: //取消排队
+      case ACTION_ARR[5]: //取消排队
         that.setData({
           visibleUndo: true,
         })
@@ -1113,31 +1063,39 @@ Page({
     }
   },
 
+  /**
+   * 不可预约处理
+   */
+  rejectSubscribe(){
+    wx.showModal({
+      title: '提示',
+      showCancel: false,
+      confirmColor: '#ff555c',
+      content: that.data.errorComment
+    })
+  },
+
   /** 预览设计效果图 */
   handlePreviewDesign(event) {
     console.log(event);
-    let imageList = [];
     let effect = event.currentTarget.dataset.effect;
     if (!effect || effect.length === 0) {
       return;
     }
-    effect.forEach(element => {
-      imageList.push(element.src);
-    });
     wx.previewImage({
       current: event.currentTarget.dataset.current,
-      urls: imageList
+      urls: effect
     })
   },
 
   //todo
-  handleAnnual(){
+  handleAnnual() {
     let months = [];
-    for(let i = 1; i <= 12; i++){
+    for (let i = 1; i <= 12; i++) {
       months.push(i);
     }
     let days = [];
-    for(let j = 1; j <= 31; j++){
+    for (let j = 1; j <= 31; j++) {
       days.push(j);
     }
     this.setData({
@@ -1147,6 +1105,239 @@ Page({
       selectMonth: months[0],
       selectDay: days[0]
     })
+  },
+
+  /**
+   * 用户车辆信息
+   */
+  getUserCarInfo() {
+    let that = this;
+    let requestData = {
+      url: ApiConst.GET_USER_CAR_INFO,
+      header: app.globalData.header,
+      success: res => {
+        console.log(that.data.adInfo);
+        if(that.data.adInfo.color_limit.indexOf(res.car_color) == -1) {
+          that.setData({
+            actionStatus: ACTION_ARR[2],
+            actionStr: '立即预约',
+            errorComment: '您的车身颜色为'+ res.car_color + ',\n暂不满足广告要求'
+          })
+        }
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  /**
+   * 获取广告站点列表
+   */
+  getAdStationList() {
+    let that = this;
+    let requestData = {
+      url: ApiConst.GET_AD_STATION_LIST,
+      data: {
+        ad_id: that.data.adId
+      },
+      header: app.globalData.header,
+      success: res => {
+        
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+  
+  /**
+   * 颜色去重
+   */
+  mergeColor() {
+    let that = this;
+    let colorList = [];
+    that.data.serverList.forEach(element => {
+      element.colors.forEach(color => {
+        //不存在数组则添加
+        console.log(color);
+        console.log(colorList.indexOf(color) === -1);
+        if (colorList.indexOf(color) === -1) {
+          colorList.push(color);
+        } else {
+          //do nothing
+        }
+      })
+    });
+    let colorArray = [];
+    let containColor = false;
+    colorList.forEach(color => {
+      let colorObj = {};
+      colorObj.color = color;
+      if (color === that.data.carColor){
+        containColor = true;
+      }
+      colorObj.select = (color === that.data.carColor)
+      colorArray.push(colorObj);
+    })
+    that.setData({
+      colorList: colorArray,
+      carColorOk: containColor
+    })
+  },
+
+  /**
+   * 预约剩余数
+   */
+  changeRemainCount(){
+    let that = this;
+    let count = 0;
+    let serverList = that.data.serverList;
+    serverList.forEach(element => {
+      count += element.remain;
+    });
+    that.setData({
+      totalCount: count,
+      remainCount: count
+    })
+  },
+
+  handleSubscribe() {
+    this.setData({
+      visibleSubscribe: true
+    })
+  },
+
+  handleSubscribeClose() {
+    this.setData({
+      visibleSubscribe: false
+    })
+  },
+
+  /**
+   * 选择服务网点
+   */
+  handleServerClick(event) {
+    console.log(event);
+    let that = this;
+    let index = event.currentTarget.dataset.index;
+    let hasSelect = that.data.hasSeverSelect;
+    if(!hasSelect){
+      that.setData({
+        selectServerIndex: index,
+        hasSeverSelect: true
+      })
+      let serverList = that.data.serverList;
+      that.setRemainCount(serverList[index].remain);
+    }else{
+      that.setData({
+        selectServerIndex: -1,
+        hasSeverSelect: false,
+        selectDateIndex: -1,
+        hasDateSelect: false,
+        selectTimeIndex: -1,
+        hasTimeSelect: false
+      })
+      that.setRemainCount(that.data.totalCount);
+    }
+    that.initSelectStatus();
+  },
+
+  /** 更新剩余数量 */
+  setRemainCount(count){
+    this.setData({
+      remainCount: count
+    });
+  },
+
+  /** 选择日期 */
+  handleDateClick(event){
+    console.log(event);
+    let that = this;
+    let index = event.currentTarget.dataset.index;
+    let hasSelect = that.data.hasDateSelect;
+    if (!hasSelect) {
+      that.setData({
+        selectDateIndex: index,
+        hasDateSelect: true
+      })
+    } else {
+      that.setData({
+        selectDateIndex: -1,
+        hasDateSelect: false,
+        selectTimeIndex: -1,
+        hasTimeSelect: false
+      })
+    }
+    that.initSelectStatus();
+  },
+
+  /** 选择时间段 */
+  handleTimeClick(event){
+    console.log(event);
+    let that = this;
+    let index = event.currentTarget.dataset.index;
+    let hasSelect = that.data.hasTimeSelect;
+    if (!hasSelect) {
+      that.setData({
+        selectTimeIndex: index,
+        hasTimeSelect: true
+      })
+    } else {
+      that.setData({
+        selectTimeIndex: -1,
+        hasTimeSelect: false
+      })
+    }
+    that.initSelectStatus();
+  },
+
+  initSelectStatus(){
+    let that =this;
+    let selectServerIndex = that.data.selectServerIndex;
+    let selectDateIndex = that.data.selectDateIndex;
+    let selectTimeIndex = that.data.selectTimeIndex;
+    let serverList = that.data.serverList;
+    let dateList = that.data.dateList;
+    let timeList = that.data.timeList;
+    if (selectServerIndex !== -1 && selectDateIndex !== -1 && selectTimeIndex !== -1) { //全选
+      that.setData({
+        selectStatusStr: '已选: ' + "\"" + serverList[selectServerIndex].name + "\" " + "\"" + dateList[selectDateIndex].date + "\" " + "\"" + timeList[selectTimeIndex].time + "\" " + "\"" + that.data.carColor + "\""
+      })
+    } else { //有选项未选择
+      that.setData({
+        selectStatusStr: '请选择 ' + (selectServerIndex !== -1 ? "" : "服务网点 ") + (selectDateIndex !== -1 ? "" : "预约日期 ") + (selectTimeIndex !== -1 ? "" : "预约时间段")
+      })
+    }
+  },
+
+  /** 确认预约 */
+  handleConfirmSubscribe(){
+    let that = this;
+    //车身颜色不满足
+    if(!that.data.carColorOk){
+      return;
+    }
+    let selectServerIndex = that.data.selectServerIndex;
+    let selectDateIndex = that.data.selectDateIndex;
+    let selectTimeIndex = that.data.selectTimeIndex;
+    if (selectServerIndex === -1){
+      $Toast({
+        content: '请选择 服务网点',
+        type: 'warning'
+      });
+      return;
+    }
+    if (selectDateIndex === -1) {
+      $Toast({
+        content: '请选择 预约日期',
+        type: 'warning'
+      });
+      return;
+    }
+    if (selectTimeIndex === -1) {
+      $Toast({
+        content: '请选择 预约时间段',
+        type: 'warning'
+      });
+      return;
+    }
   }
 
 })

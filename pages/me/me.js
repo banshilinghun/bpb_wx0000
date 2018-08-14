@@ -228,7 +228,7 @@ Page({
     console.log(event);
     let that = this;
     let item = event.currentTarget.dataset.item;
-    //判断车主是否登录，推荐有奖无需登录
+    //判断车主是否登录，推荐有奖和新手教程无需登录
     if ((item.type != CELL_TYPE[6] || item.type != CELL_TYPE[7]) && that.data.loginFlag == 0) {
       wx.showModal({
         title: '登录提示',

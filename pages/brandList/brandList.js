@@ -140,5 +140,9 @@ Page({
     this.setData({
       scrollTop: 0,
     })
+  },
+
+  handleImageError(event){
+    console.log(event);
   }
 })

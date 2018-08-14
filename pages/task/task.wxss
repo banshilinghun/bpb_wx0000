@@ -231,7 +231,7 @@
   padding: 0 20rpx;
   outline: none;
   margin: 0;
-  background: linear-gradient(45deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   color: #fff;
   font-family: "微软雅黑";
   font-size: 24rpx;

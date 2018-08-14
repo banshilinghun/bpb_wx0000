@@ -7,9 +7,10 @@
         <view class='b-cell-title'>
           <text>{{ declareInfo.adName }}</text>
         </view>
-        <view class='b-cell-content'>
-          <input placeholder='请选择广告'></input>
-        </view>
+        <picker bindchange="pickerChange" value="{{ index }}" range="{{ adList }}" class='b-picker'>
+          <view class="weui-select weui-select_in-select-after b-picker-item">{{ adList[index] }}</view>
+        </picker>
+        <image class='b-declare-arrow' src='../../image/arrow.png'></image>
         <view class='b-declare-line'></view>
       </view>
       <!-- 日期 -->
@@ -17,9 +18,12 @@
         <view class='b-cell-title'>
           <text>{{ declareInfo.date }}</text>
         </view>
-        <view class='b-cell-content'>
-          <input placeholder='请选择{{ declareInfo.date }}' disabled='true'></input>
-        </view>
+        <picker class='b-picker' mode="date" value="{{ date }}" start="{{ startDate }}" end="{{ currentDate }}" bindchange="bindDateChange">
+          <view class="b-picker-item">
+            {{ date }}
+          </view>
+        </picker>
+        <image class='b-declare-arrow' src='../../image/arrow.png'></image>
         <view class='b-declare-line' wx:if='{{ declareInfo.address }}'></view>
       </view>
       <!-- 地点 -->
@@ -45,7 +49,9 @@
     <!-- 凭证 -->
     <view class='b-declare-divider'></view>
     <view class='b-picture-wrapper'>
-      <view class='b-declare-reason-title'><text>{{ declareInfo.evidenceImage }}</text></view>
+      <view class='b-declare-reason-title'>
+        <text>{{ declareInfo.evidenceImage }}</text>
+      </view>
       <view class='b-declare-picture-wrapper'>
         <image class='b-picture-holder'></image>
         <image class='b-picture-holder'></image>
@@ -54,7 +60,9 @@
     <view class='b-declare-divider'></view>
     <!-- 原因 -->
     <view class='b-reason-wrapper'>
-      <view class='b-declare-reason-title'><text>{{ declareInfo.reason }}</text></view>
+      <view class='b-declare-reason-title'>
+        <text>{{ declareInfo.reason }}</text>
+      </view>
       <textarea class='b-declare-reason-detail' placeholder='{{ declareInfo.reasonTip }}'></textarea>
     </view>
     <view class='b-commit-btn-wrapper'>

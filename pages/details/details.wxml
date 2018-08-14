@@ -19,22 +19,22 @@
         <block>
           <view class="profile frpro">
             <view class="profile-item cwsfts">
-              <text>{{adInfo.name}}</text>
+              <text>{{ adInfo.ad_name }}</text>
             </view>
             <view class='profile-ad-status'>
-              <view wx:if="{{adInfo.run_status==0}}">
+              <view wx:if="{{ adInfo.run_status==0 }}">
                 <text class="time timetxt2">即将开始</text>
               </view>
-              <view wx:if="{{adInfo.run_status==1}}">
-                <text class="time">剩余{{adInfo.current_count}}辆</text>
+              <view wx:if="{{ adInfo.run_status==1 }}">
+                <text class="time">剩余{{ adInfo.current_count }}辆</text>
               </view>
-              <view wx:if="{{adInfo.run_status==2}}">
+              <view wx:if="{{ adInfo.run_status==2 }}">
                 <text class="time timetxt2">投放中</text>
               </view>
-              <view wx:if="{{adInfo.run_status==3}}">
+              <view wx:if="{{ adInfo.run_status==3 }}">
                 <text class="time timetxt2">检测中</text>
               </view>
-              <view wx:if="{{adInfo.run_status==4}}">
+              <view wx:if="{{ adInfo.run_status==4 }}">
                 <text class="time timetxt">已结束</text>
               </view>
               <view>
@@ -49,11 +49,11 @@
             <view class="profile-item">
               <view class='profole-type'>预计收益:</view>
             </view>
-            <view class="profole-type-right red-text" wx:if='{{ adInfo.amount != null && isDiDi != 1 }}'>￥{{ adInfo.amount }}</view>
-            <view class="profole-type-right red-text" bindtap='goValuation' wx:elif='{{ isDiDi == 1 }}'>
+            <view class="profole-type-right red-text" wx:if='{{ adInfo.predict_amount != null && adInfo.billing_mode == 0 }}'>￥{{ adInfo.predict_amount }}</view>
+            <view class="profole-type-right red-text" bindtap='goValuation' wx:elif='{{ adInfo.billing_mode == 1 }}'>
               <view class='b-income-explain-wrapper'>
-                <view>￥300
-                  <label class="data-blt2">~ </label>868</view>
+                <view>￥{{ adInfo.min_amount }}
+                  <label class="data-blt2">~ </label>{{ adInfo.max_amount }}</view>
                 <image class='b-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
               </view>
             </view>
@@ -67,33 +67,37 @@
               <text>广告类型:</text>
             </view>
             <view class="right-text">
-              <label class="data-text swtwxs" wx:if="{{adInfo.type==0}}">车尾</label>
-              <label class="data-text swtwxs" wx:if="{{adInfo.type==1}}">车内</label>
-              <label class="data-text swtwxs" wx:if="{{adInfo.type==2}}">车尾+车内</label>
-              <label class="data-text swtwxs" wx:if="{{adInfo.type==3}}">车内+车外</label>
-              <label class="data-text swtwxs" wx:if="{{adInfo.type==4}}">车外</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 0 }}">车尾</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 1 }}">车内</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 2 }}">车尾+车内</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 3 }}">车内+车外</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 4 }}">车外</label>
             </view>
           </view>
         </block>
         <block>
           <view class="profile">
             <view class="profile-item">收益时间:</view>
-            <view class="right-text">{{adInfo.begin_date}}
-              <label class="data-blt">~</label>{{adInfo.end_date}}</view>
+            <view class="right-text">{{ adInfo.begin_date }}
+              <label class="data-blt">~</label>{{ adInfo.end_date }}</view>
           </view>
         </block>
         <block>
           <view class="profile">
             <view class="profile-item">安装时间:</view>
-            <view class="right-text">{{adInfo.begin_date}}
-              <label class="data-blt">~</label>{{adInfo.end_date}}</view>
+            <view class="right-text">{{ adInfo.reserve_date.start_date }}
+              <label class="data-blt">~</label>{{ adInfo.reserve_date.last_date }}</view>
           </view>
         </block>
         <block>
           <view class="profile">
             <view class="profile-item">车辆要求:</view>
             <view class="right-text horizontal-center" bindtap='handleColorExplain'>
-              <text wx:if='{{ adInfo.city }}'>{{ adInfo.city}}</text>
+              <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
+              <text wx:if='{{ adInfo.city_name }}'>{{ adInfo.city_name + ","}}</text>
+              <text wx:if='{{ adInfo.user_limit == 1 }}'>双证车主,</text>
+              <text wx:if='{{ adInfo.user_limit == 2 }}'>普通网约车,</text>
+              <text wx:if='{{ adInfo.car_size_limit }}'>{{ adInfo.car_size_limit }}</text>
             </view>
           </view>
         </block>
@@ -101,7 +105,6 @@
           <view class="profile">
             <view class="profile-item">车辆颜色:</view>
             <view class="right-text horizontal-center" bindtap='handleColorExplain'>
-              <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
               <text>{{ carColor }}</text>
             </view>
           </view>
@@ -109,16 +112,16 @@
       </view>
 
       <!-- 参与列表 -->
-      <view class='join-list-wrapper' wx:if='{{showJoining}}' bindtap='joinClick'>
+      <view class='join-list-wrapper' wx:if='{{ showJoining }}' bindtap='joinClick'>
         <view class='join-left-layout'>
           <text class='already-join-text'>已参与</text>
           <text class='already-join-number'>{{ joinCount + '人'}}</text>
         </view>
         <view class='join-center-line'></view>
         <scroll-view class='join-avatar-scroll' scroll-x='true'>
-          <view class='join-avatar-wrapper' wx:for='{{avatarList}}' wx:for-item='item' wx:key='index'>
+          <view class='join-avatar-wrapper' wx:for='{{ avatarList }}' wx:for-item='item' wx:key='index'>
             <view class='join-avatar-item'>
-              <image class='join-avatar' src='{{item.wx_avatar}}'></image>
+              <image class='join-avatar' src='{{ item.wx_avatar }}'></image>
             </view>
           </view>
         </scroll-view>
@@ -205,7 +208,7 @@
         <view class='b-design-introduce'>
           <view class='b-ad-introduce-title'>广告介绍</view>
           <view class='b-ad-introduce-content'>
-            <text>爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣，爱康健23周年品牌宣。</text>
+            <text>{{ adInfo.introduction }}</text>
           </view>
         </view>
         <view>
@@ -215,7 +218,7 @@
               <view class='b-design-item-title'>{{ design.title }}</view>
               <view class='b-effect-wrapper'>
                 <view id='effect-image' class='b-effect-image-wrapper' wx:for='{{ design.effect }}' wx:for-item='effect' wx:key='effect.id'>
-                  <image class='b-effect-image' src='{{ effect.src }}' style='height: {{ designHeight }}px' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}' data-current='{{ effect.src }}'></image>
+                  <image class='b-effect-image' src='{{ effect }}' style='height: {{ designHeight }}px' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}' data-current='{{ effect }}'></image>
                 </view>
               </view>
             </view>
@@ -238,7 +241,7 @@
       <view class='sharetext'>{{ shareAwardText }}</view>
     </button>
     <!-- 预约排队 -->
-    <view class='subscribe_immediately {{ actionStatus === 1 ? "subscribe-focus" : "subscribe-unfocus" }}' bindtap='handleAction'>
+    <view class='subscribe_immediately {{ actionStatus === "start_subscribe" ? "b-start-subscribe" : "" }} {{ actionStatus === "not_begin"? "" : "" }}' bindtap='handleAction'>
       <view class='subcribe-wrapper'>
         <text>{{ actionStr }}</text>
       </view>
@@ -315,6 +318,102 @@
     </picker-view>
   </view>
 </model>
+
+<!-- 预约弹窗 -->
+<popup show="{{ visibleSubscribe }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
+  <view class='b-subscribe-container'>
+    <view class='b-subscribe-header'>
+      <view class='b-header-wrapper'>
+        <image class='b-subscribe-logo' src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5ae973ba514144940f868c9d3758eb35&auto=format&fit=crop&w=800&q=60' mode='aspectFill'></image>
+        <view class='b-header-right'>
+          <view class='b-header-info'>
+            <view class='b-header-money b-theme-color'>
+              <text class='b-money-symbol'>￥</text>
+              <text class='b-money-number'>300~868</text>
+            </view>
+            <view class='b-header-remain'>剩余{{ remainCount }}辆</view>
+            <view class='b-header-select'>{{ selectStatusStr }}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view>
+      <scroll-view scroll-y="true" class='b-scroll-body'>
+        <view class='b-scroll-content'>
+          <!-- 服务网点 -->
+          <view class='b-body-title'>
+            <view class='b-title-wrapper'>
+              <view class='b-body-color-title'>服务网点</view>
+              <view class='b-title-stauts' wx:if='{{ !hasSeverSelect }}'>请选择服务网点</view>
+            </view>
+            <view class='b-body-wrapper'>
+              <view class='b-body-server' wx:for="{{ serverList }}" wx:key="server" wx:if="{{ !hasSeverSelect || (hasSeverSelect &&  index === selectServerIndex) }}">
+                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}' bindtap='handleServerClick' data-index='{{ index }}'>
+                  <image class='b-server-logo'></image>
+                  <view class='b-server-right'>
+                    <view class='b-server-right-middle'>
+                      <view class='b-server-right-top'>
+                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.name }}</view>
+                        <view class='b-right-distance'>{{ item.distance }}</view>
+                      </view>
+                      <view class='b-right-address-wrapper'>
+                        <image class='b-right-location-icon' src='../../image/dw.png'></image>
+                        <view class='b-right-address'>{{ item.address }}</view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 预约日期 -->
+          <view class='b-body-title' wx:if='{{ hasSeverSelect }}'>
+            <view class='b-title-wrapper'>
+              <view class='b-body-color-title'>预约日期</view>
+              <view class='b-title-stauts' wx:if='{{ !hasDateSelect }}'>请选择预约日期</view>
+            </view>
+            <view class='b-body-wrapper'>
+              <view class='b-body-date' wx:for="{{ dateList }}" wx:key="date" wx:if="{{ !hasDateSelect || (hasDateSelect &&  index === selectDateIndex) }}">
+                <view class='b-date-cell {{ index === selectDateIndex? "theme-color" : item.enable? "normal-color" : "gray-color" }} {{ index === selectDateIndex? "b-server-select" : "b-server-normal" }}' bindtap="handleDateClick" data-index='{{ index }}'>{{ item.date }}</view>
+              </view>
+            </view>
+          </view>
+          <!-- 预约某个日期的时间段 -->
+          <view class='b-body-title' wx:if="{{ hasSeverSelect && hasDateSelect }}">
+            <view class='b-title-wrapper'>
+              <view class='b-body-color-title'>预约时间</view>
+              <view class='b-title-stauts' wx:if='{{ !hasTimeSelect }}'>请选择预约时间</view>
+            </view>
+            <view class='b-body-wrapper'>
+              <view class='b-body-date' wx:for="{{ timeList }}" wx:key="date" wx:if="{{ !hasTimeSelect || (hasTimeSelect &&  index === selectTimeIndex) }}">
+                <view class='b-date-cell {{index === selectTimeIndex? "theme-color" : item.enable? "normal-color" : "gray-color" }} {{ index === selectTimeIndex? "b-server-select" : "b-server-normal" }}' bindtap="handleTimeClick" data-index='{{ index }}'>{{ item.time }}</view>
+              </view>
+            </view>
+          </view>
+          <!-- 车身颜色 -->
+          <view class='b-body-title b-body-title-color'>
+            <view class='b-title-wrapper'>
+              <view class='b-body-color-title'>车身颜色</view>
+              <view class='b-title-stauts' wx:if='{{ !carColorOk }}'>{{ '抱歉！您的车身颜色为' + carColor + '，不符合广告要求' }}</view>
+            </view>
+            <view class='b-body-wrapper'>
+              <view wx:for="{{ colorList }}" wx:key="color" class='b-body-color-item'>
+                <view class='b-color-cell {{ item.select? "b-cell-select" : "b-cell-normal" }}'>{{ item.color }}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class='b-btn-wrapper'>
+      <button class='b-subscribe-btn {{ carColorOk? "btn-enable" : "btn-disenable" }}' bindtap='handleConfirmSubscribe'>确认预约</button>
+    </view>
+    <!-- 关闭按钮 -->
+    <view class='b-close' bindtap='handleSubscribeClose'>
+      <image class='b-close-image' src='https://wxapi.benpaobao.com/static/app_img/close-gray.png'></image>
+    </view>
+  </view>
+</popup>
 
 <!-- 轻提示 -->
 <b-toast id="toast"></b-toast>

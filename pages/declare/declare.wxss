@@ -86,3 +86,17 @@
 button::after{
   border: none;
 }
+
+.b-declare-arrow{
+  width: 30rpx;
+  height: 30rpx
+}
+
+.b-picker{
+  flex: 1
+}
+
+.b-picker-item{
+  color: #666;
+  font-size: 28rpx
+}

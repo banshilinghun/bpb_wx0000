@@ -7,11 +7,11 @@
     {{showLetter}}
   </view>
 </block>
-<scroll-view scroll-y="true" style="height:{{ winHeight }}px" bindscroll="bindScroll" scroll-into-view="{{ scrollTopId }}" scroll-top="{{ scrollTop }}">
+<scroll-view scroll-y="true" style="height:{{ winHeight }}px" scroll-into-view="{{ scrollTopId }}" scroll-top="{{ scrollTop }}">
   <view class="selection" wx:for="{{ carList }}" wx:key="{{ item.initial }}">
     <view class="item_letter" id="{{ item.initial }}">{{ item.initial }}</view>
     <view class="item_brand" wx:for="{{ item.carInfo }}" wx:for-item="ci" wx:key="{{ ci.id }}" data-brand="{{ ci }}" bindtap="bindCarBrand">
-      <image class='brand-logo' src='{{ ci.logo }}'></image>
+      <image class='brand-logo' src='{{ ci.logo }}' binderror='handleImageError'></image>
       <view class='brand-name'>
         <text>{{ ci.name }}</text>
       </view>

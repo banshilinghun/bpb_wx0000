@@ -159,3 +159,9 @@ export const REGUSE_SUBS_QUEUE = baseUrl + 'app/refuse/wait_subscribe_info';
 
 //获取用户个人广告列表
 export const GET_USER_PERSONAL_AD_LIST = baseUrl + 'app/get/user_personal_adlist';
+
+//获取用户车辆信息
+export const GET_USER_CAR_INFO = baseUrl + 'app/get/user_carinfo';
+
+//获取用户车辆信息
+export const GET_AD_STATION_LIST = baseUrl + 'app/get/ad_station_list';
