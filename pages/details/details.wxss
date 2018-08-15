@@ -1,5 +1,4 @@
 @import "../../style/common.wxss";
-
 page {
   background-color: #f6f6f6;
   padding-bottom: 0
@@ -9,7 +8,8 @@ page {
   height: 465.75rpx;
 }
 
-.profile, .account {
+.profile,
+.account {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -20,34 +20,37 @@ page {
   padding-bottom: 30rpx;
 }
 
-.profile-ad-status{
+.profile-ad-status {
   display: flex;
   flex-direction: row;
 }
 
-.profile-item, .account-item {
+.profile-item,
+.account-item {
   flex: 1;
   color: #666;
   font-weight: normal;
   position: relative;
 }
 
-.profile-arrow, .account-arrow {
+.profile-arrow,
+.account-arrow {
   width: 32rpx;
   height: 32rpx;
 }
 
-.profole-type, .profole-type-right{
+.profole-type,
+.profole-type-right {
   color: #666;
   display: inline-block;
 }
 
-.profole-type-right{
+.profole-type-right {
   margin-left: 20rpx;
   font-weight: 500
 }
 
-.profile-right-item{
+.profile-right-item {
   position: absolute;
   right: 30rpx;
 }
@@ -62,13 +65,13 @@ page {
   color: #666;
 }
 
-.horizontal-center{
+.horizontal-center {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.icon-margin{
+.icon-margin {
   margin-right: 10rpx;
 }
 
@@ -132,8 +135,10 @@ page {
   line-height: 20rpx;
   padding: 32rpx 16rpx, 0, 16rpx;
   margin-top: 60rpx;
-  overflow: hidden; /*自动隐藏文字*/
-  text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  overflow: hidden;
+  /*自动隐藏文字*/
+  text-overflow: ellipsis;
+  /*文字隐藏后添加省略号*/
 }
 
 .message {
@@ -153,7 +158,7 @@ page {
   text-align: right;
 }
 
-.b-total-count{
+.b-total-count {
   margin-left: 15rpx
 }
 
@@ -499,7 +504,8 @@ button::after {
   color: #222;
 }
 
-.search-items .items .detail-express, .search-items .items .detail-msg {
+.search-items .items .detail-express,
+.search-items .items .detail-msg {
   color: #999;
   font-size: 26rpx;
   line-height: 36rpx;
@@ -575,7 +581,7 @@ button::after {
   align-items: flex-start;
 }
 
-.items-list .lists{
+.items-list .lists {
   width: 140rpx;
   font-size: 24rpx;
   color: #222;
@@ -861,7 +867,8 @@ button::after {
   border-radius: 5px;
 }
 
-.goodsdetail .title7 .reduce, .goodsdetail .title7 .add {
+.goodsdetail .title7 .reduce,
+.goodsdetail .title7 .add {
   font-size: 50rpx;
   background: #feb70f;
   width: 50rpx;
@@ -1004,18 +1011,22 @@ button::after {
   color: #ff555c;
   font-size: 32rpx;
 }
-.red-text{
-   color: #ff555c;
-   position: relative;
+
+.red-text {
+  color: #ff555c;
+  position: relative;
 }
-.red-text icon{
+
+.red-text icon {
   position: absolute;
   top: 2px;
-  right:-2px;
+  right: -2px;
 }
-.adxtwtx{
+
+.adxtwtx {
   padding-right: 16px;
 }
+
 .msite-nav {
   overflow: visible;
   height: 98rpx;
@@ -1168,26 +1179,26 @@ button {
   height: 79rpx;
 }
 
-.service-title-wrapper{
+.service-title-wrapper {
   display: flex;
   flex-direction: column;
   border-bottom: 2rpx solid #eee;
 }
 
-.service-title-wrapper .profile{
+.service-title-wrapper .profile {
   border-bottom: 0;
 }
 
-.subscribe-action-wrapper{
+.subscribe-action-wrapper {
   padding-left: 30rpx;
   display: flex;
   flex-direction: row;
   background-color: #fff;
   align-items: center;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
-.subscribe-action-btn{
+.subscribe-action-btn {
   width: 150rpx;
   height: 56rpx;
   line-height: 56rpx;
@@ -1199,11 +1210,11 @@ button {
   margin: 0;
 }
 
-.subscribe-cancel{
+.subscribe-cancel {
   background-color: #999;
 }
 
-.explain-icon{
+.explain-icon {
   height: 100%;
   padding-left: 30rpx;
   margin-right: 10rpx;
@@ -1216,7 +1227,7 @@ button {
   background-color: transparent;
 }
 
-.profile-wrapper{
+.profile-wrapper {
   background: #fff;
   padding-left: 30rpx;
   padding-right: 30rpx;
@@ -1234,20 +1245,20 @@ button {
   background: #fff;
 }
 
-.data-blt2{
+.data-blt2 {
   padding-left: 6rpx;
   padding-right: 6rpx;
 }
 
-.data-text{
+.data-text {
   font-weight: normal
 }
 
-.swtwxs{
-  color:#666;
+.swtwxs {
+  color: #666;
 }
 
-.arrow-image{
+.arrow-image {
   width: 30rpx;
   height: 30rpx;
 }
@@ -1265,28 +1276,28 @@ button {
   color: #ff555c;
 }
 
-.subscribe_immediately{
+.subscribe_immediately {
   flex: 2;
   font-size: 24rpx;
   color: #fff;
   position: relative;
 }
 
-.b-start-subscribe{
+.b-start-subscribe {
   background: linear-gradient(90deg, #FB653D, #ff555c);
 }
 
-.b-not-begin{
-  background: linear-gradient(90deg, #FB653D, #ff555c);
-  opacity: 0.8
-}
-
-.b-reject-error{
+.b-not-begin {
   background: linear-gradient(90deg, #FB653D, #ff555c);
   opacity: 0.8
 }
 
-.subcribe-wrapper{
+.b-reject-error {
+  background: linear-gradient(90deg, #FB653D, #ff555c);
+  opacity: 0.8
+}
+
+.subcribe-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1297,13 +1308,13 @@ button {
   transform: translateY(-50%) translateX(-50%);
 }
 
-.action_bottom{
+.action_bottom {
   height: 98rpx;
   display: flex;
   background-color: #fff;
 }
 
-.b-see-more-detail{
+.b-see-more-detail {
   min-height: 80rpx;
   margin-left: 30rpx;
   margin-right: 30rpx;
@@ -1313,12 +1324,12 @@ button {
   margin-bottom: 16rpx;
 }
 
-.b-see-more-arrow{
+.b-see-more-arrow {
   width: 40rpx;
   height: 40rpx;
 }
 
-.b-see-more-text{
+.b-see-more-text {
   font-size: 28rpx;
   color: #ff555c;
 }
@@ -1341,34 +1352,34 @@ button {
   box-sizing: content-box;
 }
 
-.b-cancel-queue-tip{
+.b-cancel-queue-tip {
   width: auto;
   text-align: left;
   box-sizing: content-box;
 }
 
-.b-queue-model-item{
+.b-queue-model-item {
   margin-bottom: 10rpx;
 }
 
-.b-queue-notify-text{
+.b-queue-notify-text {
   font-size: 24rpx;
   color: #333;
 }
 
-.b-explain-icon{
+.b-explain-icon {
   width: 35rpx;
   height: 35rpx;
   margin-left: 10rpx
 }
 
-.b-income-explain-wrapper{
+.b-income-explain-wrapper {
   display: flex;
   flex-direction: row;
   align-items: center
 }
 
-.b-car-require{
+.b-car-require {
   width: 35rpx;
   height: 35rpx;
   margin-right: 10rpx
@@ -1376,7 +1387,7 @@ button {
 
 /* 广告样式 start */
 
-.b-design-container{
+.b-design-container {
   margin-top: 20rpx;
   background: #fff
 }
@@ -1396,7 +1407,7 @@ button {
   text-align: left;
 }
 
-.b-design-divider{
+.b-design-divider {
   height: 10rpx;
   width: 100%;
 }
@@ -1414,7 +1425,7 @@ button {
   margin-bottom: 10rpx
 }
 
-.b-design-wrapper:last-child{
+.b-design-wrapper:last-child {
   border-bottom: none
 }
 
@@ -1443,22 +1454,22 @@ button {
   color: #666;
 }
 
-.b-design-introduce{
+.b-design-introduce {
   padding: 0 30rpx
 }
 
-.b-effect-wrapper{
+.b-effect-wrapper {
   display: flex;
   flex-direction: row;
   padding: 20rpx 22rpx 0 22rpx
 }
 
-.b-effect-image-wrapper{
+.b-effect-image-wrapper {
   width: 33.3%;
   padding: 0 8rpx
 }
 
-.b-effect-image{
+.b-effect-image {
   width: 100%;
   box-shadow: 0 0 8rpx #ddd
 }
@@ -1466,7 +1477,8 @@ button {
 /* 广告样式 end */
 
 /* 补充年检信息弹窗 start */
-.b-annual-container{
+
+.b-annual-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1474,24 +1486,25 @@ button {
   padding: 0 40rpx 20rpx 40rpx;
 }
 
-.b-annual-left{
+.b-annual-left {
   color: #999;
   font-size: 32rpx;
 }
 
-.b-pick-item{
+.b-pick-item {
   line-height: 50px;
   text-align: center
 }
 
-.b-picker-view{
+.b-picker-view {
   flex: 1;
   height: 150px;
   margin-left: 20rpx
 }
+
 /* 补充年检信息弹窗 end */
 
-.b-temp-click{
+.b-temp-click {
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
@@ -1505,7 +1518,7 @@ button {
 
 /* 预约 start */
 
-.b-subscribe-container{
+.b-subscribe-container {
   width: 100vw;
   background-color: #fff;
   display: flex;
@@ -1516,7 +1529,7 @@ button {
   position: relative
 }
 
-.b-subscribe-header{
+.b-subscribe-header {
   position: relative;
   width: 100%;
   min-height: 220rpx;
@@ -1525,117 +1538,117 @@ button {
   box-sizing: border-box
 }
 
-.b-header-abs{
+.b-header-abs {
   position: absolute;
 }
 
-.b-header-wrapper{
+.b-header-wrapper {
   display: flex;
   flex-direction: row;
   margin-top: 30rpx;
   margin-bottom: 30rpx
 }
 
-.b-subscribe-logo{
+.b-subscribe-logo {
   width: 200rpx;
   height: 200rpx;
   background: #ccc;
   border-radius: 2rpx
 }
 
-.b-header-right{
+.b-header-right {
   margin-left: 30rpx;
   flex: 1;
   position: relative
 }
 
-.b-header-info{
+.b-header-info {
   position: absolute;
   bottom: 0
 }
 
-.b-header-money{
+.b-header-money {
   font-weight: 450;
 }
 
-.b-money-symbol{
+.b-money-symbol {
   font-size: 32rpx
 }
 
-.b-money-number{
+.b-money-number {
   font-size: 48rpx;
   font-weight: bold
 }
 
-.b-header-remain{
+.b-header-remain {
   font-size: 24rpx;
   color: #999;
   margin-top: 5rpx;
   margin-bottom: 10rpx
 }
 
-.b-close{
+.b-close {
   position: absolute;
   top: 20rpx;
   right: 20rpx;
   padding: 0 0 10rpx 10rpx
 }
 
-.b-close-image{
+.b-close-image {
   width: 35rpx;
   height: 35rpx
 }
 
-.b-header-select{
+.b-header-select {
   font-size: 24rpx;
   color: #666
 }
 
-.b-scroll-body{
+.b-scroll-body {
   height: 750rpx;
 }
 
-.b-scroll-content{
+.b-scroll-content {
   height: 100%;
   padding: 0 30rpx;
   box-sizing: border-box
 }
 
-.b-body-title{
+.b-body-title {
   padding: 20rpx 0;
   font-size: 32rpx;
   border-bottom: 1rpx solid #eee
 }
 
-.b-body-title-color{
+.b-body-title-color {
   border-bottom: none
 }
 
-.b-body-color-title{
+.b-body-color-title {
   color: #666;
   font-weight: 500;
   display: inline-block
 }
 
-.b-title-wrapper{
+.b-title-wrapper {
   display: table-cell;
   vertical-align: bottom
 }
 
-.b-title-stauts{
+.b-title-stauts {
   color: #ff555c;
   font-size: 24rpx;
   margin-left: 20rpx;
   display: inline-block
 }
 
-.b-body-server{
+.b-body-server {
   width: 100%;
   box-sizing: border-box;
   margin-top: 20rpx
 }
 
-.b-server-cell{
+.b-server-cell {
   border-radius: 8rpx;
   box-sizing: border-box;
   padding: 15rpx;
@@ -1643,79 +1656,88 @@ button {
   flex-direction: row
 }
 
-.b-server-select{
+.b-server-select {
   background: rgba(255, 247, 247, 0.5);
   border: 1rpx solid #ff555c
 }
 
-.b-server-normal{
+.b-server-normal {
   background: rgba(241, 241, 241, 1)
 }
 
-.b-server-logo{
+.b-server-logo {
   width: 120rpx;
   height: 120rpx;
   background: #eee;
 }
 
-.b-server-right{
+.b-server-right {
   flex: 1;
   position: relative;
   margin-left: 20rpx
 }
 
-.b-server-right-middle{
+.b-server-right-middle {
   width: 100%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%)
 }
 
-.b-server-right-top{
+.b-server-right-top {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-bottom: 10rpx
 }
 
-.b-right-name{
+.b-right-name {
   color: #333;
   flex: 1;
+  max-width: 400rpx;
   font-size: 32rpx;
-  font-weight: 500
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
 }
 
-.b-right-distance{
+.b-right-distance {
   font-size: 28rpx;
   color: #333;
   font-weight: 500
 }
 
-.b-right-address-wrapper{
+.b-right-address-wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
+  max-width: 400rpx;
 }
 
-.b-right-location-icon{
+.b-right-location-icon {
   width: 30rpx;
   height: 30rpx;
   margin-right: 5rpx;
 }
 
-.b-right-address{
+.b-right-address {
+  flex: 1;
   font-size: 28rpx;
-  color: #999
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
 }
 
-.b-body-wrapper{
+.b-body-wrapper {
   display: flex;
   flex-direction: row;
   margin-bottom: 20rpx;
   flex-wrap: wrap
 }
 
-.b-body-color-item{
+.b-body-color-item {
   width: 25%;
   margin-top: 30rpx;
   padding-left: 10rpx;
@@ -1723,7 +1745,7 @@ button {
   padding-right: 10rpx
 }
 
-.b-color-cell{
+.b-color-cell {
   font-size: 24rpx;
   text-align: center;
   padding-top: 15rpx;
@@ -1731,24 +1753,24 @@ button {
   padding-bottom: 15rpx
 }
 
-.b-cell-select{
+.b-cell-select {
   border: 1rpx solid #ff555c;
   background: rgba(255, 247, 247, 0.5);
   color: #ff555c
 }
 
-.b-cell-normal{
+.b-cell-normal {
   background: rgba(241, 241, 241, 1);
   color: #ccc
 }
 
-.b-btn-wrapper{
+.b-btn-wrapper {
   box-sizing: border-box;
   width: 100%;
   padding: 15rpx 30rpx
 }
 
-.b-subscribe-btn{
+.b-subscribe-btn {
   width: 100%;
   font-size: 32rpx;
   color: #fff;
@@ -1761,21 +1783,16 @@ button {
   outline: none
 }
 
-button::after{
+button::after {
   border: none
 }
 
-.btn-enable{
-  background: linear-gradient(45deg, #FB653D, #ff555c);
+.btn-enable {
+  background: linear-gradient(90deg, #FB653D, #ff555c);
   opacity: 1
 }
 
-.btn-disenable{
-  background: linear-gradient(45deg, #FB653D, #ff555c);
-  opacity: 0.5
-}
-
-.b-body-date{
+.b-body-date {
   width: 50%;
   margin-top: 30rpx;
   padding-left: 10rpx;
@@ -1783,7 +1800,7 @@ button::after{
   padding-right: 10rpx
 }
 
-.b-date-cell{
+.b-date-cell {
   font-size: 24rpx;
   text-align: center;
   padding-top: 15rpx;
@@ -1791,15 +1808,15 @@ button::after{
   padding-bottom: 15rpx
 }
 
-.theme-color{
+.theme-color {
   color: #ff555c
 }
 
-.normal-color{
+.normal-color {
   color: #333
 }
 
-.gray-color{
+.gray-color {
   color: #ccc
 }
 

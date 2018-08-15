@@ -319,12 +319,23 @@
   </view>
 </model>
 
+<!-- 确认预约提示 -->
+<model visible="{{ visibleSubscribeTip }}" title="预约确认" cancelText="暂不预约" confirmText="确认预约" confirmLoading="{{ confirmSubTipLoading }}" bind:cancel="handleSubscribeCancel" bind:confirm="handleSubscribeConfirm">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view class='b-queue-model-item'>服务网点: {{ subscribeStation }}</view>
+      <view class='b-queue-model-item'>预约时间: {{ subscribeTime }}</view>
+      <view class='b-queue-model-item'>网点地址: {{ subscribeAddress }}</view>
+    </view>
+  </view>
+</model>
+
 <!-- 预约弹窗 -->
 <popup show="{{ visibleSubscribe }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
   <view class='b-subscribe-container'>
     <view class='b-subscribe-header'>
       <view class='b-header-wrapper'>
-        <image class='b-subscribe-logo' src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5ae973ba514144940f868c9d3758eb35&auto=format&fit=crop&w=800&q=60' mode='aspectFill'></image>
+        <image class='b-subscribe-logo' src='{{ designList[0].left_img }}' mode='aspectFill'></image>
         <view class='b-header-right'>
           <view class='b-header-info'>
             <view class='b-header-money b-theme-color'>
@@ -344,21 +355,21 @@
           <view class='b-body-title'>
             <view class='b-title-wrapper'>
               <view class='b-body-color-title'>服务网点</view>
-              <view class='b-title-stauts' wx:if='{{ !hasSeverSelect }}'>请选择服务网点</view>
+              <view class='b-title-stauts' wx:if='{{ selectServerIndex === -1 }}'>请选择服务网点</view>
             </view>
             <view class='b-body-wrapper'>
-              <view class='b-body-server' wx:for="{{ serverList }}" wx:key="server" wx:if="{{ !hasSeverSelect || (hasSeverSelect &&  index === selectServerIndex) }}">
-                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}' bindtap='handleServerClick' data-index='{{ index }}'>
-                  <image class='b-server-logo'></image>
+              <view class='b-body-server' wx:for="{{ stationList }}" wx:key="server" wx:if="{{ selectServerIndex === -1 || (selectServerIndex !== -1 &&  index === selectServerIndex) }}">
+                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}' bindtap='handleServerClick' data-index='{{ index }}' data-station="{{ item }}">
+                  <image class='b-server-logo' src="{{ item.small_logo || '../../image/noimg.png' }}" catchtap='handlePreviewStation' data-image="{{ item.logo }}"></image>
                   <view class='b-server-right'>
                     <view class='b-server-right-middle'>
                       <view class='b-server-right-top'>
-                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.name }}</view>
+                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.station_name + item.station_name + item.station_name}}</view>
                         <view class='b-right-distance'>{{ item.distance }}</view>
                       </view>
                       <view class='b-right-address-wrapper'>
                         <image class='b-right-location-icon' src='../../image/dw.png'></image>
-                        <view class='b-right-address'>{{ item.address }}</view>
+                        <view class='b-right-address'>{{ item.station_address }}</view>
                       </view>
                     </view>
                   </view>
@@ -367,26 +378,26 @@
             </view>
           </view>
           <!-- 预约日期 -->
-          <view class='b-body-title' wx:if='{{ hasSeverSelect }}'>
+          <view class='b-body-title' wx:if='{{ selectServerIndex !== -1 }}'>
             <view class='b-title-wrapper'>
               <view class='b-body-color-title'>预约日期</view>
-              <view class='b-title-stauts' wx:if='{{ !hasDateSelect }}'>请选择预约日期</view>
+              <view class='b-title-stauts' wx:if='{{ selectDateIndex === -1 }}'>请选择预约日期</view>
             </view>
             <view class='b-body-wrapper'>
-              <view class='b-body-date' wx:for="{{ dateList }}" wx:key="date" wx:if="{{ !hasDateSelect || (hasDateSelect &&  index === selectDateIndex) }}">
-                <view class='b-date-cell {{ index === selectDateIndex? "theme-color" : item.enable? "normal-color" : "gray-color" }} {{ index === selectDateIndex? "b-server-select" : "b-server-normal" }}' bindtap="handleDateClick" data-index='{{ index }}'>{{ item.date }}</view>
+              <view class='b-body-date' wx:for="{{ dateList }}" wx:key="date" wx:if="{{ selectDateIndex === -1 || (selectDateIndex !== -1 &&  index === selectDateIndex) }}">
+                <view class='b-date-cell {{ index === selectDateIndex? "theme-color" : (item.enable? "normal-color" : "gray-color") }} {{ index === selectDateIndex? "b-server-select" : "b-server-normal" }}' bindtap="handleDateClick" data-index='{{ index }}' data-date="{{ item }}">{{ item.date }}</view>
               </view>
             </view>
           </view>
           <!-- 预约某个日期的时间段 -->
-          <view class='b-body-title' wx:if="{{ hasSeverSelect && hasDateSelect }}">
+          <view class='b-body-title' wx:if="{{ selectServerIndex !== -1 && selectDateIndex !== -1 }}">
             <view class='b-title-wrapper'>
               <view class='b-body-color-title'>预约时间</view>
-              <view class='b-title-stauts' wx:if='{{ !hasTimeSelect }}'>请选择预约时间</view>
+              <view class='b-title-stauts' wx:if='{{ selectTimeIndex === -1 }}'>请选择预约时间</view>
             </view>
             <view class='b-body-wrapper'>
-              <view class='b-body-date' wx:for="{{ timeList }}" wx:key="date" wx:if="{{ !hasTimeSelect || (hasTimeSelect &&  index === selectTimeIndex) }}">
-                <view class='b-date-cell {{index === selectTimeIndex? "theme-color" : item.enable? "normal-color" : "gray-color" }} {{ index === selectTimeIndex? "b-server-select" : "b-server-normal" }}' bindtap="handleTimeClick" data-index='{{ index }}'>{{ item.time }}</view>
+              <view class='b-body-date' wx:for="{{ timeList }}" wx:key="date" wx:if="{{ selectTimeIndex === -1 || (selectTimeIndex !== -1 &&  index === selectTimeIndex) }}">
+                <view class='b-date-cell {{index === selectTimeIndex? "theme-color" : item.enable? "normal-color" : "gray-color" }} {{ index === selectTimeIndex? "b-server-select" : "b-server-normal" }}' bindtap="handleTimeClick" data-index='{{ index }}' data-time="{{ item }}">{{ item.time }}</view>
               </view>
             </view>
           </view>
@@ -394,7 +405,6 @@
           <view class='b-body-title b-body-title-color'>
             <view class='b-title-wrapper'>
               <view class='b-body-color-title'>车身颜色</view>
-              <view class='b-title-stauts' wx:if='{{ !carColorOk }}'>{{ '抱歉！您的车身颜色为' + userCarColor + '，不符合广告要求' }}</view>
             </view>
             <view class='b-body-wrapper'>
               <view wx:for="{{ colorList }}" wx:key="color" class='b-body-color-item'>
@@ -406,7 +416,7 @@
       </scroll-view>
     </view>
     <view class='b-btn-wrapper'>
-      <button class='b-subscribe-btn {{ carColorOk? "btn-enable" : "btn-disenable" }}' bindtap='handleConfirmSubscribe'>确认预约</button>
+      <button class='b-subscribe-btn btn-enable' bindtap='handleConfirmSubscribe'>确认预约</button>
     </view>
     <!-- 关闭按钮 -->
     <view class='b-close' bindtap='handleSubscribeClose'>

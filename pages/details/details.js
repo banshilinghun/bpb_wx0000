@@ -91,52 +91,18 @@ Page({
     designList: [],
     //预约 data
     visibleSubscribe: false,
-    hasSeverSelect: false, 
     selectServerIndex: -1, //默认下标-1，表示未选择服务网点
-    hasDateSelect: false,
     selectDateIndex: -1, //默认下标-1，表示未选择日期
-    hasTimeSelect: false,
     selectTimeIndex: -1, //默认下标-1，表示未选择时间段
     totalCount: 0, //剩余总数
     remainCount: 0, //选择条件过滤后的剩余数
     selectStatusStr: '',
     userCarColor: '', //当前车主的车身颜色
-    serverList: [{
-        logo: '',
-        name: '奔跑宝',
-        distance: '12.78km',
-        address: '深圳市南山区腾讯大厦',
-        remain: 8,
-        colors: ['白色', '红色']
-      },
-      {
-        logo: '',
-        name: '奔跑宝',
-        distance: '12.78km',
-        address: '深圳市南山区腾讯大厦',
-        remain: 3,
-        colors: ['白色', '黑色']
-      },
-      {
-        logo: '',
-        name: '奔跑宝',
-        distance: '12.78km',
-        address: '深圳市南山区腾讯大厦',
-        remain: 4,
-        colors: ['蓝色', '红色']
-      },
-      {
-        logo: '',
-        name: '奔跑宝',
-        distance: '12.78km',
-        address: '深圳市南山区腾讯大厦',
-        remain: 0,
-        colors: ['白色', '橘色']
-      }
-    ],
     colorList: [],
-    dateList: [{ date: '2018-7-18', enable: true }, { date: '2018-7-19', enable: false }, { date: '2018-7-20', enable: true}, { date: '2018-7-21', enable: false}],
-    timeList: [{ time: '8:00-9:00', enable: false }, { time: '9:00-10:00', enable: true }, { time: '10:00-11:00', enable: true }, { time: '11:00-12:00', enable: true }],
+    subscribeStation: '',
+    subscribeTime: '',
+    subscribeAddress: '',
+    visibleSubscribeTip: false
   },
 
   onLoad: function (options) {
@@ -1118,12 +1084,18 @@ Page({
       header: app.globalData.header,
       success: res => {
         console.log(that.data.adInfo);
+        // todo 删除假信息
+        res.car_color = '红色';
         if(that.data.adInfo.color_limit.indexOf(res.car_color) == -1) {
           that.setData({
             userCarColor: res.car_color,
             actionStatus: ACTION_ARR[2],
             actionStr: '立即预约',
             errorComment: '您的车身颜色为'+ res.car_color + ',\n暂不满足广告要求'
+          })
+        } else {
+          that.setData({
+            userCarColor: res.car_color
           })
         }
       }
@@ -1143,10 +1115,26 @@ Page({
       },
       header: app.globalData.header,
       success: res => {
-        
+        //通过可预约数判断是否可点击
+        res.forEach(element => {
+          element.enable = element.surplus_count != 0
+        })
+        console.log(res);
+        //排序
+        res.sort(that.sortRuleOfServer);
+        console.log(res);
+        that.setData({
+          stationList: res
+        })
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  sortRuleOfServer(a, b){
+    console.log('a----------->' + a.surplus_count);
+    console.log('b----------->' + b.surplus_count);
+    return b.surplus_count - a.surplus_count;
   },
   
   /**
@@ -1155,9 +1143,9 @@ Page({
   changeRemainCount(){
     let that = this;
     let count = 0;
-    let serverList = that.data.serverList;
-    serverList.forEach(element => {
-      count += element.remain;
+    let stationList = that.data.stationList;
+    stationList.forEach(element => {
+      count += element.surplus_count;
     });
     that.setData({
       totalCount: count,
@@ -1168,8 +1156,10 @@ Page({
   handleSubscribe() {
     this.setData({
       visibleSubscribe: true,
-      colorList: that.data.adInfo.color_limit
+      colorList: this.data.adInfo.color_limit
     })
+    this.initSelectStatus();
+    this.changeRemainCount();
   },
 
   handleSubscribeClose() {
@@ -1185,26 +1175,46 @@ Page({
     console.log(event);
     let that = this;
     let index = event.currentTarget.dataset.index;
-    let hasSelect = that.data.hasSeverSelect;
-    if(!hasSelect){
+    //当前站点广告数量不足
+    if(!event.currentTarget.dataset.station.enable){
+      return;
+    }
+    if(that.data.selectServerIndex === -1){ //选中
       that.setData({
-        selectServerIndex: index,
-        hasSeverSelect: true
+        selectServerIndex: index
       })
-      let serverList = that.data.serverList;
-      that.setRemainCount(serverList[index].remain);
-    }else{
+      that.resetStationCount();
+      that.initDateList(index);
+    }else{ //取消选中
       that.setData({
         selectServerIndex: -1,
-        hasSeverSelect: false,
         selectDateIndex: -1,
-        hasDateSelect: false,
-        selectTimeIndex: -1,
-        hasTimeSelect: false
+        selectTimeIndex: -1
       })
       that.setRemainCount(that.data.totalCount);
     }
     that.initSelectStatus();
+  },
+
+  resetStationCount(){
+    let that = this;
+    that.setRemainCount(that.data.stationList[that.data.selectServerIndex].surplus_count);
+  },
+
+  /** 选中服务网点时初始化日期 */
+  initDateList(clickIndex){
+    let dates = this.data.stationList[clickIndex].dates;
+    dates.forEach(element => {
+      let count = 0;
+      element.times.forEach(sub => {
+        count += sub.surplus_count;
+      });
+      element.surplus_count = count;
+      element.enable = count != 0;
+    })
+    this.setData({
+      dateList: dates
+    })
   },
 
   /** 更新剩余数量 */
@@ -1219,21 +1229,41 @@ Page({
     console.log(event);
     let that = this;
     let index = event.currentTarget.dataset.index;
-    let hasSelect = that.data.hasDateSelect;
-    if (!hasSelect) {
+    if(!event.currentTarget.dataset.date.enable){
+      return;
+    }
+    if (that.data.selectDateIndex === -1) {
       that.setData({
         selectDateIndex: index,
-        hasDateSelect: true
       })
+      that.initTimeList();
+      // 设置选中日期的剩余数
+      that.resetDateCount();
     } else {
       that.setData({
         selectDateIndex: -1,
-        hasDateSelect: false,
-        selectTimeIndex: -1,
-        hasTimeSelect: false
+        selectTimeIndex: -1
       })
+      //重置数量
+      that.resetStationCount();
     }
     that.initSelectStatus();
+  },
+
+  resetDateCount(){
+    let that = this;
+    that.setRemainCount(that.data.dateList[that.data.selectDateIndex].surplus_count);
+  },
+
+  initTimeList(){
+    let times = this.data.dateList[this.data.selectDateIndex].times;
+    times.forEach(element => {
+      element.time = element.begin_time + "-" + element.end_time;
+      element.enable = element.surplus_count != 0;
+    })
+    this.setData({
+      timeList: times
+    })
   },
 
   /** 选择时间段 */
@@ -1241,19 +1271,27 @@ Page({
     console.log(event);
     let that = this;
     let index = event.currentTarget.dataset.index;
-    let hasSelect = that.data.hasTimeSelect;
-    if (!hasSelect) {
+    let time = event.currentTarget.dataset.time;
+    if(!event.currentTarget.dataset.time.enable){
+      return;
+    }
+    if (that.data.selectTimeIndex === -1) {
       that.setData({
-        selectTimeIndex: index,
-        hasTimeSelect: true
+        selectTimeIndex: index
       })
+      that.resetTimeCount();
     } else {
       that.setData({
-        selectTimeIndex: -1,
-        hasTimeSelect: false
+        selectTimeIndex: -1
       })
+      that.resetDateCount();
     }
     that.initSelectStatus();
+  },
+
+  resetTimeCount(){
+    let that = this;
+    that.setRemainCount(that.data.timeList[that.data.selectTimeIndex].surplus_count);
   },
 
   initSelectStatus(){
@@ -1261,12 +1299,12 @@ Page({
     let selectServerIndex = that.data.selectServerIndex;
     let selectDateIndex = that.data.selectDateIndex;
     let selectTimeIndex = that.data.selectTimeIndex;
-    let serverList = that.data.serverList;
+    let stationList = that.data.stationList;
     let dateList = that.data.dateList;
     let timeList = that.data.timeList;
     if (selectServerIndex !== -1 && selectDateIndex !== -1 && selectTimeIndex !== -1) { //全选
       that.setData({
-        selectStatusStr: '已选: ' + "\"" + serverList[selectServerIndex].name + "\" " + "\"" + dateList[selectDateIndex].date + "\" " + "\"" + timeList[selectTimeIndex].time + "\" " + "\"" + that.data.carColor + "\""
+        selectStatusStr: '已选: ' + "\"" + stationList[selectServerIndex].station_name + "\" " + "\"" + dateList[selectDateIndex].date + "\" " + "\"" + timeList[selectTimeIndex].time + "\" " + "\"" + that.data.userCarColor + "\""
       })
     } else { //有选项未选择
       that.setData({
@@ -1278,10 +1316,6 @@ Page({
   /** 确认预约 */
   handleConfirmSubscribe(){
     let that = this;
-    //车身颜色不满足
-    if(!that.data.carColorOk){
-      return;
-    }
     let selectServerIndex = that.data.selectServerIndex;
     let selectDateIndex = that.data.selectDateIndex;
     let selectTimeIndex = that.data.selectTimeIndex;
@@ -1306,6 +1340,31 @@ Page({
       });
       return;
     }
+    that.showSubscribeModal();
+  },
+  
+  /**
+   * 弹框提示
+   */
+  showSubscribeModal(){
+    let that = this;
+    that.setData({
+      subscribeStation: that.data.stationList[that.data.selectServerIndex].station_name,
+      subscribeTime: that.data.dateList[that.data.selectDateIndex].date + ' ' + that.data.timeList[that.data.selectTimeIndex].time,
+      subscribeAddress: that.data.stationList[that.data.selectServerIndex].station_address,
+      visibleSubscribeTip: true
+    })
+  },
+
+  handlePreviewStation(event){
+    const imageUrl = event.currentTarget.dataset.image;
+    if(!imageUrl){
+      return;
+    }
+    wx.previewImage({
+      // current: 'String', // 当前显示图片的链接，不填则默认为 urls 的第一张
+      urls: [imageUrl],
+    })
   }
 
 })
