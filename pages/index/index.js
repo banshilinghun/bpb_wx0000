@@ -227,9 +227,6 @@ Page({
         url: '../main/main'
       })
     }, 1500);
-    // wx.redirectTo({
-    //   url: '../brandList/brandList'
-    // })
   },
 
   getUserInfo: function (e) {
