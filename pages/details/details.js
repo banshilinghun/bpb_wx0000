@@ -186,33 +186,12 @@ Page({
       shareAwardText: app.globalData.shareFlag ? '分享有奖' : '分享',
       showRule: false
     })
-    //注册认证状态
-    var loginFlag = app.globalData.login;
-    var checkStaus = app.globalData.checkStaus;
-    if (loginFlag != 1) { //没有登录
-      that.setData({
-        loginStaus: 0
-      })
-    } else { //已登录
-      if (checkStaus == 0) { //未认证
-        that.setData({
-          loginStaus: 1
-        })
-      } else { //登录了且认证了
-        that.setData({
-          loginStaus: 2
-        })
-      }
-    }
-
-    //检测是否是滴滴车主以及注册认证状态
-    that.checkUserAuthStatus();
+    that.initUserAuthStatus();
     that.getLocation();
     //请求广告信息
     that.requestAdInfo();
     that.requestJoinList();
     //that.requestQueueList(); 
-
     var pages = getCurrentPages();
     console.log(pages)
     var currPage = pages[pages.length - 1]; //当前页面
@@ -230,8 +209,22 @@ Page({
     }
   },
 
+  initUserAuthStatus() {
+    const that = this;
+    //注册认证状态
+    var loginFlag = app.globalData.login;
+    if (loginFlag != 1) { //没有登录
+      that.setData({
+        loginStaus: 0
+      })
+    } else { //已登录
+      //检测是否是滴滴车主以及注册认证状态
+      that.checkUserAuthStatus();
+    }
+  },
+
   /** 请求地理位置信息 */
-  getLocation(){
+  getLocation() {
     const that = this;
     wx.getLocation({
       type: 'gcj02',
@@ -255,13 +248,24 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-          console.log(res.data)
           that.setData({
             isDiDi: res.data.data.user_type
           })
-          if (res.data.data.status != 0) {
+          let status = res.data.data.status;
+          //更新全局认证状态
+          app.globalData.checkStaus = status;
+          //是否认证
+          if (status == 0) {
             that.setData({
-              loginStaus: 2
+              loginStaus: 1 //未认证
+            })
+          } else if (status == 3) {
+            that.setData({
+              loginStaus: 3 //已认证
+            })
+          } else {
+            that.setData({
+              loginStaus: 2 //认证审核中或者失败
             })
           }
           //未注册和未认证弹框
@@ -308,11 +312,15 @@ Page({
         console.log(res.data)
         if (res.data.code == 1000) {
           let dataBean = res.data.data;
-          dataBean.info.run_status = RunStatus.getRunStatus(dataBean.info);
-          dataBean.info.begin_date = dataBean.info.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-          dataBean.info.end_date = dataBean.info.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-          dataBean.info.reserve_date.start_date = dataBean.info.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-          dataBean.info.reserve_date.last_date = dataBean.info.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          let adTempInfo = dataBean.info;
+          adTempInfo.run_status = RunStatus.getRunStatus(adTempInfo);
+          adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          adTempInfo.end_date = adTempInfo.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          //TODO 广告开放预约时间
+          if (adTempInfo.reserve_date.start_date && adTempInfo.reserve_date.last_date) {
+            adTempInfo.reserve_date.start_date = adTempInfo.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+            adTempInfo.reserve_date.last_date = adTempInfo.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          }
           //预约过滤
           that.resolveAction(dataBean);
           //广告效果图
@@ -329,21 +337,21 @@ Page({
             element.effect = effect_list;
           })
           that.setData({
-            adInfo: dataBean.info,
+            adInfo: adTempInfo,
             designList: dataBean.design_list,
-            joinCount: dataBean.info.total_count - dataBean.info.current_count,
-            carColor: (!dataBean.info.color_limit || dataBean.info.color_limit.length == 0) ? '不限' : dataBean.info.color_limit.join('/'),
+            joinCount: adTempInfo.total_count - adTempInfo.current_count,
+            carColor: (!adTempInfo.color_limit || adTempInfo.color_limit.length == 0) ? '不限' : adTempInfo.color_limit.join('/'),
             //isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
-            banners: dataBean.design_list.length == 0? [ '../../image/bpb.png' ] : [ dataBean.design_list[0].left_img ],
+            banners: dataBean.design_list.length == 0 ? ['../../image/bpb.png'] : [dataBean.design_list[0].left_img],
             //赋值分享图数据
             shareAvatar: app.globalData.userInfo.avatarUrl,
             shareNickname: app.globalData.userInfo.nickName,
-            incomeMoney: dataBean.info.predict_amount,
-            adImageUrl: dataBean.info.img_url || "",
-            adName: dataBean.info.ad_name,
-            adTime: dataBean.info.begin_date + ' ~ ' + dataBean.info.end_date,
-            adId: dataBean.info.id,
-            joinNumber: dataBean.info.total_count - dataBean.info.current_count
+            incomeMoney: adTempInfo.predict_amount,
+            adImageUrl: adTempInfo.img_url || "",
+            adName: adTempInfo.ad_name,
+            adTime: adTempInfo.begin_date + ' ~ ' + adTempInfo.end_date,
+            adId: adTempInfo.id,
+            joinNumber: adTempInfo.total_count - adTempInfo.current_count
           })
           that.setDesignImageHeight();
           that.getUserCarInfo();
@@ -375,7 +383,7 @@ Page({
   /**
    * 处理按钮状态
    */
-  resolveAction(dataBean){
+  resolveAction(dataBean) {
     const that = this;
     if (dataBean.current_reserve || dataBean.current_ad) {
       that.setData({
@@ -1032,7 +1040,7 @@ Page({
   /**
    * 不可预约处理
    */
-  rejectSubscribe(){
+  rejectSubscribe() {
     const that = this;
     wx.showModal({
       title: '提示',
@@ -1083,15 +1091,16 @@ Page({
       url: ApiConst.GET_USER_CAR_INFO,
       header: app.globalData.header,
       success: res => {
-        console.log(that.data.adInfo);
-        // todo 删除假信息
-        res.car_color = '红色';
-        if(that.data.adInfo.color_limit.indexOf(res.car_color) == -1) {
+        //未注册或者未认证
+        if (!res) {
+          return;
+        }
+        if (that.data.adInfo.color_limit.indexOf(res.car_color) == -1) {
           that.setData({
             userCarColor: res.car_color,
             actionStatus: ACTION_ARR[2],
             actionStr: '立即预约',
-            errorComment: '您的车身颜色为'+ res.car_color + ',\n暂不满足广告要求'
+            errorComment: '您的车身颜色为' + res.car_color + ',\n暂不满足广告要求'
           })
         } else {
           that.setData({
@@ -1131,16 +1140,16 @@ Page({
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
-  sortRuleOfServer(a, b){
+  sortRuleOfServer(a, b) {
     console.log('a----------->' + a.surplus_count);
     console.log('b----------->' + b.surplus_count);
     return b.surplus_count - a.surplus_count;
   },
-  
+
   /**
    * 预约剩余数
    */
-  changeRemainCount(){
+  changeRemainCount() {
     let that = this;
     let count = 0;
     let stationList = that.data.stationList;
@@ -1176,16 +1185,16 @@ Page({
     let that = this;
     let index = event.currentTarget.dataset.index;
     //当前站点广告数量不足
-    if(!event.currentTarget.dataset.station.enable){
+    if (!event.currentTarget.dataset.station.enable) {
       return;
     }
-    if(that.data.selectServerIndex === -1){ //选中
+    if (that.data.selectServerIndex === -1) { //选中
       that.setData({
         selectServerIndex: index
       })
       that.resetStationCount();
       that.initDateList(index);
-    }else{ //取消选中
+    } else { //取消选中
       that.setData({
         selectServerIndex: -1,
         selectDateIndex: -1,
@@ -1196,13 +1205,13 @@ Page({
     that.initSelectStatus();
   },
 
-  resetStationCount(){
+  resetStationCount() {
     let that = this;
     that.setRemainCount(that.data.stationList[that.data.selectServerIndex].surplus_count);
   },
 
   /** 选中服务网点时初始化日期 */
-  initDateList(clickIndex){
+  initDateList(clickIndex) {
     let dates = this.data.stationList[clickIndex].dates;
     dates.forEach(element => {
       let count = 0;
@@ -1218,18 +1227,18 @@ Page({
   },
 
   /** 更新剩余数量 */
-  setRemainCount(count){
+  setRemainCount(count) {
     this.setData({
       remainCount: count
     });
   },
 
   /** 选择日期 */
-  handleDateClick(event){
+  handleDateClick(event) {
     console.log(event);
     let that = this;
     let index = event.currentTarget.dataset.index;
-    if(!event.currentTarget.dataset.date.enable){
+    if (!event.currentTarget.dataset.date.enable) {
       return;
     }
     if (that.data.selectDateIndex === -1) {
@@ -1250,12 +1259,12 @@ Page({
     that.initSelectStatus();
   },
 
-  resetDateCount(){
+  resetDateCount() {
     let that = this;
     that.setRemainCount(that.data.dateList[that.data.selectDateIndex].surplus_count);
   },
 
-  initTimeList(){
+  initTimeList() {
     let times = this.data.dateList[this.data.selectDateIndex].times;
     times.forEach(element => {
       element.time = element.begin_time + "-" + element.end_time;
@@ -1267,12 +1276,12 @@ Page({
   },
 
   /** 选择时间段 */
-  handleTimeClick(event){
+  handleTimeClick(event) {
     console.log(event);
     let that = this;
     let index = event.currentTarget.dataset.index;
     let time = event.currentTarget.dataset.time;
-    if(!event.currentTarget.dataset.time.enable){
+    if (!event.currentTarget.dataset.time.enable) {
       return;
     }
     if (that.data.selectTimeIndex === -1) {
@@ -1289,13 +1298,13 @@ Page({
     that.initSelectStatus();
   },
 
-  resetTimeCount(){
+  resetTimeCount() {
     let that = this;
     that.setRemainCount(that.data.timeList[that.data.selectTimeIndex].surplus_count);
   },
 
-  initSelectStatus(){
-    let that =this;
+  initSelectStatus() {
+    let that = this;
     let selectServerIndex = that.data.selectServerIndex;
     let selectDateIndex = that.data.selectDateIndex;
     let selectTimeIndex = that.data.selectTimeIndex;
@@ -1314,12 +1323,12 @@ Page({
   },
 
   /** 确认预约 */
-  handleConfirmSubscribe(){
+  handleConfirmSubscribe() {
     let that = this;
     let selectServerIndex = that.data.selectServerIndex;
     let selectDateIndex = that.data.selectDateIndex;
     let selectTimeIndex = that.data.selectTimeIndex;
-    if (selectServerIndex === -1){
+    if (selectServerIndex === -1) {
       $Toast({
         content: '请选择 服务网点',
         type: 'warning'
@@ -1342,11 +1351,11 @@ Page({
     }
     that.showSubscribeModal();
   },
-  
+
   /**
    * 弹框提示
    */
-  showSubscribeModal(){
+  showSubscribeModal() {
     let that = this;
     that.setData({
       subscribeStation: that.data.stationList[that.data.selectServerIndex].station_name,
@@ -1356,9 +1365,9 @@ Page({
     })
   },
 
-  handlePreviewStation(event){
+  handlePreviewStation(event) {
     const imageUrl = event.currentTarget.dataset.image;
-    if(!imageUrl){
+    if (!imageUrl) {
       return;
     }
     wx.previewImage({

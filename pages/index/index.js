@@ -97,10 +97,7 @@ Page({
                   'content-type': 'application/json'
                 },
                 success: res => {
-                  //console.log(res.data.data)
                   if (res.data.code == 1000) {
-                    //var param = JSON.stringify(res.data.data);
-                    //app.globalData.session_id = res.data.data.session_id;
                     app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
                     app.globalData.uid = res.data.data.uid;
                     app.globalData.checkStaus = res.data.data.status;
@@ -108,7 +105,6 @@ Page({
                     app.globalData.recomId = that.data.user_id;
                     app.globalData.recomType = that.data.type;
                     app.globalData.recomAdId = that.data.adId;
-
                     if (res.data.data.phone) {
                       app.globalData.login = 1;
                     } else {
@@ -119,8 +115,6 @@ Page({
                       //if (res.data.data.phone) {}
                       that.showMain();
                     } else {
-                      //console.log(type)
-                    
                       if (that.data.jump == 'ads') {
                         that.showMain();
                       } else if (that.data.jump == 'regist') {
@@ -159,11 +153,8 @@ Page({
                       content: res.data.msg
                     });
                   }
-                  //console.log(shareAd)
                 },
                 fail: res => {
-                  //console.log(2222);
-
                   wx.showModal({
                     title: '提示',
                     showCancel: false,
@@ -180,7 +171,6 @@ Page({
 
             }
           })
-          //console.log(app.globalData.userInfo)
         } else {
           console.log('获取用户登录态失败！' + res.errMsg)
         }

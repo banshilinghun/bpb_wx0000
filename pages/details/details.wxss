@@ -1009,7 +1009,7 @@ button::after {
 
 .tasts {
   color: #ff555c;
-  font-size: 32rpx;
+  font-size: 24rpx;
 }
 
 .red-text {

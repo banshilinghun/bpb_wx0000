@@ -8,7 +8,7 @@ const domain = domainArray[2];//1
 
 const releaseDomain = 'https://wxapi.benpaobao.com/';
 const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
-const debugDomain = 'http://192.168.2.172:8000/';
+const debugDomain = 'https://adapi.benpaobao.com/';
 
 /**
  * 加载域名
