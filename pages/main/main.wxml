@@ -19,7 +19,7 @@
   <view class="message__list">
     <block wx:if="{{ haveMyAd }}">
       <view class="axstw">
-        <view class="item2">
+        <view class="item2" bindtap="go" data-name="{{ myAd.id }}">
           <view class="item-left">
             <image src="{{ myAd.logo }}" class="image" />
           </view>

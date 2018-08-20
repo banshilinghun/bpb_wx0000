@@ -31,6 +31,7 @@ page {
   color: #666;
   font-weight: normal;
   position: relative;
+  min-width: 200rpx;
 }
 
 .profile-arrow,
@@ -1289,10 +1290,15 @@ button {
 
 .b-not-begin {
   background: linear-gradient(90deg, #FB653D, #ff555c);
-  opacity: 0.8
+  opacity: 0.5
 }
 
 .b-reject-error {
+  background: linear-gradient(90deg, #FB653D, #ff555c);
+  opacity: 0.8
+}
+
+.b-own-ad{
   background: linear-gradient(90deg, #FB653D, #ff555c);
   opacity: 0.8
 }

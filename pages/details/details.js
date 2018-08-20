@@ -340,7 +340,7 @@ Page({
             adInfo: adTempInfo,
             designList: dataBean.design_list,
             joinCount: adTempInfo.total_count - adTempInfo.current_count,
-            carColor: (!adTempInfo.color_limit || adTempInfo.color_limit.length == 0) ? '不限' : adTempInfo.color_limit.join('/'),
+            carColor: (!adTempInfo.color_limit || adTempInfo.color_limit.length == 0) ? '不限' : adTempInfo.color_limit.join('、'),
             //isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
             banners: dataBean.design_list.length == 0 ? ['../../image/bpb.png'] : [dataBean.design_list[0].left_img],
             //赋值分享图数据
@@ -532,7 +532,6 @@ Page({
         success: res => {
           if (res.data.code == 1000) {
             if (res.data.data.status == 3) {
-              console.log(this.data.isDiDi)
               if (that.data.isDiDi == 1) {
                 that.setData({
                   showRule: true
@@ -1163,12 +1162,73 @@ Page({
   },
 
   handleSubscribe() {
-    this.setData({
-      visibleSubscribe: true,
-      colorList: this.data.adInfo.color_limit
-    })
-    this.initSelectStatus();
-    this.changeRemainCount();
+    //验证登录状态
+    if(app.globalData.login != 1){
+      wx.showModal({
+        title: "提示",
+        content: "你还没有登录，不能预约广告",
+        confirmText: "立即登录",
+        cancelText: "取消",
+        success: function (sure) {
+          if (sure.confirm) {
+            wx.navigateTo({
+              url: '../register/register'
+            })
+          }
+        }
+      })
+    } else {
+      this.verifyAuthStatus();
+    }
+  },
+
+  /**
+   * 验证认证状态
+   */
+  verifyAuthStatus(){
+    let authStatus = app.globalData.checkStaus;
+    if (authStatus == 2) {
+      wx.showModal({
+        title: "提示",
+        content: "你没通过身份认证，不能预约广告",
+        confirmText: "立即认证",
+        cancelText: "取消",
+        success: function (sure) {
+          if (sure.confirm) {
+            wx.navigateTo({
+              url: '../state/state'
+            })
+          }
+        }
+      })
+    } else if (authStatus == 1) {
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: "你的身份认证信息正在审核中，不能预约广告"
+      });
+    } else if(authStatus == 0) {
+      wx.showModal({
+        title: "提示",
+        content: "你没进行身份认证，不能预约广告",
+        confirmText: "立即认证",
+        cancelText: "取消",
+        success: function (sure) {
+          if (sure.confirm) {
+            wx.navigateTo({
+              url: '../auth/auth'
+            })
+          }
+        }
+      });
+    } else {
+      this.setData({
+        visibleSubscribe: true,
+        colorList: this.data.adInfo.color_limit
+      })
+      this.initSelectStatus();
+      this.changeRemainCount();
+    }
   },
 
   handleSubscribeClose() {
@@ -1362,6 +1422,90 @@ Page({
       subscribeTime: that.data.dateList[that.data.selectDateIndex].date + ' ' + that.data.timeList[that.data.selectTimeIndex].time,
       subscribeAddress: that.data.stationList[that.data.selectServerIndex].station_address,
       visibleSubscribeTip: true
+    })
+  },
+
+  /**
+   * 发起预约请求
+   */
+  handleSubscribeRequest(){
+    const that = this;
+    that.setData({
+      confirmSubTipLoading: true
+    })
+    let requestData = {
+      url: ApiConst.UPDATE_USER_RESERVE,
+      data: {
+        ad_id: that.data.adId,
+        station_id: that.data.stationList[that.data.selectServerIndex].station_id,
+        time_id: that.data.timeList[that.data.selectTimeIndex].time_id
+      },
+      header: app.globalData.header,
+      success: res => {
+        //刷新页面
+        that.setData({
+          visibleSubscribeTip: false,
+          visibleSubscribe: false
+        })
+        that.requestAdInfo();
+        //预约成功跳转我的任务
+        that.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, res => {
+          wx.navigateTo({
+            url: '../task/task'
+          })
+        });
+      },
+      complete: res => {
+        that.setData({
+          confirmSubTipLoading: false
+        })
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  /**
+   * 微信通用模态弹窗
+   * @param {*} title  标题
+   * @param {*} content 内容
+   * @param {*} confirmText 确认按钮文字
+   * @param {*} showCancel 是否显示取消按钮
+   */
+  showWxModal(title, content, confirmText, showCancel){
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirmText,
+      showCancel: showCancel,
+      confirmColor: "#ff555c"
+    })
+  },
+
+    /**
+   * 微信通用模态弹窗
+   * @param {*} title  标题
+   * @param {*} content 内容
+   * @param {*} confirmText 确认按钮文字
+   * @param {*} showCancel 是否显示取消按钮
+   */
+  showWxModalUseConfirm(title, content, confirmText, showCancel, confirmCallback){
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirmText,
+      showCancel: showCancel,
+      confirmColor: "#ff555c",
+      success: confirmCallback
+    })
+  },
+
+  /**
+   * 暂不预约
+   */
+  handleSubscribeCancel(){
+    const that = this;
+    that.setData({
+      visibleSubscribeTip: false
     })
   },
 

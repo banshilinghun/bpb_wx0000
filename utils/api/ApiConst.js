@@ -165,3 +165,12 @@ export const GET_USER_CAR_INFO = baseUrl + 'app/get/user_carinfo';
 
 //获取用户车辆信息
 export const GET_AD_STATION_LIST = baseUrl + 'app/get/ad_station_list';
+
+//保存预约信息
+export const UPDATE_USER_RESERVE = baseUrl + 'app/save/user_reserve';
+
+//提交用户签到请求
+export const COMMIT_RESERVE_SIGNIN = baseUrl + 'app/commit/user_reserve_signin';
+
+//取消预约
+export const CANCEL_USER_RESERVE = baseUrl + 'app/cancel/user_reserve';
