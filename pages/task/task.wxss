@@ -180,6 +180,11 @@
   margin-left: 10rpx
 }
 
+.b-run-statistics{
+  color: #ff555c;
+  font-size: 32rpx
+}
+
 .b-run-item-bottom{
   font-size: 24rpx;
   color: #666;

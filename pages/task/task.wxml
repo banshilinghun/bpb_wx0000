@@ -1,33 +1,35 @@
 <view class='b-task-container'>
-  <block wx:if="{{ task.finishList && task.finishList.length !== 0 }}">
+  <block wx:if="{{ runningTask || ( overTask && overTask.length !== 0 ) }}">
     <!-- 进行中任务列表 -->
-    <block wx:if='{{ task.runList && task.runList.length !== 0 }}'>
+    <block wx:if='{{ runningTask }}'>
       <view class='b-task-title'>
         <text>进行中</text>
       </view>
       <view class='b-task-content'>
         <view class='b-cotnent-detail'>
-          <block wx:if="{{ status !== 'runing' }}">
+          <block wx:if="{{ status !== 'runingFixed' && status !== 'runingByTime' }}">
             <view>
               <!-- 状态标题 -->
               <view class='b-task-status-title'>
                 <view class='b-task-tip'>
-                  <text wx:if="{{ status === 'subscribed' }}">请在规定时间前往安装</text>
-                  <text wx:if="{{ status === 'signed' }}">请及时关注网点安装进度</text>
+                  <text wx:if="{{ status === 'subscribed' || status === 'subscribeOvertime' }}">请在规定时间前往安装</text>
+                  <text wx:if="{{ status === 'signedWaitInstall' }}">请及时关注网点安装进度</text>
+                  <text wx:if="{{ status === 'installing' }}">请耐心等待广告安装完成</text>
                   <text wx:if="{{ status === 'installed' }}">请及时上传车辆上画照片</text>
                   <text wx:if="{{ status === 'installAudit' }}">请耐心等待安装审核</text>
-                  <text wx:if="{{ status === 'installFail' }}">安装审核结果</text>
+                  <text wx:if="{{ status === 'installFail' || status === 'rework' }}">安装审核结果</text>
                   <text wx:if="{{ status === 'needCheck' }}">请尽快完成自主检测</text>
                   <text wx:if="{{ status === 'checkAudit' }}">请耐心等待检测审核</text>
                   <text wx:if="{{ status === 'checkfail' }}">检测审核结果</text>
                 </view>
                 <view class='b-task-status'>
-                  <text wx:if="{{ status === 'subscribed' || status === 'signed' }}">待安装</text>
+                  <text wx:if="{{ status === 'subscribed' || status === 'subscribeOvertime' || status === 'signed' }}">待安装</text>
+                  <text wx:if="{{ status === 'installing' }}">安装中</text>
                   <text wx:if="{{ status === 'installed' }}">安装完成</text>
                   <text wx:if="{{ status === 'installAudit' }}">审核中</text>
-                  <text wx:if="{{ status === 'installFail' }}">投放异常</text>
+                  <text wx:if="{{ status === 'installFail' || status === 'rework' }}">投放异常</text>
                   <text wx:if="{{ status === 'needCheck' }}">待检测</text>
-                  <text wx:if="{{ status === 'checkAudit' }}">审核中</text>
+                  <text wx:if="{{ status === 'checkAudit' }}">检测中</text>
                   <text wx:if="{{ status === 'checkfail' }}">检测异常</text>
                 </view>
               </view>
@@ -138,15 +140,15 @@
             </view>
           </block>
           <!-- 投放中-->
-          <block wx:if='{{ status === "runing" }}'>
+          <block wx:if='{{ status === "runingFixed" || status === "runingByTime" }}'>
             <view>
               <!-- 状态标题 -->
               <view class='b-task-status-title'>
                 <view class='b-run-tip'>
-                  <text>{{ isDiDi? "累计收益:" : "预计总收益:" }}</text>
+                  <text>{{ status === "runingByTime"? "累计收益:" : "预计总收益:" }}</text>
                 </view>
                 <view class='b-run-income'>
-                  <text>400元</text>
+                  <text>{{ status === "runingByTime"? runningTask.addUpAmount : runningTask.amountInfo.predict_amount }}</text>
                 </view>
                 <view class='b-task-status'>
                   <text>投放中</text>
@@ -157,18 +159,33 @@
               </view>
               <view class='b-run-detail'>
                 <!-- 滴滴双证车主 -->
-                <block wx:if="{{ isDiDi }}">
+                <block wx:if="{{ status === 'runingByTime' }}">
                   <view class='b-run-item'>
                     <view class='b-run-top'>
-                      <view class='b-run-item-left'>8.2</view>
-                      <view class='b-run-item-right'>时</view>
+                      <block wx:if="{{ runningTask.yesterdayAmount }}">
+                          <view class='b-run-item-left'>{{ runningTask.yesterdayAmount }}
+                            <text wx:if="{{ runningTask.yesterdayAmount.level == 1 }}">小于{{ runningTask.yesterdayAmount.duration_max }}</text>
+                            <text wx:if="{{ runningTask.yesterdayAmount.level == 2 }}">{{ runningTask.yesterdayAmount.duration_max }}</text>
+                            <text wx:if="{{ runningTask.yesterdayAmount.level == 3 }}">{{ runningTask.yesterdayAmount.duration }}</text>
+                            <text wx:if="{{ runningTask.yesterdayAmount.level == 4 }}">{{ runningTask.yesterdayAmount.duration }}</text>
+                          </view>
+                          <view class='b-run-item-right'>时</view>
+                      </block>
+                      <block wx:else>
+                          <view class="b-run-statistics">统计中,请耐心等待</view>
+                      </block>
                     </view>
                     <view class='b-run-item-bottom'>昨日在线时长</view>
                   </view>
                   <view class='b-run-item'>
                     <view class='b-run-top'>
-                      <view class='b-run-item-left'>18</view>
-                      <view class='b-run-item-right'>元</view>
+                        <block wx:if="{{ runningTask.yesterdayAmount }}">
+                            <view class='b-run-item-left'>{{ runningTask.yesterdayAmount.amount }}</view>
+                            <view class='b-run-item-right'>元</view>
+                        </block>
+                        <block wx:else>
+                            <view class="b-run-statistics">统计中,请耐心等待</view>
+                        </block>
                     </view>
                     <view class='b-run-item-bottom'>昨日收益</view>
                   </view>
@@ -177,7 +194,7 @@
                 <block wx:else>
                   <view class='b-run-item'>
                     <view class='b-run-top'>
-                      <view class='b-run-item-left'>18</view>
+                      <view class='b-run-item-left'>{{ runningTask.amountInfo.days }}</view>
                       <view class='b-run-item-right'>天</view>
                     </view>
                     <view class='b-run-item-bottom'>累计投放天数</view>
@@ -190,13 +207,13 @@
 
         <!-- 广告公共部分 -->
         <view class='b-task-ad-container'>
-          <image class='b-task-image' src='https://images.unsplash.com/photo-1506666488651-1b443be39878?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c929314485c6745507b81314b5e7608&auto=format&fit=crop&w=800&q=60'></image>
+          <image class='b-task-image' src='{{ runningTask.logo }}'></image>
           <view class='b-task-ad-info'>
             <view class='b-info-name'>
-              <text>麦当劳(深圳)</text>
+              <text>{{ runningTask.ad_name }}</text>
             </view>
             <view class='b-info-date'>
-              <text>投放时间:5月1日~5月31日</text>
+              <text>投放时间:{{ runningTask.date }}</text>
             </view>
           </view>
           <!-- action button -->
@@ -219,15 +236,15 @@
       </view>
     </block>
     <!-- 已完成任务列表 -->
-    <block wx:if='{{ task.finishList && task.finishList.length !== 0 }}'>
+    <block wx:if='{{ overTask && overTask.length !== 0 }}'>
       <view class='b-task-title'>
         <text>已完成</text>
       </view>
-      <view class='finish-container' wx:for='{{ task.finishList }}' wx:for-item='finish' wx:key='finish.id'>
-        <image class='ad-image' src='{{ finish.adLogo }}' mode='aspectFill'></image>
+      <view class='finish-container' wx:for='{{ overTask }}' wx:for-item='finish' wx:key='finish.id' data-adId="{{ finish.id }}" bindtap="handleAdDetail">
+        <image class='ad-image' src='{{ finish.logo }}' mode='aspectFill'></image>
         <view class='ad-finish-item'>
           <view class='ad-name'>
-            <text>{{ finish.adName }}</text>
+            <text>{{ finish.ad_name }}</text>
           </view>
           <view class='ad-middle'>
             <view class='b-ad-middle-left'>
@@ -235,11 +252,11 @@
                 <text>实际收益：</text>
               </view>
               <view class='ad-money'>
-                <text>{{ finish.income }}</text>
+                <text>{{ finish.real_amount }}</text>
               </view>
             </view>
             <view class='ad-status'>
-              <text>已结束</text>
+              <text>已完成</text>
             </view>
           </view>
           <view class='ad-time'>
@@ -247,7 +264,7 @@
               <text>投放时间：</text>
             </view>
             <view class='ad-time-detail'>
-              <text>{{ finish.date }}</text>
+              <text>{{ finish.begin_date + "-" + finish.end_date }}</text>
             </view>
           </view>
         </view>

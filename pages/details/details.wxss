@@ -70,6 +70,7 @@ page {
   display: flex;
   flex-direction: row;
   align-items: center;
+  overflow: hidden
 }
 
 .icon-margin {
@@ -1389,6 +1390,13 @@ button {
   width: 35rpx;
   height: 35rpx;
   margin-right: 10rpx
+}
+
+.b-require-text{
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
 }
 
 /* 广告样式 start */

@@ -100,10 +100,7 @@
             <view class="profile-item">车辆要求:</view>
             <view class="right-text horizontal-center" bindtap='handleColorExplain'>
               <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
-              <text wx:if='{{ adInfo.city_name }}'>{{ adInfo.city_name + ","}}</text>
-              <text wx:if='{{ adInfo.user_limit == 1 }}'>双证车主,</text>
-              <text wx:if='{{ adInfo.user_limit == 2 }}'>普通网约车,</text>
-              <text wx:if='{{ adInfo.car_size_limit }}'>{{ adInfo.car_size_limit }}</text>
+              <text class="b-require-text">{{ adInfo.car_require }}</text>
             </view>
           </view>
         </block>

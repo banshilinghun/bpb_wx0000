@@ -17,7 +17,7 @@ Page({
     pwdIcon: "../../image/pwdIcon.png",
     verifiIcon: "../../image/verifiIcon.png",
     istrue: true,
-    wx_code: app.globalData.code,
+    wx_code: app.globalData.code
   },
 
   onLoad: function (options) {

@@ -28,6 +28,16 @@ function friendly_time(time_stamp) {
   return f_time;
 }
 
+/**
+ * 格式化时间 为 x月x日
+ *
+ * @param {*} date 时间
+ */
+function formatDateTime(date){
+  return date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+}
+
 module.exports = {
-  friendly_time: friendly_time
+  friendly_time: friendly_time,
+  formatDateTime: formatDateTime
 }

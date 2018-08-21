@@ -174,3 +174,6 @@ export const COMMIT_RESERVE_SIGNIN = baseUrl + 'app/commit/user_reserve_signin';
 
 //取消预约
 export const CANCEL_USER_RESERVE = baseUrl + 'app/cancel/user_reserve';
+
+//我的任务
+export const GET_MY_TASK_LIST = baseUrl + "app/get/my_task_list";

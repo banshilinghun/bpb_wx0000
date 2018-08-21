@@ -3,12 +3,15 @@ const app = getApp();
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
 const util = require("../../utils/common/util.js");
+const timeUtil = require("../../utils/time/timeUtil");
+const designMode = require("../../utils/designMode/designMode");
 const {
   $Toast
 } = require('../../components/base/index');
 
-//subscribed: 已预约未签到 | signed: 已签到未安装 | installed: 安装完成待上画
-const STATUS = ['subscribed', 'signed', 'installed', 'installAudit', 'installFail', 'runing', 'needCheck', 'checkAudit', 'checkfail'];
+//subscribed: 已预约未签到 | subscribeOvertime 预约中，已超时 | signedWaitInstall: 已签到未安装 | installing: 安装中 | installed: 安装完成待上画 | rework: 返工预约 
+//installAudit: 安装审核 | installFail: 安装审核失败 | runingFixed: 投放中固定收益  | runingByTime: 投放中按时计费 | needCheck: 待检测 | checkAudit: 检测审核中 | checkfail: 审核失败
+
 // 计时器
 let timer;
 
@@ -19,21 +22,10 @@ Page({
    */
   data: {
     task: {
-      runList: [{}],
-      finishList: [{
-        adLogo: 'https://images.unsplash.com/photo-1506666488651-1b443be39878?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c929314485c6745507b81314b5e7608&auto=format&fit=crop&w=800&q=60',
-        adName: '麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳麦当劳',
-        income: '565',
-        date: '07月12日-8月11日'
-      },
-        {
-          adLogo: 'https://images.unsplash.com/photo-1506666488651-1b443be39878?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c929314485c6745507b81314b5e7608&auto=format&fit=crop&w=800&q=60',
-          adName: '奈雪的茶',
-          income: '565',
-          date: '07月12日-8月11日'
-        }]
+      runningTask: [],
+      overTask: []
     },
-    status: STATUS[6], //请确认等待广告安装完毕或提醒安装人员确认安装结束
+    status: '', //请确认等待广告安装完毕或提醒安装人员确认安装结束
     isDiDi: false
   },
 
@@ -42,6 +34,31 @@ Page({
    */
   onLoad: function(options) {
 
+  },
+
+  onShow: function(){
+    this.requestTaskList();
+  },
+
+  requestTaskList(){
+    const that = this;
+    let requestData = {
+      url: ApiConst.GET_MY_TASK_LIST,
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        res.runningTask.date = timeUtil.formatDateTime(res.runningTask.begin_date) + "-" + timeUtil.formatDateTime(res.runningTask.end_date);
+        that.setData({
+          status: designMode.getCurrentStatus(res.runningTask),
+          runningTask: res.runningTask,
+          overTask: res.overTask
+        })
+      },
+      complete: res => {
+        that.hideLoading();
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -222,6 +239,10 @@ Page({
     this.showModal('网点地址确认', event.currentTarget.dataset.address, '我知道了');
   },
 
+  handleAdDetail(event){
+    console.log(event);
+  },
+
   showLoading: function () {
     wx.showLoading({
       title: '加载中🚗...',
@@ -240,6 +261,6 @@ Page({
       showCancel: false,
       confirmColor: '#ff555c'
     })
-  }
+  },
 
 })

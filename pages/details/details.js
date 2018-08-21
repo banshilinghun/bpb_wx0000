@@ -125,41 +125,6 @@ Page({
       })
     }
     app.globalData.isFirst = false;
-    that.setScrollHeight();
-  },
-
-  setScrollHeight() {
-    let that = this;
-    let proSystem = new Promise(function (resolve, reject) {
-      wx.getSystemInfo({
-        success: function (res) {
-          that.setData({
-            windowWidth: res.windowWidth,
-            bannerHeight: res.windowWidth * 0.5625
-          });
-          resolve(res);
-        }
-      });
-    })
-    let proTop = new Promise((resolve, reject) => {
-      let query = wx.createSelectorQuery();
-      //选择id
-      query.select('#b-detail-top').boundingClientRect(rect => {
-        resolve(rect);
-      }).exec();
-    });
-    let proBottom = new Promise((resolve, reject) => {
-      let query = wx.createSelectorQuery();
-      //选择id
-      query.select('#b-detail-bottom').boundingClientRect(rect => {
-        resolve(rect);
-      }).exec();
-    });
-    Promise.all([proSystem, proTop, proBottom]).then(results => {
-      that.setData({
-        scrollHeight: results[0].windowHeight - results[1].height - results[2].height
-      });
-    })
   },
 
   setDesignImageHeight() {
@@ -217,6 +182,8 @@ Page({
       that.setData({
         loginStaus: 0
       })
+      //如果没有登录直接渲染完视图计算顶部高度
+      that.setScrollHeight();
     } else { //已登录
       //检测是否是滴滴车主以及注册认证状态
       that.checkUserAuthStatus();
@@ -268,6 +235,8 @@ Page({
               loginStaus: 2 //认证审核中或者失败
             })
           }
+          //在认证状态请求完之后才能渲染完视图计算顶部高度
+          that.setScrollHeight();
           //未注册和未认证弹框
           if (app.globalData.showAuthTip) {
             return;
@@ -285,6 +254,43 @@ Page({
           content: '网络错误'
         });
       }
+    })
+  },
+
+  /**
+   * 计算滚动区域高度
+   */
+  setScrollHeight() {
+    let that = this;
+    let proSystem = new Promise(function (resolve, reject) {
+      wx.getSystemInfo({
+        success: function (res) {
+          that.setData({
+            windowWidth: res.windowWidth,
+            bannerHeight: res.windowWidth * 0.5625
+          });
+          resolve(res);
+        }
+      });
+    })
+    let proTop = new Promise((resolve, reject) => {
+      let query = wx.createSelectorQuery();
+      //选择id
+      query.select('#b-detail-top').boundingClientRect(rect => {
+        resolve(rect);
+      }).exec();
+    });
+    let proBottom = new Promise((resolve, reject) => {
+      let query = wx.createSelectorQuery();
+      //选择id
+      query.select('#b-detail-bottom').boundingClientRect(rect => {
+        resolve(rect);
+      }).exec();
+    });
+    Promise.all([proSystem, proTop, proBottom]).then(results => {
+      that.setData({
+        scrollHeight: results[0].windowHeight - results[1].height - results[2].height
+      });
     })
   },
 
@@ -336,6 +342,11 @@ Page({
             console.log(effect_list);
             element.effect = effect_list;
           })
+          //车辆要求
+          let city_name = adTempInfo.city_limit == 0 && adTempInfo.city_name ? adTempInfo.city_name : "";
+          let user_limit = adTempInfo.user_limit == 1 ? ", 双证车主" : adTempInfo.user_limit == 2? ", 普通网约车" : "";
+          let car_size_limit = adTempInfo.car_size_limit ? ", " + adTempInfo.car_size_limit : "";
+          adTempInfo.car_require = city_name + user_limit + car_size_limit;
           that.setData({
             adInfo: adTempInfo,
             designList: dataBean.design_list,
