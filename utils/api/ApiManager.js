@@ -2,29 +2,30 @@
 /**
  * API 接口管理
  */
-const domainArray = ['release', 'release2', 'debug']
+const domainArray = ['release', 'release2', 'test', 'debug']
 //api 1
 const domain = domainArray[2];//1
 
-const releaseDomain = 'https://wxapi.benpaobao.com/';
-const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
-//const debugDomain = 'https://adapi.benpaobao.com/';
-const debugDomain = 'http://192.168.2.172:8000/';
+let domainStrategy = {
+  release: function(){
+    return 'https://wxapi.benpaobao.com/';
+  },
+  release2: function(){
+    return 'https://wxapi2.benpaobao.com/';
+  },
+  test: function(){
+    return 'https://adapi.benpaobao.com/';
+  },
+  debug: function(){
+    return 'http://192.168.2.172:8000/';
+  }
+}
 
 /**
  * 加载域名
  */
 function getBaseUrl() {
-  switch (domain) {
-    case domainArray[0]:
-      return releaseDomain;
-    case domainArray[1]:
-      return releaseDomain2;
-    case domainArray[2]:
-      return debugDomain;
-    default:
-      return releaseDomain;
-  }
+  return domainStrategy[domain]();
 }
 
 class uploadInfo {

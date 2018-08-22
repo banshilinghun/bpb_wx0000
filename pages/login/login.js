@@ -75,11 +75,9 @@ Page({
 					that.setLoginData2();
 					if(res.data.code == 1000) {
 						app.globalData.header.Cookie = 'sessionid='+res.data.data.session_id;
-						//app.globalData.uid = res.data.data.uid;
 						wx.showToast({
 							title: "登录成功"
 						})
-//						that.redirectTo(res.data.data);
 						setTimeout(function() {
 							that.redirectTo(res.data.data);
 						}, 1000);
