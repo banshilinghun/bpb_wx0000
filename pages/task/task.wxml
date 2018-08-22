@@ -23,7 +23,7 @@
                   <text wx:if="{{ status === 'checkfail' }}">检测审核结果</text>
                 </view>
                 <view class='b-task-status'>
-                  <text wx:if="{{ status === 'subscribed' || status === 'subscribeOvertime' || status === 'signed' }}">待安装</text>
+                  <text wx:if="{{ status === 'subscribed' || status === 'subscribeOvertime' || status === 'signedWaitInstall' }}">待安装</text>
                   <text wx:if="{{ status === 'installing' }}">安装中</text>
                   <text wx:if="{{ status === 'installed' }}">安装完成</text>
                   <text wx:if="{{ status === 'installAudit' }}">审核中</text>
@@ -34,21 +34,21 @@
                 </view>
               </view>
               <!-- 未签到 -->
-              <block wx:if="{{ status === 'subscribed'}}">
+              <block wx:if="{{ status === 'subscribed' || status === 'subscribeOvertime' }}">
                 <view class='b-content-margin'>
                   <view class='b-subscribe-info'>
-                    <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png'></image>
+                    <image class='b-time-image' src='{{ runningTask.logo }}'></image>
                     <view class='b-time-text'>
-                      <text>07月08日 09:00-10:00</text>
+                      <text>{{ runningTask.reserveDate.subscribeTime }}</text>
                     </view>
                     <view class='b-location-distance'>
                       <text>13.68km</text>
                     </view>
                   </view>
-                  <view class='b-address' bindtap='handleShowAddress' data-address='{{ "一号车库一号车库一号车库一号车库一号车库一号车库一号车库" }}'>
+                  <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.reserveDate.server_name }}'>
                     <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
                     <view class='b-time-text'>
-                      <text>一号车库一号车库一号车库一号车库一号车库一号车库一号车库</text>
+                      <text>{{ runningTask.reserveDate.server_name }}</text>
                     </view>
                     <!-- 导航 -->
                     <view class='b-go-map' catchtap='handleNavigation'>
@@ -64,21 +64,23 @@
                 </view>
               </block>
               <!-- 已签到未安装、安装未上画-->
-              <block wx:elif="{{ status === 'signed'}}">
+              <block wx:elif="{{ status === 'signedWaitInstall' || status === 'installing' || status === 'installed' }}">
                 <view class='b-content-margin'>
                   <view class='b-signed-wait-install'>
                     <view class='b-subscribe-info'>
                       <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png' mode='aspectFill'></image>
                       <view class='b-time-text'>
-                        <text wx:if="{{ status === 'signed' }}">07月08日 09:00-10:00</text>
-                        <text wx:if="{{ status === 'installed' }}">安装用时10fen30秒</text>
+                        <text wx:if="{{ status === 'signedWaitInstall' }}">已等待8分10秒</text>
+                        <text wx:if="{{ status === 'installing' }}">已安装9分30秒</text>
+                        <text wx:if="{{ status === 'installed' }}">安装用时10分30秒</text>
                       </view>
                     </view>
                     <view class='b-address'>
                       <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-loading-icon.png'></image>
                       <view class='b-need-wait-text'>
-                        <text wx:if="{{ status === 'signed' }}">还需等待2位</text>
-                        <text wx:if="{{ status === 'installed' }}">还需等待2位</text>
+                        <text wx:if="{{ status === 'signedWaitInstall' }}">还需等待2位</text>
+                        <text wx:if="{{ status === 'installing' }}">请耐心等待安装完成</text>
+                        <text wx:if="{{ status === 'installed' }}">等待上传车辆画面</text>
                       </view>
                     </view>
                   </view>
@@ -291,8 +293,8 @@
   </view>
 </model>
 
-<!-- 取消预约 -->
-<model visible="{{ visibleSubTip }}" title="取消提示" cancelText='联系客服' confirmText="我知道了" bind:cancel="handleCancelSubscribeTip" bind:confirm='handleConfirmSubscribeTip'>
+<!-- 不可取消提示 -->
+<model visible="{{ visibleSubTip }}" title="取消提示" cancelText='联系客服' confirmText="我知道了" bind:cancel="handleContactService" bind:confirm='handleUnableCancel'>
   <view class='subscribe-wrapper'>
     <view class='b-cancel-queue-tip'>
       <view class='b-queue-model-item'>您已错过取消时间，</view>
@@ -300,3 +302,12 @@
     </view>
   </view>
 </model>
+
+<!-- 取消预约提示 -->
+<model visible="{{ visibleSubCancelModel }}" title="取消提示" cancelText='暂不取消' confirmText="取消预约" confirmLoading="{{ showCancelLoading }}" bind:cancel="handleNotCancel" bind:confirm='handleSureCancel'>
+    <view class='subscribe-wrapper'>
+      <view class='b-cancel-queue-tip'>
+        <view class='b-queue-model-item'>您确定要取消预约吗？</view>
+      </view>
+    </view>
+  </model>

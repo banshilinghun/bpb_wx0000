@@ -424,7 +424,7 @@ Page({
     } else {
       that.showLoading();
       let requestData = {
-        url: ApiConst.CANCEL_SUBSCRIBE,
+        url: ApiConst.CANCEL_USER_RESERVE,
         data: {
           subscribe_id: element.subscribe_id
         },

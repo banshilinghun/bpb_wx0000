@@ -499,7 +499,7 @@ Page({
       subscribe_id: subscribe_id
     }
     wx.request({
-      url: ApiConst.CANCEL_SUBSCRIBE,
+      url: ApiConst.CANCEL_USER_RESERVE,
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -1460,8 +1460,8 @@ Page({
         })
         that.requestAdInfo();
         //预约成功跳转我的任务
-        that.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, res => {
-          wx.navigateTo({
+        that.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, function(res){
+          wx.switchTab({
             url: '../task/task'
           })
         });

@@ -1,4 +1,12 @@
 
+/** 
+ * todo 
+ * 1、超时未签到处理
+ * 2、地理位置显示处理，距离显示
+ * 3、多个计时器
+ */
+
+
 const app = getApp();
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
@@ -47,10 +55,20 @@ Page({
       data: {},
       header: app.globalData.header,
       success: res => {
-        res.runningTask.date = timeUtil.formatDateTime(res.runningTask.begin_date) + "-" + timeUtil.formatDateTime(res.runningTask.end_date);
+        let runningTempTask = res.runningTask;
+        if(runningTempTask && Object.keys(runningTempTask).length !== 0){
+          runningTempTask.date = timeUtil.formatDateTime(runningTempTask.begin_date) + "-" + timeUtil.formatDateTime(runningTempTask.end_date);
+          if(runningTempTask.reserveDate){
+            runningTempTask.reserveDate.subscribeTime = timeUtil.formatDateTime(runningTempTask.reserveDate.date) + " " + runningTempTask.reserveDate.begin_time + "-" + runningTempTask.reserveDate.end_time;
+          }
+          that.setData({
+            status: designMode.getCurrentStatus(runningTempTask),
+          })
+        } else {
+          runningTempTask= null;
+        }
         that.setData({
-          status: designMode.getCurrentStatus(res.runningTask),
-          runningTask: res.runningTask,
+          runningTask: runningTempTask,
           overTask: res.overTask
         })
       },
@@ -99,50 +117,6 @@ Page({
   },
 
   /**
-   * 取消预约
-   */
-  handleUnSubscribe(){
-    let that = this;
-    //todo
-    let element = {
-      date: '2018-8-6',
-      begin_time: '12:00',
-      subscribe_id: '1000000000'
-    }
-    //判断距离预约时间截止是否大于3小时，否则不可取消
-    //预约截止时间
-    let date = new Date(element.date + ' ' + element.begin_time);
-    let targetTime = date.getTime();
-    //当前时间
-    let currentTime = new Date().getTime();
-    console.log('remain------------>' + (targetTime - currentTime) / 1000);
-    if ((targetTime - currentTime) / 1000 < 3600 * 3) {
-      that.setData({
-        visibleSubTip: true
-      })
-    } else {
-      that.showLoading();
-      let requestData = {
-        url: ApiConst.CANCEL_SUBSCRIBE,
-        data: {
-          subscribe_id: element.subscribe_id
-        },
-        header: app.globalData.header,
-        success: res => {
-          $Toast({
-            content: '取消成功',
-            type: 'success'
-          });
-        },
-        complete: res => {
-          that.hideLoading();
-        }
-      }
-      ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
-    }
-  },
-
-  /**
    * 处理按钮点击事件
    */
   handleAction(){
@@ -150,12 +124,15 @@ Page({
     let that = this;
     switch (that.data.status){
       case 'subscribed':  //需要签到
-      case 'installFail': //安装审核不合格，需重新上画
+      case 'subscribeOvertime':
+      case 'rework': //安装审核不合格，需重新上画
         that.sign();
-       break;
+        break;
+      case 'installFail': //安装审核不合格，需重新拍照审核
+        break;
       case 'signed':      //待上画
       case 'installed':
-       break;
+        break;
       case 'needCheck':   //待检测
         break;
       case 'checkfail':   //检测审核不合格，需重新拍照检测
@@ -164,10 +141,36 @@ Page({
   },
 
   /**
+   * 取消预约
+   */
+  handleUnSubscribe(){
+    let that = this;
+    //判断距离预约时间截止是否大于3小时，否则不可取消
+    //预约截止时间 todo
+    //let targetTime = new Date(that.data.runningTask.reserveDate.date + ' ' + that.data.runningTask.reserveDate.begin_time).getTime();
+    let targetTime = new Date("2018-08-23 11:56:54").getTime();
+    //当前时间
+    let currentTime = new Date(that.data.runningTask.now_date).getTime();
+    console.log('currentTime------->' + targetTime);
+    console.log('currentTime------->' + currentTime);
+    console.log('remain------------>' + (targetTime - currentTime) / 1000);
+    if ((targetTime - currentTime) / 1000 < 3600 * 3) {
+      that.setData({
+        visibleSubTip: true
+      })
+    } else {
+      that.setData({
+        visibleSubCancelModel: true
+      })
+    }
+  },
+
+  /**
    * 签到
    */
   sign(){
     let that = this;
+    that.showLoading();
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
@@ -176,21 +179,39 @@ Page({
         // 22.532809, 113.926436
         //113.932713,22.538789
         //22.532620,113.926930
-        let distance = util.getDistance(res.latitude, res.longitude, '22.538789', '113.932713');
+        let distance = util.getDistance(res.latitude, res.longitude, '22.532809', '113.926436');
         console.log('distance------------>' + distance);
         //限制在服务网点五百米范围内可签到
         if(distance * 1000 > 500){
+          that.hideLoading();
           that.setData({
             visibleSign: true
           })
         }else{
-          $Toast({
-            content: '签到成功',
-            type: 'success'
-          })
+          that.sendSignRequest();
         }
       }
     })
+  },
+
+  sendSignRequest(){
+    const that = this;
+    let requestData = {
+      url: ApiConst.COMMIT_RESERVE_SIGNIN,
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        $Toast({
+          content: '签到成功',
+          type: 'success'
+        })
+        that.requestTaskList();
+      },
+      complete: res => {
+        that.hideLoading();
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -205,16 +226,19 @@ Page({
   /**
    * 联系客服
    */
-  handleCancelSubscribeTip(){
+  handleContactService(){
     wx.switchTab({
       url: '../QAservice/service'
+    })
+    this.setData({
+      visibleSubTip: false
     })
   },
 
   /**
    * 超时不可取消确认
    */
-  handleConfirmSubscribeTip(){
+  handleUnableCancel(){
     this.setData({
       visibleSubTip: false
     })
@@ -241,6 +265,51 @@ Page({
 
   handleAdDetail(event){
     console.log(event);
+  },
+
+  /**
+   *暂不取消预约
+   */
+  handleNotCancel(){
+    this.setData({
+      visibleSubCancelModel: false
+    })
+  },
+
+  /**
+   *确认取消预约
+   */
+  handleSureCancel(){
+    const that = this;
+    that.setData({
+      showCancelLoading: true
+    })
+    that.sendCancelSubscribeRequest();
+  },
+
+  sendCancelSubscribeRequest(){
+    const that = this;
+    let requestData = {
+      url: ApiConst.CANCEL_USER_RESERVE,
+      data: {},
+      header: app.globalData.header,
+      success: res => {
+        $Toast({
+          content: '取消成功',
+          type: 'success'
+        });
+        that.setData({
+          visibleSubCancelModel: false
+        })
+        that.requestTaskList();
+      },
+      complete: res => {
+        that.setData({
+          showCancelLoading: false
+        })
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   showLoading: function () {

@@ -1,5 +1,5 @@
 
-/** api 常量类以及方法调用 */
+/** api 常量类以及 url 调用 */
 
 let ApiManager = require('../api/ApiManager.js');
 let baseUrl = ApiManager.getBaseUrl();
