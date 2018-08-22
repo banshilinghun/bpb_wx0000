@@ -2,10 +2,6 @@
 /**
  * API 接口管理
  */
-const domainArray = ['release', 'release2', 'test', 'debug']
-//api 1
-const domain = domainArray[2];//1
-
 let domainStrategy = {
   release: function(){
     return 'https://wxapi.benpaobao.com/';
@@ -25,7 +21,7 @@ let domainStrategy = {
  * 加载域名
  */
 function getBaseUrl() {
-  return domainStrategy[domain]();
+  return domainStrategy['test']();
 }
 
 class uploadInfo {
