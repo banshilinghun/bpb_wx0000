@@ -37,7 +37,12 @@ function formatDateTime(date){
   return date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
 }
 
+function formatDateTimeSprit(date){
+  return date.replace(/(.+?)\-(.+?)\-(.+)/, "$2/$3");
+}
+
 module.exports = {
   friendly_time: friendly_time,
-  formatDateTime: formatDateTime
+  formatDateTime: formatDateTime,
+  formatDateTimeSprit: formatDateTimeSprit
 }

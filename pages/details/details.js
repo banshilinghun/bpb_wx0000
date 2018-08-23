@@ -344,7 +344,7 @@ Page({
           })
           //车辆要求
           let city_name = adTempInfo.city_limit == 0 && adTempInfo.city_name ? adTempInfo.city_name : "";
-          let user_limit = adTempInfo.user_limit == 1 ? ", 双证车主" : adTempInfo.user_limit == 2? ", 普通网约车" : "";
+          let user_limit = adTempInfo.user_limit == 1 ? ", 双证车主" : adTempInfo.user_limit == 2 ? ", 普通网约车" : "";
           let car_size_limit = adTempInfo.car_size_limit ? ", " + adTempInfo.car_size_limit : "";
           adTempInfo.car_require = city_name + user_limit + car_size_limit;
           that.setData({
@@ -1174,7 +1174,7 @@ Page({
 
   handleSubscribe() {
     //验证登录状态
-    if(app.globalData.login != 1){
+    if (app.globalData.login != 1) {
       wx.showModal({
         title: "提示",
         content: "你还没有登录，不能预约广告",
@@ -1196,42 +1196,14 @@ Page({
   /**
    * 验证认证状态
    */
-  verifyAuthStatus(){
+  verifyAuthStatus() {
     let authStatus = app.globalData.checkStaus;
     if (authStatus == 2) {
-      wx.showModal({
-        title: "提示",
-        content: "你没通过身份认证，不能预约广告",
-        confirmText: "立即认证",
-        cancelText: "取消",
-        success: function (sure) {
-          if (sure.confirm) {
-            wx.navigateTo({
-              url: '../state/state'
-            })
-          }
-        }
-      })
+      this.showAuthFailModal();
     } else if (authStatus == 1) {
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: "你的身份认证信息正在审核中，不能预约广告"
-      });
-    } else if(authStatus == 0) {
-      wx.showModal({
-        title: "提示",
-        content: "你没进行身份认证，不能预约广告",
-        confirmText: "立即认证",
-        cancelText: "取消",
-        success: function (sure) {
-          if (sure.confirm) {
-            wx.navigateTo({
-              url: '../auth/auth'
-            })
-          }
-        }
-      });
+      this.showWxModal('提示', '你的身份认证信息正在审核中，不能预约广告', '我知道了', false);
+    } else if (authStatus == 0) {
+      this.showNotAuthModal();
     } else {
       this.setData({
         visibleSubscribe: true,
@@ -1240,6 +1212,26 @@ Page({
       this.initSelectStatus();
       this.changeRemainCount();
     }
+  },
+
+  showAuthFailModal() {
+    this.showWxModalShowAll("提示", "你没通过身份认证，不能预约广告", "立即认证", "取消", true, function (res) {
+      if (res.confirm) {
+        wx.navigateTo({
+          url: '../state/state'
+        })
+      }
+    })
+  },
+
+  showNotAuthModal() {
+    this.showWxModalShowAll("提示", "你没进行身份认证，不能预约广告", "立即认证", "取消", true, function (res) {
+      if (res.confirm) {
+        wx.navigateTo({
+          url: '../auth/auth'
+        })
+      }
+    })
   },
 
   handleSubscribeClose() {
@@ -1283,14 +1275,24 @@ Page({
 
   /** 选中服务网点时初始化日期 */
   initDateList(clickIndex) {
-    let dates = this.data.stationList[clickIndex].dates;
+    let station = this.data.stationList[clickIndex];
+    let dates = station.dates;
     dates.forEach(element => {
       let count = 0;
-      element.times.forEach(sub => {
+      let timeAvailable = false;
+      element.times.forEach((sub, index) => {
+        //计算数量
         count += sub.surplus_count;
+        if (index === element.times.length - 1) {
+          //先判断时间
+          const nowTime = station.now_date;
+          let lastTime = new Date(element.date + " " + sub.begin_time).getTime() / 1000;
+          timeAvailable = lastTime >= nowTime;
+        }
       });
       element.surplus_count = count;
-      element.enable = count != 0;
+      //预约数为0，不可点击; 当前时间大于预约时间，不可点击
+      element.enable = timeAvailable && count != 0;
     })
     this.setData({
       dateList: dates
@@ -1336,13 +1338,17 @@ Page({
   },
 
   initTimeList() {
-    let times = this.data.dateList[this.data.selectDateIndex].times;
-    times.forEach(element => {
+    let selectStation = this.data.stationList[this.data.selectServerIndex];
+    let selectDate = this.data.dateList[this.data.selectDateIndex];
+    selectDate.times.forEach(element => {
+      //先判断时间
+      const nowTime = selectStation.now_date;
+      let itemTime = new Date(selectDate.date + " " + element.begin_time).getTime() / 1000;
       element.time = element.begin_time + "-" + element.end_time;
-      element.enable = element.surplus_count != 0;
+      element.enable = nowTime <= itemTime && element.surplus_count != 0;
     })
     this.setData({
-      timeList: times
+      timeList: selectDate.times
     })
   },
 
@@ -1439,7 +1445,7 @@ Page({
   /**
    * 发起预约请求
    */
-  handleSubscribeRequest(){
+  handleSubscribeRequest() {
     const that = this;
     that.setData({
       confirmSubTipLoading: true
@@ -1460,7 +1466,7 @@ Page({
         })
         that.requestAdInfo();
         //预约成功跳转我的任务
-        that.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, function(res){
+        that.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, function (res) {
           wx.switchTab({
             url: '../task/task'
           })
@@ -1482,7 +1488,7 @@ Page({
    * @param {*} confirmText 确认按钮文字
    * @param {*} showCancel 是否显示取消按钮
    */
-  showWxModal(title, content, confirmText, showCancel){
+  showWxModal(title, content, confirmText, showCancel) {
     wx.showModal({
       title: title,
       content: content,
@@ -1492,14 +1498,32 @@ Page({
     })
   },
 
-    /**
+  /**
    * 微信通用模态弹窗
    * @param {*} title  标题
    * @param {*} content 内容
    * @param {*} confirmText 确认按钮文字
    * @param {*} showCancel 是否显示取消按钮
    */
-  showWxModalUseConfirm(title, content, confirmText, showCancel, confirmCallback){
+  showWxModalUseConfirm(title, content, confirmText, showCancel, confirmCallback) {
+    wx.showModal({
+      title: title,
+      content: content,
+      confirmText: confirmText,
+      showCancel: showCancel,
+      confirmColor: "#ff555c",
+      success: confirmCallback
+    })
+  },
+
+  /**
+   * 微信通用模态弹窗
+   * @param {*} title  标题
+   * @param {*} content 内容
+   * @param {*} confirmText 确认按钮文字
+   * @param {*} showCancel 是否显示取消按钮
+   */
+  showWxModalShowAll(title, content, confirmText, cancelText, showCancel, confirmCallback) {
     wx.showModal({
       title: title,
       content: content,
@@ -1513,7 +1537,7 @@ Page({
   /**
    * 暂不预约
    */
-  handleSubscribeCancel(){
+  handleSubscribeCancel() {
     const that = this;
     that.setData({
       visibleSubscribeTip: false

@@ -343,7 +343,12 @@
           <view class='b-header-info'>
             <view class='b-header-money b-theme-color'>
               <text class='b-money-symbol'>￥</text>
-              <text class='b-money-number'>300~868</text>
+              <block wx:if='{{ adInfo.billing_mode == 0 }}'>
+                <text class='b-money-number'>{{ adInfo.predict_amount}}</text>
+              </block>
+              <block wx:elif="{{ adInfo.billing_mode == 1 }}">
+                <text class='b-money-number'>{{ adInfo.min_amount + "~" + adInfo.max_amount }}</text>
+              </block>
             </view>
             <view class='b-header-remain'>剩余{{ remainCount }}辆</view>
             <view class='b-header-select'>{{ selectStatusStr }}</view>
@@ -367,7 +372,7 @@
                   <view class='b-server-right'>
                     <view class='b-server-right-middle'>
                       <view class='b-server-right-top'>
-                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.station_name + item.station_name + item.station_name}}</view>
+                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.station_name }}</view>
                         <view class='b-right-distance'>{{ item.distance }}</view>
                       </view>
                       <view class='b-right-address-wrapper'>

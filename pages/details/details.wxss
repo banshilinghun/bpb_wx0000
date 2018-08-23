@@ -1630,7 +1630,7 @@ button {
 
 .b-body-title {
   padding: 20rpx 0;
-  font-size: 32rpx;
+  font-size: 28rpx;
   border-bottom: 1rpx solid #eee
 }
 
@@ -1737,7 +1737,7 @@ button {
 
 .b-right-address {
   flex: 1;
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #999;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -116,6 +116,7 @@ Page({
             title: '车型补充提示',
             content: '为了保证广告安装和广告计费正常进行，需要您补充完善车型信息',
             showCancel: false,
+            confirmColor: '#ff555c',
             success: res => {
               if (res.confirm) {
                 wx.navigateTo({

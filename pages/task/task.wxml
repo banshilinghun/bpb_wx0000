@@ -42,7 +42,7 @@
                       <text>{{ runningTask.reserveDate.subscribeTime }}</text>
                     </view>
                     <view class='b-location-distance'>
-                      <text>13.68km</text>
+                      <text>{{ distance }}km</text>
                     </view>
                   </view>
                   <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.reserveDate.server_name }}'>

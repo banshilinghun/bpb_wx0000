@@ -57,7 +57,7 @@ Page({
       success: res => {
         let runningTempTask = res.runningTask;
         if(runningTempTask && Object.keys(runningTempTask).length !== 0){
-          runningTempTask.date = timeUtil.formatDateTime(runningTempTask.begin_date) + "-" + timeUtil.formatDateTime(runningTempTask.end_date);
+          runningTempTask.date = timeUtil.formatDateTimeSprit(runningTempTask.begin_date) + "-" + timeUtil.formatDateTimeSprit(runningTempTask.end_date);
           if(runningTempTask.reserveDate){
             runningTempTask.reserveDate.subscribeTime = timeUtil.formatDateTime(runningTempTask.reserveDate.date) + " " + runningTempTask.reserveDate.begin_time + "-" + runningTempTask.reserveDate.end_time;
           }
@@ -66,6 +66,14 @@ Page({
           })
         } else {
           runningTempTask= null;
+        }
+        //计算距离
+        if(runningTempTask.reserveDate){
+          that.calculateDistance(runningTempTask.reserveDate.lat, runningTempTask.reserveDate.lng).then(distance => {
+            that.setData({
+              distance: distance
+            })
+          });
         }
         that.setData({
           runningTask: runningTempTask,
@@ -120,7 +128,6 @@ Page({
    * 处理按钮点击事件
    */
   handleAction(){
-    console.log('handleAction---------->');
     let that = this;
     switch (that.data.status){
       case 'subscribed':  //需要签到
@@ -146,14 +153,9 @@ Page({
   handleUnSubscribe(){
     let that = this;
     //判断距离预约时间截止是否大于3小时，否则不可取消
-    //预约截止时间 todo
-    //let targetTime = new Date(that.data.runningTask.reserveDate.date + ' ' + that.data.runningTask.reserveDate.begin_time).getTime();
-    let targetTime = new Date("2018-08-23 11:56:54").getTime();
+    let targetTime = new Date(that.data.runningTask.reserveDate.date + ' ' + that.data.runningTask.reserveDate.begin_time).getTime();
     //当前时间
     let currentTime = new Date(that.data.runningTask.now_date).getTime();
-    console.log('currentTime------->' + targetTime);
-    console.log('currentTime------->' + currentTime);
-    console.log('remain------------>' + (targetTime - currentTime) / 1000);
     if ((targetTime - currentTime) / 1000 < 3600 * 3) {
       that.setData({
         visibleSubTip: true
@@ -171,27 +173,38 @@ Page({
   sign(){
     let that = this;
     that.showLoading();
-    wx.getLocation({
-      type: 'gcj02',
-      success: function (res) {
-        console.log('lat----->' + res.latitude);
-        console.log('lng----->' + res.longitude);
-        // 22.532809, 113.926436
-        //113.932713,22.538789
-        //22.532620,113.926930
-        let distance = util.getDistance(res.latitude, res.longitude, '22.532809', '113.926436');
-        console.log('distance------------>' + distance);
-        //限制在服务网点五百米范围内可签到
-        if(distance * 1000 > 500){
-          that.hideLoading();
-          that.setData({
-            visibleSign: true
-          })
-        }else{
-          that.sendSignRequest();
-        }
+    that.calculateDistance(that.data.runningTask.reserveDate.lat, that.data.runningTask.reserveDate.lng).then(distance => {
+      //限制在服务网点五百米范围内可签到
+      //TODO
+      distance = 0.3;
+      if(distance * 1000 > 500){
+        that.hideLoading();
+        that.setData({
+          visibleSign: true
+        })
+      }else{
+        that.sendSignRequest();
       }
-    })
+    });
+  },
+
+  calculateDistance(serverLat, serverLng){
+    const that = this;
+    return new Promise(function(resolve, reject){
+      wx.getLocation({
+        type: 'gcj02',
+        success: function (res) {
+          console.log('lat----->' + res.latitude);
+          console.log('lng----->' + res.longitude);
+          // 22.532809, 113.926436
+          //113.932713,22.538789
+          //22.532620,113.926930
+          let distance = util.getDistance(res.latitude, res.longitude, serverLat, serverLng);
+          console.log('distance------------>' + distance);
+          resolve(distance.toFixed(2));
+        }
+      })
+    });
   },
 
   sendSignRequest(){
@@ -248,11 +261,13 @@ Page({
    * 导航
    */
   handleNavigation(){
+    const that = this;
+    let reserveInfo = that.data.runningTask.reserveDate;
     wx.openLocation({
-      longitude: Number('113.932713'),
-      latitude: Number('22.538789'),
-      name: '奔跑宝',
-      address: '田夏金牛大厦'
+      longitude: Number(reserveInfo.lat),
+      latitude: Number(reserveInfo.lng),
+      name: reserveInfo.server_name,
+      address: reserveInfo.address
     })
   },
 
