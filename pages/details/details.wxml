@@ -221,7 +221,7 @@
               <view class='b-design-item-title'>{{ design.title }}</view>
               <view class='b-effect-wrapper'>
                 <view id='effect-image' class='b-effect-image-wrapper' wx:for='{{ design.effect }}' wx:for-item='effect' wx:key='effect.id'>
-                  <image class='b-effect-image' src='{{ effect }}' style='height: {{ designHeight }}px' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}' data-current='{{ effect }}'></image>
+                  <image class='b-effect-image' src='{{ effect.img }}' style='height: {{ designHeight }}px' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}' data-current='{{ effect.img }}'></image>
                 </view>
               </view>
             </view>

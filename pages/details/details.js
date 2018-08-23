@@ -332,12 +332,24 @@ Page({
           //广告效果图
           dataBean.design_list.forEach(element => {
             let effect_list = [];
-            effect_list.push(element.left_img);
-            effect_list.push(element.right_img);
-            effect_list.push(element.inner_img);
+            let left = {
+              img: element.left_img,
+              desc: '车身左侧'
+            };
+            let right = {
+              img: element.right_img,
+              desc: '车身右侧'
+            };
+            let inner = {
+              img: element.inner_img,
+              desc: '车内'
+            };
+            effect_list.push(left);
+            effect_list.push(right);
+            effect_list.push(inner);
             //过滤空值
             effect_list = effect_list.filter((item) => {
-              return Boolean(item.trim()) === true;
+              return Boolean(item.img.trim()) === true;
             })
             console.log(effect_list);
             element.effect = effect_list;
@@ -1067,9 +1079,13 @@ Page({
     if (!effect || effect.length === 0) {
       return;
     }
+    let imageList = [];
+    effect.forEach(element => {
+      imageList.push(element.img);
+    })
     wx.previewImage({
       current: event.currentTarget.dataset.current,
-      urls: effect
+      urls: imageList
     })
   },
 
