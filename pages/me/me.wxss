@@ -40,7 +40,15 @@ page{
 
 .b-user-name{
   color: #fff;
-  font-size: 36rpx
+  font-size: 36rpx;
+  width: 300rpx;
+  overflow: hidden
+}
+
+.b-real-name{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
 }
 
 .b-user-palte{

@@ -5,7 +5,7 @@
         <image class='b-header-avatar' src='{{ userInfo.avatarUrl }}'></image>
         <view class='b-header-detail'>
           <view class='b-user-name'>
-            <text>{{ real_name? real_name : userInfo.nickName }}</text>
+            <text class='b-real-name'>{{ real_name? real_name : userInfo.nickName }}</text>
           </view>
           <view class='b-user-palte'>
             <text wx:if='{{ loginFlag == 0 }}'>未绑定手机号</text>

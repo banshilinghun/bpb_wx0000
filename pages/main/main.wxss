@@ -312,11 +312,12 @@ movable-view {
   width: 100%;
 }
 
+/* FDFFE8 */
 .mpweixin {
   height: 80rpx;
   width: 100%;
   font-size: 26rpx;
-  background: #FDFFE8;
+  background: linear-gradient(90deg, #FB653D, #ff555c);
   display: flex;
   align-items: center;
   text-align: left;
@@ -325,6 +326,10 @@ movable-view {
   position: fixed;
   top: 0;
   z-index: 9;
+}
+
+.b-contact-color{
+  color: #fff
 }
 
 .profile-arrow {
