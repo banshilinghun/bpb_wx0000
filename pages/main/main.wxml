@@ -17,7 +17,9 @@
     </swiper>
   </view>
   <view class="message__list">
+    <!-- 我的任务 -->
     <block wx:if="{{ haveMyAd }}">
+      <view class='b-main-title'><text>我的任务</text></view>
       <view class="axstw">
         <view class="item2" bindtap="go" data-name="{{ myAd.id }}">
           <view class="item-left">
@@ -56,8 +58,12 @@
         <button class="btn-red dh-btn blod" wx:if="{{canCheck==4}}" bindtap="goMap" data-longitude="{{myAd.subscribe.lng}}" data-latitude="{{myAd.subscribe.lat}}" data-name="{{myAd.subscribe.serviceName}}" data-address="{{myAd.subscribe.address}}"> 已预约{{myAd.subscribe.date}}{{myAd.subscribe.begin_time}}-{{myAd.subscribe.end_time}}
           <view class='yjdh-btn'>一键前往</view>
         </button>
-        <button class="btn-red dh-btn blod" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 广告已结束，检测领取收益 <view class='yjdh-btn'>立即检测</view></button>
-        <button class="btn-red dh-btn blod" bindtap="check" wx:if="{{canCheck==8}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 广告检测未通过，请重新检测 <view class='yjdh-btn'>立即检测</view></button>
+        <button class="btn-red dh-btn blod" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 广告已结束，检测领取收益
+          <view class='yjdh-btn'>立即检测</view>
+        </button>
+        <button class="btn-red dh-btn blod" bindtap="check" wx:if="{{canCheck==8}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 广告检测未通过，请重新检测
+          <view class='yjdh-btn'>立即检测</view>
+        </button>
         <button class="btn-gray blod" wx:if="{{canCheck==0}}"> {{myAd.check.checkDate}}开始广告检测 </button>
         <button class="btn-gray blod" wx:if="{{canCheck==2}}"> {{myAd.check.checkDate}}开始广告检测 </button>
         <button class="btn-red dh-btn blod" wx:if="{{canCheck==3}}" bindtap="goMap" data-longitude="{{myAd.check.lng}}" data-latitude="{{myAd.check.lat}}" data-name="{{myAd.check.serviceName}}" data-address="{{myAd.check.address}}">广告检测，请前往服务网点检测
@@ -72,60 +78,65 @@
         <button class="btn-gray blod" wx:if="{{canCheck==5}}">检测审核中，通过后可提取收益</button>
       </view>
     </block>
-    <block wx:for="{{adList}}" wx:key="item.id">
-      <view class="item2" bindtap="go" data-name="{{item.id}}">
-        <view class="item-left">
-          <image src="{{ item.logo }}" class="image" />
+    <!-- 任务列表 -->
+    <block wx:if="{{ adList && adList.length !== 0 }}">
+      <view class='b-main-title'><text>广告市场</text></view>
+      <block wx:for="{{ adList }}" wx:key="item.id">
+        <view class="item2" bindtap="go" data-name="{{item.id}}">
+          <view class="item-left">
+            <image src="{{ item.logo }}" class="image" />
+          </view>
+          <view class="item-middle">
+            <view>
+              <text class="title">{{ item.ad_name }}</text>
+            </view>
+            <view class="myad-li">
+              <view class="message" wx:if="{{ status == 3 && item.billing_mode == 0 }}">预计收益：
+                <label class="data-text">{{ item.predict_amount }}元</label>
+              </view>
+              <view class="message" wx:if="{{ status == 3 && item.billing_mode == 1 }}">预计收益：
+                <label class="data-text">￥{{ item.min_amount }}
+                  <label class="data-blt">~ </label>{{ item.max_amount }}</label>
+              </view>
+              <view class="message" wx:if="{{ status != 3 }}">预计收益：
+                <label class="data-text ywxst">***
+                  <text class=''>（身份认证后可查看收益）</text>
+                </label>
+              </view>
+              <view class="message">投放时间：
+                <label class="data-text">{{ item.begin_date }}
+                  <label class="data-blt">~</label>{{ item.end_date }}</label>
+              </view>
+            </view>
+          </view>
+          <view class="item_right">
+            <view wx:if="{{ item.run_status==0 }}">
+              <text class="time timetxt2">即将开始</text>
+            </view>
+            <view wx:if="{{ item.run_status==1 }}">
+              <text class="time">剩余{{ item.current_count }}</text>
+            </view>
+            <view wx:if="{{ item.run_status==2 }}">
+              <text class="time timetxt2">投放中</text>
+            </view>
+            <view wx:if="{{ item.run_status==3 }}">
+              <text class="time timetxt2">检测中</text>
+            </view>
+            <view wx:if="{{ item.run_status==4 }}">
+              <text class="time timetxt">已结束</text>
+            </view>
+            <button data-adName="{{ item.name }}" data-adId="{{ item.id }}" data-adImg="{{ item.share_img }}" class='wtwabt' open-type="share" wx:if='{{ showShareBtn }}'>
+              <image src='../../image/shareicon.png'></image>
+              <view class='sharetext'>{{ shareAwardText }}</view>
+            </button>
+          </view>
         </view>
-        <view class="item-middle">
-          <view>
-            <text class="title">{{ item.ad_name }}</text>
-          </view>
-          <view class="myad-li">
-            <view class="message" wx:if="{{ status == 3 && item.billing_mode == 0 }}">预计收益：
-              <label class="data-text">{{ item.predict_amount }}元</label>
-            </view>
-            <view class="message" wx:if="{{ status == 3 && item.billing_mode == 1 }}">预计收益：
-              <label class="data-text">￥{{ item.min_amount }}
-                <label class="data-blt">~ </label>{{ item.max_amount }}</label>
-            </view>
-            <view class="message" wx:if="{{ status != 3 }}">预计收益：
-              <label class="data-text ywxst">***
-                <text class=''>（身份认证后可查看收益）</text>
-              </label>
-            </view>
-            <view class="message">投放时间：
-              <label class="data-text">{{ item.begin_date }}
-                <label class="data-blt">~</label>{{ item.end_date }}</label>
-            </view>
-          </view>
+        <view class='b-line-wrapper'>
+          <view class="line"></view>
         </view>
-        <view class="item_right">
-          <view wx:if="{{ item.run_status==0 }}">
-            <text class="time timetxt2">即将开始</text>
-          </view>
-          <view wx:if="{{ item.run_status==1 }}">
-            <text class="time">剩余{{ item.current_count }}</text>
-          </view>
-          <view wx:if="{{ item.run_status==2 }}">
-            <text class="time timetxt2">投放中</text>
-          </view>
-          <view wx:if="{{ item.run_status==3 }}">
-            <text class="time timetxt2">检测中</text>
-          </view>
-          <view wx:if="{{ item.run_status==4 }}">
-            <text class="time timetxt">已结束</text>
-          </view>
-          <button data-adName="{{ item.name }}" data-adId="{{ item.id }}" data-adImg="{{ item.share_img }}" class='wtwabt' open-type="share" wx:if='{{ showShareBtn }}'>
-            <image src='../../image/shareicon.png'></image>
-            <view class='sharetext'>{{ shareAwardText }}</view>
-          </button>
-        </view>
-      </view>
-      <view class='b-line-wrapper'>
-        <view class="line"></view>
-      </view>
+      </block>
     </block>
+
     <!--正在加载-->
     <view class='load-more' hidden='{{ !isShowLoadingMore }}'>
       <view class="weui-loadmore">

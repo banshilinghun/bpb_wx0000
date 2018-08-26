@@ -169,10 +169,6 @@ button::after {
   display: inline-block;
 }
 
-.axstw {
-  margin-bottom: 20rpx;
-}
-
 .texst {
   height: 88rpx;
 }
@@ -504,4 +500,15 @@ movable-view {
   margin-bottom: 30rpx;
   text-align: left;
   box-sizing: content-box;
+}
+
+.b-main-title{
+  width: 100%;
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+  text-align: left;
+  box-sizing: border-box;
+  padding: 20rpx 0 20rpx 30rpx;
+  background-color: #F6F6F6
 }
