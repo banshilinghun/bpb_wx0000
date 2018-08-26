@@ -35,9 +35,9 @@
     <block>
       <view class="profile">
         <view class="profile-item">预计收益:</view>
-        <view class="right-text red-text" wx:if='{{ adInfo.amount!=null && adInfo.use_didi != 1 }}'>{{adInfo.amount}}元</view>
-        <view class="right-text red-text adxtwtx" bindtap='goValuation' wx:if='{{ adInfo.use_didi == 1 }}'>{{ adInfo.min_amount }}<label class="data-blt2">~</label>{{ adInfo.max_amount }}元<icon type="info" size="16"  color='#ff555c'/></view>
-        <view class="right-text tasts" wx:if='{{ adInfo.amount == null }}'>身份认证后可查看收益</view>
+        <view class="right-text red-text" wx:if='{{ adInfo.amount && adInfo.use_didi != 1 }}'>{{adInfo.amount}}元</view>
+        <view class="right-text red-text adxtwtx" bindtap='goValuation' wx:if='{{ adInfo.amount && adInfo.use_didi == 1 }}'>{{ adInfo.min_amount }}<label class="data-blt2">~</label>{{ adInfo.max_amount }}元<icon type="info" size="16"  color='#ff555c'/></view>
+        <view class="right-text tasts" wx:if='{{ !adInfo.amount }}'>身份认证后可查看收益</view>
       </view>
     </block>
     <block>
