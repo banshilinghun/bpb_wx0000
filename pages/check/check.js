@@ -1,7 +1,9 @@
 var util = require("../../utils/common/util");
-const ApiConst = require("../../utils/api/ApiConst.js");
+const ApiConst = require("../../utils/api/ApiConst");
+const ApiManager = require("../../utils/api/ApiManager");
 const StrategyHelper = require("../../helper/StrategyHelper");
 const ModalHelper = require("../../helper/ModalHelper");
+const LoadingHelper = require("../../helper/LoadingHelper");
 const app = getApp()
 var sourceType = [
 	['camera'],
@@ -48,14 +50,22 @@ Page({
 		var intent = JSON.parse(options.intent);
 		console.log(intent);
 		this.setData({
-			check_id: intent.check_id,
-			regist_id: intent.regist_id,
+			check_id: intent.check_id || '',
+			regist_id: intent.regist_id || '',
 			carOut: true,
 			carTail: true,
 			carIn: intent.classify == 3, //3:车内+车外, 4:车外
 			actionType: StrategyHelper.getActionType(intent.flag)
 		})
 		this.initScrollViewHeight();
+		this.setNavigationBarTitle();
+	},
+
+	setNavigationBarTitle(){
+		const that = this;
+		wx.setNavigationBarTitle({
+			title: that.data.actionType == StrategyHelper.REGIST ? '登记' : '检测'
+		})
 	},
 
 	initScrollViewHeight() {
@@ -109,7 +119,7 @@ Page({
 				})
 				setTimeout(function () {
 					wx.switchTab({
-						url: '../main/main'
+						url: '../task/task'
 					})
 				}, 1000);
       },
@@ -136,6 +146,7 @@ Page({
 	},
 
 	uploadImage(filename, imageData){
+		LoadingHelper.showLoading();
 		const that = this;
 		let formTempData = {};
 		//todo
@@ -159,7 +170,7 @@ Page({
 				})
       },
       complete: res => {
-        that.hideLoading();
+        LoadingHelper.hideLoading();
       }
     }
 		ApiManager.uploadFile(new ApiManager.requestInfo(requestData));

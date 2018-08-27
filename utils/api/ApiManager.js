@@ -59,7 +59,7 @@ function uploadFile(uploadInfo) {
     url: uploadInfo.url,
     filePath: uploadInfo.filePath,
     name: uploadInfo.fileName,
-    header: getApp.globalData.header,
+    header: getApp().globalData.header,
     formData: uploadInfo.formData,
     success: function (res) {
       if (res.statusCode == 200) {
@@ -101,7 +101,7 @@ function sendRequest(requestInfo) {
   wx.request({
     url: requestInfo.url,
     data: requestInfo.data,
-    header: requestInfo.header,
+    header: getApp().globalData.header,
     success: function (res) {
       if (res.statusCode == 200) {
         let dataBean = res.data;
