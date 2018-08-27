@@ -50,7 +50,6 @@ Page({
 		this.setData({
 			check_id: intent.check_id,
 			regist_id: intent.regist_id,
-			type: StrategyHelper.getActionType(intent.classify),
 			carOut: true,
 			carTail: true,
 			carIn: intent.classify == 3, //3:车内+车外, 4:车外
