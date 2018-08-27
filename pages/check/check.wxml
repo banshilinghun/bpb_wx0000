@@ -46,9 +46,9 @@
                   </view>
                   <view class="weui-uploader__bd">
                     <view class="weui-uploader__files">
-                      <block wx:for="{{imageList4}}" wx:for-item="image" wx:key="key">
+                      <block wx:for="{{ imageList4 }}" wx:for-item="image" wx:key="key">
                         <view class="weui-uploader__file">
-                          <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="chooseImage4"></image>
+                          <image class="weui-uploader__img" src="{{ image }}" data-src="{{ image }}" bindtap="chooseImage4"></image>
                         </view>
                       </block>
                     </view>

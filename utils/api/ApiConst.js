@@ -177,3 +177,9 @@ export const CANCEL_USER_RESERVE = baseUrl + 'app/cancel/user_reserve';
 
 //我的任务
 export const GET_MY_TASK_LIST = baseUrl + "app/get/my_task_list";
+
+//上传广告登记图片
+export const UPLOAD_REGIST_IMG = baseUrl + "app/upload/ad_regist_img";
+
+//提交广告登记信息
+export const COMMIT_REGIST_INFO = baseUrl + "app/commit/ad_regist_info";

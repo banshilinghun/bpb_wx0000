@@ -13,6 +13,7 @@ const ApiManager = require("../../utils/api/ApiManager.js");
 const util = require("../../utils/common/util.js");
 const timeUtil = require("../../utils/time/timeUtil");
 const designMode = require("../../utils/designMode/designMode");
+const LoadingHelper = require("../../helper/LoadingHelper");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -34,7 +35,10 @@ Page({
       overTask: []
     },
     status: '', //请确认等待广告安装完毕或提醒安装人员确认安装结束
-    isDiDi: false
+    isDiDi: false,
+    installTime: '',
+    waitTime: '',
+    installOverTime: ''
   },
 
   /**
@@ -50,6 +54,9 @@ Page({
 
   requestTaskList(){
     const that = this;
+    //清除timer
+    clearInterval(timer);
+    LoadingHelper.showLoading();
     let requestData = {
       url: ApiConst.GET_MY_TASK_LIST,
       data: {},
@@ -67,24 +74,84 @@ Page({
         } else {
           runningTempTask= null;
         }
-        //计算距离
-        if(runningTempTask.reserveDate){
+        //计算距离 process=1 || process=2
+        if(runningTempTask && runningTempTask.reserveDate){
           that.calculateDistance(runningTempTask.reserveDate.lat, runningTempTask.reserveDate.lng).then(distance => {
             that.setData({
               distance: distance
             })
           });
         }
+        //签到未安装等待时间,等待人数  process=3
+        if(runningTempTask && runningTempTask.waitInfo){
+          let nowTime =  new Date(runningTempTask.now_date).getTime() / 1000;
+          let waitTime = Math.floor(nowTime - runningTempTask.waitInfo.signInDate);
+          that.lopperWaitTime(waitTime);
+          that.setData({
+            waitInfo: runningTempTask.waitInfo,
+            waitTime: that.formatTime(waitTime)
+          })
+        }
+        if(runningTempTask && runningTempTask.installInfo){
+          if(!runningTempTask.installInfo.end_time){
+            //安装中，安装时间 process=4
+            let installTime = Math.floor(runningTempTask.installInfo.now_date - runningTempTask.installInfo.begin_time);
+            that.lopperInstallTime(installTime);
+            that.setData({
+              installTime: that.formatTime(installTime)
+            })
+          } else {
+            //安装完成待上画
+            that.setData({
+              installOverTime: that.formatTime(Math.floor(runningTempTask.installInfo.end_time - runningTempTask.installInfo.begin_time))
+            })
+          }
+        }
+        //安装完成待上画
         that.setData({
           runningTask: runningTempTask,
           overTask: res.overTask
         })
       },
       complete: res => {
-        that.hideLoading();
+        LoadingHelper.hideLoading();
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  /**
+   * 安装等待时间计时
+   */
+  lopperWaitTime(waitTimeParam){
+    timer = setInterval(() => {
+      waitTimeParam++;
+      this.setData({
+        waitTime: this.formatTime(waitTimeParam)
+      })
+    }, 1000);
+  },
+
+  /**
+   * 安装用时
+   * @param {*} 已安装时间 
+   */
+  lopperInstallTime(installTimeParam){
+    timer = setInterval(() => {
+      installTimeParam++;
+      this.setData({
+        installTime: this.formatTime(installTimeParam)
+      })
+    }, 1000);
+  },
+
+  formatTime(targetTime){
+    let days = Math.floor(targetTime / (3600 * 24));
+    let hours = Math.floor((targetTime % (3600 * 24)) / 3600);
+    let minutes = Math.floor((targetTime % 3600) / 60);
+    let seconds = targetTime % 60;
+    let tempTime = (days == 0? '' : `${ days }天`) + (hours == 0 && days == 0? '' : `${ hours }时`) + (minutes == 0 && days == 0 && hours == 0? '' : `${ minutes }分`) + (`${ seconds }秒`);
+    return tempTime;
   },
 
   /**
@@ -95,7 +162,6 @@ Page({
     let that = this;
     let date = new Date(element.date + ' ' + element.end_time);
     let targetTime = date.getTime();
-    clearInterval(timer);
     timer = setInterval(() => {
       //当前时间
       let currentTime = new Date().getTime();
@@ -136,15 +202,28 @@ Page({
         that.sign();
         break;
       case 'installFail': //安装审核不合格，需重新拍照审核
-        break;
-      case 'signed':      //待上画
-      case 'installed':
+        break;  
+      case 'installed': //待上画
+        that.uploadInstallPicture();
         break;
       case 'needCheck':   //待检测
         break;
       case 'checkfail':   //检测审核不合格，需重新拍照检测
         break;
     }
+  },
+
+  /**
+   * 上传车辆安装画面
+   */
+  uploadInstallPicture(){
+    let registObj = {
+      classify: runningTask.classify,
+      regist_id: runningTask.regist_id
+    }
+    wx.navigateTo({
+      url: '../check/check?intent=' + JSON.stringify(registObj)
+    })
   },
 
   /**
@@ -325,16 +404,6 @@ Page({
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
-  },
-
-  showLoading: function () {
-    wx.showLoading({
-      title: '加载中🚗...',
-    })
-  },
-
-  hideLoading: function () {
-    wx.hideLoading();
   },
 
   showModal(title, content, confirm){

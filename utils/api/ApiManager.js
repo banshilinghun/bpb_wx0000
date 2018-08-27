@@ -59,7 +59,7 @@ function uploadFile(uploadInfo) {
     url: uploadInfo.url,
     filePath: uploadInfo.filePath,
     name: uploadInfo.fileName,
-    header: uploadInfo.header,
+    header: getApp.globalData.header,
     formData: uploadInfo.formData,
     success: function (res) {
       if (res.statusCode == 200) {

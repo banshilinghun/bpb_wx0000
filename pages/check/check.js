@@ -1,5 +1,7 @@
 var util = require("../../utils/common/util");
 const ApiConst = require("../../utils/api/ApiConst.js");
+const StrategyHelper = require("../../helper/StrategyHelper");
+const ModalHelper = require("../../helper/ModalHelper");
 const app = getApp()
 var sourceType = [
 	['camera'],
@@ -11,6 +13,7 @@ var sizeType = [
 	['original'],
 	['compressed', 'original']
 ]
+
 Page({
 	data: {
 		provinces: [],
@@ -29,344 +32,198 @@ Page({
 		animationData: {},
 		animationAddressMenu: {},
 		addressMenuIsShow: false,
-    istrue:true,
+		istrue: true,
 		value: [0, 0],
 		show1: true,
 		show2: true,
 		show3: true,
-    show4: true,
-    scrollHeight: 0
+		show4: true,
+		scrollHeight: 0,
+		regist_id: '', //登记id
+		check_id: '', //检测id
+		actionType: StrategyHelper.REGIST, //
 	},
-	onLoad: function(options) {
-		var adData = JSON.parse(options.ckData);
-		console.log(adData);
-    let that = this;
+
+	onLoad: function (options) {
+		var intent = JSON.parse(options.intent);
+		console.log(intent);
 		this.setData({
-			ckId: adData.checkid,
-			type: adData.type
+			check_id: intent.check_id,
+			regist_id: intent.regist_id,
+			type: StrategyHelper.getActionType(intent.classify),
+			carOut: true,
+			carTail: true,
+			carIn: StrategyHelper.getActionType(intent.classify) == StrategyHelper.REGIST, //3:车内+车外, 4:车外
 		})
-
-		if(adData.type == 3) {
-			this.setData({
-        carOut: true,
-				carIn: true,
-        carTail:true
-			})
-		}
-		if(adData.type == 4) {
-			this.setData({
-        carOut: true,
-        carTail: true
-			})
-		}
-    //设置scrollView 高度
-    wx.getSystemInfo({
-      success: function(res) {
-        that.setData({
-          scrollHeight: res.windowHeight - 35
-        })
-      }
-    })
+		this.initScrollViewHeight();
 	},
 
-	formSubmit: function(e) {
-		var param = e.detail.value;
-    //var formId = e.detail.formId;
-    this.mysubmit(param);
+	initScrollViewHeight() {
+		//设置scrollView 高度
+		wx.getSystemInfo({
+			success: res => {
+				this.setData({
+					scrollHeight: res.windowHeight - 35
+				})
+			}
+		})
 	},
-  mysubmit: function (param) {
 
-		///var uid = app.globalData.uid;
-		var ckId = this.data.ckId;
-		//		console.log(ckId);
-		//		console.log(param)
-		var formData = {
-			check_id: ckId
-		}
-    var carleftPhoto = this.data.carleftPhoto;
-    var carrightPhoto = this.data.carrightPhoto;
+	formSubmit: function (e) {
+		this.mysubmit(e.detail.value);
+	},
+
+	mysubmit: function () {
+		var carleftPhoto = this.data.carleftPhoto;
+		var carrightPhoto = this.data.carrightPhoto;
 		var carnPhoto = this.data.carnPhoto;
 		var cartPhoto = this.data.cartPhoto;
-		//		console.log(formData);
-    if (carleftPhoto == undefined) {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '请上传车身左侧照片'
-				});
-    } else if (carrightPhoto==undefined){
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '请上传车身右侧照片'
-      });
-    } else if (cartPhoto == undefined){
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '请上传车尾照片'
-      });
-    } else if (carnPhoto == undefined && this.data.carIn) {
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '请上传车内照片'
-      });
-    }else{
-      wx.request({
-        url: ApiConst.MID_CHECK,
-        data: formData,
-        header: app.globalData.header,
-        success: res => {
-          if (res.data.code == 1000) {
-            wx.showToast({
-              title: "提交成功"
-            })
-            setTimeout(function () {
-              wx.switchTab({
-                url: '../main/main'
-              })
-            }, 1000);
-          } else {
-            //					console.log(res.data)
-            wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: res.data.msg
-            });
-          }
-        },
-        fail: res => {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '网络错误'
-          });
-        }
-      })
-    }
-		
+		if (!carleftPhoto) {
+			ModalHelper.showWxModal('提示', '请上传车身左侧照片', '我知道了', false);
+		} else if (!carrightPhoto) {
+			ModalHelper.showWxModal('提示', '请上传车身右侧照片', '我知道了', false);
+		} else if (!cartPhoto) {
+			ModalHelper.showWxModal('提示', '请上传车尾照片', '我知道了', false);
+		} else if (!carnPhoto && this.data.carIn) {
+			ModalHelper.showWxModal('提示', '请上传车内照片', '我知道了', false);
+		} else {
+			this.commitRegistCheckInfo();
+		}
 	},
 
-	chooseImage: function() { //车身左侧
-		var that = this;
-		//		console.log(that.data.ckId);
+	commitRegistCheckInfo(){
+		//todo
+		let commitUrl = that.data.actionType == StrategyHelper.REGIST? ApiConst.COMMIT_REGIST_INFO : '';
+		let commitData = {};
+		if(that.data.actionType == StrategyHelper.REGIST) {
+			commitData.regist_id = this.data.regist_id;
+		} else {
+			commitData.check_id = this.data.check_id;
+		}
+    let requestData = {
+			url: commitUrl,
+			data: commitData,
+      success: res => {
+				wx.showToast({
+					title: "提交成功"
+				})
+				setTimeout(function () {
+					wx.switchTab({
+						url: '../main/main'
+					})
+				}, 1000);
+      },
+      complete: res => {
+        that.hideLoading();
+      }
+    }
+		ApiManager.uploadFile(new ApiManager.requestInfo(requestData));
+	},
+
+	chooseImage: function () { //车身左侧
+		this.wxChooseImage('left_img');
+	},
+
+	wxChooseImage(filename){
 		wx.chooseImage({
 			sourceType: sourceType[0],
 			sizeType: sizeType[0],
 			count: 1,
-			success: function(res) {
-				//				console.log(res)
-				var wxres = res;
-				wx.uploadFile({
-          url: ApiConst.MID_CHECK_IMG,
-					filePath: res.tempFilePaths[0],
-          name: 'left_img',
-					header: {
-						"Cookie": app.globalData.header.Cookie,
-					},
-					formData: {
-						check_id: that.data.ckId
-					},
-					success: function(res) {
-						var resdata = JSON.parse(res.data);
-						if(resdata.code == 1000) {
-							that.setData({
-								imageList: wxres.tempFilePaths,
-								carleftPhoto: wxres.tempFilePaths[0],
-								show1: false
-							})
-						} else {
-							wx.showModal({
-								title: '提示',
-								showCancel: false,
-								content: resdata.msg
-							});
-						}
-					},
-					fail: res => {
-						console.log(res.data)
-						wx.showModal({
-							title: '提示',
-							showCancel: false,
-							content: '网络错误'
-						});
-					}
-				})
+			success: res => {
+				this.uploadImage(filename, res);
 			}
 		})
-
 	},
-	previewImage: function(e) {
+
+	uploadImage(filename, imageData){
+		const that = this;
+		let formTempData = {};
+		//todo
+		let uploadUrl = that.data.actionType == StrategyHelper.REGIST? ApiConst.UPLOAD_REGIST_IMG : '';
+		if(that.data.actionType == StrategyHelper.REGIST){
+			formTempData.regist_id = that.data.regist_id;
+		} else {
+			formTempData.check_id = that.data.check_id;
+		}
+    let requestData = {
+			url: uploadUrl,
+			filePath: imageData.tempFilePaths[0],
+      formData: formTempData,
+			name: filename,
+      success: res => {
+				that.changeImageStatus(filename, imageData);
+        that.setData({
+					imageList: imageData.tempFilePaths,
+					carleftPhoto: imageData.tempFilePaths[0],
+					show1: false
+				})
+      },
+      complete: res => {
+        that.hideLoading();
+      }
+    }
+		ApiManager.uploadFile(new ApiManager.requestInfo(requestData));
+	},
+
+	changeImageStatus(filename, imageData){
+		let imageStrategy = {
+			left_img : function(){
+				this.setData({
+					imageList: imageData.tempFilePaths,
+					carleftPhoto: imageData.tempFilePaths[0],
+					show1: false
+				})
+			},
+			in_img: function(){
+				this.setData({
+					imageList2: wxres.tempFilePaths,
+					carnPhoto: wxres.tempFilePaths[0],
+					show2: false
+				})
+			},
+			front_img: function(){
+				this.setData({
+					imageList3: wxres.tempFilePaths,
+					cartPhoto: wxres.tempFilePaths[0],
+					show3: false
+				})
+			},
+			right_img: function(){
+				this.setData({
+					imageList4: wxres.tempFilePaths,
+					carrightPhoto: wxres.tempFilePaths[0],
+					show4: false
+				})
+			}
+		}
+		imageStrategy[filename]();
+	},
+
+	previewImage: function (e) {
 		var current = e.target.dataset.src
 		wx.previewImage({
 			current: current,
 			urls: this.data.imageList
 		})
 	},
-  chooseImage4: function () { //车身右侧
-    var that = this;
-    //		console.log(that.data.ckId);
-    wx.chooseImage({
-      sourceType: sourceType[0],
-      sizeType: sizeType[0],
-      count: 1,
-      success: function (res) {
-        //				console.log(res)
-        var wxres = res;
-        wx.uploadFile({
-          url: ApiConst.MID_CHECK_IMG,
-          filePath: res.tempFilePaths[0],
-          name: 'right_img',
-          header: {
-            "Cookie": app.globalData.header.Cookie,
-          },
-          formData: {
-            check_id: that.data.ckId
-          },
-          success: function (res) {
-            var resdata = JSON.parse(res.data);
-            if (resdata.code == 1000) {
-              that.setData({
-                imageList4: wxres.tempFilePaths,
-                carrightPhoto: wxres.tempFilePaths[0],
-                show4: false
-              })
-            } else {
-              wx.showModal({
-                title: '提示',
-                showCancel: false,
-                content: resdata.msg
-              });
-            }
-          },
-          fail: res => {
-            console.log(res.data)
-            wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: '网络错误'
-            });
-          }
-        })
-      }
-    })
 
-  },
-  previewImage4: function (e) {
-    var current = e.target.dataset.src
-
-    wx.previewImage({
-      current: current,
-      urls: this.data.imageList4
-    })
-  },
-	chooseImage2: function() { //车内
-		var that = this
-		wx.chooseImage({
-			sourceType: sourceType[0],
-			sizeType: sizeType[0],
-			count: 1,
-			success: function(res) {
-				//				console.log(res)
-				var wxres = res;
-
-				wx.uploadFile({
-          url: ApiConst.MID_CHECK_IMG,
-					filePath: res.tempFilePaths[0],
-          name: 'in_img',
-					header: {
-						"Cookie": app.globalData.header.Cookie,
-					},
-					formData: {
-						check_id: that.data.ckId
-					},
-					success: function(res) {
-						var resdata = JSON.parse(res.data);
-						if(resdata.code == 1000) {
-							that.setData({
-								imageList2: wxres.tempFilePaths,
-								carnPhoto: wxres.tempFilePaths[0],
-								show2: false
-							})
-						} else {
-							wx.showModal({
-								title: '提示',
-								showCancel: false,
-								content: resdata.msg
-							});
-						}
-					},
-					fail: res => {
-						console.log(res.data)
-						wx.showModal({
-							title: '提示',
-							showCancel: false,
-							content: '网络错误'
-						});
-					}
-				})
-			}
-		})
-
+	chooseImage2: function () { //车内
+		this.wxChooseImage('in_img');
 	},
-	previewImage2: function(e) {
+
+	previewImage2: function (e) {
 		var current = e.target.dataset.src
 		wx.previewImage({
 			current: current,
 			urls: this.data.imageList2
 		})
 	},
-	chooseImage3: function() { //车头
-		var that = this
-		wx.chooseImage({
-			sourceType: sourceType[0],
-			sizeType: sizeType[0],
-			count: 1,
-			success: function(res) {
-				//				console.log(res)
-				var wxres = res;
-        console.log(wxres);
-				wx.uploadFile({
-          url: ApiConst.MID_CHECK_IMG,
-					filePath: res.tempFilePaths[0],
-          name: 'front_img',
-					header: {
-						"Cookie": app.globalData.header.Cookie,
-					},
-					formData: {
-						check_id: that.data.ckId
-					},
-					success: function(res) {
-            //console.log(res)
-						var resdata = JSON.parse(res.data);
-						if(resdata.code == 1000) {
-							that.setData({
-								imageList3: wxres.tempFilePaths,
-								cartPhoto: wxres.tempFilePaths[0],
-								show3: false
-							})
-						} else {
-							wx.showModal({
-								title: '提示',
-								showCancel: false,
-								content: resdata.msg
-							});
-						}
-					},
-					fail: res => {
-						console.log(res.data)
-						wx.showModal({
-							title: '提示',
-							showCancel: false,
-							content: '网络错误'
-						});
-					}
-				})
-			}
-		})
+
+	chooseImage3: function () { //车头
+		this.wxChooseImage('front_img');
 	},
-	previewImage3: function(e) {
+
+	previewImage3: function (e) {
 		var current = e.target.dataset.src
 		wx.previewImage({
 			current: current,
@@ -374,12 +231,24 @@ Page({
 		})
 	},
 
-  /**
-   * 自主检测帮助
-   */
-  handleHelp(){
-    wx.navigateTo({
-      url: '../checkCourse/checkCourse?flag=2'
-    })
-  }
+	chooseImage4: function () { //车身右侧
+		this.wxChooseImage('right_img');
+	},
+
+	previewImage4: function (e) {
+		var current = e.target.dataset.src
+		wx.previewImage({
+			current: current,
+			urls: this.data.imageList4
+		})
+	},
+
+	/**
+	 * 自主检测帮助
+	 */
+	handleHelp() {
+		wx.navigateTo({
+			url: '../checkCourse/checkCourse?flag=2'
+		})
+	}
 })

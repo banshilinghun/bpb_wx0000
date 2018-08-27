@@ -70,15 +70,15 @@
                     <view class='b-subscribe-info'>
                       <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png' mode='aspectFill'></image>
                       <view class='b-time-text'>
-                        <text wx:if="{{ status === 'signedWaitInstall' }}">已等待8分10秒</text>
-                        <text wx:if="{{ status === 'installing' }}">已安装9分30秒</text>
-                        <text wx:if="{{ status === 'installed' }}">安装用时10分30秒</text>
+                        <text wx:if="{{ status === 'signedWaitInstall' }}">已等待{{ waitTime }}</text>
+                        <text wx:if="{{ status === 'installing' }}">已安装{{ installTime }}</text>
+                        <text wx:if="{{ status === 'installed' }}">安装用时{{ installOverTime }}</text>
                       </view>
                     </view>
                     <view class='b-address'>
                       <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-loading-icon.png'></image>
                       <view class='b-need-wait-text'>
-                        <text wx:if="{{ status === 'signedWaitInstall' }}">还需等待2位</text>
+                        <text wx:if="{{ status === 'signedWaitInstall' }}">还需等待 {{ waitInfo.signInPosition }} 位</text>
                         <text wx:if="{{ status === 'installing' }}">请耐心等待安装完成</text>
                         <text wx:if="{{ status === 'installed' }}">等待上传车辆画面</text>
                       </view>
