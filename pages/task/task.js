@@ -14,6 +14,7 @@ const util = require("../../utils/common/util.js");
 const timeUtil = require("../../utils/time/timeUtil");
 const designMode = require("../../utils/designMode/designMode");
 const LoadingHelper = require("../../helper/LoadingHelper");
+const StrategyHelper = require("../../helper/StrategyHelper");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -195,31 +196,46 @@ Page({
    */
   handleAction(){
     let that = this;
-    switch (that.data.status){
-      case 'subscribed':  //需要签到
-      case 'subscribeOvertime':
-      case 'rework': //安装审核不合格，需重新上画
+    let actionStrategy = {
+      subscribed: function(){
         that.sign();
-        break;
-      case 'installFail': //安装审核不合格，需重新拍照审核
-        break;  
-      case 'installed': //待上画
+      },
+      subscribeOvertime: function(){
+        that.sign();
+      },
+      //安装审核不合格，需重新上画
+      rework: function(){
+        that.sign();
+      },
+      //安装审核不合格，需重新拍照审核
+      installFail: function(){
         that.uploadInstallPicture();
-        break;
-      case 'needCheck':   //待检测
-        break;
-      case 'checkfail':   //检测审核不合格，需重新拍照检测
-        break;
+      },
+      //待上画
+      installed: function(){
+        that.uploadInstallPicture();
+      },
+      //待检测
+      needCheck: function(){
+
+      },
+      //检测审核不合格，需重新拍照检测
+      checkfail: function(){
+
+      }
     }
+    actionStrategy[that.data.status]();
   },
 
   /**
    * 上传车辆安装画面
    */
   uploadInstallPicture(){
+    let that = this;
     let registObj = {
-      classify: runningTask.classify,
-      regist_id: runningTask.regist_id
+      classify: that.data.runningTask.classify,
+      regist_id: that.data.runningTask.regist_id,
+      flag: StrategyHelper.REGIST
     }
     wx.navigateTo({
       url: '../check/check?intent=' + JSON.stringify(registObj)

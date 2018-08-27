@@ -5,14 +5,14 @@ export const REGIST = 'regist';
 export const CHECK = 'check';
 
 let actionStrategy = {
-  '3': function(){
+  regist: function(){
     return REGIST;
   },
-  '4': function(){
+  check: function(){
     return CHECK;
   }
 }
 
-export function getActionType(classify){
-  return actionStrategy[classify]();
+export function getActionType(flag){
+  return actionStrategy[flag]();
 }

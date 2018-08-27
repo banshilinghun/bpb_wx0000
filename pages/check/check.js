@@ -53,7 +53,8 @@ Page({
 			type: StrategyHelper.getActionType(intent.classify),
 			carOut: true,
 			carTail: true,
-			carIn: StrategyHelper.getActionType(intent.classify) == StrategyHelper.REGIST, //3:车内+车外, 4:车外
+			carIn: intent.classify == 3, //3:车内+车外, 4:车外
+			actionType: StrategyHelper.getActionType(intent.flag)
 		})
 		this.initScrollViewHeight();
 	},
