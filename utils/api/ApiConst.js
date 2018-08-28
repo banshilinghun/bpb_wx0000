@@ -189,3 +189,6 @@ export const UPLOAD_CHECK_IMG = baseUrl + "app/upload/ad_check_img";
 
 //提交广告检测信息
 export const COMMIT_CHECK_INFO = baseUrl + "app/commit/ad_check_info";
+
+//获取提现列表信息
+export const GET_WITHDRAW_RECORD_LIST = baseUrl + "app/get/withdraw_record_list";
