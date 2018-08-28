@@ -100,14 +100,14 @@
             <view class="profile-item">车辆要求:</view>
             <view class="right-text horizontal-center" bindtap='handleColorExplain'>
               <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
-              <text class="b-require-text">{{ adInfo.car_require }}</text>
+              <text class="b-require-text" catchtap='handleRequire' data-require='{{  adInfo.car_require }}'>{{ adInfo.car_require }}</text>
             </view>
           </view>
         </block>
         <block>
           <view class="profile">
             <view class="profile-item">车辆颜色:</view>
-            <view class="right-text horizontal-center">
+            <view class="right-text horizontal-center" bindtap='handleCarColor' data-color='{{ carColor }}'>
               <text>{{ carColor }}</text>
             </view>
           </view>
@@ -159,55 +159,6 @@
             </view>
           </view>
         </block>
-
-        <view class='list-root-wrapper'>
-          <!-- 列表 -->
-          <view class='list-transform'>
-            <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id" wx:if='{{ !showMap }}'>
-              <view class="itemcon {{item.lista==2?'curitem':''}}">
-                <view class="item {{item.lista==2?'curitemList':''}}">
-                  <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
-                  <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
-                  <image wx:if='{{item.small_logo!=null}}' src='{{item.small_logo}}' class='sev_logo' catchtap='previewImage' data-image='{{ item.logo }}'
-                    data-samllImage='{{item.small_logo}}'></image>
-                  <image wx:if='{{item.small_logo==null}}' src='../../image/noimg.png' class='sev_logo'></image>
-                  <view class="item-middle">
-                    <view>
-                      <text class="title">{{item.name}}</text>
-                    </view>
-                    <view class="myad-li" bindtap='showAddress' data-address='{{item}}'>
-                      <view class="message">
-                        <image src='../../image/dw.png'></image>{{item.address}}
-                      </view>
-                      <!-- <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> -->
-                      <view class="mmtext">剩余车辆
-                        <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
-
-                      </view>
-                    </view>
-
-                  </view>
-                  <view class="item_right">
-                    <view>
-                      <text class="time">{{item.distance}}km</text>
-                    </view>
-                    <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}"
-                      data-address="{{item.address}}">
-                      <image src='../../image/dh.png'></image>导航
-                    </view>
-                    <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}" data-serverName='{{ item.name }}'
-                      data-serverAddress='{{ item.address }}'> 预约</view>
-                    <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
-                    <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
-                  </view>
-                </view>
-                <view class='yy_time' wx:if='{{item.lista==2}}'>
-                  <label class="province-text">已预约{{selDate}} {{selTime}}</label>
-                </view>
-              </view>
-            </block>
-          </view>
-        </view>
       </view>
       <!-- 广告介绍和设计样式预览 -->
       <view class='b-design-container'>

@@ -110,12 +110,12 @@ Page({
 		const that = this;
 		LoadingHelper.showLoading();
 		//todo
-		let commitUrl = that.data.actionType == StrategyHelper.REGIST? ApiConst.COMMIT_REGIST_INFO : '';
+    let commitUrl = that.data.actionType == StrategyHelper.REGIST ? ApiConst.COMMIT_REGIST_INFO : ApiConst.COMMIT_CHECK_INFO;
 		let commitData = {};
 		if(that.data.actionType == StrategyHelper.REGIST) {
 			commitData.regist_id = this.data.regist_id;
 		} else {
-			commitData.check_id = this.data.check_id;
+      commitData.check_id = this.data.check_id;
 		}
     let requestData = {
 			url: commitUrl,
@@ -156,12 +156,11 @@ Page({
 		LoadingHelper.showLoading();
 		const that = this;
 		let formTempData = {};
-		//todo
-		let uploadUrl = that.data.actionType == StrategyHelper.REGIST? ApiConst.UPLOAD_REGIST_IMG : '';
+    let uploadUrl = that.data.actionType == StrategyHelper.REGIST ? ApiConst.UPLOAD_REGIST_IMG : ApiConst.UPLOAD_CHECK_IMG;
 		if(that.data.actionType == StrategyHelper.REGIST){
 			formTempData.regist_id = that.data.regist_id;
 		} else {
-			formTempData.check_id = that.data.check_id;
+      formTempData.check_id = that.data.check_id;
 		}
     let requestData = {
 			url: uploadUrl,

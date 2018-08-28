@@ -4,9 +4,7 @@
       <view class='b-header-user'>
         <image class='b-header-avatar' src='{{ userInfo.avatarUrl }}'></image>
         <view class='b-header-detail'>
-          <view class='b-user-name'>
-            <text class='b-real-name'>{{ real_name? real_name : userInfo.nickName }}</text>
-          </view>
+          <view class='b-user-name'>{{ real_name? real_name : userInfo.nickName }}</view>
           <view class='b-user-palte'>
             <text wx:if='{{ loginFlag == 0 }}'>未绑定手机号</text>
             <text wx:elif='{{ status == 0 }}'>未认证</text>
@@ -66,8 +64,7 @@
       </view>
     </view>
     <view class='b-me-cell'>
-      <view class='b-cell-item' wx:for="{{ incomeCells }}" wx:key='{{ income }}' wx:if='{{ item.visible }}' bindtap='handleAction'
-        data-item='{{ item }}'>
+      <view class='b-cell-item' wx:for="{{ incomeCells }}" wx:key='{{ income }}' wx:if='{{ item.visible }}' bindtap='handleAction' data-item='{{ item }}'>
         <view class='b-cell-wrapper'>
           <image class='b-cell-image' src='{{ item.icon }}'></image>
           <view class='b-cell-action'>
@@ -85,8 +82,7 @@
       </view>
     </view>
     <view class='b-me-cell'>
-      <view class='b-cell-item' wx:for="{{ ExceptionCells }}" wx:key='{{ exception }}' wx:if='{{ item.visible }}' bindtap='handleAction'
-        data-item='{{ item }}'>
+      <view class='b-cell-item' wx:for="{{ ExceptionCells }}" wx:key='{{ exception }}' wx:if='{{ item.visible }}' bindtap='handleAction' data-item='{{ item }}'>
         <view class='b-cell-wrapper'>
           <image class='b-cell-image' src='{{ item.icon }}'></image>
           <view class='b-cell-action'>
@@ -104,8 +100,7 @@
       </view>
     </view>
     <view class='b-me-cell'>
-      <view class='b-cell-item' wx:for="{{ actionCells }}" wx:key='{{ action }}' wx:if='{{ item.visible }}' bindtap='handleAction'
-        data-item='{{ item }}'>
+      <view class='b-cell-item' wx:for="{{ actionCells }}" wx:key='{{ action }}' wx:if='{{ item.visible }}' bindtap='handleAction' data-item='{{ item }}'>
         <view class='b-cell-wrapper'>
           <image class='b-cell-image' src='{{ item.icon }}'></image>
           <view class='b-cell-action'>

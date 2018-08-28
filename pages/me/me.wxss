@@ -39,12 +39,9 @@ page{
 }
 
 .b-user-name{
+  max-width: 300rpx;
   color: #fff;
   font-size: 36rpx;
-  width: 300rpx
-}
-
-.b-real-name{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap

@@ -1550,6 +1550,14 @@ Page({
       // current: 'String', // 当前显示图片的链接，不填则默认为 urls 的第一张
       urls: [imageUrl],
     })
+  },
+
+  handleRequire(event){
+    ModalHelper.showWxModal('车辆要求', event.currentTarget.dataset.require, "我知道了", false);
+  },
+
+  handleCarColor(event){
+    ModalHelper.showWxModal('颜色要求', event.currentTarget.dataset.color, "我知道了", false);
   }
 
 })

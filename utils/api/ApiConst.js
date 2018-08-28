@@ -183,3 +183,9 @@ export const UPLOAD_REGIST_IMG = baseUrl + "app/upload/ad_regist_img";
 
 //提交广告登记信息
 export const COMMIT_REGIST_INFO = baseUrl + "app/commit/ad_regist_info";
+
+//上传广告检测图片
+export const UPLOAD_CHECK_IMG = baseUrl + "app/upload/ad_check_img";
+
+//提交广告检测信息
+export const COMMIT_CHECK_INFO = baseUrl + "app/commit/ad_check_info";
