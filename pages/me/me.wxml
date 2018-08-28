@@ -15,9 +15,9 @@
             <text wx:elif='{{ status == 3 }}'>{{ plate_no }}</text>
           </view>
         </view>
-        <image class='b-header-auth-status' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://upload-images.jianshu.io/upload_images/4240944-dcc9ec1d8bfed7e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'></image>
-        <image class='b-header-auth-status' wx:if='{{ status == 2 }}' src='https://upload-images.jianshu.io/upload_images/4240944-a875c93fac25d7da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'></image>
-        <image class='b-header-auth-status' wx:if='{{ status == 3 }}' src='https://upload-images.jianshu.io/upload_images/4240944-02a665fd79318c2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'></image>
+        <image class='b-header-auth-status' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error.png'></image>
+        <image class='b-header-auth-status' wx:if='{{ status == 2 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error.png'></image>
+        <image class='b-header-auth-status' wx:if='{{ status == 3 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-success.png'></image>
       </view>
       <!-- 余额、待收收益、累计收益 -->
       <view class='b-header-income'>
@@ -66,7 +66,8 @@
       </view>
     </view>
     <view class='b-me-cell'>
-      <view class='b-cell-item' wx:for="{{ incomeCells }}"  wx:key='{{ income }}'   wx:if='{{ item.visible }}'  bindtap='handleAction' data-item='{{ item }}'>
+      <view class='b-cell-item' wx:for="{{ incomeCells }}" wx:key='{{ income }}' wx:if='{{ item.visible }}' bindtap='handleAction'
+        data-item='{{ item }}'>
         <view class='b-cell-wrapper'>
           <image class='b-cell-image' src='{{ item.icon }}'></image>
           <view class='b-cell-action'>
@@ -77,14 +78,15 @@
     </view>
   </view>
   <!-- 异常处理（损坏申报、掉漆申报、违章申报） -->
-  <view class='b-me-income'>
+  <view class='b-me-income' wx:if="{{ false }}">
     <view class='b-me-panel'>
       <view class='b-panel-title'>
         <text>异常处理</text>
       </view>
     </view>
     <view class='b-me-cell'>
-      <view class='b-cell-item' wx:for="{{ ExceptionCells }}" wx:key='{{ exception }}'  wx:if='{{ item.visible }}'  bindtap='handleAction' data-item='{{ item }}'>
+      <view class='b-cell-item' wx:for="{{ ExceptionCells }}" wx:key='{{ exception }}' wx:if='{{ item.visible }}' bindtap='handleAction'
+        data-item='{{ item }}'>
         <view class='b-cell-wrapper'>
           <image class='b-cell-image' src='{{ item.icon }}'></image>
           <view class='b-cell-action'>
@@ -96,8 +98,14 @@
   </view>
   <!-- action（推荐有奖、新手教程、注册认证） -->
   <view class='b-me-income'>
+    <view class='b-me-panel'>
+      <view class='b-panel-title'>
+        <text>常用工具</text>
+      </view>
+    </view>
     <view class='b-me-cell'>
-      <view class='b-cell-item' wx:for="{{ actionCells }}"  wx:key='{{ action }}'  wx:if='{{ item.visible }}'  bindtap='handleAction' data-item='{{ item }}'>
+      <view class='b-cell-item' wx:for="{{ actionCells }}" wx:key='{{ action }}' wx:if='{{ item.visible }}' bindtap='handleAction'
+        data-item='{{ item }}'>
         <view class='b-cell-wrapper'>
           <image class='b-cell-image' src='{{ item.icon }}'></image>
           <view class='b-cell-action'>

@@ -1,12 +1,11 @@
 const util = require("../../utils/common/util");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require('../../utils/api/ApiManager.js');
-var formatLocation = util.formatLocation;
-var getDistance = util.getDistance;
 const app = getApp();
 const Constant = require("../../utils/constant/Constant");
 const shareUtil = require("../../utils/module/shareUtil");
-const viewUtil = require("../../utils/common/viewUtil.js");
+const LoadingHelper = require("../../helper/LoadingHelper");
+const ModalHelper = require("../../helper/ModalHelper");
 const RunStatus = require("../main/runStatus");
 const {
   $Toast
@@ -125,15 +124,6 @@ Page({
       })
     }
     app.globalData.isFirst = false;
-  },
-
-  setDesignImageHeight() {
-    let that = this;
-    viewUtil.getViewHeight("#effect-image").then(rect => {
-      that.setData({
-        designHeight: rect.width * 9 / 16
-      })
-    })
   },
 
   onShow: function (n) {
@@ -308,6 +298,7 @@ Page({
    */
   requestAdInfo: function () {
     var that = this;
+    LoadingHelper.showLoading();
     wx.request({
       url: ApiConst.GET_AD_INFO,
       data: {
@@ -376,25 +367,17 @@ Page({
             adId: adTempInfo.id,
             joinNumber: adTempInfo.total_count - adTempInfo.current_count
           })
-          that.setDesignImageHeight();
           that.getUserCarInfo();
           that.getAdStationList();
         } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
+          ModalHelper.showWxModal("提示", res.data.msg, '我知道了', false);
         }
       },
       fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
+        ModalHelper.showWxModal("提示", '网络错误', '我知道了', false);
       },
       complete: res => {
+        LoadingHelper.hideLoading();
         that.setData({
           isShowLoadingMore: false
         });
@@ -871,9 +854,7 @@ Page({
    */
   takeParkInQueue: function () {
     var that = this;
-    wx.showLoading({
-      title: '奔跑中🚗...',
-    })
+    LoadingHelper.showLoading();
     let requestData = {
       url: ApiConst.TAKE_PART_IN_QUEUE,
       data: {
@@ -894,7 +875,7 @@ Page({
         })
       },
       complete: res => {
-        wx.hideLoading();
+        LoadingHelper.hideLoading();
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));

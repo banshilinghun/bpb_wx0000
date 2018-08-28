@@ -26,6 +26,7 @@ function getBaseUrl() {
 
 class uploadInfo {
   constructor(object) {
+    console.log('filePath------uploadInfo--->' + object.filePath);
     this.url = object.url;
     this.filePath = object.filePath;
     this.fileName = object.fileName;
@@ -55,6 +56,7 @@ function uploadFile(uploadInfo) {
   if (!uploadInfo) {
     return;
   }
+  console.log('filePath--------->' + uploadInfo.filePath);
   wx.uploadFile({
     url: uploadInfo.url,
     filePath: uploadInfo.filePath,

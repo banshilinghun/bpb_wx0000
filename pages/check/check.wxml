@@ -1,6 +1,5 @@
 <view class='contain'>
 
-
   <!--2.列表View-->
   <view class="swiper">
     <block>
@@ -11,9 +10,9 @@
         </view>
       </view>
     </block>
-    <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
-      <block>
-        <form bindsubmit="formSubmit">
+    <block>
+      <form bindsubmit="formSubmit">
+        <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
           <view class="weui-cells my-cells" wx:if='{{carOut}}'>
             <view class="weui-cell">
               <view class="weui-cell__bd">
@@ -106,13 +105,14 @@
               </view>
             </view>
           </view>
-          <button formType="submit" class='btn-quit'> 提交</button>
-        </form>
-      </block>
-    </scroll-view>
+        </scroll-view>
+        <button id="b-commit" formType="submit" class='btn-quit'> 提交</button>
+      </form>
+    </block>
   </view>
 </view>
-<view class="dialog-mask " style="z-index:11;visibility:{{addressMenuIsShow ? 'visible': 'hidden'}}" bindtap="hideCitySelected" />
+<view class="dialog-mask " style="z-index:11;visibility:{{addressMenuIsShow ? 'visible': 'hidden'}}" bindtap="hideCitySelected"
+/>
 <!--城市三级联动-->
 <!--使用动画时不能wx:if="{{city.length>0&&isVisible}}" ，不能hidden=''属性否则无动画效果-->
 <view class="picker-view" animation="{{animationAddressMenu}}" style="visibility:{{addressMenuIsShow ? 'visible':'hidden'}}">

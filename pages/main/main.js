@@ -7,6 +7,7 @@ const dotHelper = require("../../pages/me/dotHelper.js");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
 const RunStatus = require("../main/runStatus");
+const StrategyHelper = require("../../helper/StrategyHelper");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -403,81 +404,10 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-          //					console.log(res.data)
-          //console.log(res.data.data)
           if (res.data.data != null) {
             var nowdate = util.dateToString(new Date());
             if (res.data.data.subscribe != null && res.data.data.check == null) {
               res.data.data.subscribe.date = res.data.data.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-              this.setData({
-                canCheck: 4
-              })
-            }
-            if (res.data.data.check != null) {
-              if (res.data.data.check.checkType == 'SELF_CHECK') { //自主检测
-                if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //自主检测还未到检测时间
-                  this.setData({
-                    canCheck: 0
-                  })
-                }
-                if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期中检测了
-                  this.setData({
-                    canCheck: 1
-                  })
-                }
-                if (res.data.data.check.status == 1) { //检测审核中
-                  this.setData({
-                    canCheck: 5
-                  })
-                }
-                if (res.data.data.check.status == 2) { //检测未通过
-                  this.setData({
-                    canCheck: 8
-                  })
-                }
-              }
-              if (res.data.data.check.checkType == 'SERVER_CHECK') { //期末检测
-                //console.log(res.data.data.check.checkType)
-                if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
-                  this.setData({
-                    canCheck: 2
-                  })
-                }
-                if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期末检测了
-                  this.setData({
-                    canCheck: 3
-                  })
-                }
-                if (res.data.data.check.status == 1) { //期末检测审核中
-                  this.setData({
-                    canCheck: 5
-                  })
-                }
-
-              }
-              if (res.data.data.check.checkType == 'ANY_CHECK') { //两种检测
-                //console.log(res.data.data.check.checkType)
-                if (nowdate < res.data.data.check.checkDate && res.data.data.check.status == 0) { //期末检测还未到检测时间
-                  this.setData({
-                    canCheck: 2
-                  })
-                }
-                if (nowdate >= res.data.data.check.checkDate && res.data.data.check.status == 0) { //可以期末检测了
-                  this.setData({
-                    canCheck: 6
-                  })
-                }
-                if (res.data.data.check.status == 1) { //期末检测审核中
-                  this.setData({
-                    canCheck: 5
-                  })
-                }
-                if (res.data.data.check.status == 2) { //检测未通过
-                  this.setData({
-                    canCheck: 7
-                  })
-                }
-              }
             }
             res.data.data.begin_date = res.data.data.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
             res.data.data.end_date = res.data.data.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
@@ -485,14 +415,13 @@ Page({
               res.data.data.check.checkDate = res.data.data.check.checkDate.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日");
             }
             var myad = res.data.data;
-
+            myad.taskDesc = StrategyHelper.getMyTaskDesc(myad);
+            myad.taskStatus = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(myad));
             z.setData({
               myAd: myad,
               haveMyAd: true
             })
-
           } else {
-            //z.shippingAddress()
             z.setData({
               myAd: null,
               haveMyAd: false
@@ -690,7 +619,6 @@ Page({
       success: res => {
         if (res.data.code == 1000) {
           app.globalData.shareFlag = res.data.data;
-          console.log('app---------->' + app.globalData.shareFlag);
           that.setData({
             bannerFlag: that.data.bannerFlag + 1,
             showRecommend: res.data.data,
@@ -753,7 +681,6 @@ Page({
       const updateManager = wx.getUpdateManager();
       updateManager.onCheckForUpdate(function(res) {
         // 请求完新版本信息的回调
-        console.log('onCheckForUpdate----------------->');
       })
 
       updateManager.onUpdateReady(function() {
@@ -846,6 +773,12 @@ Page({
       }
       ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
     }, 1000);
+  },
+
+  handleGoTask(){
+    wx.switchTab({
+      url: '../task/task'
+    })
   }
 
 })

@@ -1,7 +1,7 @@
 
-export function showLoading(){
+export function showLoading(title){
   wx.showLoading({
-    title: '奔跑中🚗...'
+    title: title || '奔跑中🚗...'
   });
 }
 

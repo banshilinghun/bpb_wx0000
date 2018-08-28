@@ -4,6 +4,7 @@ const ApiManager = require("../../utils/api/ApiManager");
 const StrategyHelper = require("../../helper/StrategyHelper");
 const ModalHelper = require("../../helper/ModalHelper");
 const LoadingHelper = require("../../helper/LoadingHelper");
+const viewUtil = require("../../utils/common/viewUtil");
 const app = getApp()
 var sourceType = [
 	['camera'],
@@ -70,13 +71,17 @@ Page({
 
 	initScrollViewHeight() {
 		//设置scrollView 高度
-		wx.getSystemInfo({
-			success: res => {
-				this.setData({
-					scrollHeight: res.windowHeight - 35
-				})
-			}
+		const that = this;
+		viewUtil.getViewHeight("#b-commit").then(rect => {
+			wx.getSystemInfo({
+				success: res => {
+					that.setData({
+						scrollHeight: res.windowHeight - 35 - rect.height
+					})
+				}
+			})
 		})
+		
 	},
 
 	formSubmit: function (e) {
@@ -102,6 +107,8 @@ Page({
 	},
 
 	commitRegistCheckInfo(){
+		const that = this;
+		LoadingHelper.showLoading();
 		//todo
 		let commitUrl = that.data.actionType == StrategyHelper.REGIST? ApiConst.COMMIT_REGIST_INFO : '';
 		let commitData = {};
@@ -124,10 +131,10 @@ Page({
 				}, 1000);
       },
       complete: res => {
-        that.hideLoading();
+        LoadingHelper.hideLoading();
       }
     }
-		ApiManager.uploadFile(new ApiManager.requestInfo(requestData));
+		ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
 	},
 
 	chooseImage: function () { //车身左侧
@@ -160,49 +167,45 @@ Page({
 			url: uploadUrl,
 			filePath: imageData.tempFilePaths[0],
       formData: formTempData,
-			name: filename,
+			fileName: filename,
       success: res => {
 				that.changeImageStatus(filename, imageData);
-        that.setData({
-					imageList: imageData.tempFilePaths,
-					carleftPhoto: imageData.tempFilePaths[0],
-					show1: false
-				})
       },
       complete: res => {
         LoadingHelper.hideLoading();
       }
     }
-		ApiManager.uploadFile(new ApiManager.requestInfo(requestData));
+		ApiManager.uploadFile(new ApiManager.uploadInfo(requestData));
 	},
 
 	changeImageStatus(filename, imageData){
+		const that = this;
 		let imageStrategy = {
 			left_img : function(){
-				this.setData({
+				that.setData({
 					imageList: imageData.tempFilePaths,
 					carleftPhoto: imageData.tempFilePaths[0],
 					show1: false
 				})
 			},
 			in_img: function(){
-				this.setData({
-					imageList2: wxres.tempFilePaths,
-					carnPhoto: wxres.tempFilePaths[0],
+				that.setData({
+					imageList2: imageData.tempFilePaths,
+					carnPhoto: imageData.tempFilePaths[0],
 					show2: false
 				})
 			},
 			front_img: function(){
-				this.setData({
-					imageList3: wxres.tempFilePaths,
-					cartPhoto: wxres.tempFilePaths[0],
+				that.setData({
+					imageList3: imageData.tempFilePaths,
+					cartPhoto: imageData.tempFilePaths[0],
 					show3: false
 				})
 			},
 			right_img: function(){
-				this.setData({
-					imageList4: wxres.tempFilePaths,
-					carrightPhoto: wxres.tempFilePaths[0],
+				that.setData({
+					imageList4: imageData.tempFilePaths,
+					carrightPhoto: imageData.tempFilePaths[0],
 					show4: false
 				})
 			}
@@ -211,7 +214,8 @@ Page({
 	},
 
 	previewImage: function (e) {
-		var current = e.target.dataset.src
+		let current = e.target.dataset.src;
+		const that = this;
 		wx.previewImage({
 			current: current,
 			urls: this.data.imageList

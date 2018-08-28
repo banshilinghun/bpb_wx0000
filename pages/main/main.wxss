@@ -18,6 +18,13 @@ page {
   background-color: #fff;
 }
 
+.my-item{
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 10rpx 20rpx
+}
+
 .item-left {
   margin-top: 12rpx;
   display: table-cell;
@@ -44,6 +51,7 @@ page {
   font-size: 36rpx;
   overflow: hidden; /*自动隐藏文字*/
   text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap
 }
 
 .message {
@@ -313,7 +321,7 @@ movable-view {
   height: 80rpx;
   width: 100%;
   font-size: 26rpx;
-  background: linear-gradient(90deg, #FB653D, #ff555c);
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   display: flex;
   align-items: center;
   text-align: left;
@@ -503,12 +511,61 @@ movable-view {
 }
 
 .b-main-title{
-  width: 100%;
   font-size: 32rpx;
   color: #333;
   font-weight: 500;
   text-align: left;
   box-sizing: border-box;
-  padding: 20rpx 0 20rpx 30rpx;
-  background-color: #F6F6F6
+  padding: 10rpx 0 10rpx 30rpx
+}
+
+.b-my-main-title{
+  display: flex;
+  flex-direction: row;
+  font-size: 36rpx;
+  color: #333;
+  font-weight: 500;
+  box-sizing: border-box;
+  padding: 15rpx 20rpx 0 20rpx
+}
+
+.b-title-left{
+  flex: 1;
+}
+
+.b-title-right{
+  color: #ff555c
+}
+
+.b-task-wrapper{
+  background: linear-gradient(90deg, #ff555c, #FB653D);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20rpx 20rpx;
+  border-radius: 10rpx;
+  margin: 0 20rpx 20rpx 20rpx
+}
+
+.b-task-desc{
+  font-size: 28rpx;
+  color: #fff;
+  flex: 1;
+}
+
+.b-task-btn{
+  background-color: #fff;
+  box-shadow:0px 2px 2px #ddd;
+  color: #ff555c;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+  padding: 5rpx 10rpx
+}
+
+.b-my-ad-wrapper{
+  border-radius: 10rpx;
+  background-color: #fff;
+  margin: 20rpx;
+  box-shadow: 0 2px 6px #aaa;
+  overflow: hidden
 }

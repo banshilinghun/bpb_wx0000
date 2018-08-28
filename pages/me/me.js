@@ -22,41 +22,41 @@ Page({
     incomeCells: [{
         type: 1,
         text: '提现',
-        icon: 'https://upload-images.jianshu.io/upload_images/4240944-2ae97187059b243b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-withdraw-icon.png',
         url: '../withdraw/withdraw',
         visible: true
       },
       {
         type: 2,
         text: '提现记录',
-        icon: 'https://upload-images.jianshu.io/upload_images/4240944-c787785ebf84d971.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-withdraw-record.png',
         url: '../withdrawRecord/withdrawRecord',
         visible: true
       }, {
         type: 3,
         text: '收益记录',
-        icon: 'https://upload-images.jianshu.io/upload_images/4240944-90fb413fc672c3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-income-record.png',
         url: '../earningRecord/earningRecord',
-        visible: true
+        visible: false
       }
     ],
     ExceptionCells: [{
         type: 4,
         text: '损坏申报',
-        icon: 'https://upload-images.jianshu.io/upload_images/4240944-23ef57a41ce19448.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-damage-icon.png',
         url: '../declare/declare?type=damage',
         visible: true
       },
       {
         type: 5,
         text: '掉漆申报',
-        icon: 'https://upload-images.jianshu.io/upload_images/4240944-51f84e196a11b983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-drop-icon.png',
         url: '../declare/declare?type=drop',
         visible: true
       }, {
         type: 6,
         text: '违章申报',
-        icon: 'https://upload-images.jianshu.io/upload_images/4240944-d6d2717348a94b1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-traffic-icon.png',
         url: '../declare/declare?type=violate',
         visible: true
       }
@@ -64,20 +64,20 @@ Page({
     actionCells: [{
         type: 7,
         text: '推荐有奖',
-        icon: '../../image/shmgc.png',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-recommend-icon.png',
         url: '../recommend/recommend?flag=recommend',
         visible: true
       },
       {
         type: 8,
         text: '新手教程',
-        icon: 'https://upload-images.jianshu.io/upload_images/4240944-9d66c194774e98c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-user-course.png',
         url: '../teaching/teaching',
         visible: true
       }, {
         type: 9,
         text: '注册认证',
-        icon: '../../image/card.png',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-auth-icon.png',
         url: '../auth/auth',
         visible: true
       }

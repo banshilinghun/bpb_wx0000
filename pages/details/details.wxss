@@ -1475,17 +1475,29 @@ button {
 .b-effect-wrapper {
   display: flex;
   flex-direction: row;
-  padding: 20rpx 22rpx 0 22rpx
+  padding: 20rpx 0 0 0
 }
 
 .b-effect-image-wrapper {
-  width: 33.3%;
   padding: 0 8rpx
 }
 
 .b-effect-image {
-  width: 100%;
-  box-shadow: 0 0 8rpx #ddd
+  width: 320rpx;
+  height: 180rpx;
+  border-radius: 5rpx;
+}
+
+.b-effect-desc{
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  padding: 0 0 10rpx 0
+}
+
+.b-scroll-effect{
+  padding: 0 30rpx;
+  box-sizing: border-box
 }
 
 /* 广告样式 end */

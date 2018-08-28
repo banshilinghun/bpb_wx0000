@@ -30,7 +30,7 @@ page{
   border-radius: 50%;
   border: 1rpx solid #fff;
   background: #f6f6f6;
-  box-shadow: 0 0 10rpx #ccc;
+  box-shadow: 0 0 10rpx #666
 }
 
 .b-header-detail{
@@ -41,8 +41,7 @@ page{
 .b-user-name{
   color: #fff;
   font-size: 36rpx;
-  width: 300rpx;
-  overflow: hidden
+  width: 300rpx
 }
 
 .b-real-name{
@@ -58,7 +57,7 @@ page{
 }
 
 .b-header-auth-status{
-  width: 80rpx;
+  width: 70rpx;
   height: 80rpx;
   margin-left: 30rpx
 }
@@ -143,11 +142,11 @@ page{
 }
 
 .b-cell-image{
-  width: 50rpx;
-  height: 50rpx
+  width: 60rpx;
+  height: 60rpx
 }
 
 .b-cell-action{
   color: #666;
-  font-size: 24rpx
+  font-size: 28rpx
 }

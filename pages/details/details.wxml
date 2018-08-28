@@ -3,7 +3,7 @@
     <view class='taewtw' wx:if='{{ loginStaus==0 }}' bindtap="goRegister">立马注册，躺着赚钱，速速来抢</view>
     <view class='taewtw' wx:if='{{ loginStaus==1 }}' bindtap="goAuth">立马认证，躺着赚钱，速速来抢</view>
   </view>
-  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
+  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px' wx:if="{{ adInfo }}">
     <view class='detail-container'>
       <view class="page-section page-section-spacing swiper">
         <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>
@@ -168,7 +168,8 @@
                 <view class="item {{item.lista==2?'curitemList':''}}">
                   <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
                   <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
-                  <image wx:if='{{item.small_logo!=null}}' src='{{item.small_logo}}' class='sev_logo' catchtap='previewImage' data-image='{{ item.logo }}' data-samllImage='{{item.small_logo}}'></image>
+                  <image wx:if='{{item.small_logo!=null}}' src='{{item.small_logo}}' class='sev_logo' catchtap='previewImage' data-image='{{ item.logo }}'
+                    data-samllImage='{{item.small_logo}}'></image>
                   <image wx:if='{{item.small_logo==null}}' src='../../image/noimg.png' class='sev_logo'></image>
                   <view class="item-middle">
                     <view>
@@ -190,10 +191,12 @@
                     <view>
                       <text class="time">{{item.distance}}km</text>
                     </view>
-                    <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
+                    <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}"
+                      data-address="{{item.address}}">
                       <image src='../../image/dh.png'></image>导航
                     </view>
-                    <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}" data-serverName='{{ item.name }}' data-serverAddress='{{ item.address }}'> 预约</view>
+                    <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}" data-serverName='{{ item.name }}'
+                      data-serverAddress='{{ item.address }}'> 预约</view>
                     <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
                     <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
                   </view>
@@ -219,11 +222,16 @@
           <view>
             <view wx:for="{{ designList }}" wx:for-item='design' class='b-design-wrapper' wx:key='design.id'>
               <view class='b-design-item-title'>{{ design.title }}</view>
-              <view class='b-effect-wrapper'>
-                <view id='effect-image' class='b-effect-image-wrapper' wx:for='{{ design.effect }}' wx:for-item='effect' wx:key='effect.id'>
-                  <image class='b-effect-image' src='{{ effect.img }}' style='height: {{ designHeight }}px' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}' data-current='{{ effect.img }}'></image>
+              <scroll-view scroll-x='true' class="b-scroll-effect">
+                <view class='b-effect-wrapper'>
+                  <view id='effect-image' class='b-effect-image-wrapper' wx:for='{{ design.effect }}' wx:for-item='effect' wx:key='effect.id'>
+                    <image class='b-effect-image' src='{{ effect.img }}' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}' data-current='{{ effect.img }}'></image>
+                    <view class="b-effect-desc">
+                      <text>{{ effect.desc }}</text>
+                    </view>
+                  </view>
                 </view>
-              </view>
+              </scroll-view>
             </view>
           </view>
         </view>
@@ -244,7 +252,8 @@
       <view class='sharetext'>{{ shareAwardText }}</view>
     </button>
     <!-- 预约排队 -->
-    <view class='subscribe_immediately {{ actionStatus === "start_subscribe"? "b-start-subscribe" : "" }} {{ actionStatus === "not_begin"? "b-not-begin" : "" }} {{ actionStatus === "reject_error"? "b-reject-error" : "" }} {{ actionStatus === "own_ad"? "b-own-ad" : "" }}' bindtap='handleAction'>
+    <view class='subscribe_immediately {{ actionStatus === "start_subscribe"? "b-start-subscribe" : "" }} {{ actionStatus === "not_begin"? "b-not-begin" : "" }} {{ actionStatus === "reject_error"? "b-reject-error" : "" }} {{ actionStatus === "own_ad"? "b-own-ad" : "" }}'
+      bindtap='handleAction'>
       <view class='subcribe-wrapper'>
         <text>{{ actionStr }}</text>
       </view>
@@ -253,7 +262,8 @@
 </view>
 
 <!-- 预约成功弹框 -->
-<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!' btnText='分享微信好友' />
+<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!'
+  btnText='分享微信好友' />
 <view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
   <view class="count">
   </view>
@@ -262,7 +272,8 @@
 <share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener' adId="{{ adInfo.id }}"></share-popup>
 
 <!-- 朋友圈分享 -->
-<share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}' joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
+<share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}'
+  joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
   adId='{{adId}}' bind:hideDialog='hideDialogListener'>
 </share-detail>
 
@@ -275,16 +286,19 @@
 </view>
 
 <!-- 规则弹框 -->
-<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail' data-adId="{{ adId }}" data-serverId="{{ serverId }}" data-serverName='{{ serverName }}' data-serverAddress='{{ serverAddress }}'></rule-dialog>
+<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail' data-adId="{{ adId }}"
+  data-serverId="{{ serverId }}" data-serverName='{{ serverName }}' data-serverAddress='{{ serverAddress }}'></rule-dialog>
 
 <!-- 地址弹框 -->
 <dialog-address showAddressDialog='{{ showAddressDialog }}' address='{{ address }}' phone='{{ phone }}'></dialog-address>
 
 <!-- 注册认证弹框 -->
-<dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ "https://wxapi.benpaobao.com/static/app_img/auth-icon.png" }}' btnStr='{{ authStr }}' status='{{ authStatus }}' content='{{ authContent }}' bind:action='handleActionTap'></dialog-auth>
+<dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ "https://wxapi.benpaobao.com/static/app_img/auth-icon.png" }}'
+  btnStr='{{ authStr }}' status='{{ authStatus }}' content='{{ authContent }}' bind:action='handleActionTap'></dialog-auth>
 
 <!-- 预约排队 -->
-<model visible="{{ visible }}" title="预约排队确认" cancelText="暂不排队" confirmText="确认排队" cancelLoading="{{ cancelLoading }}" confirmLoading="{{ confirmLoading }}" bind:cancel="handleQueueCancel" bind:confirm="handleQueueConfirm" explain='排队说明' bind:explain="handleModelExplain">
+<model visible="{{ visible }}" title="预约排队确认" cancelText="暂不排队" confirmText="确认排队" cancelLoading="{{ cancelLoading }}" confirmLoading="{{ confirmLoading }}"
+  bind:cancel="handleQueueCancel" bind:confirm="handleQueueConfirm" explain='排队说明' bind:explain="handleModelExplain">
   <view class='subscribe-wrapper'>
     <view class='subscribe-body'>
       <view class='b-queue-model-item'>排队序号: {{ serial_number }}</view>
@@ -296,7 +310,8 @@
 </model>
 
 <!-- 取消排队 -->
-<model visible="{{ visibleUndo }}" title="取消确认" cancelText="暂不取消" confirmText="确认取消" confirmLoading="{{ doLoading }}" bind:cancel="handleUndoCancel" bind:confirm="handleConfirmCancel">
+<model visible="{{ visibleUndo }}" title="取消确认" cancelText="暂不取消" confirmText="确认取消" confirmLoading="{{ doLoading }}" bind:cancel="handleUndoCancel"
+  bind:confirm="handleConfirmCancel">
   <view class='subscribe-wrapper'>
     <view class='b-cancel-queue-tip'>
       <view class='b-queue-model-item'>取消后，需重新参加排队，</view>
@@ -306,7 +321,8 @@
 </model>
 
 <!-- 年检弹窗 -->
-<model visible="{{ visibleAnnual }}" title="完善车辆年检日期" cancelText="取消" confirmText="保存" confirmLoading="{{ annualLoading }}" bind:cancel="handleAnnualCancel" bind:confirm="handleAnnualConfirm">
+<model visible="{{ visibleAnnual }}" title="完善车辆年检日期" cancelText="取消" confirmText="保存" confirmLoading="{{ annualLoading }}"
+  bind:cancel="handleAnnualCancel" bind:confirm="handleAnnualConfirm">
   <view class='b-annual-container'>
     <view class='b-annual-left'>
       <text>年检日期: </text>
@@ -323,7 +339,8 @@
 </model>
 
 <!-- 确认预约提示 -->
-<model visible="{{ visibleSubscribeTip }}" title="预约确认" cancelText="暂不预约" confirmText="确认预约" confirmLoading="{{ confirmSubTipLoading }}" bind:cancel="handleSubscribeCancel" bind:confirm="handleSubscribeRequest">
+<model visible="{{ visibleSubscribeTip }}" title="预约确认" cancelText="暂不预约" confirmText="确认预约" confirmLoading="{{ confirmSubTipLoading }}"
+  bind:cancel="handleSubscribeCancel" bind:confirm="handleSubscribeRequest">
   <view class='subscribe-wrapper'>
     <view class='subscribe-body'>
       <view class='b-queue-model-item'>服务网点: {{ subscribeStation }}</view>
@@ -367,7 +384,8 @@
             </view>
             <view class='b-body-wrapper'>
               <view class='b-body-server' wx:for="{{ stationList }}" wx:key="server" wx:if="{{ selectServerIndex === -1 || (selectServerIndex !== -1 &&  index === selectServerIndex) }}">
-                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}' bindtap='handleServerClick' data-index='{{ index }}' data-station="{{ item }}">
+                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}' bindtap='handleServerClick'
+                  data-index='{{ index }}' data-station="{{ item }}">
                   <image class='b-server-logo' src="{{ item.small_logo || '../../image/noimg.png' }}" catchtap='handlePreviewStation' data-image="{{ item.logo }}"></image>
                   <view class='b-server-right'>
                     <view class='b-server-right-middle'>
@@ -393,7 +411,8 @@
             </view>
             <view class='b-body-wrapper'>
               <view class='b-body-date' wx:for="{{ dateList }}" wx:key="date" wx:if="{{ selectDateIndex === -1 || (selectDateIndex !== -1 &&  index === selectDateIndex) }}">
-                <view class='b-date-cell {{ index === selectDateIndex? "theme-color" : (item.enable? "normal-color" : "gray-color") }} {{ index === selectDateIndex? "b-server-select" : "b-server-normal" }}' bindtap="handleDateClick" data-index='{{ index }}' data-date="{{ item }}">{{ item.date }}</view>
+                <view class='b-date-cell {{ index === selectDateIndex? "theme-color" : (item.enable? "normal-color" : "gray-color") }} {{ index === selectDateIndex? "b-server-select" : "b-server-normal" }}'
+                  bindtap="handleDateClick" data-index='{{ index }}' data-date="{{ item }}">{{ item.date }}</view>
               </view>
             </view>
           </view>
@@ -405,7 +424,8 @@
             </view>
             <view class='b-body-wrapper'>
               <view class='b-body-date' wx:for="{{ timeList }}" wx:key="date" wx:if="{{ selectTimeIndex === -1 || (selectTimeIndex !== -1 &&  index === selectTimeIndex) }}">
-                <view class='b-date-cell {{index === selectTimeIndex? "theme-color" : item.enable? "normal-color" : "gray-color" }} {{ index === selectTimeIndex? "b-server-select" : "b-server-normal" }}' bindtap="handleTimeClick" data-index='{{ index }}' data-time="{{ item }}">{{ item.time }}</view>
+                <view class='b-date-cell {{index === selectTimeIndex? "theme-color" : item.enable? "normal-color" : "gray-color" }} {{ index === selectTimeIndex? "b-server-select" : "b-server-normal" }}'
+                  bindtap="handleTimeClick" data-index='{{ index }}' data-time="{{ item }}">{{ item.time }}</view>
               </view>
             </view>
           </view>

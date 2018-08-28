@@ -12,7 +12,6 @@ const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
 const util = require("../../utils/common/util.js");
 const timeUtil = require("../../utils/time/timeUtil");
-const designMode = require("../../utils/designMode/designMode");
 const LoadingHelper = require("../../helper/LoadingHelper");
 const StrategyHelper = require("../../helper/StrategyHelper");
 const {
@@ -70,7 +69,7 @@ Page({
             runningTempTask.reserveDate.subscribeTime = timeUtil.formatDateTime(runningTempTask.reserveDate.date) + " " + runningTempTask.reserveDate.begin_time + "-" + runningTempTask.reserveDate.end_time;
           }
           that.setData({
-            status: designMode.getCurrentStatus(runningTempTask),
+            status: StrategyHelper.getCurrentStatus(runningTempTask),
           })
         } else {
           runningTempTask= null;
@@ -375,6 +374,9 @@ Page({
 
   handleAdDetail(event){
     console.log(event);
+    wx.navigateTo({
+      url: '../details/details?adId=' + event.currentTarget.dataset.adid,
+    })
   },
 
   /**
