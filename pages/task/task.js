@@ -13,6 +13,7 @@ const ApiManager = require("../../utils/api/ApiManager.js");
 const util = require("../../utils/common/util.js");
 const timeUtil = require("../../utils/time/timeUtil");
 const LoadingHelper = require("../../helper/LoadingHelper");
+const ModalHelper = require("../../helper/ModalHelper");
 const StrategyHelper = require("../../helper/StrategyHelper");
 const {
   $Toast
@@ -44,15 +45,15 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
 
   },
 
-  onShow: function(){
+  onShow: function () {
     this.requestTaskList();
   },
 
-  requestTaskList(){
+  requestTaskList() {
     const that = this;
     //清除timer
     clearInterval(timer);
@@ -63,51 +64,53 @@ Page({
       header: app.globalData.header,
       success: res => {
         let runningTempTask = res.runningTask;
-        if(runningTempTask && Object.keys(runningTempTask).length !== 0){
+        if (runningTempTask && Object.keys(runningTempTask).length !== 0) {
           runningTempTask.date = timeUtil.formatDateTimeSprit(runningTempTask.begin_date) + "-" + timeUtil.formatDateTimeSprit(runningTempTask.end_date);
-          if(runningTempTask.reserveDate){
+          runningTempTask.statusStr = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(runningTempTask));
+
+          //计算距离 process=1 || process=2
+          if (runningTempTask.reserveDate) {
             runningTempTask.reserveDate.subscribeTime = timeUtil.formatDateTime(runningTempTask.reserveDate.date) + " " + runningTempTask.reserveDate.begin_time + "-" + runningTempTask.reserveDate.end_time;
+            that.calculateDistance(runningTempTask.reserveDate.lat, runningTempTask.reserveDate.lng).then(distance => {
+              that.setData({
+                distance: distance
+              })
+            });
           }
           that.setData({
             status: StrategyHelper.getCurrentStatus(runningTempTask),
           })
-        } else {
-          runningTempTask= null;
-        }
-        //计算距离 process=1 || process=2
-        if(runningTempTask && runningTempTask.reserveDate){
-          that.calculateDistance(runningTempTask.reserveDate.lat, runningTempTask.reserveDate.lng).then(distance => {
+          //签到未安装等待时间,等待人数  process=3
+          if (runningTempTask.waitInfo) {
+            let nowTime = new Date(runningTempTask.now_date).getTime() / 1000;
+            let waitTime = Math.floor(nowTime - runningTempTask.waitInfo.signInDate);
+            that.lopperWaitTime(waitTime);
             that.setData({
-              distance: distance
-            })
-          });
-        }
-        //签到未安装等待时间,等待人数  process=3
-        if(runningTempTask && runningTempTask.waitInfo){
-          let nowTime =  new Date(runningTempTask.now_date).getTime() / 1000;
-          let waitTime = Math.floor(nowTime - runningTempTask.waitInfo.signInDate);
-          that.lopperWaitTime(waitTime);
-          that.setData({
-            waitInfo: runningTempTask.waitInfo,
-            waitTime: that.formatTime(waitTime)
-          })
-        }
-        if(runningTempTask && runningTempTask.installInfo){
-          if(!runningTempTask.installInfo.end_time){
-            //安装中，安装时间 process=4
-            let installTime = Math.floor(runningTempTask.installInfo.now_date - runningTempTask.installInfo.begin_time);
-            that.lopperInstallTime(installTime);
-            that.setData({
-              installTime: that.formatTime(installTime)
-            })
-          } else {
-            //安装完成待上画
-            that.setData({
-              installOverTime: that.formatTime(Math.floor(runningTempTask.installInfo.end_time - runningTempTask.installInfo.begin_time))
+              waitInfo: runningTempTask.waitInfo,
+              waitTime: that.formatTime(waitTime)
             })
           }
+          if (runningTempTask.installInfo) {
+            if (!runningTempTask.installInfo.end_time) {
+              //安装中，安装时间 process=4
+              let installTime = Math.floor(runningTempTask.installInfo.now_date - runningTempTask.installInfo.begin_time);
+              that.lopperInstallTime(installTime);
+              that.setData({
+                installTime: that.formatTime(installTime)
+              })
+            } else {
+              //安装完成待上画
+              that.setData({
+                installOverTime: that.formatTime(Math.floor(runningTempTask.installInfo.end_time - runningTempTask.installInfo.begin_time))
+              })
+            }
+          }
+          //判断视图显示隐藏
+          runningTempTask.action = StrategyHelper.getTaskActionDisplay(runningTempTask);
+          console.log(runningTempTask);
+        } else {
+          runningTempTask = null;
         }
-        //安装完成待上画
         that.setData({
           runningTask: runningTempTask,
           overTask: res.overTask
@@ -123,7 +126,7 @@ Page({
   /**
    * 安装等待时间计时
    */
-  lopperWaitTime(waitTimeParam){
+  lopperWaitTime(waitTimeParam) {
     timer = setInterval(() => {
       waitTimeParam++;
       this.setData({
@@ -136,7 +139,7 @@ Page({
    * 安装用时
    * @param {*} 已安装时间 
    */
-  lopperInstallTime(installTimeParam){
+  lopperInstallTime(installTimeParam) {
     timer = setInterval(() => {
       installTimeParam++;
       this.setData({
@@ -145,12 +148,12 @@ Page({
     }, 1000);
   },
 
-  formatTime(targetTime){
+  formatTime(targetTime) {
     let days = Math.floor(targetTime / (3600 * 24));
     let hours = Math.floor((targetTime % (3600 * 24)) / 3600);
     let minutes = Math.floor((targetTime % 3600) / 60);
     let seconds = targetTime % 60;
-    let tempTime = (days == 0? '' : `${ days }天`) + (hours == 0 && days == 0? '' : `${ hours }时`) + (minutes == 0 && days == 0 && hours == 0? '' : `${ minutes }分`) + (`${ seconds }秒`);
+    let tempTime = (days == 0 ? '' : `${days}天`) + (hours == 0 && days == 0 ? '' : `${hours}时`) + (minutes == 0 && days == 0 && hours == 0 ? '' : `${minutes}分`) + (`${seconds}秒`);
     return tempTime;
   },
 
@@ -193,33 +196,33 @@ Page({
   /**
    * 处理按钮点击事件
    */
-  handleAction(){
+  handleAction() {
     let that = this;
     let actionStrategy = {
-      subscribed: function(){
+      subscribed: function () {
         that.sign();
       },
-      subscribeOvertime: function(){
+      subscribeOvertime: function () {
         that.sign();
       },
       //安装审核不合格，需重新上画
-      rework: function(){
+      rework: function () {
         that.sign();
       },
       //安装审核不合格，需重新拍照审核
-      installFail: function(){
+      installFail: function () {
         that.uploadInstallPicture();
       },
       //待上画
-      installed: function(){
+      installed: function () {
         that.uploadInstallPicture();
       },
       //待检测
-      needCheck: function(){
+      needCheck: function () {
         that.uploadCheckPicture();
       },
       //检测审核不合格，需重新拍照检测
-      checkfail: function(){
+      checkfail: function () {
         that.uploadCheckPicture();
       }
     }
@@ -230,7 +233,7 @@ Page({
   /**
    * 上传车辆安装画面
    */
-  uploadInstallPicture(){
+  uploadInstallPicture() {
     let that = this;
     let registObj = {
       classify: that.data.runningTask.classify,
@@ -245,7 +248,7 @@ Page({
   /**
    * 上传车辆检测画面
    */
-  uploadCheckPicture(){
+  uploadCheckPicture() {
     let that = this;
     let registObj = {
       classify: that.data.runningTask.classify,
@@ -260,7 +263,7 @@ Page({
   /**
    * 取消预约
    */
-  handleUnSubscribe(){
+  handleUnSubscribe() {
     let that = this;
     //判断距离预约时间截止是否大于3小时，否则不可取消
     let targetTime = new Date(that.data.runningTask.reserveDate.date + ' ' + that.data.runningTask.reserveDate.begin_time).getTime();
@@ -280,27 +283,27 @@ Page({
   /**
    * 签到
    */
-  sign(){
+  sign() {
     let that = this;
     LoadingHelper.showLoading();
-    that.calculateDistance(that.data.runningTask.reserveDate.lat, that.data.runningTask.reserveDate.lng).then(distance => {
+    let lat = that.data.status === StrategyHelper.REWORK? that.data.runningTask.stationInfo.lat : that.data.runningTask.reserveDate.lat;
+    let lng = that.data.status === StrategyHelper.REWORK? that.data.runningTask.stationInfo.lng : that.data.runningTask.reserveDate.lng;
+    that.calculateDistance(lat, lng).then(distance => {
       //限制在服务网点五百米范围内可签到
-      //TODO
-      distance = 0.3;
-      if(distance * 1000 > 500){
+      if (distance * 1000 > 500) {
         LoadingHelper.hideLoading();
         that.setData({
           visibleSign: true
         })
-      }else{
+      } else {
         that.sendSignRequest();
       }
     });
   },
 
-  calculateDistance(serverLat, serverLng){
+  calculateDistance(serverLat, serverLng) {
     const that = this;
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
       wx.getLocation({
         type: 'gcj02',
         success: function (res) {
@@ -317,7 +320,7 @@ Page({
     });
   },
 
-  sendSignRequest(){
+  sendSignRequest() {
     const that = this;
     let requestData = {
       url: ApiConst.COMMIT_RESERVE_SIGNIN,
@@ -338,18 +341,19 @@ Page({
   },
 
   /**
-   * 关闭签到距离提示弹窗
+   * 关闭签到距离提示弹窗,并跳转导航
    */
-  handleSignTipdConfirm(){
+  handleSignTipdConfirm() {
     this.setData({
       visibleSign: false
     })
+    this.handleNavigation();
   },
 
   /**
    * 联系客服
    */
-  handleContactService(){
+  handleContactService() {
     wx.switchTab({
       url: '../QAservice/service'
     })
@@ -361,7 +365,7 @@ Page({
   /**
    * 超时不可取消确认
    */
-  handleUnableCancel(){
+  handleUnableCancel() {
     this.setData({
       visibleSubTip: false
     })
@@ -370,25 +374,35 @@ Page({
   /**
    * 导航
    */
-  handleNavigation(){
+  handleNavigation() {
     const that = this;
-    let reserveInfo = that.data.runningTask.reserveDate;
-    wx.openLocation({
-      longitude: Number(reserveInfo.lat),
-      latitude: Number(reserveInfo.lng),
-      name: reserveInfo.server_name,
-      address: reserveInfo.address
-    })
+    if (that.data.status === StrategyHelper.REWORK) {
+      let stationInfo = that.data.runningTask.stationInfo;
+      wx.openLocation({
+        longitude: Number(stationInfo.lng),
+        latitude: Number(stationInfo.lat),
+        name: stationInfo.name,
+        address: stationInfo.address
+      })
+    } else {
+      let reserveInfo = that.data.runningTask.reserveDate;
+      wx.openLocation({
+        longitude: Number(reserveInfo.lng),
+        latitude: Number(reserveInfo.lat),
+        name: reserveInfo.server_name,
+        address: reserveInfo.address
+      })
+    }
   },
 
   /**
    * 显示完整地址
    */
-  handleShowAddress(event){
-    this.showModal('网点地址确认', event.currentTarget.dataset.address, '我知道了');
+  handleShowAddress(event) {
+    ModalHelper.showWxModal('网点地址确认', event.currentTarget.dataset.address, '我知道了', false);
   },
 
-  handleAdDetail(event){
+  handleAdDetail(event) {
     console.log(event);
     wx.navigateTo({
       url: '../details/details?adId=' + event.currentTarget.dataset.adid,
@@ -398,7 +412,7 @@ Page({
   /**
    *暂不取消预约
    */
-  handleNotCancel(){
+  handleNotCancel() {
     this.setData({
       visibleSubCancelModel: false
     })
@@ -407,7 +421,7 @@ Page({
   /**
    *确认取消预约
    */
-  handleSureCancel(){
+  handleSureCancel() {
     const that = this;
     that.setData({
       showCancelLoading: true
@@ -415,7 +429,7 @@ Page({
     that.sendCancelSubscribeRequest();
   },
 
-  sendCancelSubscribeRequest(){
+  sendCancelSubscribeRequest() {
     const that = this;
     let requestData = {
       url: ApiConst.CANCEL_USER_RESERVE,
@@ -438,16 +452,6 @@ Page({
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
-  },
-
-  showModal(title, content, confirm){
-    wx.showModal({
-      title: title,
-      content: content,
-      confirmText: confirm,
-      showCancel: false,
-      confirmColor: '#ff555c'
-    })
-  },
+  }
 
 })

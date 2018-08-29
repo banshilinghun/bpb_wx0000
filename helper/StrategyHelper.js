@@ -6,27 +6,42 @@ const TimeUtil = require('../utils/time/timeUtil');
 export const REGIST = 'regist';
 export const CHECK = 'check';
 
+//任务状态
+export const SUBSCRIBED = 'subscribed';
+export const SUBSCRIBE_OVER_TIME = 'subscribeOvertime';
+export const SIGNED_WAIT_INSTALL = 'signedWaitInstall';
+export const INSTALLING = 'installing';
+export const REWORK = 'rework';
+export const INSTALLED = 'installed';
+export const INSTALL_AUDIT = 'installAudit';
+export const INSTALL_FAIL = 'installFail';
+export const RUNNING_FIXED = 'runingFixed';
+export const RUNNING_BY_TIME = 'runingByTime';
+export const NEED_CHECK = 'needCheck';
+export const CHECK_AUDIT = 'checkAudit';
+export const CHECK_FAIL = 'checkfail';
+
 
 //subscribed: 已预约未签到 | subscribeOvertime 预约中，已超时 | signedWaitInstall: 已签到未安装 | installing: 安装中 | installed: 安装完成待上画 | rework: 返工预约 
 //installAudit: 安装审核 | installFail: 安装审核失败 | runingFixed: 投放中固定收益  | runingByTime: 投放中按时计费 | needCheck: 待检测 | checkAudit: 检测审核中 | checkfail: 审核失败
 let taskStrategy = {
   //预约中
-  1: () => "subscribed",
+  1: () => SUBSCRIBED,
 
   //已超时未签到
-  2: () => "subscribeOvertime",
+  2: () => SUBSCRIBE_OVER_TIME,
 
   //已签到，未安装
-  3: () => "signedWaitInstall",
+  3: () => SIGNED_WAIT_INSTALL,
 
   //已签到，安装中
-  4: () => "installing",
+  4: () => INSTALLING,
 
   //审核失败，需要返工
-  5: () => "rework",
+  5: () => REWORK,
 
   //安装完成待上画
-  6: () => "installed",
+  6: () => INSTALLED,
 
   //已提交登记信息, 但有审核中、审核失败（不需要返工）状态
   7: function(runningTask){
@@ -34,27 +49,27 @@ let taskStrategy = {
       console.error('登记信息 field "registInfo" to null or undefined is invalid')
     }
     if(runningTask.registInfo.status == 1){
-      return "installAudit";
+      return INSTALL_AUDIT;
     } else if(runningTask.registInfo.status == 2) {
-      return "installFail";
+      return INSTALL_FAIL;
     }
   },
 
   //投放中，固定收益
-  8: () => "runingFixed",
+  8: () => RUNNING_FIXED,
 
   //投放中，按时计费
-  9: () => "runingByTime",
+  9: () => RUNNING_BY_TIME,
   
   //广告处于检测中
   10: function(runningTask){
     //未提交审核
     if(runningTask.status == 0){
-      return "needCheck";
+      return needCheck;
     } else if(runningTask.status == 1) {
-      return "checkAudit";
+      return CHECK_AUDIT;
     } else if(runningTask.status == 2) {
-      return "checkfail";
+      return CHECK_FAIL;
     }
   }
 }
@@ -71,6 +86,30 @@ export function getCurrentStatus(runningTask){
     return;
   }
   return taskStrategy[runningTask.process](runningTask);
+}
+
+/**
+ *  判断当前可见视图
+ * 
+ * @param {*} status 当前状态
+ */
+export function getTaskActionDisplay(runningTask){
+  let status = getCurrentStatus(runningTask);
+  let action = {};
+  action.subscribed = status === SUBSCRIBED;
+  action.subscribeOvertime = status === SUBSCRIBE_OVER_TIME;
+  action.signedWaitInstall = status === SIGNED_WAIT_INSTALL;
+  action.installing = status === INSTALLING;
+  action.rework = status === REWORK;
+  action.installed = status === INSTALLED;
+  action.installAudit = status === INSTALL_AUDIT;
+  action.installFail = status === INSTALL_FAIL;
+  action.runingFixed = status === RUNNING_FIXED;
+  action.runingByTime = status === RUNNING_BY_TIME;
+  action.needCheck = status === NEED_CHECK;
+  action.checkAudit = status === CHECK_AUDIT;
+  action.checkfail = status === CHECK_FAIL;
+  return action;
 }
 
 /**
@@ -148,13 +187,13 @@ export function getMyTaskDesc(runningTask){
 
 let taskStatusStrategy = {
   subscribed: () => '待安装',
-  subscribeOvertime: () => this.subscribed(),
-  signedWaitInstall: () => this.subscribed(),
+  subscribeOvertime: () => taskStatusStrategy.subscribed(),
+  signedWaitInstall: () => taskStatusStrategy.subscribed(),
   installing: () => '安装中',
   installed: () => '安装完成',
   installAudit: () => '审核中',
   installFail: () => '投放异常',
-  rework: () => this.installFail(),
+  rework: () => taskStatusStrategy.installFail(),
   needCheck: () => '待检测',
   checkAudit: () => '检测中',
   checkfail: () => '检测异常'
