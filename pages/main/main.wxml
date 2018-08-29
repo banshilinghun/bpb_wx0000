@@ -19,7 +19,7 @@
   </view>
   <view class="message__list">
     <!-- 我的任务 -->
-    <block wx:if="{{ haveMyAd }}">
+    <block wx:if="{{ myAd }}">
       <view class="b-my-ad-wrapper">
         <view class='b-my-main-title'>
           <view class="b-title-left">
@@ -130,22 +130,11 @@
         </view>
       </block>
     </block>
-
     <!--正在加载-->
-    <view class='load-more' hidden='{{ !isShowLoadingMore }}'>
-      <view class="weui-loadmore">
-        <view class="weui-loading"></view>
-        <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗....</view>
-      </view>
-    </view>
-    <view class='no-more' wx:if='{{ showNomore }}'>
-      <view class='no-more-line'></view>
-      <view class='no-more-wrapper'>
-        <text class='no-more-text'>我是有底线的~</text>
-      </view>
-    </view>
+    <loading-more isShowLoadingMore="{{ isShowLoadingMore }}" showNomore="{{ showNomore }}"></loading-more>
   </view>
 </view>
+
 <!-- 推荐有奖 -->
 <view class='movable-wrapper' bindtap='recommendClick' wx:if='{{ showRecommend }}'>
   <image class='active-img' src='../../image/recommend.gif'></image>

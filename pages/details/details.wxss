@@ -1286,21 +1286,21 @@ button {
 }
 
 .b-start-subscribe {
-  background: linear-gradient(90deg, #FB653D, #ff555c);
+  background: linear-gradient(90deg, #ff555c, #FB653D);
 }
 
 .b-not-begin {
-  background: linear-gradient(90deg, #FB653D, #ff555c);
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   opacity: 0.5
 }
 
 .b-reject-error {
-  background: linear-gradient(90deg, #FB653D, #ff555c);
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   opacity: 0.8
 }
 
 .b-own-ad{
-  background: linear-gradient(90deg, #FB653D, #ff555c);
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   opacity: 0.8
 }
 
@@ -1319,6 +1319,14 @@ button {
   height: 98rpx;
   display: flex;
   background-color: #fff;
+}
+
+.action_bottom_visible{
+  opacity: 1;
+}
+
+.action_bottom_invisible{
+  opacity: 0;
 }
 
 .b-see-more-detail {

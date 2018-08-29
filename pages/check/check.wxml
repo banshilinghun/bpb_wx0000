@@ -2,7 +2,7 @@
 
   <!--2.列表View-->
   <view class="swiper">
-    <block>
+    <block wx:if="{{ visibleCourse }}">
       <view class='check-help-wrapper'>
         <view class='check-image-wrapper' bindtap='handleHelp'>
           <image class='check-help-image' src='../../image/check-help.png'></image>
@@ -11,7 +11,7 @@
       </view>
     </block>
     <block>
-      <form bindsubmit="formSubmit">
+      <form bindsubmit="formSubmit" report-submit="{{ hasFormId }}">
         <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
           <view class="weui-cells my-cells" wx:if='{{carOut}}'>
             <view class="weui-cell">
@@ -106,7 +106,9 @@
             </view>
           </view>
         </scroll-view>
-        <button id="b-commit" formType="submit" class='btn-quit'> 提交</button>
+        <view id="b-commit" class="b-commit-wrapper">
+            <button formType="submit" class='btn-quit'> 提交</button>
+        </view>
       </form>
     </block>
   </view>

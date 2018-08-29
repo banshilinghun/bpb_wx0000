@@ -210,7 +210,7 @@ Page({
             if (dataBean.status == 3) {
               that.setData({
                 plate_no: dataBean.plate_no,
-                real_name: dataBean.real_name + 'real_namereal_namereal_name'
+                real_name: dataBean.real_name
               })
             }
           } else {

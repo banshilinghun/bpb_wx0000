@@ -1,11 +1,13 @@
 // 收益记录
 
-const ApiConst = require("../../utils/api/ApiConst.js");
+const ApiManager = require("../../utils/api/ApiManager");
+const ApiConst = require("../../utils/api/ApiConst");
 var util = require("../../utils/common/util");
 const dotHelper = require("../../pages/me/dotHelper.js");
 const Constant = require("../../utils/constant/Constant.js");
 const shareUtil = require("../../utils/module/shareUtil");
 const { $Toast } = require('../../components/base/index');
+const LoadingHelper = require('../../helper/LoadingHelper');
 const app = getApp();
 //推荐奖励是否关闭
 let shareFlag;
@@ -33,7 +35,8 @@ Page({
     shareTitle: '',
     description: '',
     showShareModel: false,
-    showSharePop: false
+    showSharePop: false,
+    visible: false
   },
 
   /**
@@ -70,6 +73,7 @@ Page({
         return value2 - value1;
       }
     }
+    LoadingHelper.showLoading();
     wx.request({
       url: ApiConst.ACCOUNT_COUPON,
       data: {},
@@ -287,6 +291,9 @@ Page({
       fail: res => {
         wx.stopPullDownRefresh();
         that.showModal('网络错误');
+      },
+      complete: () => {
+        LoadingHelper.hideLoading();
       }
     })
   },

@@ -105,7 +105,6 @@ Page({
   },
 
   onLoad: function (options) {
-    //console.log(options.share);
     var that = this;
     that.setData({
       latitude: null,
@@ -148,7 +147,6 @@ Page({
     that.requestJoinList();
     //that.requestQueueList(); 
     var pages = getCurrentPages();
-    console.log(pages)
     var currPage = pages[pages.length - 1]; //当前页面
     if (currPage.data.mydata != undefined) {
       if (currPage.data.mydata.share == 1 && n != 0 && that.data.showShare) {
@@ -174,6 +172,8 @@ Page({
       })
       //如果没有登录直接渲染完视图计算顶部高度
       that.setScrollHeight();
+      //未注册和未认证弹框
+      that.showRequireAuthDialog(that.data.loginStaus);
     } else { //已登录
       //检测是否是滴滴车主以及注册认证状态
       that.checkUserAuthStatus();
@@ -199,52 +199,40 @@ Page({
 
   checkUserAuthStatus: function () {
     let that = this;
-    wx.request({
+    let requestData = {
       url: ApiConst.GET_AUTH_STATUS,
       data: {},
-      header: app.globalData.header,
       success: res => {
-        if (res.data.code == 1000) {
+        that.setData({
+          isDiDi: res.user_type
+        })
+        let status = res.status;
+        //更新全局认证状态
+        app.globalData.checkStaus = status;
+        //是否认证
+        if (status == 0) {
           that.setData({
-            isDiDi: res.data.data.user_type
+            loginStaus: 1 //未认证
           })
-          let status = res.data.data.status;
-          //更新全局认证状态
-          app.globalData.checkStaus = status;
-          //是否认证
-          if (status == 0) {
-            that.setData({
-              loginStaus: 1 //未认证
-            })
-          } else if (status == 3) {
-            that.setData({
-              loginStaus: 3 //已认证
-            })
-          } else {
-            that.setData({
-              loginStaus: 2 //认证审核中或者失败
-            })
-          }
-          //在认证状态请求完之后才能渲染完视图计算顶部高度
-          that.setScrollHeight();
-          //未注册和未认证弹框
-          if (app.globalData.showAuthTip) {
-            return;
-          }
-          if (that.data.loginStaus == 0 || that.data.loginStaus == 1) {
-            that.showRequireAuthDialog(that.data.loginStaus);
-            app.globalData.showAuthTip = true;
-          }
+        } else if (status == 3) {
+          that.setData({
+            loginStaus: 3 //已认证
+          })
+        } else {
+          that.setData({
+            loginStaus: 2 //认证审核中或者失败
+          })
         }
+        //在认证状态请求完之后才能渲染完视图计算顶部高度
+        that.setScrollHeight();
+        //未注册和未认证弹框
+        that.showRequireAuthDialog(that.data.loginStaus);
       },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
+      complete: res => {
+        
       }
-    })
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -285,12 +273,19 @@ Page({
   },
 
   showRequireAuthDialog: function (loginStatus) {
-    this.setData({
-      showAuthDialog: true,
-      authStr: loginStatus == 0 ? '立即注册' : '立即认证',
-      authContent: loginStatus == 0 ? '先注册，抢活快\n广告安装无障碍' : '先认证，抢活快\n广告安装无障碍',
-      authStatus: loginStatus
-    })
+    const that = this;
+    if (app.globalData.showAuthTip) {
+      return;
+    }
+    if (that.data.loginStaus == 0 || that.data.loginStaus == 1) {
+      that.setData({
+        showAuthDialog: true,
+        authStr: loginStatus == 0 ? '立即注册' : '立即认证',
+        authContent: loginStatus == 0 ? '先注册，抢活快\n广告安装无障碍' : '先认证，抢活快\n广告安装无障碍',
+        authStatus: loginStatus
+      })
+      app.globalData.showAuthTip = true;
+    }
   },
 
   /**
@@ -306,7 +301,6 @@ Page({
       },
       header: app.globalData.header,
       success: res => {
-        console.log(res.data)
         if (res.data.code == 1000) {
           let dataBean = res.data.data;
           let adTempInfo = dataBean.info;
@@ -342,7 +336,6 @@ Page({
             effect_list = effect_list.filter((item) => {
               return Boolean(item.img.trim()) === true;
             })
-            console.log(effect_list);
             element.effect = effect_list;
           })
           //车辆要求
@@ -429,17 +422,15 @@ Page({
   /** 请求已参与车主列表 */
   requestJoinList: function () {
     var that = this;
-    wx.request({
+    let requestData = {
       url: ApiConst.AD_JOINED_USER,
       data: {
         ad_id: that.data.adId,
         page_no: 1,
         page_size: 20,
       },
-      success: function (res) {
-        console.log(res);
-        if (res.data.code == 1000) {
-          var dataList = res.data.data.ad_list;
+      success: res => {
+        var dataList = res.ad_list;
           var tempAvatarList = [];
           for (var key in dataList) {
             var dataBean = dataList[key];
@@ -455,22 +446,12 @@ Page({
             showJoining: dataList.length == 0 ? false : true,
             joinAvatarList: tempAvatarList
           });
-        } else {
-          wx.showModal({
-            title: '提示',
-            content: res.data.msg,
-            showCancel: false,
-          })
-        }
       },
-      fail: function (res) {
-        wx.showModal({
-          title: '提示',
-          content: '网络错误',
-          showCancel: false,
-        })
+      complete: res => {
+        
       }
-    })
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   joinClick: function () {
@@ -487,139 +468,23 @@ Page({
     })
     this.receiveAd();
   },
+
+  //todo
   cancel: function () {
     var that = this;
-    var subscribe_id = this.data.selId;
-    var reqData = {
-      subscribe_id: subscribe_id
-    }
-    wx.request({
-      url: ApiConst.CANCEL_USER_RESERVE,
-      data: reqData,
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          wx.showToast({
-            title: "取消成功"
-          })
-          that.onShow(0);
-        } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
+    let requestData = {
+      url: ApiConst.CONFIRM_SUBS_QUEUE,
+      data: {
+        subscribe_id: that.data.selId
       },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
+      success: res => {
+        
+      },
+      complete: res => {
+        
       }
-    })
-  },
-
-  arrangement: function (e) {
-    var that = this;
-    console.log(e)
-    that.setData({
-      serverId: e.currentTarget.dataset.serverid,
-      serverName: e.currentTarget.dataset.servername,
-      serverAddress: e.currentTarget.dataset.serveraddress,
-    })
-    console.log(that.data.serverId)
-    if (app.globalData.login == 1) {
-      wx.request({
-        url: ApiConst.GET_AUTH_STATUS,
-        data: {},
-        header: app.globalData.header,
-        success: res => {
-          if (res.data.code == 1000) {
-            if (res.data.data.status == 3) {
-              if (that.data.isDiDi == 1) {
-                that.setData({
-                  showRule: true
-                })
-              } else if (that.data.isDiDi == 1 && !app.globalData.showRuleTip) {
-                that.setData({
-                  showRule: true
-                })
-                app.globalData.showRuleTip = true;
-              } else {
-                wx.navigateTo({
-                  url: '../arrangement/arrangement?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
-                })
-              }
-            } else {
-              if (res.data.data.status == 2) {
-                wx.showModal({
-                  title: "提示",
-                  content: "你没通过身份认证，不能预约广告",
-                  confirmText: "立即认证",
-                  cancelText: "取消",
-                  success: function (sure) {
-                    if (sure.confirm) {
-                      wx.navigateTo({
-                        url: '../state/state'
-                      })
-                    }
-                  }
-                })
-              } else if (res.data.data.status == 1) {
-                wx.showModal({
-                  title: '提示',
-                  showCancel: false,
-                  content: "你的身份认证信息正在审核中，不能预约广告"
-                });
-              } else {
-                wx.showModal({
-                  title: "提示",
-                  content: "你没进行身份认证，不能预约广告",
-                  confirmText: "立即认证",
-                  cancelText: "取消",
-                  success: function (sure) {
-                    if (sure.confirm) {
-                      wx.navigateTo({
-                        url: '../auth/auth'
-                      })
-                    }
-                  }
-                })
-              }
-            }
-          } else {
-            wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: res.data.msg
-            });
-          }
-        },
-        fail: res => {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '网络错误'
-          });
-        }
-      })
-    } else {
-      wx.showModal({
-        title: "提示",
-        content: "你还没有登录，不能预约广告",
-        confirmText: "立即登录",
-        cancelText: "取消",
-        success: function (sure) {
-          if (sure.confirm) {
-            wx.navigateTo({
-              url: '../register/register'
-            })
-          }
-        }
-      })
     }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   goMap: function (e) {
@@ -756,7 +621,6 @@ Page({
   },
 
   previewImage: function (e) {
-    console.log(e);
     var that = this;
     let image = e.currentTarget.dataset.image;
     let samllImage = e.currentTarget.dataset.samllimage;
@@ -786,14 +650,12 @@ Page({
   },
 
   goRuleDetail: function (e) {
-    console.log(e)
     wx.navigateTo({
       url: '../valuation/valuation?arrangementData=' + JSON.stringify(e.currentTarget.dataset)
     })
   },
 
   showAddress: function (e) {
-    console.log(e);
     this.setData({
       showAddressDialog: true,
       address: e.currentTarget.dataset.address.address,
@@ -802,7 +664,6 @@ Page({
   },
 
   handleActionTap: function (event) {
-    console.log(event);
     let status = event.detail.data.status;
     if (status == 0) {
       wx.navigateTo({
@@ -843,7 +704,6 @@ Page({
   /** 预约排队人数 */
   queueClick: function () {
     let that = this;
-    console.log('-----' + that.data.adId);
     wx.navigateTo({
       url: '../subscribeQueue/subscribeQueue?adId=' + that.data.adId
     })
@@ -1055,7 +915,6 @@ Page({
 
   /** 预览设计效果图 */
   handlePreviewDesign(event) {
-    console.log(event);
     let effect = event.currentTarget.dataset.effect;
     if (!effect || effect.length === 0) {
       return;
@@ -1135,10 +994,8 @@ Page({
         res.forEach(element => {
           element.enable = element.surplus_count != 0
         })
-        console.log(res);
         //排序
         res.sort(that.sortRuleOfServer);
-        console.log(res);
         that.setData({
           stationList: res
         })
@@ -1148,8 +1005,6 @@ Page({
   },
 
   sortRuleOfServer(a, b) {
-    console.log('a----------->' + a.surplus_count);
-    console.log('b----------->' + b.surplus_count);
     return b.surplus_count - a.surplus_count;
   },
 
@@ -1172,19 +1027,13 @@ Page({
   handleSubscribe() {
     //验证登录状态
     if (app.globalData.login != 1) {
-      wx.showModal({
-        title: "提示",
-        content: "你还没有登录，不能预约广告",
-        confirmText: "立即登录",
-        cancelText: "取消",
-        success: function (sure) {
-          if (sure.confirm) {
-            wx.navigateTo({
-              url: '../register/register'
-            })
-          }
+      ModalHelper.showWxModalShowAllWidthCallback("提示", "你还没有登录，不能预约广告", "立即登录", "取消", true, sure => {
+        if (sure.confirm) {
+          wx.navigateTo({
+            url: '../register/register'
+          })
         }
-      })
+      });
     } else {
       this.verifyAuthStatus();
     }
@@ -1198,7 +1047,7 @@ Page({
     if (authStatus == 2) {
       this.showAuthFailModal();
     } else if (authStatus == 1) {
-      this.showWxModal('提示', '你的身份认证信息正在审核中，不能预约广告', '我知道了', false);
+      ModalHelper.showWxModal('提示', '你的身份认证信息正在审核中，不能预约广告', '我知道了', false);
     } else if (authStatus == 0) {
       this.showNotAuthModal();
     } else {
@@ -1212,7 +1061,7 @@ Page({
   },
 
   showAuthFailModal() {
-    this.showWxModalShowAll("提示", "你没通过身份认证，不能预约广告", "立即认证", "取消", true, function (res) {
+    ModalHelper.showWxModalShowAllWidthCallback("提示", "你没通过身份认证，不能预约广告", "立即认证", "取消", true, function (res) {
       if (res.confirm) {
         wx.navigateTo({
           url: '../state/state'
@@ -1222,7 +1071,7 @@ Page({
   },
 
   showNotAuthModal() {
-    this.showWxModalShowAll("提示", "你没进行身份认证，不能预约广告", "立即认证", "取消", true, function (res) {
+    ModalHelper.showWxModalShowAllWidthCallback("提示", "你没进行身份认证，不能预约广告", "立即认证", "取消", true, function (res) {
       if (res.confirm) {
         wx.navigateTo({
           url: '../auth/auth'
@@ -1463,7 +1312,7 @@ Page({
         })
         that.requestAdInfo();
         //预约成功跳转我的任务
-        that.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, function (res) {
+        ModalHelper.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, function (res) {
           wx.switchTab({
             url: '../task/task'
           })
@@ -1476,59 +1325,6 @@ Page({
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
-  },
-
-  /**
-   * 微信通用模态弹窗
-   * @param {*} title  标题
-   * @param {*} content 内容
-   * @param {*} confirmText 确认按钮文字
-   * @param {*} showCancel 是否显示取消按钮
-   */
-  showWxModal(title, content, confirmText, showCancel) {
-    wx.showModal({
-      title: title,
-      content: content,
-      confirmText: confirmText,
-      showCancel: showCancel,
-      confirmColor: "#ff555c"
-    })
-  },
-
-  /**
-   * 微信通用模态弹窗
-   * @param {*} title  标题
-   * @param {*} content 内容
-   * @param {*} confirmText 确认按钮文字
-   * @param {*} showCancel 是否显示取消按钮
-   */
-  showWxModalUseConfirm(title, content, confirmText, showCancel, confirmCallback) {
-    wx.showModal({
-      title: title,
-      content: content,
-      confirmText: confirmText,
-      showCancel: showCancel,
-      confirmColor: "#ff555c",
-      success: confirmCallback
-    })
-  },
-
-  /**
-   * 微信通用模态弹窗
-   * @param {*} title  标题
-   * @param {*} content 内容
-   * @param {*} confirmText 确认按钮文字
-   * @param {*} showCancel 是否显示取消按钮
-   */
-  showWxModalShowAll(title, content, confirmText, cancelText, showCancel, confirmCallback) {
-    wx.showModal({
-      title: title,
-      content: content,
-      confirmText: confirmText,
-      showCancel: showCancel,
-      confirmColor: "#ff555c",
-      success: confirmCallback
-    })
   },
 
   /**

@@ -53,12 +53,8 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 1000) {
-          //更新pageIndex
-          that.setData({
-            pageIndex: currentPageIndex
-          })
           //处理数据
-          var dataList = res.data.data.info;
+          var dataList = res.data.data.ad_list;
           for (var key in dataList) {
             var dataBean = dataList[key];
             var timeArray = dataBean.update_date.split(' ');
@@ -83,7 +79,9 @@ Page({
               userInfo: dataList
             })
           }
+          //更新pageIndex
           that.setData({
+            pageIndex: currentPageIndex,
             hasmore: res.data.data.more_data == 0 ? false : true,
             showNomore: res.data.data.more_data == 0 ? true : false
           })

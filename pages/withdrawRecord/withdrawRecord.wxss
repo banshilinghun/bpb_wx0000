@@ -10,7 +10,8 @@
   height: 60px;
   line-height: 60px;
   text-align: center;
-  font-size: 28rpx;
+  font-size: 32rpx;
+  font-weight: bold;
   color: black
 }
 
@@ -29,6 +30,17 @@
   height: 100rpx;
   line-height: 100rpx;
   text-align: center
+}
+
+.b-body-money{
+  color: #ff555c;
+  font-weight: 500;
+  font-size: 28rpx
+}
+
+.b-body-status{
+  color: #333;
+  font-size: 28rpx;
 }
 
 .b-item-line{

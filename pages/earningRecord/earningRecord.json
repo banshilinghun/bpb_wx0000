@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "收益记录",
+  "navigationBarTitleText": "待收收益",
   "usingComponents": {
     "amount-steps": "../../components/amount-steps/index",
     "dialog": "../../components/dialog/bpb-dialog",

@@ -1,7 +1,7 @@
 <view class='b-earning-container'>
-  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
+  <scroll-view scroll-y='true'>
     <!-- 待收收益 -->
-    <view>
+    <view class="b-earning-wrapper">
       <view class='b-earning-title'>待收收益</view>
       <view class='step-container'>
         <block wx:if='{{ stepsList && stepsList.length != 0 }}'>
@@ -16,43 +16,44 @@
           </view>
         </block>
       </view>
-      <view class='b-divider'></view>
     </view>
     <!-- 收益时间、收益金额、收益来源 -->
     <!-- title -->
-    <view class='b-record-title'>
-      <view class='b-record-title-item' wx:for='{{ titleArray }}' wx:key='title'>
-        <text>{{ item }}</text>
-      </view>
-    </view>
-    <!-- 列表 body -->
-    <view>
-      <block wx:if='{{ earningRecords && earningRecords.length !== 0 }}'>
-        <view class='b-record-body' wx:for='{{ earningRecords }}' wx:key='body'>
-          <view class='b-body-item'>
-            <view class='b-body-common'>
-              <text>{{ item.date }}</text>
-            </view>
-            <view class='b-body-common'>
-              <text>￥{{ item.money }}</text>
-            </view>
-            <view class='b-body-common'>
-              <text wx:if='{{ item.type == 1 }}'>推荐奖励</text>
-              <text wx:if='{{ item.type == 2 }}'>新手奖励</text>
-              <text wx:if='{{ item.type == 3 }}'>广告任务奖励</text>
-            </view>
-          </view>
-          <view class='b-item-line' wx:if='{{ index !== earningRecords.length - 1 }}'></view>
+    <block wx:if="{{ visible }}">
+      <view class='b-record-title' >
+        <view class='b-record-title-item' wx:for='{{ titleArray }}' wx:key='title'>
+          <text>{{ item }}</text>
         </view>
-      </block>
-      <!-- 空视图 -->
-      <block wx:else>
-        <emptyView title='您还没有相关的收益记录' content='赶紧努力吧~' topMargin='50' />
-      </block>
-    </view>
+      </view>
+      <!-- 列表 body -->
+      <view>
+        <block wx:if='{{ earningRecords && earningRecords.length !== 0 }}'>
+          <view class='b-record-body' wx:for='{{ earningRecords }}' wx:key='body'>
+            <view class='b-body-item'>
+              <view class='b-body-common'>
+                <text>{{ item.date }}</text>
+              </view>
+              <view class='b-body-common'>
+                <text>￥{{ item.money }}</text>
+              </view>
+              <view class='b-body-common'>
+                <text wx:if='{{ item.type == 1 }}'>推荐奖励</text>
+                <text wx:if='{{ item.type == 2 }}'>新手奖励</text>
+                <text wx:if='{{ item.type == 3 }}'>广告任务奖励</text>
+              </view>
+            </view>
+            <view class='b-item-line' wx:if='{{ index !== earningRecords.length - 1 }}'></view>
+          </view>
+        </block>
+        <!-- 空视图 -->
+        <block wx:else>
+          <emptyView title='您还没有相关的收益记录' content='赶紧努力吧~' topMargin='50' />
+        </block>
+      </view>
+    </block>
   </scroll-view>
   <!-- 总结 -->
-  <view class='b-record-footer'>
+  <view class='b-record-footer' wx:if="{{ visible }}">
     <view class='b-record-footer-item'>
       <text>收益次数: {{ count }}</text>
     </view>
@@ -62,9 +63,11 @@
   </view>
 </view>
 <!-- 分享dialog -->
-<dialog showDialog='{{ showGoodsDetail }}' bind:btnclick='dialogClickListener' title='{{ shareTitle }}' description='{{ description }}' btnText='邀请好友' />
+<dialog showDialog='{{ showGoodsDetail }}' bind:btnclick='dialogClickListener' title='{{ shareTitle }}' description='{{ description }}'
+  btnText='邀请好友' />
 <!-- 领取奖励分享 -->
-<share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showShareModel }}' bind:hideDialog='hideDialogListener' positionStatus='{{ positionStatus }}'></share-award>
+<share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}'
+  awardType='{{ shareInfo.awardType }}' showShareModel='{{ showShareModel }}' bind:hideDialog='hideDialogListener' positionStatus='{{ positionStatus }}'></share-award>
 <!-- 分享选择pop -->
 <share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener'></share-popup>
 <!-- 轻提示 -->

@@ -2,7 +2,8 @@
 @import '../withdrawRecord/withdrawRecord.wxss';
 
 .b-earning-container{
-  margin-bottom: 60px;
+  background: url('https://wxapi.benpaobao.com/static/app_img/v2/b-earning-bg.jpeg');
+  min-height: 100vh
 }
 
 .b-earning-title{
@@ -62,3 +63,10 @@
   font-weight: 500
 }
 
+.b-earning-wrapper{
+  background-color: #fff;
+  box-shadow: 0 2px 4px #999; 
+  border-radius: 10rpx;
+  margin: 40rpx 20rpx;
+  opacity: 0.8;
+}

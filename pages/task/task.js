@@ -216,13 +216,14 @@ Page({
       },
       //待检测
       needCheck: function(){
-
+        that.uploadCheckPicture();
       },
       //检测审核不合格，需重新拍照检测
       checkfail: function(){
-
+        that.uploadCheckPicture();
       }
     }
+    console.log('status---------->' + that.data.status);
     actionStrategy[that.data.status]();
   },
 
@@ -235,6 +236,21 @@ Page({
       classify: that.data.runningTask.classify,
       regist_id: that.data.runningTask.regist_id,
       flag: StrategyHelper.REGIST
+    }
+    wx.navigateTo({
+      url: '../check/check?intent=' + JSON.stringify(registObj)
+    })
+  },
+
+  /**
+   * 上传车辆检测画面
+   */
+  uploadCheckPicture(){
+    let that = this;
+    let registObj = {
+      classify: that.data.runningTask.classify,
+      check_id: that.data.runningTask.check_id,
+      flag: StrategyHelper.CHECK
     }
     wx.navigateTo({
       url: '../check/check?intent=' + JSON.stringify(registObj)
@@ -266,13 +282,13 @@ Page({
    */
   sign(){
     let that = this;
-    that.showLoading();
+    LoadingHelper.showLoading();
     that.calculateDistance(that.data.runningTask.reserveDate.lat, that.data.runningTask.reserveDate.lng).then(distance => {
       //限制在服务网点五百米范围内可签到
       //TODO
       distance = 0.3;
       if(distance * 1000 > 500){
-        that.hideLoading();
+        LoadingHelper.hideLoading();
         that.setData({
           visibleSign: true
         })
@@ -315,7 +331,7 @@ Page({
         that.requestTaskList();
       },
       complete: res => {
-        that.hideLoading();
+        LoadingHelper.hideLoading();
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));

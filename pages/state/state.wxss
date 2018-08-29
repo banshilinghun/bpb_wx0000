@@ -80,7 +80,7 @@
   font-size: 32rpx;
   margin-top: 20px;
   border: none;
-  background-color: #ff555c;
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   color: #fff;
 }
 
@@ -100,7 +100,7 @@
 
 .fllow_btn {
   width: 100%;
-  background: #ff555c;
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   margin-top: 60rpx;
   border: 0;
   color: #fff;
@@ -138,7 +138,7 @@
 }
 
 .btn-action {
-  background-color: #ff555c;
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   width: 300rpx;
   height: 80rpx;
   line-height: 80rpx;

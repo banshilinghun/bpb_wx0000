@@ -19,7 +19,6 @@ Page({
     adList: '',
     focus: false,
     isShowView: true,
-    haveMyAd: false,
     //测试数据
     userList: [],
     background: ['banner3', 'banner1', 'banner2'],
@@ -418,13 +417,11 @@ Page({
             myad.taskDesc = StrategyHelper.getMyTaskDesc(myad);
             myad.taskStatus = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(myad));
             z.setData({
-              myAd: myad,
-              haveMyAd: true
+              myAd: myad
             })
           } else {
             z.setData({
-              myAd: null,
-              haveMyAd: false
+              myAd: null
             })
           }
 

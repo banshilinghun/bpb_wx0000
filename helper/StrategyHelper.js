@@ -6,52 +6,27 @@ const TimeUtil = require('../utils/time/timeUtil');
 export const REGIST = 'regist';
 export const CHECK = 'check';
 
-let actionStrategy = {
-  regist: function(){
-    return REGIST;
-  },
-  check: function(){
-    return CHECK;
-  }
-}
-
-export function getActionType(flag){
-  return actionStrategy[flag]();
-}
-
 
 //subscribed: 已预约未签到 | subscribeOvertime 预约中，已超时 | signedWaitInstall: 已签到未安装 | installing: 安装中 | installed: 安装完成待上画 | rework: 返工预约 
 //installAudit: 安装审核 | installFail: 安装审核失败 | runingFixed: 投放中固定收益  | runingByTime: 投放中按时计费 | needCheck: 待检测 | checkAudit: 检测审核中 | checkfail: 审核失败
 let taskStrategy = {
   //预约中
-  1: function(){
-    return "subscribed";
-  },
+  1: () => "subscribed",
 
   //已超时未签到
-  2: function(){
-    return "subscribeOvertime";
-  },
+  2: () => "subscribeOvertime",
 
   //已签到，未安装
-  3: function(){
-    return "signedWaitInstall";
-  },
+  3: () => "signedWaitInstall",
 
   //已签到，安装中
-  4: function(){
-    return "installing";
-  },
+  4: () => "installing",
 
   //审核失败，需要返工
-  5: function(){
-    return "rework";
-  },
+  5: () => "rework",
 
   //安装完成待上画
-  6: function(){
-    return "installed";
-  },
+  6: () => "installed",
 
   //已提交登记信息, 但有审核中、审核失败（不需要返工）状态
   7: function(runningTask){
@@ -66,14 +41,10 @@ let taskStrategy = {
   },
 
   //投放中，固定收益
-  8: function(){
-    return "runingFixed";
-  },
+  8: () => "runingFixed",
 
   //投放中，按时计费
-  9: function(){
-    return "runingByTime";
-  },
+  9: () => "runingByTime",
   
   //广告处于检测中
   10: function(runningTask){
@@ -119,24 +90,16 @@ let taskTitleStrategy = {
   },
 
   //已签到，未安装
-  3: function(){
-    return "请及时关注网点安装进度";
-  },
+  3: () => "请及时关注网点安装进度",
 
   //已签到，安装中
-  4: function(){
-    return "请耐心等待广告安装完成";
-  },
+  4: () => "请耐心等待广告安装完成",
 
   //审核失败，需要返工
-  5: function(){
-    return "安装审核未通过，请重新安装";
-  },
+  5: () => "安装审核未通过，请重新安装",
 
   //安装完成待上画
-  6: function(){
-    return "请及时上传车辆上画照片";
-  },
+  6: () => "请及时上传车辆上画照片",
 
   //已提交登记信息, 但有审核中、审核失败（不需要返工）状态
   7: function(runningTask){
@@ -151,14 +114,10 @@ let taskTitleStrategy = {
   },
 
   //投放中，固定收益
-  8: function(){
-    return "广告投放中";
-  },
+  8: () => "广告投放中",
 
   //投放中，按时计费
-  9: function(){
-    return "广告投放中";
-  },
+  9: () => "广告投放中",
   
   //广告处于检测中
   10: function(runningTask){
@@ -188,39 +147,17 @@ export function getMyTaskDesc(runningTask){
 }
 
 let taskStatusStrategy = {
-  subscribed: function(){
-    return '待安装';
-  },
-  subscribeOvertime: function(){
-    return this.subscribed();
-  },
-  signedWaitInstall: function(){
-    return this.subscribed();
-  },
-  installing: function(){
-    return '安装中';
-  },
-  installed: function(){
-    return '安装完成';
-  },
-  installAudit: function(){
-    return '审核中';
-  },
-  installFail: function(){
-    return '投放异常';
-  },
-  rework: function(){
-    return this.installFail();
-  },
-  needCheck: function(){
-    return '待检测';
-  },
-  checkAudit: function(){
-    return '检测中';
-  },
-  checkfail: function(){
-    return '检测异常';
-  }
+  subscribed: () => '待安装',
+  subscribeOvertime: () => this.subscribed(),
+  signedWaitInstall: () => this.subscribed(),
+  installing: () => '安装中',
+  installed: () => '安装完成',
+  installAudit: () => '审核中',
+  installFail: () => '投放异常',
+  rework: () => this.installFail(),
+  needCheck: () => '待检测',
+  checkAudit: () => '检测中',
+  checkfail: () => '检测异常'
 }
 
 /**
@@ -234,3 +171,19 @@ export function getTaskStatusStr(taskStatus){
   return taskStatusStrategy[taskStatus]();
 }
 
+
+/**
+ * 提现状态
+ */
+const withDrawStrategy = {
+  1: () => '审核中',
+  2: () => '审核失败',
+  3: () => '审核通过',
+  4: () => '正在转账',
+  5: () => '转账成功',
+  6: () => '转账失败',
+}
+
+export function getWithdrawStatus(status){
+  return withDrawStrategy[status]();
+}

@@ -191,7 +191,7 @@
   </scroll-view>
 
   <!-- 底部分享预约按钮 -->
-  <view class='action_bottom' id="b-detail-bottom">
+  <view class='action_bottom {{ adInfo? "action_bottom_visible" : "action_bottom_invisible" }}' id="b-detail-bottom">
     <!-- 客服 -->
     <button class='wtwabt' open-type='contact'>
       <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_message_icon.png'></image>

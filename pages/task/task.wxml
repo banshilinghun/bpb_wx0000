@@ -45,10 +45,10 @@
                       <text>{{ distance }}km</text>
                     </view>
                   </view>
-                  <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.reserveDate.server_name }}'>
+                  <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.reserveDate.address }}'>
                     <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
                     <view class='b-time-text'>
-                      <text>{{ runningTask.reserveDate.server_name }}</text>
+                      <text>{{ runningTask.reserveDate.address }}</text>
                     </view>
                     <!-- 导航 -->
                     <view class='b-go-map' catchtap='handleNavigation'>
@@ -222,16 +222,16 @@
           <view class='b-task-action'>
             <button class='b-action-btn b-action-cancel' wx:if='{{ status === "subscribed" }}' catchtap='handleUnSubscribe'>取消预约</button>
             <block wx:if='{{ status === "subscribed" || status === "installFail" }}'>
-              <button class='b-action-btn' bindtap='handleAction'>签到</button>
+              <button class='b-action-btn' catchtap='handleAction'>签到</button>
             </block>
             <block wx:elif='{{ status === "signed" || status === "installed" }}'>
-              <button class='b-action-btn' bindtap='handleAction'>上画登记</button>
+              <button class='b-action-btn' catchtap='handleAction'>上画登记</button>
             </block>
             <block wx:elif='{{ status === "needCheck" }}'>
-              <button class='b-action-btn' bindtap='handleAction'>下画检测</button>
+              <button class='b-action-btn' catchtap='handleAction'>下画检测</button>
             </block>
             <block wx:elif='{{ status === "checkfail" }}'>
-              <button class='b-action-btn' bindtap='handleAction'>重新检测</button>
+              <button class='b-action-btn' catchtap='handleAction'>重新检测</button>
             </block>
           </view>
         </view>

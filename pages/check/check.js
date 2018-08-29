@@ -44,7 +44,9 @@ Page({
 		scrollHeight: 0,
 		regist_id: '', //登记id
 		check_id: '', //检测id
-		actionType: StrategyHelper.REGIST, //
+		actionType: StrategyHelper.REGIST,
+		visibleCourse: false,
+		hasFormId: true
 	},
 
 	onLoad: function (options) {
@@ -55,8 +57,9 @@ Page({
 			regist_id: intent.regist_id || '',
 			carOut: true,
 			carTail: true,
-			carIn: intent.classify == 3, //3:车内+车外, 4:车外
-			actionType: StrategyHelper.getActionType(intent.flag)
+			carIn: parseInt(intent.classify) == 3, //3:车内+车外, 4:车外
+			actionType: intent.flag,
+			visibleCourse: intent.flag === StrategyHelper.CHECK
 		})
 		this.initScrollViewHeight();
 		this.setNavigationBarTitle();
@@ -65,7 +68,7 @@ Page({
 	setNavigationBarTitle(){
 		const that = this;
 		wx.setNavigationBarTitle({
-			title: that.data.actionType == StrategyHelper.REGIST ? '登记' : '检测'
+			title: that.data.actionType === StrategyHelper.REGIST ? '登记' : '检测'
 		})
 	},
 
@@ -73,11 +76,18 @@ Page({
 		//设置scrollView 高度
 		const that = this;
 		viewUtil.getViewHeight("#b-commit").then(rect => {
+			console.log(rect);
 			wx.getSystemInfo({
 				success: res => {
-					that.setData({
-						scrollHeight: res.windowHeight - 35 - rect.height
-					})
+					if(that.data.actionType === StrategyHelper.REGIST){
+						that.setData({
+							scrollHeight: res.windowHeight - rect.height
+						})
+					} else {
+						that.setData({
+							scrollHeight: res.windowHeight - 35 - rect.height
+						})
+					}
 				}
 			})
 		})
@@ -85,10 +95,11 @@ Page({
 	},
 
 	formSubmit: function (e) {
-		this.mysubmit(e.detail.value);
+		console.log(e);
+		this.mysubmit(e.detail.formId);
 	},
 
-	mysubmit: function () {
+	mysubmit: function (form_id) {
 		var carleftPhoto = this.data.carleftPhoto;
 		var carrightPhoto = this.data.carrightPhoto;
 		var carnPhoto = this.data.carnPhoto;
@@ -102,21 +113,22 @@ Page({
 		} else if (!carnPhoto && this.data.carIn) {
 			ModalHelper.showWxModal('提示', '请上传车内照片', '我知道了', false);
 		} else {
-			this.commitRegistCheckInfo();
+			this.commitRegistCheckInfo(form_id);
 		}
 	},
 
-	commitRegistCheckInfo(){
+	commitRegistCheckInfo(form_id){
 		const that = this;
 		LoadingHelper.showLoading();
 		//todo
-    let commitUrl = that.data.actionType == StrategyHelper.REGIST ? ApiConst.COMMIT_REGIST_INFO : ApiConst.COMMIT_CHECK_INFO;
+    let commitUrl = that.data.actionType === StrategyHelper.REGIST ? ApiConst.COMMIT_REGIST_INFO : ApiConst.COMMIT_CHECK_INFO;
 		let commitData = {};
 		if(that.data.actionType == StrategyHelper.REGIST) {
 			commitData.regist_id = this.data.regist_id;
 		} else {
       commitData.check_id = this.data.check_id;
 		}
+		commitData.form_id = form_id;
     let requestData = {
 			url: commitUrl,
 			data: commitData,
@@ -156,7 +168,7 @@ Page({
 		LoadingHelper.showLoading();
 		const that = this;
 		let formTempData = {};
-    let uploadUrl = that.data.actionType == StrategyHelper.REGIST ? ApiConst.UPLOAD_REGIST_IMG : ApiConst.UPLOAD_CHECK_IMG;
+    let uploadUrl = that.data.actionType === StrategyHelper.REGIST ? ApiConst.UPLOAD_REGIST_IMG : ApiConst.UPLOAD_CHECK_IMG;
 		if(that.data.actionType == StrategyHelper.REGIST){
 			formTempData.regist_id = that.data.regist_id;
 		} else {
