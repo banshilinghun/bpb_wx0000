@@ -40,7 +40,7 @@
               </view>
               <view class="myad-li">
                 <view class="message" wx:if='{{ myAd.billing_mode == 0 }}'>预计收益：
-                  <label class="data-text">{{ myAd.predict_amount }}元</label>
+                  <label class="data-text">￥{{ myAd.predict_amount }}</label>
                 </view>
                 <view class="message" wx:if='{{ isDiDi==1 }}'>预计收益：
                   <label class="data-text">￥{{ myAd.min_amount }}
@@ -85,7 +85,7 @@
             </view>
             <view class="myad-li">
               <view class="message" wx:if="{{ status == 3 && item.billing_mode == 0 }}">预计收益：
-                <label class="data-text">{{ item.predict_amount }}元</label>
+                <label class="data-text">￥{{ item.predict_amount }}</label>
               </view>
               <view class="message" wx:if="{{ status == 3 && item.billing_mode == 1 }}">预计收益：
                 <label class="data-text">￥{{ item.min_amount }}

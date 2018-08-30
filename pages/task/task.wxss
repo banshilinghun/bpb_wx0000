@@ -119,13 +119,13 @@
   flex: 1;
   color: #999;
   font-size: 28rpx;
-  margin-left: 20rpx
+  margin-left: 10rpx
 }
 
 .b-audit-fail{
   font-size: 28rpx;
   color: #ff555c;
-  text-align: center
+  text-align: left
 }
 
 .b-run-tip{
@@ -257,7 +257,7 @@ button::after {
 .b-need-check-content{
   font-size: 28rpx;
   color: #666;
-  text-align: center
+  text-align: left
 }
 
 /* 已结束 start */
@@ -354,6 +354,27 @@ button::after {
   right: 30rpx;
   background: #ddd;
   height: 1rpx
+}
+
+.b-reason-wrapper{
+  color: #fff;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  background: linear-gradient(90deg, #ff555c, #FB653D);
+  opacity: 0.8;
+  font-size: 24rpx;
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.b-reason-title{
+  font-weight: bold;
+  margin-right: 20rpx
+}
+
+.b-reason-content{
+  flex: 1
 }
 
 /* 已结束 over */

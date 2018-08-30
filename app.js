@@ -1,5 +1,6 @@
 //app.js
 const app = getApp();
+//user_type 为1时表示滴滴认证,其余状态为普通
 
 App({
   onLaunch: function () {

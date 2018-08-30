@@ -52,7 +52,7 @@ Page({
             status: status,
             comment: res.data.data.comment
           })
-          if (status == 1){//审核中
+          if (parseInt(status) === 1){//审核中
             that.setData({
               stateSrc: 'https://wxapi.benpaobao.com/static/app_img/v2/checking-icon.png',
               stateStr: '您的资料已提交审核，请耐心等待审核结果'
@@ -60,7 +60,7 @@ Page({
           }else if(status == 2){//未通过
             that.setData({
               stateSrc: 'https://wxapi.benpaobao.com/static/app_img/v2/check-refuse.png',
-              stateStr: '很抱歉!您的资料未能通过审核,您可重新提交认证'
+              stateStr: '很抱歉!您的资料未能通过审核,\n您可重新提交认证'
             })
           }else if(status == 3){//已通过
             that.setData({

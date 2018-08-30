@@ -462,12 +462,6 @@ Page({
     })
   },
 
-  check: function(e) {
-    wx.navigateTo({
-      url: '../checkCourse/checkCourse?ckData=' + JSON.stringify(e.currentTarget.dataset) + '&flag=1'
-    })
-  },
-
   //分享
   onShareAppMessage: function(res) {
     if (res.from == 'button') {
@@ -545,15 +539,7 @@ Page({
       showDialog: false
     })
   },
-  selfCheck: function(e) {
-    var that = this;
-    wx.navigateTo({
-      url: '../checkCourse/checkCourse?ckData=' + JSON.stringify(e.currentTarget.dataset) + '&flag=1'
-    })
-    that.setData({
-      showDialog: false
-    })
-  },
+  
   tapName: function(event) {
     var that = this;
     console.log(event.currentTarget.dataset.hi)

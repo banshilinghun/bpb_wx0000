@@ -65,7 +65,7 @@ Page({
     isPreview: false,
     showRule: false,
     //是否滴滴合法车主
-    isDiDi: 0,
+    isDiDi: false,
     //地址弹框 start
     showAddressDialog: false,
     address: '',
@@ -204,7 +204,7 @@ Page({
       data: {},
       success: res => {
         that.setData({
-          isDiDi: res.user_type
+          isDiDi: parseInt(res.user_type) === 1
         })
         let status = res.status;
         //更新全局认证状态
@@ -294,15 +294,13 @@ Page({
   requestAdInfo: function () {
     var that = this;
     LoadingHelper.showLoading();
-    wx.request({
+    let requestData = {
       url: ApiConst.GET_AD_INFO,
       data: {
         ad_id: that.data.adId
       },
-      header: app.globalData.header,
       success: res => {
-        if (res.data.code == 1000) {
-          let dataBean = res.data.data;
+          let dataBean = res;
           let adTempInfo = dataBean.info;
           adTempInfo.run_status = RunStatus.getRunStatus(adTempInfo);
           adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
@@ -362,12 +360,6 @@ Page({
           })
           that.getUserCarInfo();
           that.getAdStationList();
-        } else {
-          ModalHelper.showWxModal("提示", res.data.msg, '我知道了', false);
-        }
-      },
-      fail: res => {
-        ModalHelper.showWxModal("提示", '网络错误', '我知道了', false);
       },
       complete: res => {
         LoadingHelper.hideLoading();
@@ -376,7 +368,8 @@ Page({
         });
         wx.hideNavigationBarLoading()
       }
-    })
+    };
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -905,12 +898,7 @@ Page({
    */
   rejectSubscribe() {
     const that = this;
-    wx.showModal({
-      title: '提示',
-      showCancel: false,
-      confirmColor: '#ff555c',
-      content: that.data.errorComment
-    })
+    ModalHelper.showWxModal('提示', that.data.errorComment, '确定', false);
   },
 
   /** 预览设计效果图 */
@@ -966,7 +954,7 @@ Page({
             userCarColor: res.car_color,
             actionStatus: ACTION_ARR[2],
             actionStr: '立即预约',
-            errorComment: '您的车身颜色为' + res.car_color + ',\n暂不满足广告要求'
+            errorComment: `您的车身颜色为${ res.car_color },\n暂不满足广告要求`
           })
         } else {
           that.setData({
@@ -1044,20 +1032,30 @@ Page({
    */
   verifyAuthStatus() {
     let authStatus = app.globalData.checkStaus;
-    if (authStatus == 2) {
+    if (Number(authStatus) === 2) {
       this.showAuthFailModal();
-    } else if (authStatus == 1) {
+    } else if (Number(authStatus) === 1) {
       ModalHelper.showWxModal('提示', '你的身份认证信息正在审核中，不能预约广告', '我知道了', false);
-    } else if (authStatus == 0) {
+    } else if (Number(authStatus) === 0) {
       this.showNotAuthModal();
     } else {
-      this.setData({
-        visibleSubscribe: true,
-        colorList: this.data.adInfo.color_limit
-      })
-      this.initSelectStatus();
-      this.changeRemainCount();
+      this.startSubscribe();
     }
+  },
+
+  /**
+   * 初始化预约
+   */
+  startSubscribe(){
+    this.setData({
+      visibleSubscribe: true,
+      colorList: this.data.adInfo.color_limit,
+      selectServerIndex: -1,
+      selectDateIndex: -1,
+      selectTimeIndex: -1
+    })
+    this.initSelectStatus();
+    this.changeRemainCount();
   },
 
   showAuthFailModal() {
@@ -1132,8 +1130,13 @@ Page({
         if (index === element.times.length - 1) {
           //先判断时间
           const nowTime = station.now_date;
-          let lastTime = new Date(element.date + " " + sub.begin_time).getTime() / 1000;
+          console.log('lastTime-------->' + nowTime)
+          let lastTime = new Date(element.date + " " + sub.end_time).getTime() / 1000;
+          console.log('date-------->' + new Date('2018-3-7').getTime());
+          console.log('type-------->' + typeof new Date(element.date + " " + sub.end_time).getTime())
+          console.log('lastTime-------->' + lastTime)
           timeAvailable = lastTime >= nowTime;
+          console.log('timeAvailable-------->' + timeAvailable)
         }
       });
       element.surplus_count = count;
@@ -1189,9 +1192,9 @@ Page({
     selectDate.times.forEach(element => {
       //先判断时间
       const nowTime = selectStation.now_date;
-      let itemTime = new Date(selectDate.date + " " + element.begin_time).getTime() / 1000;
+      let itemTime = new Date(selectDate.date + " " + element.end_time).getTime() / 1000;
       element.time = element.begin_time + "-" + element.end_time;
-      element.enable = nowTime <= itemTime && element.surplus_count != 0;
+      element.enable = nowTime <= itemTime && element.surplus_count !== 0;
     })
     this.setData({
       timeList: selectDate.times

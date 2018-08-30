@@ -56,7 +56,6 @@ function uploadFile(uploadInfo) {
   if (!uploadInfo) {
     return;
   }
-  console.log('filePath--------->' + uploadInfo.filePath);
   wx.uploadFile({
     url: uploadInfo.url,
     filePath: uploadInfo.filePath,
@@ -67,13 +66,13 @@ function uploadFile(uploadInfo) {
       if (res.statusCode == 200) {
         let dataBean = res.data;
         //json格式错误，解析对象失败，这时候手动parse
-        if (typeof (dataBean) == 'string') {
+        if (typeof (dataBean) === 'string') {
           dataBean = JSON.parse(dataBean);
         }
-        if (dataBean.code == 1000) {
+        if (Number(dataBean.code) === 1000) {
           uploadInfo.success && uploadInfo.success(dataBean.data);
         } else {
-          showModel(res.data.msg);
+          showModel(dataBean.msg);
           uploadInfo.fail && uploadInfo.fail(res);
         }
       } else {
@@ -108,13 +107,13 @@ function sendRequest(requestInfo) {
       if (res.statusCode == 200) {
         let dataBean = res.data;
         //json格式错误，解析对象失败，这时候手动parse
-        if (typeof (dataBean) == 'string') {
+        if (typeof (dataBean) === 'string') {
           dataBean = JSON.parse(dataBean);
         }
-        if (dataBean.code == 1000) {
+        if (Number(dataBean.code) === 1000) {
           requestInfo.success && requestInfo.success(dataBean.data);
         } else {
-          showModel(res.data.msg);
+          showModel(dataBean.msg);
           requestInfo.fail && requestInfo.fail(res);
         }
       } else {
@@ -135,6 +134,7 @@ function sendRequest(requestInfo) {
 }
 
 function showModel(content) {
+  console.log('content--------->' + content);
   if (!content) {
     content = '服务器开小差了\n\r~~~~(>_<)~~~~';
   }

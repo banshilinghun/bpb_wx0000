@@ -83,12 +83,13 @@
                   </view>
                 </view>
               </block>
-              <!-- 已签到未安装、安装未上画-->
+              <!-- 等待安装-->
               <block wx:elif="{{ runningTask.action.signedWaitInstall }}">
                 <view class='b-content-margin'>
                   <view class='b-signed-wait-install'>
                     <view class='b-subscribe-info'>
-                      <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png' mode='aspectFill'></image>
+                      <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png'
+                        mode='aspectFill'></image>
                       <view class='b-time-text'>
                         <text>已等待{{ waitTime }}</text>
                       </view>
@@ -102,12 +103,13 @@
                   </view>
                 </view>
               </block>
-              <!-- 已签到未安装、安装未上画-->
+              <!-- 安装中 -->
               <block wx:elif="{{ runningTask.action.installing }}">
                 <view class='b-content-margin'>
                   <view class='b-signed-wait-install'>
                     <view class='b-subscribe-info'>
-                      <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png' mode='aspectFill'></image>
+                      <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png'
+                        mode='aspectFill'></image>
                       <view class='b-time-text'>
                         <text>已安装{{ installTime }}</text>
                       </view>
@@ -121,12 +123,13 @@
                   </view>
                 </view>
               </block>
-              <!-- 已签到未安装、安装未上画-->
-              <block wx:elif="{{ runningTask.action.installFail }}">
+              <!-- 安装未上画-->
+              <block wx:elif="{{ runningTask.action.installed }}">
                 <view class='b-content-margin'>
                   <view class='b-signed-wait-install'>
                     <view class='b-subscribe-info'>
-                      <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png' mode='aspectFill'></image>
+                      <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-keep-time.png'
+                        mode='aspectFill'></image>
                       <view class='b-time-text'>
                         <text>安装用时{{ installOverTime }}</text>
                       </view>
@@ -154,79 +157,95 @@
 
               <!-- 安装审核中、检测审核中 -->
               <block wx:elif="{{ runningTask.action.checkAudit }}">
-                  <view class='b-content-margin'>
-                    <view class='b-audit-info'>
-                      <image class='b-audit-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-audit-icon.png'></image>
-                      <view class='b-auditing'>
-                        <text>检测审核中，通过后可提取收益</text>
-                      </view>
+                <view class='b-content-margin'>
+                  <view class='b-audit-info'>
+                    <image class='b-audit-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-audit-icon.png'></image>
+                    <view class='b-auditing'>
+                      <text>检测审核中，通过后可提取收益</text>
                     </view>
                   </view>
-                </block>
+                </view>
+              </block>
               <!-- 待检测 -->
               <block wx:elif="{{ runningTask.action.needCheck }}">
                 <view class='b-content-margin'>
-                  <view class='b-need-check-content'>
-                    <text>广告已结束，检测领取收益</text>
+                  <view class='b-audit-info'>
+                    <image class='b-audit-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-check-icon.png'></image>
+                    <view class='b-auditing'>
+                      <text>广告已结束，检测领取收益</text>
+                    </view>
                   </view>
                 </view>
               </block>
 
-              <!-- 异常 -->
+              <!-- 登记异常 -->
               <block wx:elif="{{ runningTask.action.installFail}}">
                 <view class='b-content-margin'>
                   <view class='b-audit-fail'>
                     <!-- 安装异常 -->
                     <block>
-                      <text>审核未通过，请重新拍照上传</text>
+                      <text>安装画面检测不合格，请拍照重新登记</text>
+                    </block>
+                  </view>
+                </view>
+                <view class="b-reason-wrapper">
+                  <view class="b-reason-title">不合格原因: </view>
+                  <view class="b-reason-content">{{ runningTask.registInfo.comment }}</view>
+                </view>
+              </block>
+
+              <!-- 检测异常 -->
+              <block wx:elif="{{ runningTask.action.checkfail }}">
+                <view class='b-content-margin'>
+                  <view class='b-audit-fail'>
+                    <!-- 检测异常 -->
+                    <block>
+                      <text>广告画面检测不合格，请拍照重新检测</text>
+                    </block>
+                  </view>
+                </view>
+                <view class="b-reason-wrapper">
+                  <view class="b-reason-title">不合格原因: </view>
+                  <view class="b-reason-content">{{ runningTask.detectionInfo.comment }}</view>
+                </view>
+              </block>
+              <!-- 异常 -->
+              <block wx:elif="{{ runningTask.action.rework }}">
+                <view class='b-content-margin'>
+                  <view class='b-audit-fail'>
+                    <!-- 返工 -->
+                    <block>
+                      <view class='b-address' bindtap='handleShowAddress' data-address='{{ "一号车库一号车库一号车库一号车库一号车库一号车库一号车库" }}'>
+                        <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
+                        <view class='b-time-text'>
+                          <text>一号车库一号车库一号车库一号车库一号车库一号车库一号车库</text>
+                        </view>
+                        <!-- 导航 -->
+                        <view class='b-go-map' catchtap='handleNavigation'>
+                          <image class='b-map-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-nav-icon.png'></image>
+                          <view class='b-map-text'>
+                            <text>导航</text>
+                          </view>
+                        </view>
+                      </view>
+                      <view class='b-install-fail-content'>
+                        <text>广告画面安装不合格，请重新返回网点；</text>
+                      </view>
+                      <view>
+                        <text>签到后等待重新安装</text>
+                      </view>
+                      <view class="b-reason-wrapper">
+                        <view class="b-reason-title">不合格原因: </view>
+                        <view class="b-reason-content">{{ runningTask.registInfo.comment }}</view>
+                      </view>
                     </block>
                   </view>
                 </view>
               </block>
-
-              <!-- 异常 -->
-              <block wx:elif="{{ runningTask.action.checkfail }}">
-                  <view class='b-content-margin'>
-                    <view class='b-audit-fail'>
-                      <!-- 检测异常 -->
-                      <block>
-                        <text>广告画面检测不合格，请拍照重新检测</text>
-                      </block>
-                    </view>
-                  </view>
-                </block>
-                <!-- 异常 -->
-              <block wx:elif="{{ runningTask.action.rework }}">
-                  <view class='b-content-margin'>
-                    <view class='b-audit-fail'>
-                      <!-- 返工 -->
-                      <block>
-                        <view class='b-address' bindtap='handleShowAddress' data-address='{{ "一号车库一号车库一号车库一号车库一号车库一号车库一号车库" }}'>
-                          <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
-                          <view class='b-time-text'>
-                            <text>一号车库一号车库一号车库一号车库一号车库一号车库一号车库</text>
-                          </view>
-                          <!-- 导航 -->
-                          <view class='b-go-map' catchtap='handleNavigation'>
-                            <image class='b-map-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-nav-icon.png'></image>
-                            <view class='b-map-text'>
-                              <text>导航</text>
-                            </view>
-                          </view>
-                        </view>
-                        <view class='b-install-fail-content'>
-                          <text>广告画面安装不合格，请重新返回网点；</text>
-                        </view>
-                        <view>
-                          <text>签到后等待重新安装</text>
-                        </view>
-                      </block>
-                    </view>
-                  </view>
-                </block>
             </view>
           </block>
 
+          <!-- 固定收益，按天计费 -->
           <block wx:if="{{ runningTask.action.runingFixed }}">
             <view>
               <!-- 状态标题 -->
@@ -235,7 +254,7 @@
                   <text>预计总收益:</text>
                 </view>
                 <view class='b-run-income'>
-                  <text>{{ runningTask.amountInfo.predict_amount }}</text>
+                  <text>{{ runningTask.amountInfo.predict_amount }}元</text>
                 </view>
                 <view class='b-task-status'>
                   <text>投放中</text>
@@ -258,7 +277,7 @@
               </view>
             </view>
           </block>
-          <!-- 投放中-->
+          <!-- 投放中 按时长计费-->
           <block wx:if='{{ runningTask.action.runingByTime }}'>
             <view>
               <!-- 状态标题 -->
@@ -267,7 +286,7 @@
                   <text>累计收益:</text>
                 </view>
                 <view class='b-run-income'>
-                  <text>{{ runningTask.addUpAmount }}</text>
+                  <text>{{ runningTask.addUpAmount }}元</text>
                 </view>
                 <view class='b-task-status'>
                   <text>投放中</text>
@@ -282,16 +301,20 @@
                   <view class='b-run-top'>
                     <block wx:if="{{ runningTask.yesterdayAmount }}">
                       <view class='b-run-item-left'>{{ runningTask.yesterdayAmount }}
-                        <text wx:if="{{ runningTask.yesterdayAmount.level == 1 }}">小于{{ runningTask.yesterdayAmount.duration_max
+                        <text wx:if="{{ runningTask.yesterdayAmount.level == 1 }}">小于{{
+                          runningTask.yesterdayAmount.duration_max
                           }}
                         </text>
-                        <text wx:if="{{ runningTask.yesterdayAmount.level == 2 }}">{{ runningTask.yesterdayAmount.duration_max
+                        <text wx:if="{{ runningTask.yesterdayAmount.level == 2 }}">{{
+                          runningTask.yesterdayAmount.duration_max
                           }}
                         </text>
-                        <text wx:if="{{ runningTask.yesterdayAmount.level == 3 }}">{{ runningTask.yesterdayAmount.duration
+                        <text wx:if="{{ runningTask.yesterdayAmount.level == 3 }}">{{
+                          runningTask.yesterdayAmount.duration
                           }}
                         </text>
-                        <text wx:if="{{ runningTask.yesterdayAmount.level == 4 }}">{{ runningTask.yesterdayAmount.duration
+                        <text wx:if="{{ runningTask.yesterdayAmount.level == 4 }}">{{
+                          runningTask.yesterdayAmount.duration
                           }}
                         </text>
                       </view>
@@ -337,8 +360,11 @@
             <block wx:if='{{ runningTask.action.subscribed || runningTask.action.subscribeOvertime || runningTask.action.rework }}'>
               <button class='b-action-btn' catchtap='handleAction'>签到</button>
             </block>
-            <block wx:elif='{{ runningTask.action.installed || runningTask.action.installFail }}'>
+            <block wx:elif='{{ runningTask.action.installed }}'>
               <button class='b-action-btn' catchtap='handleAction'>上画登记</button>
+            </block>
+            <block wx:elif='{{ runningTask.action.installFail }}'>
+              <button class='b-action-btn' catchtap='handleAction'>重新登记</button>
             </block>
             <block wx:elif='{{ runningTask.action.needCheck }}'>
               <button class='b-action-btn' catchtap='handleAction'>下画检测</button>
@@ -368,7 +394,7 @@
                 <text>实际收益：</text>
               </view>
               <view class='ad-money'>
-                <text>{{ finish.real_amount }}</text>
+                <text>￥{{ finish.real_amount }}</text>
               </view>
             </view>
             <view class='ad-status'>
@@ -380,7 +406,7 @@
               <text>投放时间：</text>
             </view>
             <view class='ad-time-detail'>
-              <text>{{ finish.begin_date + "-" + finish.end_date }}</text>
+              <text>{{ finish.begin_date + " ~ " + finish.end_date }}</text>
             </view>
           </view>
         </view>

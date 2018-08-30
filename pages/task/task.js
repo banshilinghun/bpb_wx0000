@@ -67,50 +67,23 @@ Page({
         if (runningTempTask && Object.keys(runningTempTask).length !== 0) {
           runningTempTask.date = timeUtil.formatDateTimeSprit(runningTempTask.begin_date) + "-" + timeUtil.formatDateTimeSprit(runningTempTask.end_date);
           runningTempTask.statusStr = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(runningTempTask));
-
-          //计算距离 process=1 || process=2
-          if (runningTempTask.reserveDate) {
-            runningTempTask.reserveDate.subscribeTime = timeUtil.formatDateTime(runningTempTask.reserveDate.date) + " " + runningTempTask.reserveDate.begin_time + "-" + runningTempTask.reserveDate.end_time;
-            that.calculateDistance(runningTempTask.reserveDate.lat, runningTempTask.reserveDate.lng).then(distance => {
-              that.setData({
-                distance: distance
-              })
-            });
-          }
+          //初始化状态
           that.setData({
             status: StrategyHelper.getCurrentStatus(runningTempTask),
           })
+          //计算距离 process=1 || process=2
+          that.transformReserve(runningTempTask);
           //签到未安装等待时间,等待人数  process=3
-          if (runningTempTask.waitInfo) {
-            let nowTime = new Date(runningTempTask.now_date).getTime() / 1000;
-            let waitTime = Math.floor(nowTime - runningTempTask.waitInfo.signInDate);
-            that.lopperWaitTime(waitTime);
-            that.setData({
-              waitInfo: runningTempTask.waitInfo,
-              waitTime: that.formatTime(waitTime)
-            })
-          }
-          if (runningTempTask.installInfo) {
-            if (!runningTempTask.installInfo.end_time) {
-              //安装中，安装时间 process=4
-              let installTime = Math.floor(runningTempTask.installInfo.now_date - runningTempTask.installInfo.begin_time);
-              that.lopperInstallTime(installTime);
-              that.setData({
-                installTime: that.formatTime(installTime)
-              })
-            } else {
-              //安装完成待上画
-              that.setData({
-                installOverTime: that.formatTime(Math.floor(runningTempTask.installInfo.end_time - runningTempTask.installInfo.begin_time))
-              })
-            }
-          }
+          that.transformWait(runningTempTask);
+          //安装数据处理
+          that.transformInstall(runningTempTask);
           //判断视图显示隐藏
           runningTempTask.action = StrategyHelper.getTaskActionDisplay(runningTempTask);
-          console.log(runningTempTask);
         } else {
           runningTempTask = null;
         }
+        //已完成数据处理
+        that.transformOverTask(res.overTask);
         that.setData({
           runningTask: runningTempTask,
           overTask: res.overTask
@@ -121,6 +94,60 @@ Page({
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  transformReserve(runningTempTask){
+    const that = this;
+    if (runningTempTask.reserveDate) {
+      runningTempTask.reserveDate.subscribeTime = timeUtil.formatDateTime(runningTempTask.reserveDate.date) + " " + runningTempTask.reserveDate.begin_time + "-" + runningTempTask.reserveDate.end_time;
+      that.calculateDistance(runningTempTask.reserveDate.lat, runningTempTask.reserveDate.lng).then(distance => {
+        that.setData({
+          distance: distance
+        })
+      });
+    }
+  },
+
+  transformWait(runningTempTask){
+    const that = this;
+    if (runningTempTask.waitInfo) {
+      let nowTime = new Date(runningTempTask.now_date).getTime() / 1000;
+      let waitTime = Math.floor(nowTime - runningTempTask.waitInfo.signInDate);
+      that.lopperWaitTime(waitTime);
+      that.setData({
+        waitInfo: runningTempTask.waitInfo,
+        waitTime: that.formatTime(waitTime)
+      })
+    }
+  },
+
+  transformInstall(runningTempTask){
+    const that = this;
+    if (runningTempTask.installInfo) {
+      if (!runningTempTask.installInfo.end_time) {
+        //安装中，安装时间 process=4
+        let installTime = Math.floor(runningTempTask.installInfo.now_date - runningTempTask.installInfo.begin_time);
+        that.lopperInstallTime(installTime);
+        that.setData({
+          installTime: that.formatTime(installTime)
+        })
+      } else {
+        //安装完成待上画
+        that.setData({
+          installOverTime: that.formatTime(Math.floor(runningTempTask.installInfo.end_time - runningTempTask.installInfo.begin_time))
+        })
+      }
+    }
+  },
+
+  transformOverTask(overTaskList){
+    const that = this;
+    if(overTaskList && overTaskList.length !== 0){
+      overTaskList.forEach(element => {
+        element.begin_date = timeUtil.formatDateTime(element.begin_date);
+        element.end_date = timeUtil.formatDateTime(element.end_date);
+      });
+    }
   },
 
   /**
@@ -237,7 +264,7 @@ Page({
     let that = this;
     let registObj = {
       classify: that.data.runningTask.classify,
-      regist_id: that.data.runningTask.regist_id,
+      regist_id: that.data.status === StrategyHelper.INSTALL_FAIL? that.data.runningTask.registInfo.regist_id : that.data.runningTask.regist_id,
       flag: StrategyHelper.REGIST
     }
     wx.navigateTo({
@@ -252,11 +279,11 @@ Page({
     let that = this;
     let registObj = {
       classify: that.data.runningTask.classify,
-      check_id: that.data.runningTask.check_id,
+      check_id: that.data.runningTask.detectionInfo.detection_id,
       flag: StrategyHelper.CHECK
     }
     wx.navigateTo({
-      url: '../check/check?intent=' + JSON.stringify(registObj)
+      url: `../checkCourse/checkCourse?intent=${ JSON.stringify(registObj) }&flag=1`
     })
   },
 

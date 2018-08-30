@@ -17,7 +17,7 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
-    params = options.ckData;
+    params = options.intent;
     let that = this;
     wx.getSystemInfo({
       success: function(res) {
@@ -39,7 +39,7 @@ Page({
 
   handleCheck(){
     wx.redirectTo({
-      url: '../check/check?ckData=' + params
+      url: '../check/check?intent=' + params
     })
   }
 

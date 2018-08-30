@@ -48,9 +48,9 @@ let taskStrategy = {
     if(!runningTask.registInfo){
       console.error('登记信息 field "registInfo" to null or undefined is invalid')
     }
-    if(runningTask.registInfo.status == 1){
+    if(Number(runningTask.registInfo.status) === 1){
       return INSTALL_AUDIT;
-    } else if(runningTask.registInfo.status == 2) {
+    } else if(Number(runningTask.registInfo.status) == 2) {
       return INSTALL_FAIL;
     }
   },
@@ -64,11 +64,11 @@ let taskStrategy = {
   //广告处于检测中
   10: function(runningTask){
     //未提交审核
-    if(runningTask.status == 0){
-      return needCheck;
-    } else if(runningTask.status == 1) {
+    if(Number(runningTask.detectionInfo.status) === 0){
+      return NEED_CHECK;
+    } else if(Number(runningTask.detectionInfo.status) === 1) {
       return CHECK_AUDIT;
-    } else if(runningTask.status == 2) {
+    } else if(Number(runningTask.detectionInfo.status) === 2) {
       return CHECK_FAIL;
     }
   }
@@ -161,11 +161,11 @@ let taskTitleStrategy = {
   //广告处于检测中
   10: function(runningTask){
     //未提交审核
-    if(runningTask.status == 0){
+    if(runningTask.detectionInfo.status == 0){
       return "广告已结束，检测领取收益";
-    } else if(runningTask.status == 1) {
+    } else if(runningTask.detectionInfo.status == 1) {
       return "检测审核中，通过后可提取收益";
-    } else if(runningTask.status == 2) {
+    } else if(runningTask.detectionInfo.status == 2) {
       return "广告检测未通过，请重新检测";
     }
   }
@@ -194,6 +194,8 @@ let taskStatusStrategy = {
   installAudit: () => '审核中',
   installFail: () => '投放异常',
   rework: () => taskStatusStrategy.installFail(),
+  runingFixed: ()=> '投放中',
+  runingByTime: () => taskStatusStrategy.runingFixed(),
   needCheck: () => '待检测',
   checkAudit: () => '检测中',
   checkfail: () => '检测异常'
@@ -209,7 +211,6 @@ export function getTaskStatusStr(taskStatus){
   }
   return taskStatusStrategy[taskStatus]();
 }
-
 
 /**
  * 提现状态
