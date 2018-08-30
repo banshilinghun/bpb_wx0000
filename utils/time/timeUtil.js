@@ -58,9 +58,20 @@ function formatTimestamp(timestamp) {
   return new Date(timestamp * 1000).Format();
 }
 
+/**
+ * 返回时间戳 unit 为秒
+ * @param {*} date 日期{2018-8-30}
+ * @param {*} time 时间{08：00}
+ */
+function getTimeStapByDate(date, time){
+  const dateParam = `${date} ${time}`.replace(/-/g, "/");
+  return new Date(dateParam).getTime() / 1000;
+}
+
 module.exports = {
   friendly_time: friendly_time,
   formatDateTime: formatDateTime,
   formatDateTimeSprit: formatDateTimeSprit,
-  formatTimestamp: formatTimestamp
+  formatTimestamp: formatTimestamp,
+  getTimeStapByDate: getTimeStapByDate
 }

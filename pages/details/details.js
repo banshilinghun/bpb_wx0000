@@ -7,6 +7,8 @@ const shareUtil = require("../../utils/module/shareUtil");
 const LoadingHelper = require("../../helper/LoadingHelper");
 const ModalHelper = require("../../helper/ModalHelper");
 const RunStatus = require("../main/runStatus");
+const TimeUtil = require("../../utils/time/timeUtil");
+
 const {
   $Toast
 } = require('../../components/base/index');
@@ -1130,18 +1132,13 @@ Page({
         if (index === element.times.length - 1) {
           //先判断时间
           const nowTime = station.now_date;
-          console.log('lastTime-------->' + nowTime)
-          let lastTime = new Date(element.date + " " + sub.end_time).getTime() / 1000;
-          console.log('date-------->' + new Date('2018-3-7').getTime());
-          console.log('type-------->' + typeof new Date(element.date + " " + sub.end_time).getTime())
-          console.log('lastTime-------->' + lastTime)
+          let lastTime = TimeUtil.getTimeStapByDate(element.date, sub.end_time);
           timeAvailable = lastTime >= nowTime;
-          console.log('timeAvailable-------->' + timeAvailable)
         }
       });
       element.surplus_count = count;
       //预约数为0，不可点击; 当前时间大于预约时间，不可点击
-      element.enable = timeAvailable && count != 0;
+      element.enable = timeAvailable && count !== 0;
     })
     this.setData({
       dateList: dates
@@ -1192,7 +1189,7 @@ Page({
     selectDate.times.forEach(element => {
       //先判断时间
       const nowTime = selectStation.now_date;
-      let itemTime = new Date(selectDate.date + " " + element.end_time).getTime() / 1000;
+      let itemTime = TimeUtil.getTimeStapByDate(selectDate.date, element.end_time);
       element.time = element.begin_time + "-" + element.end_time;
       element.enable = nowTime <= itemTime && element.surplus_count !== 0;
     })
