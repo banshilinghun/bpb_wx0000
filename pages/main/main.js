@@ -98,38 +98,6 @@ Page({
         })
       }
     })
-    //获取用户是否需要补充车型信息
-    this.judgeNeedAddCarModel();
-  },
-
-  judgeNeedAddCarModel: function() {
-    let requestData = {
-      url: ApiConst.NEED_ADD_CAR_MODEL,
-      data: {},
-      header: app.globalData.header,
-      success: res => {
-        console.log(res);
-        //需要补充车型信息
-        app.globalData.needAddCarModel = res;
-        if (res) {
-          wx.showModal({
-            title: '车型补充提示',
-            content: '为了保证广告安装和广告计费正常进行，需要您补充完善车型信息',
-            showCancel: false,
-            confirmText: '立即补充',
-            confirmColor: '#ff555c',
-            success: res => {
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '../brandList/brandList?flag=1',
-                })
-              }
-            }
-          })
-        }
-      }
-    };
-    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**

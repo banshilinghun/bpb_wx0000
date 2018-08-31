@@ -1735,7 +1735,7 @@ button {
 .b-right-name {
   color: #333;
   flex: 1;
-  font-size: 32rpx;
+  font-size: 28rpx;
   font-weight: 500;
   overflow: hidden;
   margin-right: 20rpx;
@@ -1756,8 +1756,8 @@ button {
 }
 
 .b-right-location-icon {
-  width: 30rpx;
-  height: 30rpx;
+  width: 24rpx;
+  height: 24rpx;
   margin-right: 5rpx;
 }
 
@@ -1879,4 +1879,15 @@ button::after {
   color: #4A90E2;
   font-size: 24rpx;
   font-weight: 500;
+}
+
+.b-server_remain{
+  color: #333;
+  margin-top: 5rpx;
+  font-size: 24rpx
+}
+
+.b-server-surplus_count{
+  color: #ff555c;
+  margin-left: 10rpx
 }

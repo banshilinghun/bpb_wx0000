@@ -109,7 +109,7 @@ Page({
 		} else if (!carrightPhoto) {
 			ModalHelper.showWxModal('提示', '请上传车身右侧照片', '我知道了', false);
 		} else if (!cartPhoto) {
-			ModalHelper.showWxModal('提示', '请上传车尾照片', '我知道了', false);
+			ModalHelper.showWxModal('提示', '请上传车头照片', '我知道了', false);
 		} else if (!carnPhoto && this.data.carIn) {
 			ModalHelper.showWxModal('提示', '请上传车内照片', '我知道了', false);
 		} else {

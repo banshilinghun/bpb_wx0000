@@ -106,7 +106,10 @@ Page({
                     app.globalData.recomId = that.data.user_id;
                     app.globalData.recomType = that.data.type;
                     app.globalData.recomAdId = that.data.adId;
+                    //年检状态
                     app.globalData.car_check_date = dataBean.data.car_check_date;
+                    //补全车型状态
+                    app.globalData.is_add_car_model = dataBean.data.is_add_car_model;
                     if (dataBean.data.phone) {
                       app.globalData.login = 1;
                     } else {

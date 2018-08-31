@@ -27,8 +27,7 @@ App({
     //是否已经展示认证弹窗
     showAuthTip: false,
     //需要补全车型信息
-    needAddCarModel: false,
-    showAuthTip: false,
+    is_add_car_model: false,
     //是否展示过计价规则弹窗
     showRuleTip: false,
     //年检时间

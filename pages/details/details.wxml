@@ -346,8 +346,7 @@
                   <view class='b-server-right'>
                     <view class='b-server-right-middle'>
                       <view class='b-server-right-top'>
-                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{
-                          item.station_name + item.station_name + item.station_name }}</view>
+                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.station_name }}</view>
                         <view class='b-right-distance'>{{ item.distance }}km</view>
                       </view>
                       <view class='b-right-address-wrapper'>
@@ -359,8 +358,6 @@
                             <text>导航</text>
                           </view>
                         </view>
-                      </view>
-                      <view class="b-">
                       </view>
                     </view>
                   </view>

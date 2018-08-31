@@ -991,17 +991,27 @@ Page({
    */
   verifyAuthStatus() {
     let authStatus = app.globalData.checkStaus;
-    if (Number(authStatus) === 2) { //认证失败
+    //认证失败
+    if (Number(authStatus) === 2) {
       this.showAuthFailModal();
-    } else if (Number(authStatus) === 1) { //认证审核中
-      ModalHelper.showWxModal('提示', '你的身份认证信息正在审核中，不能预约广告', '我知道了', false);
-    } else if (Number(authStatus) === 0) { //未认证
-      this.showNotAuthModal();
-    } else if (!app.globalData.car_check_date && !app.globalData.visibleCheckDate) { //填写年检信息
-      this.initAnnual();
-    } else {
-      this.startSubscribe();
+      return;
     }
+    //认证审核中
+    if (Number(authStatus) === 1) {
+      ModalHelper.showWxModal('提示', '你的身份认证信息正在审核中，不能预约广告', '我知道了', false);
+      return;
+    }
+    //未认证
+    if (Number(authStatus) === 0) {
+      this.showNotAuthModal();
+      return;
+    }
+    //补充年检信息
+    if (!app.globalData.car_check_date && !app.globalData.visibleCheckDate) { //填写年检信息
+      this.initAnnual();
+      return;
+    }
+    this.startSubscribe();
   },
 
   /**

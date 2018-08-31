@@ -6,10 +6,12 @@ const {
 const Constant = require("../../utils/constant/Constant");
 const shareUtil = require("../../utils/module/shareUtil");
 const dotHelper = require("../../pages/me/dotHelper.js");
+const ApiManager = require('../../utils/api/ApiManager.js');
 const ApiConst = require("../../utils/api/ApiConst.js");
+const ModalHelper = require("../../helper/ModalHelper");
 
-//1:提现，2:提现记录 3:收益记录 4:损坏申报 5:掉漆申报 6:违章申报 7:推荐有奖 8:新手教程 9:注册认证
-const CELL_TYPE = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+//1:提现，2:提现记录 3:收益记录 4:损坏申报 5:掉漆申报 6:违章申报 7:推荐有奖 8:新手教程 9:注册认证 10: 补充车型
+const CELL_TYPE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 //推荐奖励是否关闭
 let shareFlag;
 
@@ -128,6 +130,28 @@ Page({
     that.requestUserAccount();
     //车主认证状态信息
     that.requestAuthStatus();
+    //车型
+    that.controlCarModel();
+  },
+
+  controlCarModel(){
+    let that = this;
+    let actionCell = that.data.actionCells;
+    //先过滤
+    actionCell = actionCell.filter(element => element.type !== 10);
+    if(app.globalData.is_add_car_model){
+      actionCell.push({
+        type: 10,
+        text: '车型补充',
+        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-add-car-model.png',
+        url: '../brandList/brandList?flag=1',
+        visible: true
+      });
+    }
+    console.log(actionCell);
+    that.setData({
+      actionCells: actionCell
+    })
   },
 
   /**
@@ -196,31 +220,23 @@ Page({
     let that = this;
     console.log(Boolean(0));
     if (that.data.loginFlag == 1) { //登录了
-      wx.request({
+      let requestData = {
         url: ApiConst.GET_AUTH_STATUS,
         data: {},
-        header: app.globalData.header,
         success: res => {
-          let dataBean = res.data.data;
-          if (res.data.code == 1000) {
-            this.setData({
-              status: dataBean.status,
-              isDiDi: dataBean.user_type //是否是滴滴合法车主
+          this.setData({
+            status: res.status,
+            isDiDi: res.user_type //是否是滴滴合法车主
+          })
+          if (res.status == 3) {
+            that.setData({
+              plate_no: res.plate_no,
+              real_name: res.real_name
             })
-            if (dataBean.status == 3) {
-              that.setData({
-                plate_no: dataBean.plate_no,
-                real_name: dataBean.real_name
-              })
-            }
-          } else {
-            that.showModal(res.data.msg);
           }
-        },
-        fail: res => {
-          that.showModal('网络错误');
         }
-      })
+      }
+      ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
     }
   },
 
@@ -230,30 +246,14 @@ Page({
     let item = event.currentTarget.dataset.item;
     //判断车主是否登录，推荐有奖和新手教程无需登录
     if ((item.type != CELL_TYPE[6] || item.type != CELL_TYPE[7]) && that.data.loginFlag == 0) {
-      wx.showModal({
-        title: '登录提示',
-        content: '你还没有登录',
-        cancelText: '取消',
-        confirmText: '立即登录',
-        success: res => {
-          if (res.confirm) {
-            that.navigateTo('../register/register');
-          }
+      ModalHelper.showWxModalShowAllWidthCallback('登录提示', '你还没有登录', '立即登录', '取消', true, res => {
+        if (res.confirm) {
+          that.navigateTo('../register/register');
         }
       })
       return;
     }
     switch (Number(item.type)) {
-      case CELL_TYPE[0]: //提现
-      case CELL_TYPE[1]: //提现记录
-      case CELL_TYPE[2]: //收益记录
-      case CELL_TYPE[3]: //损坏申报
-      case CELL_TYPE[4]: //掉漆申报
-      case CELL_TYPE[5]: //违章申报
-      case CELL_TYPE[6]: //推荐有奖
-      case CELL_TYPE[7]: //新手教程
-        that.navigateTo(item.url);
-        break;
       case CELL_TYPE[8]: //注册认证
         if (this.data.status == 0) {
           that.navigateTo(item.url);
@@ -263,6 +263,7 @@ Page({
         }
         break;
       default:
+        that.addCarModel(item.url);
         break;
     }
   },
@@ -270,6 +271,16 @@ Page({
   navigateTo(url) {
     wx.navigateTo({
       url: url,
+    })
+  },
+
+  addCarModel(url) {
+    ModalHelper.showWxModalShowAllWidthCallback('车型补充提示', '为了保证广告安装和广告计费正常进行，需要您补充完善车型信息', '立即补充', '取消', true, res => {
+      if(res.confirm){
+        wx.navigateTo({
+          url: url,
+        })
+      }
     })
   },
 

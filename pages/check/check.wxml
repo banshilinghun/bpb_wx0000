@@ -87,7 +87,7 @@
               <view class="weui-cell__bd">
                 <view class="weui-uploader">
                   <view class="weui-uploader__hd">
-                    <view class="weui-uploader__title">车尾(车牌)</view>
+                    <view class="weui-uploader__title">车头(车牌)</view>
                   </view>
                   <view class="weui-uploader__bd">
                     <view class="weui-uploader__files">

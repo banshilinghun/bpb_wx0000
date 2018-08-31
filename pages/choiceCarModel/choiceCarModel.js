@@ -1,10 +1,10 @@
-
 /** 选择车型款式 */
 
 const app = getApp();
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require('../../utils/api/ApiManager.js');
-
+const ModalHelper = require('../../helper/ModalHelper');
+const LoadingHelper = require("../../helper/LoadingHelper");
 Page({
 
   /**
@@ -24,7 +24,7 @@ Page({
     console.log(options);
     //添加 checked 属性
     let carModels = JSON.parse(options.carModels);
-    for(let i = 0; i < carModels.length; i++){
+    for (let i = 0; i < carModels.length; i++) {
       let carModelBean = carModels[i];
       carModelBean.checked = false;
     }
@@ -36,18 +36,18 @@ Page({
     })
   },
 
-  modelClickListener: function(event){
+  modelClickListener: function (event) {
     let that = this;
     let model = event.currentTarget.dataset.model;
     let carModelList = that.data.carModelList;
-    for (let i = 0; i < carModelList.length; i++){
+    for (let i = 0; i < carModelList.length; i++) {
       let carModel = carModelList[i];
-      if (model.detail_id == carModel.detail_id){
+      if (model.detail_id == carModel.detail_id) {
         carModel.checked = true;
         that.setData({
           checkedModel: carModel
         })
-      }else{
+      } else {
         carModel.checked = false;
       }
     }
@@ -56,27 +56,23 @@ Page({
     });
   },
 
-  back: function(){
+  back: function () {
     wx.navigateBack({});
   },
 
-  confirm: function(){
+  confirm: function () {
     let that = this;
     let checkedModel = that.data.checkedModel;
-    if(!checkedModel){
+    if (!checkedModel) {
       wx.showToast({
         title: '请选择车辆款式',
       })
       return;
     }
     let modelContent = that.data.carModelDetail + ' ' + checkedModel.detail_name;
-    wx.showModal({
-      title: "车型确认",
-      content: modelContent,
-      success: res =>{
-        if(res.confirm){
-          that.selectListener(checkedModel);
-        }
+    ModalHelper.showWxModalShowAllWidthCallback('车型确认', modelContent, '提交', '取消', true, res => {
+      if (res.confirm) {
+        that.selectListener(checkedModel);
       }
     })
   },
@@ -97,41 +93,40 @@ Page({
         carModel: checkedModel.detail_id,
         carModelDetail: that.data.carModelDetail + ' ' + checkedModel.detail_name
       });
-      wx.navigateBack({
-        delta: 3,
-      });
+      that.navigateBack();
     }
   },
 
   //添加车型信息
   addCarModelInfo: function (checkedModel) {
     let that = this;
+    LoadingHelper.showLoading();
     let requestData = {
       url: ApiConst.ADD_CAR_MODEL_INFO,
       data: {
         car_model: checkedModel.detail_id
       },
-      header: app.globalData.header,
       success: res => {
         this.setData({
           showDialog: false
         })
-        app.globalData.needAddCarModel = false;
-        wx.showModal({
-          title: '提示',
-          content: '车型信息提交成功\n请耐心等待审核',
-          showCancel: false,
-          success: res => {
-            if (res.confirm) {
-              wx.navigateBack({
-                delta: 3,
-              })
-            }
-          }
+        //缓存成功状态
+        app.globalData.is_add_car_model = false;
+        ModalHelper.showWxModalUseConfirm('提示', '车型信息提交成功\n请耐心等待审核', '我知道了', false, res => {
+          that.navigateBack();
         })
+      },
+      complete: res => {
+        LoadingHelper.hideLoading();
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  navigateBack() {
+    wx.navigateBack({
+      delta: 3,
+    })
   }
 
 })
