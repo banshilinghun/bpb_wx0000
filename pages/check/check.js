@@ -103,7 +103,7 @@ Page({
       wx.showModal({
         title: '提示',
         showCancel: false,
-        content: '请上传车尾照片'
+        content: '请上传车头照片'
       });
     } else if (carnPhoto == undefined && this.data.carIn) {
       wx.showModal({
