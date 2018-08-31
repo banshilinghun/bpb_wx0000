@@ -97,22 +97,24 @@ Page({
                   'content-type': 'application/json'
                 },
                 success: res => {
-                  if (res.data.code == 1000) {
-                    app.globalData.header.Cookie = 'sessionid=' + res.data.data.session_id;
-                    app.globalData.uid = res.data.data.uid;
-                    app.globalData.checkStaus = res.data.data.status;
-                    app.globalData.isFirst = res.data.data.isFirst;
+                  let dataBean = res.data;
+                  if (dataBean.code == 1000) {
+                    app.globalData.header.Cookie = 'sessionid=' + dataBean.data.session_id;
+                    app.globalData.uid = dataBean.data.uid;
+                    app.globalData.checkStaus = dataBean.data.status;
+                    app.globalData.isFirst = dataBean.data.isFirst;
                     app.globalData.recomId = that.data.user_id;
                     app.globalData.recomType = that.data.type;
                     app.globalData.recomAdId = that.data.adId;
-                    if (res.data.data.phone) {
+                    app.globalData.car_check_date = dataBean.data.car_check_date;
+                    if (dataBean.data.phone) {
                       app.globalData.login = 1;
                     } else {
                       app.globalData.login = 0;
                     }
                     if (type == 1 || type == 2) {
                       //没有手机号处理,跳转拉新页面（novice）
-                      //if (res.data.data.phone) {}
+                      //if (dataBean.data.phone) {}
                       that.showMain();
                     } else {
                       if (that.data.jump == 'ads') {
@@ -150,7 +152,7 @@ Page({
                     wx.showModal({
                       title: '提示',
                       showCancel: false,
-                      content: res.data.msg
+                      content: dataBean.msg
                     });
                   }
                 },

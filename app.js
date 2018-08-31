@@ -30,7 +30,11 @@ App({
     needAddCarModel: false,
     showAuthTip: false,
     //是否展示过计价规则弹窗
-    showRuleTip: false
+    showRuleTip: false,
+    //年检时间
+    car_check_date: null,
+    //一个应用周期内是否展示过年检弹窗
+    visibleCheckDate: false
   },
 
 })

@@ -6,7 +6,8 @@
   <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px' wx:if="{{ adInfo }}">
     <view class='detail-container'>
       <view class="page-section page-section-spacing swiper">
-        <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>
+        <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white"
+          style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>
           <block wx:for="{{ banners }}" wx:key="item.id">
             <swiper-item>
               <image src="{{ item }}" mode="scaleToFill" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'></image>
@@ -100,14 +101,16 @@
             <view class="profile-item">车辆要求:</view>
             <view class="right-text horizontal-center" bindtap='handleColorExplain'>
               <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
-              <text class="b-require-text" catchtap='handleRequire' data-require='{{  adInfo.car_require }}'>{{ adInfo.car_require }}</text>
+              <text class="b-require-text" catchtap='handleRequire' data-require='{{  adInfo.car_require }}'>{{
+                adInfo.car_require }}</text>
             </view>
           </view>
         </block>
         <block>
           <view class="profile">
             <view class="profile-item">车辆颜色:</view>
-            <view class="right-text b-color-content" bindtap='handleCarColor' data-color='{{ carColor }}'>{{ carColor }}</view>
+            <view class="right-text b-color-content" bindtap='handleCarColor' data-color='{{ carColor }}'>{{ carColor
+              }}</view>
           </view>
         </block>
       </view>
@@ -173,8 +176,10 @@
               <view class='b-design-item-title'>{{ design.title }}</view>
               <scroll-view scroll-x='true' class="b-scroll-effect">
                 <view class='b-effect-wrapper'>
-                  <view id='effect-image' class='b-effect-image-wrapper' wx:for='{{ design.effect }}' wx:for-item='effect' wx:key='effect.id'>
-                    <image class='b-effect-image' src='{{ effect.img }}' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}' data-current='{{ effect.img }}'></image>
+                  <view id='effect-image' class='b-effect-image-wrapper' wx:for='{{ design.effect }}' wx:for-item='effect'
+                    wx:key='effect.id'>
+                    <image class='b-effect-image' src='{{ effect.img }}' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}'
+                      data-current='{{ effect.img }}'></image>
                     <view class="b-effect-desc">
                       <text>{{ effect.desc }}</text>
                     </view>
@@ -222,8 +227,8 @@
 
 <!-- 朋友圈分享 -->
 <share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}'
-  joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
-  adId='{{adId}}' bind:hideDialog='hideDialogListener'>
+  joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}'
+  showShareModel='{{ showShareModel }}' adId='{{adId}}' bind:hideDialog='hideDialogListener'>
 </share-detail>
 
 <!--正在加载-->
@@ -246,8 +251,9 @@
   btnStr='{{ authStr }}' status='{{ authStatus }}' content='{{ authContent }}' bind:action='handleActionTap'></dialog-auth>
 
 <!-- 预约排队 -->
-<model visible="{{ visible }}" title="预约排队确认" cancelText="暂不排队" confirmText="确认排队" cancelLoading="{{ cancelLoading }}" confirmLoading="{{ confirmLoading }}"
-  bind:cancel="handleQueueCancel" bind:confirm="handleQueueConfirm" explain='排队说明' bind:explain="handleModelExplain">
+<model visible="{{ visible }}" title="预约排队确认" cancelText="暂不排队" confirmText="确认排队" cancelLoading="{{ cancelLoading }}"
+  confirmLoading="{{ confirmLoading }}" bind:cancel="handleQueueCancel" bind:confirm="handleQueueConfirm" explain='排队说明'
+  bind:explain="handleModelExplain">
   <view class='subscribe-wrapper'>
     <view class='subscribe-body'>
       <view class='b-queue-model-item'>排队序号: {{ serial_number }}</view>
@@ -259,8 +265,8 @@
 </model>
 
 <!-- 取消排队 -->
-<model visible="{{ visibleUndo }}" title="取消确认" cancelText="暂不取消" confirmText="确认取消" confirmLoading="{{ doLoading }}" bind:cancel="handleUndoCancel"
-  bind:confirm="handleConfirmCancel">
+<model visible="{{ visibleUndo }}" title="取消确认" cancelText="暂不取消" confirmText="确认取消" confirmLoading="{{ doLoading }}"
+  bind:cancel="handleUndoCancel" bind:confirm="handleConfirmCancel">
   <view class='subscribe-wrapper'>
     <view class='b-cancel-queue-tip'>
       <view class='b-queue-model-item'>取消后，需重新参加排队，</view>
@@ -333,18 +339,28 @@
             </view>
             <view class='b-body-wrapper'>
               <view class='b-body-server' wx:for="{{ stationList }}" wx:key="server" wx:if="{{ selectServerIndex === -1 || (selectServerIndex !== -1 &&  index === selectServerIndex) }}">
-                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}' bindtap='handleServerClick'
-                  data-index='{{ index }}' data-station="{{ item }}">
-                  <image class='b-server-logo' src="{{ item.small_logo || '../../image/noimg.png' }}" catchtap='handlePreviewStation' data-image="{{ item.logo }}"></image>
+                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}'
+                  bindtap='handleServerClick' data-index='{{ index }}' data-station="{{ item }}">
+                  <image class='b-server-logo' src="{{ item.small_logo || '../../image/noimg.png' }}" catchtap='handlePreviewStation'
+                    data-image="{{ item.logo }}"></image>
                   <view class='b-server-right'>
                     <view class='b-server-right-middle'>
                       <view class='b-server-right-top'>
-                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.station_name }}</view>
-                        <view class='b-right-distance'>{{ item.distance }}</view>
+                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{
+                          item.station_name + item.station_name + item.station_name }}</view>
+                        <view class='b-right-distance'>{{ item.distance }}km</view>
                       </view>
                       <view class='b-right-address-wrapper'>
                         <image class='b-right-location-icon' src='../../image/dw.png'></image>
                         <view class='b-right-address'>{{ item.station_address }}</view>
+                        <view class='b-go-map' catchtap='handleNavigation' data-nav="{{ item }}">
+                          <image class='b-map-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-nav-icon.png'></image>
+                          <view class='b-map-text'>
+                            <text>导航</text>
+                          </view>
+                        </view>
+                      </view>
+                      <view class="b-">
                       </view>
                     </view>
                   </view>
@@ -404,5 +420,3 @@
 
 <!-- 轻提示 -->
 <b-toast id="toast"></b-toast>
-
-<view class='b-temp-click' bindtap='handleAnnual'></view>

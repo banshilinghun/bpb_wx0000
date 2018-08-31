@@ -125,6 +125,7 @@ Page({
       })
     }
     app.globalData.isFirst = false;
+    that.getLocation();
   },
 
   onShow: function (n) {
@@ -143,7 +144,6 @@ Page({
       showRule: false
     })
     that.initUserAuthStatus();
-    that.getLocation();
     //请求广告信息
     that.requestAdInfo();
     that.requestJoinList();
@@ -188,13 +188,14 @@ Page({
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
-        var latitude = res.latitude;
-        var longitude = res.longitude;
         that.setData({
-          latitude: latitude,
-          longitude: longitude,
+          latitude: res.latitude,
+          longitude: res.longitude,
           haveLoca: true
         })
+      },
+      complete: res => {
+        that.getAdStationList();
       }
     })
   },
@@ -229,9 +230,6 @@ Page({
         that.setScrollHeight();
         //未注册和未认证弹框
         that.showRequireAuthDialog(that.data.loginStaus);
-      },
-      complete: res => {
-        
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
@@ -302,66 +300,35 @@ Page({
         ad_id: that.data.adId
       },
       success: res => {
-          let dataBean = res;
-          let adTempInfo = dataBean.info;
-          adTempInfo.run_status = RunStatus.getRunStatus(adTempInfo);
-          adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-          adTempInfo.end_date = adTempInfo.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-          //TODO 广告开放预约时间
-          if (adTempInfo.reserve_date.start_date && adTempInfo.reserve_date.last_date) {
-            adTempInfo.reserve_date.start_date = adTempInfo.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-            adTempInfo.reserve_date.last_date = adTempInfo.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-          }
-          //预约过滤
-          that.resolveAction(dataBean);
-          //广告效果图
-          dataBean.design_list.forEach(element => {
-            let effect_list = [];
-            let left = {
-              img: element.left_img,
-              desc: '车身左侧'
-            };
-            let right = {
-              img: element.right_img,
-              desc: '车身右侧'
-            };
-            let inner = {
-              img: element.inner_img,
-              desc: '车内'
-            };
-            effect_list.push(left);
-            effect_list.push(right);
-            effect_list.push(inner);
-            //过滤空值
-            effect_list = effect_list.filter((item) => {
-              return Boolean(item.img.trim()) === true;
-            })
-            element.effect = effect_list;
-          })
-          //车辆要求
-          let city_name = adTempInfo.city_limit == 0 && adTempInfo.city_name ? adTempInfo.city_name : "";
-          let user_limit = adTempInfo.user_limit == 1 ? ", 双证车主" : adTempInfo.user_limit == 2 ? ", 普通网约车" : "";
-          let car_size_limit = adTempInfo.car_size_limit ? ", " + adTempInfo.car_size_limit : "";
-          adTempInfo.car_require = city_name + user_limit + car_size_limit;
-          that.setData({
-            adInfo: adTempInfo,
-            designList: dataBean.design_list,
-            joinCount: adTempInfo.total_count - adTempInfo.current_count,
-            carColor: (!adTempInfo.color_limit || adTempInfo.color_limit.length == 0) ? '不限' : adTempInfo.color_limit.join('、'),
-            //isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
-            banners: dataBean.design_list.length == 0 ? ['../../image/bpb.png'] : [dataBean.design_list[0].left_img],
-            //赋值分享图数据
-            shareAvatar: app.globalData.userInfo.avatarUrl,
-            shareNickname: app.globalData.userInfo.nickName,
-            incomeMoney: adTempInfo.predict_amount,
-            adImageUrl: adTempInfo.img_url || "",
-            adName: adTempInfo.ad_name,
-            adTime: adTempInfo.begin_date + ' ~ ' + adTempInfo.end_date,
-            adId: adTempInfo.id,
-            joinNumber: adTempInfo.total_count - adTempInfo.current_count
-          })
-          that.getUserCarInfo();
-          that.getAdStationList();
+        let dataBean = res;
+        let adTempInfo = dataBean.info;
+        adTempInfo.run_status = RunStatus.getRunStatus(adTempInfo);
+        adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+        adTempInfo.end_date = adTempInfo.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+        //TODO 广告开放预约时间
+        if (adTempInfo.reserve_date.start_date && adTempInfo.reserve_date.last_date) {
+          adTempInfo.reserve_date.start_date = adTempInfo.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          adTempInfo.reserve_date.last_date = adTempInfo.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+        }
+        //预约过滤
+        that.resolveAction(dataBean);
+        //广告效果图
+        that.resolveEffect(dataBean);
+
+        //车辆要求
+        let city_name = adTempInfo.city_limit == 0 && adTempInfo.city_name ? adTempInfo.city_name : "";
+        let user_limit = adTempInfo.user_limit == 1 ? ", 双证车主" : adTempInfo.user_limit == 2 ? ", 普通网约车" : "";
+        let car_size_limit = adTempInfo.car_size_limit ? ", " + adTempInfo.car_size_limit : "";
+        adTempInfo.car_require = city_name + user_limit + car_size_limit;
+        that.setData({
+          adInfo: adTempInfo,
+          designList: dataBean.design_list,
+          joinCount: adTempInfo.total_count - adTempInfo.current_count,
+          carColor: (!adTempInfo.color_limit || adTempInfo.color_limit.length == 0) ? '不限' : adTempInfo.color_limit.join('、'),
+          //isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
+          banners: dataBean.design_list.length == 0 ? ['../../image/bpb.png'] : [dataBean.design_list[0].left_img]
+        })
+        that.getUserCarInfo();
       },
       complete: res => {
         LoadingHelper.hideLoading();
@@ -414,6 +381,32 @@ Page({
     }
   },
 
+  resolveEffect(dataBean) {
+    dataBean.design_list.forEach(element => {
+      let effect_list = [];
+      let left = {
+        img: element.left_img,
+        desc: '车身左侧'
+      };
+      let right = {
+        img: element.right_img,
+        desc: '车身右侧'
+      };
+      let inner = {
+        img: element.inner_img,
+        desc: '车内'
+      };
+      effect_list.push(left);
+      effect_list.push(right);
+      effect_list.push(inner);
+      //过滤空值
+      effect_list = effect_list.filter((item) => {
+        return Boolean(item.img.trim()) === true;
+      })
+      element.effect = effect_list;
+    })
+  },
+
   /** 请求已参与车主列表 */
   requestJoinList: function () {
     var that = this;
@@ -426,24 +419,24 @@ Page({
       },
       success: res => {
         var dataList = res.ad_list;
-          var tempAvatarList = [];
-          for (var key in dataList) {
-            var dataBean = dataList[key];
-            //过滤没有头像用户
-            if (!dataBean.wx_avatar.trim()) {
-              dataList.splice(key, 1);
-            } else {
-              tempAvatarList.push(dataBean.wx_avatar);
-            }
+        var tempAvatarList = [];
+        for (var key in dataList) {
+          var dataBean = dataList[key];
+          //过滤没有头像用户
+          if (!dataBean.wx_avatar.trim()) {
+            dataList.splice(key, 1);
+          } else {
+            tempAvatarList.push(dataBean.wx_avatar);
           }
-          that.setData({
-            avatarList: dataList,
-            showJoining: dataList.length == 0 ? false : true,
-            joinAvatarList: tempAvatarList
-          });
+        }
+        that.setData({
+          avatarList: dataList,
+          showJoining: dataList.length == 0 ? false : true,
+          joinAvatarList: tempAvatarList
+        });
       },
       complete: res => {
-        
+
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
@@ -473,10 +466,10 @@ Page({
         subscribe_id: that.data.selId
       },
       success: res => {
-        
+
       },
       complete: res => {
-        
+
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
@@ -834,39 +827,6 @@ Page({
     });
   },
 
-  /** 取消完善年检信息 */
-  handleAnnualCancel() {
-    this.setData({
-      visibleAnnual: false
-    })
-  },
-
-  /** 保存年检信息 */
-  handleAnnualConfirm() {
-    //todo 删除测试数据
-    let that = this;
-    that.setData({
-      annualLoading: true
-    })
-    setTimeout(() => {
-      that.setData({
-        annualLoading: false,
-        visibleAnnual: false
-      })
-      $Toast({
-        content: '选择了' + that.data.selectMonth + '月和' + that.data.selectDay + '日',
-        type: 'success'
-      })
-    }, 1000);
-  },
-
-  bindAnnualChange(event) {
-    this.setData({
-      selectMonth: this.data.months[event.detail.value[0]],
-      selectDay: this.data.days[event.detail.value[1]]
-    })
-  },
-
   handleAction: function () {
     let that = this;
     switch (that.data.actionStatus) {
@@ -919,25 +879,6 @@ Page({
     })
   },
 
-  //todo
-  handleAnnual() {
-    let months = [];
-    for (let i = 1; i <= 12; i++) {
-      months.push(i);
-    }
-    let days = [];
-    for (let j = 1; j <= 31; j++) {
-      days.push(j);
-    }
-    this.setData({
-      visibleAnnual: true,
-      months: months,
-      days: days,
-      selectMonth: months[0],
-      selectDay: days[0]
-    })
-  },
-
   /**
    * 用户车辆信息
    */
@@ -978,12 +919,9 @@ Page({
       data: {
         ad_id: that.data.adId
       },
-      header: app.globalData.header,
       success: res => {
-        //通过可预约数判断是否可点击
-        res.forEach(element => {
-          element.enable = element.surplus_count != 0
-        })
+        //计算距离
+        that.calculateStationDistance(res);
         //排序
         res.sort(that.sortRuleOfServer);
         that.setData({
@@ -992,6 +930,18 @@ Page({
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  calculateStationDistance(stationList) {
+    const that = this;
+    //todo 距离排序
+    stationList.forEach(element => {
+      const distance = util.getDistance(that.data.latitude, that.data.longitude, element.lat, element.lng).toFixed(2);
+      console.log('distance----------->' + distance);
+      element.distance = distance;
+      //通过可预约数判断是否可点击
+      element.enable = element.surplus_count != 0;
+    })
   },
 
   sortRuleOfServer(a, b) {
@@ -1015,8 +965,15 @@ Page({
   },
 
   handleSubscribe() {
+    console.log('stationList----------->' + this.data.stationList);
+    if (!this.data.stationList || this.data.stationList.length === 0) {
+      $Toast({
+        content: '数据正在加载中'
+      })
+      return;
+    }
     //验证登录状态
-    if (app.globalData.login != 1) {
+    if (app.globalData.login != 1) { //未登录注册
       ModalHelper.showWxModalShowAllWidthCallback("提示", "你还没有登录，不能预约广告", "立即登录", "取消", true, sure => {
         if (sure.confirm) {
           wx.navigateTo({
@@ -1034,12 +991,14 @@ Page({
    */
   verifyAuthStatus() {
     let authStatus = app.globalData.checkStaus;
-    if (Number(authStatus) === 2) {
+    if (Number(authStatus) === 2) { //认证失败
       this.showAuthFailModal();
-    } else if (Number(authStatus) === 1) {
+    } else if (Number(authStatus) === 1) { //认证审核中
       ModalHelper.showWxModal('提示', '你的身份认证信息正在审核中，不能预约广告', '我知道了', false);
-    } else if (Number(authStatus) === 0) {
+    } else if (Number(authStatus) === 0) { //未认证
       this.showNotAuthModal();
+    } else if (!app.globalData.car_check_date && !app.globalData.visibleCheckDate) { //填写年检信息
+      this.initAnnual();
     } else {
       this.startSubscribe();
     }
@@ -1048,7 +1007,7 @@ Page({
   /**
    * 初始化预约
    */
-  startSubscribe(){
+  startSubscribe() {
     this.setData({
       visibleSubscribe: true,
       colorList: this.data.adInfo.color_limit,
@@ -1078,6 +1037,80 @@ Page({
         })
       }
     })
+  },
+
+  initAnnual() {
+    let months = [];
+    for (let i = 1; i <= 12; i++) {
+      months.push(i);
+    }
+    let days = [];
+    for (let j = 1; j <= 31; j++) {
+      days.push(j);
+    }
+    this.setData({
+      visibleAnnual: true,
+      months: months,
+      days: days,
+      selectMonth: months[0],
+      selectDay: days[0]
+    })
+  },
+
+  /** 取消完善年检信息 */
+  handleAnnualCancel() {
+    this.setData({
+      visibleAnnual: false
+    })
+    this.startSubscribe();
+  },
+
+  /** 保存年检信息 */
+  handleAnnualConfirm() {
+    //todo 删除测试数据
+    let that = this;
+    that.setData({
+      annualLoading: true
+    })
+    that.uploadCheckDate();
+  },
+
+  bindAnnualChange(event) {
+    this.setData({
+      selectMonth: this.data.months[event.detail.value[0]],
+      selectDay: this.data.days[event.detail.value[1]]
+    })
+  },
+
+  uploadCheckDate() {
+    const that = this;
+    const check_date = `${that.formatCheckDate(that.data.selectMonth)}-${that.formatCheckDate(that.data.selectDay)}`;
+    let requestData = {
+      url: ApiConst.SET_USER_CAR_CHECK_DATE,
+      data: {
+        car_check_date: check_date
+      },
+      success: res => {
+        $Toast({
+          content: '保存成功',
+          type: 'success'
+        });
+        app.globalData.car_check_date = check_date;
+        app.globalData.visibleCheckDate = true;
+      },
+      complete: res => {
+        that.setData({
+          annualLoading: false,
+          visibleAnnual: false
+        })
+        this.startSubscribe();
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  formatCheckDate(number) {
+    return String(number).length === 1 ? `0${number}` : number;
   },
 
   handleSubscribeClose() {
@@ -1348,12 +1381,25 @@ Page({
     })
   },
 
-  handleRequire(event){
+  handleRequire(event) {
     ModalHelper.showWxModal('车辆要求', event.currentTarget.dataset.require, "我知道了", false);
   },
 
-  handleCarColor(event){
+  handleCarColor(event) {
     ModalHelper.showWxModal('颜色要求', event.currentTarget.dataset.color, "我知道了", false);
-  }
+  },
+
+  /**
+   * 导航
+   */
+  handleNavigation(event) {
+    let nav = event.currentTarget.dataset.nav;
+    wx.openLocation({
+      longitude: Number(nav.lng),
+      latitude: Number(nav.lat),
+      name: nav.station_name,
+      address: nav.station_address
+    })
+  },
 
 })
