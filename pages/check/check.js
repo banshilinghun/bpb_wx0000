@@ -120,7 +120,6 @@ Page({
 	commitRegistCheckInfo(form_id){
 		const that = this;
 		LoadingHelper.showLoading();
-		//todo
     let commitUrl = that.data.actionType === StrategyHelper.REGIST ? ApiConst.COMMIT_REGIST_INFO : ApiConst.COMMIT_CHECK_INFO;
 		let commitData = {};
 		if(that.data.actionType == StrategyHelper.REGIST) {

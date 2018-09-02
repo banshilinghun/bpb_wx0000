@@ -68,10 +68,20 @@ function getTimeStapByDate(date, time){
   return new Date(dateParam).getTime() / 1000;
 }
 
+/**
+ * 返回时间戳 unit 为秒
+ * @param {*} date 日期{2018-8-30 21:50:46}
+ */
+function getTimeStapOnlyDate(date){
+  const dateParam = `${date}`.replace(/-/g, "/");
+  return new Date(dateParam).getTime() / 1000;
+}
+
 module.exports = {
   friendly_time: friendly_time,
   formatDateTime: formatDateTime,
   formatDateTimeSprit: formatDateTimeSprit,
   formatTimestamp: formatTimestamp,
-  getTimeStapByDate: getTimeStapByDate
+  getTimeStapByDate: getTimeStapByDate,
+  getTimeStapOnlyDate: getTimeStapOnlyDate
 }

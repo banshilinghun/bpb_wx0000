@@ -119,13 +119,13 @@ let taskTitleStrategy = {
   //预约中
   1: function(runningTask){
     let date = TimeUtil.formatDateTime(runningTask.reserveDate.date);
-    return `预约时间: ${ date }${ runningTask.reserveDate.begin_time }${ runningTask.reserveDate.end_time }`;
+    return `预约时间: ${ date } ${ runningTask.reserveDate.begin_time }-${ runningTask.reserveDate.end_time }`;
   },
 
   //已超时未签到
   2: function(runningTask){ 
     let date = TimeUtil.formatDateTime(runningTask.reserveDate.date);
-    return `预约时间: ${ date }${ runningTask.reserveDate.begin_time }${ runningTask.reserveDate.end_time }`;
+    return `预约时间: ${ date } ${ runningTask.reserveDate.begin_time }-${ runningTask.reserveDate.end_time }`;
   },
 
   //已签到，未安装

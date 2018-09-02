@@ -1,5 +1,6 @@
 var util = require("../../utils/common/util");
 const ApiConst = require("../../utils/api/ApiConst.js");
+const LoadingHelper = require('../../helper/LoadingHelper');
 const app = getApp()
 var sourceType = [
   ['camera'],
@@ -58,6 +59,7 @@ Page({
     is_bad: 2,
     show1: true,
     show2: true,
+    scrollHeight: 0,
     color: [{
         'carColor': '#ffffff',
         'name': '白色',
@@ -115,7 +117,7 @@ Page({
       }
     ]
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     var that = this;
     that.judgeCanIUse();
     //var sourceType2 = [];
@@ -135,12 +137,17 @@ Page({
       timingFunction: 'ease',
     })
     this.animation = animation;
+    this.setScrollHeight();
+  },
+
+  setScrollHeight(){
+    
   },
 
   /**
    * 判断 微信版本 兼容性
    */
-  judgeCanIUse: function() {
+  judgeCanIUse: function () {
     var that = this;
     //组件不兼容
     //微信版本过低
@@ -149,17 +156,17 @@ Page({
     }
   },
 
-  showLowVersionTips: function() {
+  showLowVersionTips: function () {
     wx.showModal({
       title: '提示',
       content: '您当前微信版本过低，将导致无法正常使用奔跑宝小程序，请升级到微信最新版本。',
       showCancel: false,
-      success: function(res) {},
+      success: function (res) {},
     })
   },
 
   // 执行动画
-  startAnimation: function(isShow, offset) {
+  startAnimation: function (isShow, offset) {
     var that = this
     var offsetTem
     if (offset == 0) {
@@ -175,7 +182,7 @@ Page({
     //console.log(that.data)
   },
   // 执行动画
-  startAddressAnimation: function(isShow) {
+  startAddressAnimation: function (isShow) {
     //		console.log(isShow)
     var that = this
     if (isShow) {
@@ -188,7 +195,7 @@ Page({
       addressMenuIsShow: isShow,
     })
   },
-  startAddressAnimation2: function(isShow) {
+  startAddressAnimation2: function (isShow) {
     //		console.log(isShow)
     var that = this
     if (isShow) {
@@ -202,17 +209,17 @@ Page({
     })
   },
 
-  sourceTypeChange: function(e) {
+  sourceTypeChange: function (e) {
     this.setData({
       sourceTypeIndex: e.detail.value
     })
   },
-  sourceTypeChange2: function(e) {
+  sourceTypeChange2: function (e) {
     this.setData({
       sourceTypeIndex2: e.detail.value
     })
   },
-  showMenuTap: function(e) {
+  showMenuTap: function (e) {
     console.log('selectState')
     //获取点击菜单的类型 1点击状态 2点击时间 
     var menuType = e.currentTarget.dataset.type
@@ -226,12 +233,12 @@ Page({
     })
     this.startAnimation(true, 0)
   },
-  hideMenuTap: function(e) {
+  hideMenuTap: function (e) {
     this.startAnimation(false, -200)
   },
 
   // 选择状态按钮
-  selectState: function(e) {
+  selectState: function (e) {
     console.log('selectState1')
     this.startAnimation(false, -200)
     var status = e.currentTarget.dataset.status
@@ -243,7 +250,7 @@ Page({
   },
 
   // 点击所在地区弹出选择框
-  selectDistrict: function(e) {
+  selectDistrict: function (e) {
     var that = this
     //console.log('111111111')
     if (that.data.addressMenuIsShow) {
@@ -252,7 +259,7 @@ Page({
     that.startAddressAnimation(true)
   },
 
-  selectBrand: function(e) {
+  selectBrand: function (e) {
     var that = this
     //console.log('22222')
     if (that.data.addressMenuIsShow2) {
@@ -266,12 +273,12 @@ Page({
   },
 
   // 点击地区选择取消按钮
-  cityCancel: function(e) {
+  cityCancel: function (e) {
     this.startAddressAnimation(false)
     this.startAddressAnimation2(false)
   },
   // 点击地区选择确定按钮
-  citySure: function(e) {
+  citySure: function (e) {
     var that = this
     var city = that.data.city
     var value = that.data.value
@@ -284,7 +291,7 @@ Page({
       cityId: that.data.citys[value[1]].id
     })
   },
-  barndSure: function(e) {
+  barndSure: function (e) {
     var that = this
     var model = that.data.model
     var value = that.data.value2
@@ -299,13 +306,13 @@ Page({
       modelId: that.data.models[value[1]].id
     })
   },
-  hideCitySelected: function(e) {
+  hideCitySelected: function (e) {
     //		console.log(e)
     this.startAddressAnimation(false)
     this.startAddressAnimation2(false)
   },
   // 处理省市县联动逻辑
-  cityChange: function(e) {
+  cityChange: function (e) {
     //		console.log(e)
     var value = e.detail.value
     var provinces = this.data.provinces
@@ -337,7 +344,7 @@ Page({
 
     //		console.log(this.data)
   },
-  brandChange: function(e) {
+  brandChange: function (e) {
     //console.log(this.data.carList)
     var value = e.detail.value
     var brands = this.data.brands
@@ -370,14 +377,14 @@ Page({
     //		console.log(this.data)
   },
 
-  formSubmit: function(e) {
+  formSubmit: function (e) {
     console.log(e)
     var param = e.detail.value;
     var formId = e.detail.formId;
     this.mysubmit(param, formId);
   },
 
-  mysubmit: function(param, formId) {
+  mysubmit: function (param, formId) {
     console.log(param)
     var carPhoto = this.data.carPhoto;
     var licensePhoto = this.data.licensePhoto;
@@ -424,55 +431,43 @@ Page({
         return;
       }
       //发起提交认证请求
-      wx.request({
+      LoadingHelper.showLoading();
+      let requestData = {
         url: ApiConst.AUTH_IDENTITY_INFO,
         data: formData,
-        header: app.globalData.header,
         success: res => {
-          if (res.data.code == 1000) {
-            wx.showToast({
-              title: "提交成功"
+          wx.showToast({
+            title: "提交成功"
+          })
+          setTimeout(function () {
+            wx.redirectTo({
+              url: '../state/state?followFlag=1'
             })
-            setTimeout(function() {
-              wx.redirectTo({
-                url: '../state/state?followFlag=1'
-              })
-            }, 1000);
-          } else {
-            //					console.log(res.data)
-            wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: res.data.msg
-            });
-          }
+          }, 1000);
         },
-        fail: res => {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '网络错误'
-          });
+        complete: res => {
+          LoadingHelper.hideLoading();
         }
-      })
+      }
+      ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
     }
   },
 
-  radioChange: function(e) {
+  radioChange: function (e) {
     //console.log(e.detail.value);
     this.setData({
       car_type: e.detail.value
     })
   },
 
-  switchChange: function(e) {
+  switchChange: function (e) {
     // console.log(e.detail.value);
     this.setData({
       is_bad: e.detail.value
     })
   },
 
-  goStep: function() {
+  goStep: function () {
     this.setData({
       currentMenuID: '1',
       currentPage: 1
@@ -480,13 +475,13 @@ Page({
   },
 
   //车辆照片
-  chooseImage: function() {
+  chooseImage: function () {
     var that = this
     wx.chooseImage({
       sourceType: sourceType[2],
       sizeType: sizeType[0],
       count: 1,
-      success: function(res) {
+      success: function (res) {
         console.log(res)
         var wxres = res;
         wx.uploadFile({
@@ -496,7 +491,7 @@ Page({
           header: {
             "Cookie": app.globalData.header.Cookie,
           },
-          success: function(res) {
+          success: function (res) {
             var resdata = JSON.parse(res.data);
             if (resdata.code == 1000) {
               //							console.log(res.data)
@@ -527,13 +522,13 @@ Page({
   },
 
   //行驶证
-  chooseImage2: function() {
+  chooseImage2: function () {
     var that = this
     wx.chooseImage({
       sourceType: sourceType[2],
       sizeType: sizeType[0],
       count: 1,
-      success: function(res) {
+      success: function (res) {
         console.log(res)
         var wxres = res;
         wx.uploadFile({
@@ -543,7 +538,7 @@ Page({
           header: {
             "Cookie": app.globalData.header.Cookie,
           },
-          success: function(res) {
+          success: function (res) {
             var resdata = JSON.parse(res.data);
             if (resdata.code == 1000) {
               that.setData({
@@ -572,7 +567,7 @@ Page({
     })
   },
 
-  previewImage: function(e) {
+  previewImage: function (e) {
     var current = e.target.dataset.src
 
     wx.previewImage({
@@ -581,7 +576,7 @@ Page({
     })
   },
 
-  checkName: function(param) {
+  checkName: function (param) {
     var name = param.name;
     if (name != '') {
       return true;
@@ -595,7 +590,7 @@ Page({
     }
   },
 
-  checkCity: function(param) {
+  checkCity: function (param) {
     var city = param.city;
     if (city != '') {
       return true;
@@ -609,7 +604,7 @@ Page({
     }
   },
 
-  checkCarCode: function(param) {
+  checkCarCode: function (param) {
     var carcode = param.carcode;
     console.log(carcode)
     if (carcode != undefined) {
@@ -633,7 +628,7 @@ Page({
 
   },
 
-  checkBrand: function(param) {
+  checkBrand: function (param) {
     var brand = param.brand;
     if (brand != '') {
       return true;
@@ -647,7 +642,7 @@ Page({
     }
   },
 
-  checkColor: function(param) {
+  checkColor: function (param) {
     var color = param.color;
     if (color != '') {
       return true;
@@ -661,7 +656,7 @@ Page({
     }
   },
 
-  showKeyboard: function() {
+  showKeyboard: function () {
     var self = this;
     self.setData({
       isFocus: true,
@@ -672,7 +667,7 @@ Page({
   /**
    * 点击页面隐藏键盘事件
    */
-  hideKeyboard: function() {
+  hideKeyboard: function () {
     var self = this;
     if (self.data.isKeyboard) {
       //说明键盘是显示的，再次点击要隐藏键盘
@@ -689,7 +684,7 @@ Page({
     }
   },
 
-  bindFocus: function() {
+  bindFocus: function () {
     var self = this;
     if (self.data.isKeyboard) {
       //说明键盘是显示的，再次点击要隐藏键盘
@@ -706,7 +701,7 @@ Page({
     }
   },
 
-  tapKeyboard: function(e) {
+  tapKeyboard: function (e) {
     var self = this;
     //获取键盘点击的内容，并将内容赋值到textarea框中
     var tapIndex = e.target.dataset.index;
@@ -759,7 +754,7 @@ Page({
     }
   },
 
-  onReady: function() {
+  onReady: function () {
     var self = this;
     //将keyboard1和keyboard2中的所有字符串拆分成一个一个字组成的数组
     self.data.keyboard1 = self.data.keyboard1.split('');
@@ -769,21 +764,21 @@ Page({
     });
   },
 
-  onShow: function() {
+  onShow: function () {
     var self = this;
     self.setData({
       flag: false
     });
     console.log('carModelDetail------->' + this.data.carModelDetail);
     console.log('carModel------->' + this.data.carModel);
-    if (this.data.carModelDetail){
+    if (this.data.carModelDetail) {
       this.setData({
         areaInfo2: this.data.carModelDetail
       })
     }
   },
 
-  tapSpecBtn: function() {
+  tapSpecBtn: function () {
     this.hideKeyboard();
   }
 })

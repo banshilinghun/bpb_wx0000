@@ -1427,6 +1427,7 @@ button {
   text-align: left;
   padding-top: 40rpx;
   padding-bottom: 15rpx;
+  font-weight: 500
 }
 
 .b-ad-introduce-content {
@@ -1630,9 +1631,9 @@ button {
 
 .b-close {
   position: absolute;
-  top: 20rpx;
-  right: 20rpx;
-  padding: 0 0 10rpx 10rpx
+  top: 0;
+  right: 0;
+  padding: 20rpx
 }
 
 .b-close-image {

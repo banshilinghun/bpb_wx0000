@@ -24,6 +24,8 @@ const {
 
 // 计时器
 let timer;
+//记录请求任务列表时loading加载状态，只在第一次请求时显示
+let loadingFirst = true;
 
 Page({
 
@@ -57,7 +59,9 @@ Page({
     const that = this;
     //清除timer
     clearInterval(timer);
-    LoadingHelper.showLoading();
+    if(loadingFirst){
+      LoadingHelper.showLoading();
+    }
     let requestData = {
       url: ApiConst.GET_MY_TASK_LIST,
       data: {},
@@ -90,7 +94,10 @@ Page({
         })
       },
       complete: res => {
-        LoadingHelper.hideLoading();
+        if(loadingFirst){
+          LoadingHelper.hideLoading();
+          loadingFirst = false;
+        }
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
@@ -111,7 +118,7 @@ Page({
   transformWait(runningTempTask){
     const that = this;
     if (runningTempTask.waitInfo) {
-      let nowTime = new Date(runningTempTask.now_date).getTime() / 1000;
+      let nowTime = timeUtil.getTimeStapOnlyDate(runningTempTask.now_date);
       let waitTime = Math.floor(nowTime - runningTempTask.waitInfo.signInDate);
       that.lopperWaitTime(waitTime);
       that.setData({
@@ -119,6 +126,18 @@ Page({
         waitTime: that.formatTime(waitTime)
       })
     }
+  },
+
+  /**
+   * 安装等待时间计时
+   */
+  lopperWaitTime(waitTimeParam) {
+    timer = setInterval(() => {
+      waitTimeParam++;
+      this.setData({
+        waitTime: this.formatTime(waitTimeParam)
+      })
+    }, 1000);
   },
 
   transformInstall(runningTempTask){
@@ -140,28 +159,6 @@ Page({
     }
   },
 
-  transformOverTask(overTaskList){
-    const that = this;
-    if(overTaskList && overTaskList.length !== 0){
-      overTaskList.forEach(element => {
-        element.begin_date = timeUtil.formatDateTime(element.begin_date);
-        element.end_date = timeUtil.formatDateTime(element.end_date);
-      });
-    }
-  },
-
-  /**
-   * 安装等待时间计时
-   */
-  lopperWaitTime(waitTimeParam) {
-    timer = setInterval(() => {
-      waitTimeParam++;
-      this.setData({
-        waitTime: this.formatTime(waitTimeParam)
-      })
-    }, 1000);
-  },
-
   /**
    * 安装用时
    * @param {*} 已安装时间 
@@ -173,6 +170,16 @@ Page({
         installTime: this.formatTime(installTimeParam)
       })
     }, 1000);
+  },
+
+  transformOverTask(overTaskList){
+    const that = this;
+    if(overTaskList && overTaskList.length !== 0){
+      overTaskList.forEach(element => {
+        element.begin_date = timeUtil.formatDateTime(element.begin_date);
+        element.end_date = timeUtil.formatDateTime(element.end_date);
+      });
+    }
   },
 
   formatTime(targetTime) {
@@ -190,15 +197,14 @@ Page({
   getRemainTime(element) {
     //预约时间
     let that = this;
-    let date = new Date(element.date + ' ' + element.end_time);
-    let targetTime = date.getTime();
+    let targetTime = timeUtil.getTimeStapByDate(element.date, element.end_time);
     timer = setInterval(() => {
       //当前时间
-      let currentTime = new Date().getTime();
+      let currentTime = new Date().getTime() / 1000;
       let remainTime = currentTime - targetTime;
       if (remainTime > 0) { //说明已超时
         // 一个小时之内倒计时，所以为 3600
-        let remainSeconds = (3600 - (currentTime - targetTime) / 1000);
+        let remainSeconds = 3600 - (currentTime - targetTime);
         if (remainSeconds > 0) {
           //剩余分钟数
           let minutes = Math.floor(remainSeconds / 60);
@@ -293,10 +299,10 @@ Page({
   handleUnSubscribe() {
     let that = this;
     //判断距离预约时间截止是否大于3小时，否则不可取消
-    let targetTime = new Date(that.data.runningTask.reserveDate.date + ' ' + that.data.runningTask.reserveDate.begin_time).getTime();
+    let targetTime = timeUtil.getTimeStapByDate(that.data.runningTask.reserveDate.date, that.data.runningTask.reserveDate.begin_time);
     //当前时间
-    let currentTime = new Date(that.data.runningTask.now_date).getTime();
-    if ((targetTime - currentTime) / 1000 < 3600 * 3) {
+    let currentTime = timeUtil.getTimeStapOnlyDate(that.data.runningTask.now_date);
+    if ((targetTime - currentTime) < 3600 * 3) {
       that.setData({
         visibleSubTip: true
       })

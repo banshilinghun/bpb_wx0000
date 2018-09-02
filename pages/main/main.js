@@ -195,13 +195,12 @@ Page({
           that.setData({
             pageIndex: currentPageIndex
           })
-          var nowdate = util.dateToString(new Date());
           let dataList = res.data.data.ad_list;
           if (dataList.length > 0) {
-            //0:即将开始 1:剩余27(表示预约中的状态） 2投放中 3检测中 4已结束
             for (var i = 0; i < dataList.length; i++) {
               let dataBean = dataList[i];
               dataBean.run_status = RunStatus.getRunStatus(dataBean);
+              dataBean.adStatusStr = RunStatus.getAdStatusStr(dataBean);
               dataBean.begin_date = dataBean.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
               dataBean.end_date = dataBean.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
             }

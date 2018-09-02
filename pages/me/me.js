@@ -87,6 +87,7 @@ Page({
     avatar: '',
     userInfo: {},
     amount: '0.00',
+    incomeNumber: 0,
     total: '0.00',
     rate: 0,
     showRecommend: false,
@@ -262,8 +263,11 @@ Page({
           that.navigateTo('../state/state');
         }
         break;
+      case CELL_TYPE[9]:
+        addCarModel(item.url);
+        break;
       default:
-        that.addCarModel(item.url);
+        that.navigateTo(item.url);
         break;
     }
   },

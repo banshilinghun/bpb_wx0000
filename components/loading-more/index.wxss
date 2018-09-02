@@ -40,3 +40,8 @@
   align-items: center;
   background-color: #F6F6F6;
 }
+
+.weui-loadmore__tips{
+  font-size: 24rpx;
+  color: #999;
+}

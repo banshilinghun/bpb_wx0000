@@ -42,7 +42,7 @@
                 <view class="message" wx:if='{{ myAd.billing_mode == 0 }}'>预计收益：
                   <label class="data-text">￥{{ myAd.predict_amount }}</label>
                 </view>
-                <view class="message" wx:if='{{ isDiDi==1 }}'>预计收益：
+                <view class="message" wx:if='{{ myAd.billing_mode == 1 }}'>预计收益：
                   <label class="data-text">￥{{ myAd.min_amount }}
                     <label class="data-blt">~ </label>{{ myAd.max_amount }}</label>
                 </view>
@@ -103,20 +103,8 @@
             </view>
           </view>
           <view class="item_right">
-            <view wx:if="{{ item.run_status==0 }}">
-              <text class="time timetxt2">即将开始</text>
-            </view>
-            <view wx:if="{{ item.run_status==1 }}">
-              <text class="time">剩余{{ item.current_count }}</text>
-            </view>
-            <view wx:if="{{ item.run_status==2 }}">
-              <text class="time timetxt2">投放中</text>
-            </view>
-            <view wx:if="{{ item.run_status==3 }}">
-              <text class="time timetxt2">检测中</text>
-            </view>
-            <view wx:if="{{ item.run_status==4 }}">
-              <text class="time timetxt">已结束</text>
+            <view>
+              <text class="time  {{ (item.run_status === 0  ||item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{ item.adStatusStr }}</text>
             </view>
             <button data-adName="{{ item.name }}" data-adId="{{ item.id }}" data-adImg="{{ item.share_img }}" class='wtwabt' open-type="share"
               wx:if='{{ showShareBtn }}'>

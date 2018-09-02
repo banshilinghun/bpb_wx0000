@@ -6,9 +6,9 @@
   <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px' wx:if="{{ adInfo }}">
     <view class='detail-container'>
       <view class="page-section page-section-spacing swiper">
-        <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white"
+        <swiper indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white"
           style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>
-          <block wx:for="{{ banners }}" wx:key="item.id">
+          <block wx:for="{{ adInfo.banners }}" wx:key="item.id">
             <swiper-item>
               <image src="{{ item }}" mode="scaleToFill" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'></image>
             </swiper-item>
@@ -23,23 +23,9 @@
               <text>{{ adInfo.ad_name }}</text>
             </view>
             <view class='profile-ad-status'>
-              <view wx:if="{{ adInfo.run_status==0 }}">
-                <text class="time timetxt2">即将开始</text>
-              </view>
-              <view wx:if="{{ adInfo.run_status==1 }}">
-                <text class="time">剩余{{ adInfo.current_count }}辆</text>
-              </view>
-              <view wx:if="{{ adInfo.run_status==2 }}">
-                <text class="time timetxt2">投放中</text>
-              </view>
-              <view wx:if="{{ adInfo.run_status==3 }}">
-                <text class="time timetxt2">检测中</text>
-              </view>
-              <view wx:if="{{ adInfo.run_status==4 }}">
-                <text class="time timetxt">已结束</text>
-              </view>
               <view>
-                <text class="time timetxt b-total-count">(共{{ adInfo.total_count }}辆)</text>
+                <text class="time  {{ (item.run_status === 0  ||item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{
+                    adInfo.adStatusStr }}</text>
               </view>
             </view>
           </view>
@@ -310,7 +296,7 @@
   <view class='b-subscribe-container'>
     <view class='b-subscribe-header'>
       <view class='b-header-wrapper'>
-        <image class='b-subscribe-logo' src='{{ designList[0].left_img }}' mode='aspectFill'></image>
+        <image class='b-subscribe-logo' src='{{ adInfo.logo }}' mode='aspectFill'></image>
         <view class='b-header-right'>
           <view class='b-header-info'>
             <view class='b-header-money b-theme-color'>
@@ -346,7 +332,8 @@
                   <view class='b-server-right'>
                     <view class='b-server-right-middle'>
                       <view class='b-server-right-top'>
-                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{ item.station_name }}</view>
+                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{
+                          item.station_name }}</view>
                         <view class='b-right-distance'>{{ item.distance }}km</view>
                       </view>
                       <view class='b-right-address-wrapper'>

@@ -18,7 +18,6 @@ const ACTION_ARR = ['not_begin', 'start_subscribe', 'reject_error', 'own_ad', 'q
 
 Page({
   data: {
-    banners: [],
     receive: 0,
     expressList: [],
     expressNumber: 0,
@@ -303,9 +302,10 @@ Page({
         let dataBean = res;
         let adTempInfo = dataBean.info;
         adTempInfo.run_status = RunStatus.getRunStatus(adTempInfo);
+        adTempInfo.adStatusStr = RunStatus.getAdStatusStr(adTempInfo);
         adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
         adTempInfo.end_date = adTempInfo.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-        //TODO 广告开放预约时间
+        //广告开放预约时间
         if (adTempInfo.reserve_date.start_date && adTempInfo.reserve_date.last_date) {
           adTempInfo.reserve_date.start_date = adTempInfo.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
           adTempInfo.reserve_date.last_date = adTempInfo.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
@@ -314,9 +314,10 @@ Page({
         that.resolveAction(dataBean);
         //广告效果图
         that.resolveEffect(dataBean);
-
+        //banner
+        adTempInfo.banners = that.resolveBanner(dataBean);
         //车辆要求
-        let city_name = adTempInfo.city_limit == 0 && adTempInfo.city_name ? adTempInfo.city_name : "";
+        let city_name = adTempInfo.city_limit == 0 && adTempInfo.city_name ? `${ adTempInfo.city_name }车辆` : "";
         let user_limit = adTempInfo.user_limit == 1 ? ", 双证车主" : adTempInfo.user_limit == 2 ? ", 普通网约车" : "";
         let car_size_limit = adTempInfo.car_size_limit ? ", " + adTempInfo.car_size_limit : "";
         adTempInfo.car_require = city_name + user_limit + car_size_limit;
@@ -326,7 +327,6 @@ Page({
           joinCount: adTempInfo.total_count - adTempInfo.current_count,
           carColor: (!adTempInfo.color_limit || adTempInfo.color_limit.length == 0) ? '不限' : adTempInfo.color_limit.join('、'),
           //isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
-          banners: dataBean.design_list.length == 0 ? ['../../image/bpb.png'] : [dataBean.design_list[0].left_img]
         })
         that.getUserCarInfo();
       },
@@ -400,11 +400,27 @@ Page({
       effect_list.push(right);
       effect_list.push(inner);
       //过滤空值
-      effect_list = effect_list.filter((item) => {
-        return Boolean(item.img.trim()) === true;
-      })
+      effect_list = effect_list.filter(item => Boolean(item.img.trim()))
       element.effect = effect_list;
     })
+  },
+
+  resolveBanner(dataBean){
+    let banners = [];
+    if(dataBean.design_list.length === 1){
+      //一套设计直接取这套设计所有图片
+      let designBean = dataBean.design_list[0];
+      banners.push(designBean.left_img);
+      banners.push(designBean.right_img);
+      banners.push(designBean.inner_img);
+      banners =  banners.filter(element => Boolean(element.trim()));
+    } else {
+      //多套设计取第一张
+      dataBean.design_list.forEach(element => {
+        banners.push(element.left_img);
+      })
+    }
+    return banners;
   },
 
   /** 请求已参与车主列表 */
@@ -677,7 +693,6 @@ Page({
     let requestData = {
       url: ApiConst.GET_QUEUE_USER,
       data: dataBean,
-      header: app.globalData.header,
       success: res => {
         that.setData({
           queueList: res.users,
@@ -708,7 +723,6 @@ Page({
       data: {
         ad_id: that.data.adId
       },
-      header: app.globalData.header,
       success: res => {
         that.setData({
           isQueueing: true,
@@ -1077,7 +1091,6 @@ Page({
 
   /** 保存年检信息 */
   handleAnnualConfirm() {
-    //todo 删除测试数据
     let that = this;
     that.setData({
       annualLoading: true

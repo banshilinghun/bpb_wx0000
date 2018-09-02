@@ -241,7 +241,7 @@
   font-family: "微软雅黑";
   font-size: 24rpx;
   font-weight: 500;
-  box-shadow: 0 0 16rpx #ccc
+  box-shadow: 0 2px 4px #ccc
 }
 
 .b-action-cancel {

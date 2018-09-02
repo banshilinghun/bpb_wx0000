@@ -41,7 +41,7 @@
                   <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.reserveDate.address }}'>
                     <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
                     <view class='b-time-text'>
-                      <text>{{ runningTask.reserveDate.address }}</text>
+                      <text>{{ runningTask.reserveDate.server_name }}</text>
                     </view>
                     <!-- 导航 -->
                     <view class='b-go-map' catchtap='handleNavigation'>
@@ -68,7 +68,7 @@
                   <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.reserveDate.address }}'>
                     <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
                     <view class='b-time-text'>
-                      <text>{{ runningTask.reserveDate.address }}</text>
+                      <text>{{ runningTask.reserveDate.server_name }}</text>
                     </view>
                     <!-- 导航 -->
                     <view class='b-go-map' catchtap='handleNavigation'>

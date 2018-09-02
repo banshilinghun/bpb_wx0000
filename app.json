@@ -28,7 +28,6 @@
     "pages/brandList/brandList",
     "pages/brandDetail/brandDetail",
     "pages/subscribeQueue/subscribeQueue",
-    "pages/myAd/myAd",
     "pages/choiceCarModel/choiceCarModel",
     "pages/explain/explain",
     "pages/withdrawRecord/withdrawRecord",

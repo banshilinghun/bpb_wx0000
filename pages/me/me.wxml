@@ -35,7 +35,7 @@
               <text>待收收益</text>
             </view>
             <view class='b-balance-number'>
-              <text>￥0.00</text>
+              <text>{{ incomeNumber }}</text>
             </view>
             <view class='b-red-dot' wx:if='{{ dotVisible }}'></view>
           </view>
