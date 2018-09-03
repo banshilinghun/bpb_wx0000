@@ -8,6 +8,7 @@ const LoadingHelper = require("../../helper/LoadingHelper");
 const ModalHelper = require("../../helper/ModalHelper");
 const RunStatus = require("../main/runStatus");
 const TimeUtil = require("../../utils/time/timeUtil");
+const StringUtil = require("../../utils/string/stringUtil");
 
 const {
   $Toast
@@ -15,6 +16,8 @@ const {
 
 //预约排队状态数组  
 const ACTION_ARR = ['not_begin', 'start_subscribe', 'reject_error', 'own_ad', 'queue', 'cancel_queue'];
+//记录请求广告信息loading加载状态，只在第一次请求时显示
+let loadingFirst = true;
 
 Page({
   data: {
@@ -292,7 +295,9 @@ Page({
    */
   requestAdInfo: function () {
     var that = this;
-    LoadingHelper.showLoading();
+    if(loadingFirst){
+      LoadingHelper.showLoading();
+    }
     let requestData = {
       url: ApiConst.GET_AD_INFO,
       data: {
@@ -305,6 +310,7 @@ Page({
         adTempInfo.adStatusStr = RunStatus.getAdStatusStr(adTempInfo);
         adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
         adTempInfo.end_date = adTempInfo.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+        adTempInfo.ad_name = StringUtil.formatAdName(adTempInfo.ad_name, adTempInfo.city_name);
         //广告开放预约时间
         if (adTempInfo.reserve_date.start_date && adTempInfo.reserve_date.last_date) {
           adTempInfo.reserve_date.start_date = adTempInfo.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
@@ -331,7 +337,10 @@ Page({
         that.getUserCarInfo();
       },
       complete: res => {
-        LoadingHelper.hideLoading();
+        if(loadingFirst){
+          LoadingHelper.hideLoading();
+          loadingFirst = false;
+        }
         that.setData({
           isShowLoadingMore: false
         });
@@ -936,8 +945,8 @@ Page({
       success: res => {
         //计算距离
         that.calculateStationDistance(res);
-        //排序
-        res.sort(that.sortRuleOfServer);
+        //先按数量排序（过滤掉数量为0的），再按距离排序
+        res = that.sortStationList(res);
         that.setData({
           stationList: res
         })
@@ -951,15 +960,33 @@ Page({
     //todo 距离排序
     stationList.forEach(element => {
       const distance = util.getDistance(that.data.latitude, that.data.longitude, element.lat, element.lng).toFixed(2);
-      console.log('distance----------->' + distance);
       element.distance = distance;
       //通过可预约数判断是否可点击
-      element.enable = element.surplus_count != 0;
+      element.enable = parseInt(element.surplus_count) !== 0;
     })
   },
 
-  sortRuleOfServer(a, b) {
+  sortStationList(stationList){
+    let targetStationList = [];
+    //筛选有可预约数量
+    let useableStationList = stationList.filter(element => parseInt(element.surplus_count) !== 0);
+    //先数量排序再按距离排序
+    useableStationList.sort(this.sortBySurplusCount);
+    useableStationList.sort(this.sortByDistance);
+    //筛选数量为0的网点
+    let emptyStationList = stationList.filter(element => parseInt(element.surplus_count) === 0);
+    emptyStationList.sort(this.sortByDistance);
+    //拼接为新数组
+    targetStationList = targetStationList.concat(useableStationList, emptyStationList);
+    return targetStationList;
+  },
+
+  sortBySurplusCount(a, b){
     return b.surplus_count - a.surplus_count;
+  },
+
+  sortByDistance(a, b){
+    return a.distance - b.distance;
   },
 
   /**
@@ -982,7 +1009,7 @@ Page({
     console.log('stationList----------->' + this.data.stationList);
     if (!this.data.stationList || this.data.stationList.length === 0) {
       $Toast({
-        content: '数据正在加载中'
+        content: '数据正在加载中，请稍后再试'
       })
       return;
     }

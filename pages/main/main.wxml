@@ -71,7 +71,7 @@
     </block>
     <!-- 广告市场 -->
     <block wx:if="{{ adList && adList.length !== 0 }}">
-      <view class='b-main-title'>
+      <view class='b-main-title' wx:if='{{ myAd }}'>
         <text>广告市场</text>
       </view>
       <block wx:for="{{ adList }}" wx:key="item.id">

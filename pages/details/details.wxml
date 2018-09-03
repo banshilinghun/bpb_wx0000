@@ -19,9 +19,7 @@
       <view class="profile-wrapper">
         <block>
           <view class="profile frpro">
-            <view class="profile-item cwsfts">
-              <text>{{ adInfo.ad_name }}</text>
-            </view>
+            <view class="profile-item cwsfts">{{ adInfo.ad_name }}</view>
             <view class='profile-ad-status'>
               <view>
                 <text class="time  {{ (item.run_status === 0  ||item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{
@@ -136,16 +134,6 @@
         <view>
           <image class='arrow-image' src='../../image/arrow.png'></image>
         </view>
-      </view>
-      <!-- 服务网点列表 -->
-      <view class="protwo">
-        <block wx:if="{{service.length>0}}">
-          <view class='service-title-wrapper'>
-            <view class="profile frpro">
-              <view class="profile-item cwsfts">预约前往下列服务网点</view>
-            </view>
-          </view>
-        </block>
       </view>
       <!-- 广告介绍和设计样式预览 -->
       <view class='b-design-container'>

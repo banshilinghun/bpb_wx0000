@@ -8,6 +8,7 @@ const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require("../../utils/api/ApiManager.js");
 const RunStatus = require("../main/runStatus");
 const StrategyHelper = require("../../helper/StrategyHelper");
+const StringUtil = require("../../utils/string/stringUtil");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -203,6 +204,7 @@ Page({
               dataBean.adStatusStr = RunStatus.getAdStatusStr(dataBean);
               dataBean.begin_date = dataBean.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
               dataBean.end_date = dataBean.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+              dataBean.ad_name = StringUtil.formatAdName(dataBean.ad_name, dataBean.city_name);
             }
             if (currentPageIndex != 0) {
               dataList = that.data.adList.concat(dataList);
@@ -297,7 +299,6 @@ Page({
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-          //					console.log(res.data)
           z.setData({
             bannerFlag: z.data.bannerFlag + 1,
             status: res.data.data.status,
@@ -307,8 +308,6 @@ Page({
             plate_no: res.data.data.plate_no,
             isDiDi: res.data.data.user_type //是否是滴滴车主
           })
-          //if (z.data.bannerFlag==2&&)
-          //console.log(z.data.bannerFlag);
           if (z.data.bannerFlag == 2) {
             if (z.data.showRecommend) { //可以显示推荐朋友圈
               if (z.data.isDiDi == 1) { //滴滴合法车主

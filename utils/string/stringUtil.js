@@ -59,13 +59,26 @@ function cutstr(str, len) {
       return str_cut;
     }
   }
-  //如果给定字符串小于指定长度，则返回源字符串；  
+  //如果给定字符串小于指定长度，则返回源字符串;  
   if (str_length < len) {
     return str;
   }
 }
 
+/**
+ * 格式化广告名
+ * @param {*} adName    广告名
+ * @param {*} cityName  城市名
+ */
+function formatAdName(adName, cityName){
+  if(cityName && cityName.indexOf('市') !== -1){
+    cityName = cityName.replace('市', '');
+  }
+  return cityName? `${adName}（${cityName}）` : `${adName}`;
+}
+
 module.exports = {
   substringStr: substringStr,
-  substringName: substringName
+  substringName: substringName,
+  formatAdName: formatAdName
 }

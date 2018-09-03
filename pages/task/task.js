@@ -15,6 +15,7 @@ const timeUtil = require("../../utils/time/timeUtil");
 const LoadingHelper = require("../../helper/LoadingHelper");
 const ModalHelper = require("../../helper/ModalHelper");
 const StrategyHelper = require("../../helper/StrategyHelper");
+const StringUtil = require("../../utils/string/stringUtil");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -55,6 +56,10 @@ Page({
     this.requestTaskList();
   },
 
+  onPullDownRefresh(){
+    this.requestTaskList();
+  },
+
   requestTaskList() {
     const that = this;
     //清除timer
@@ -67,9 +72,12 @@ Page({
       data: {},
       header: app.globalData.header,
       success: res => {
+        //进行中
         let runningTempTask = res.runningTask;
+        let overTempTask = res.overTask;
         if (runningTempTask && Object.keys(runningTempTask).length !== 0) {
           runningTempTask.date = timeUtil.formatDateTimeSprit(runningTempTask.begin_date) + "-" + timeUtil.formatDateTimeSprit(runningTempTask.end_date);
+          runningTempTask.ad_name = StringUtil.formatAdName(runningTempTask.ad_name, runningTempTask.city_name);
           runningTempTask.statusStr = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(runningTempTask));
           //初始化状态
           that.setData({
@@ -86,6 +94,12 @@ Page({
         } else {
           runningTempTask = null;
         }
+        //已完成列表
+        if(overTempTask && overTempTask.length !== 0){
+          overTempTask.forEach(element => {
+            element.ad_name = StringUtil.formatAdName(element.ad_name, element.city_name);
+          })
+        }
         //已完成数据处理
         that.transformOverTask(res.overTask);
         that.setData({
@@ -98,6 +112,7 @@ Page({
           LoadingHelper.hideLoading();
           loadingFirst = false;
         }
+        wx.stopPullDownRefresh();
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));

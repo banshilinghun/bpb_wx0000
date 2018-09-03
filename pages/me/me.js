@@ -133,6 +133,8 @@ Page({
     that.requestAuthStatus();
     //车型
     that.controlCarModel();
+    //待收收益数量
+    that.requestAccountCoupon();
   },
 
   controlCarModel(){
@@ -149,7 +151,6 @@ Page({
         visible: true
       });
     }
-    console.log(actionCell);
     that.setData({
       actionCells: actionCell
     })
@@ -241,6 +242,31 @@ Page({
     }
   },
 
+  /**
+   * 请求可领取奖励详情
+   */
+  requestAccountCoupon() {
+    const that = this;
+    let requestData = {
+      url: ApiConst.ACCOUNT_COUPON,
+      data: {},
+      success: res => {
+        let couponList =  res.coupon_info;
+        let couponCount = 0;
+        if(couponList && couponList.length !== 0){
+          //状态为2表示已激活未领取的奖励
+          couponCount = res.coupon_info.filter(element => {
+            return parseInt(element.status) === 2;
+          }).length;
+        }
+        that.setData({
+          incomeNumber: couponCount
+        })
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
   handleAction(event) {
     console.log(event);
     let that = this;
@@ -264,7 +290,7 @@ Page({
         }
         break;
       case CELL_TYPE[9]:
-        addCarModel(item.url);
+        that.addCarModel(item.url);
         break;
       default:
         that.navigateTo(item.url);

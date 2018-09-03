@@ -30,7 +30,7 @@
               <block wx:if="{{ runningTask.action.subscribed }}">
                 <view class='b-content-margin'>
                   <view class='b-subscribe-info'>
-                    <image class='b-time-image' src='{{ runningTask.logo }}'></image>
+                    <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-time-icon.png'></image>
                     <view class='b-time-text'>
                       <text>{{ runningTask.reserveDate.subscribeTime }}</text>
                     </view>
