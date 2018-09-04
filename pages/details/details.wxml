@@ -180,7 +180,7 @@
       <view class='sharetext'>{{ shareAwardText }}</view>
     </button>
     <!-- 预约排队 -->
-    <view class='subscribe_immediately {{ actionStatus === "start_subscribe"? "b-start-subscribe" : "" }} {{ actionStatus === "not_begin"? "b-not-begin" : "" }} {{ actionStatus === "reject_error"? "b-reject-error" : "" }} {{ actionStatus === "own_ad"? "b-own-ad" : "" }}'
+    <view class='subscribe_immediately b-start-subscribe {{ actionStatus === 0 || actionStatus === 4 || actionStatus === 5 || actionStatus === 6? "b-action-disenable" : "" }}'
       bindtap='handleAction'>
       <view class='subcribe-wrapper'>
         <text>{{ actionStr }}</text>

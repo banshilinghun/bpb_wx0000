@@ -8,6 +8,7 @@ const Constant = require("../../utils/constant/Constant.js");
 const shareUtil = require("../../utils/module/shareUtil");
 const { $Toast } = require('../../components/base/index');
 const LoadingHelper = require('../../helper/LoadingHelper');
+const ModalHelper = require('../../helper/ModalHelper');
 const app = getApp();
 //推荐奖励是否关闭
 let shareFlag;
@@ -431,11 +432,7 @@ Page({
   },
 
   showModel(msg) {
-    wx.showModal({
-      title: '提示',
-      showCancel: false,
-      content: msg
-    });
+    ModalHelper.showWxModal('提示', msg, '我知道了', false);
   },
 
   //分享

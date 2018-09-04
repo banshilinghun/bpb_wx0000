@@ -14,8 +14,6 @@ const {
   $Toast
 } = require('../../components/base/index');
 
-//预约排队状态数组  
-const ACTION_ARR = ['not_begin', 'start_subscribe', 'reject_error', 'own_ad', 'queue', 'cancel_queue'];
 //记录请求广告信息loading加载状态，只在第一次请求时显示
 let loadingFirst = true;
 
@@ -295,7 +293,7 @@ Page({
    */
   requestAdInfo: function () {
     var that = this;
-    if(loadingFirst){
+    if (loadingFirst) {
       LoadingHelper.showLoading();
     }
     let requestData = {
@@ -316,7 +314,7 @@ Page({
           adTempInfo.reserve_date.start_date = adTempInfo.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
           adTempInfo.reserve_date.last_date = adTempInfo.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
         }
-        //预约过滤
+        //按钮状态
         that.resolveAction(dataBean);
         //广告效果图
         that.resolveEffect(dataBean);
@@ -337,7 +335,7 @@ Page({
         that.getUserCarInfo();
       },
       complete: res => {
-        if(loadingFirst){
+        if (loadingFirst) {
           LoadingHelper.hideLoading();
           loadingFirst = false;
         }
@@ -354,40 +352,27 @@ Page({
    * 处理按钮状态
    */
   resolveAction(dataBean) {
-    const that = this;
     if (dataBean.current_reserve || dataBean.current_ad) {
-      that.setData({
-        actionStr: '查看我的广告',
-        actionStatus: ACTION_ARR[3]
-      });
+      this.updateAction(RunStatus.OWNER_ACTION);
       return;
-    } else {
-      //运行状态过滤
-      if (dataBean.info.run_status == 1) {
-        // 剩余数过滤
-        if (dataBean.info.current_count != 0) {
-          that.setData({
-            actionStr: '立即预约',
-            actionStatus: ACTION_ARR[1]
-          })
-        } else {
-          that.setData({
-            actionStr: '立即预约',
-            actionStatus: ACTION_ARR[2],
-            errorComment: '当前广告已被预约完，\n下次记得早点来预约哦~'
-          })
-        }
-      } else if (dataBean.info.run_status == 0) { //即将开始
-        that.setData({
-          actionStr: '即将开始',
-          actionStatus: ACTION_ARR[0]
-        })
+    }
+    //运行状态过滤
+    let run_status = dataBean.info.run_status;
+    if (run_status === RunStatus.PUBLISHED) {
+      // 剩余数过滤
+      if (parseInt(dataBean.info.current_count) !== 0) {
+        this.updateAction(RunStatus.SUBSCRIBE_ACTION);
       } else {
-        that.setData({
-          actionStr: '查看我的广告',
-          actionStatus: ACTION_ARR[3]
-        });
+        this.updateAction(RunStatus.NO_COUNT_ACTION);
       }
+    } else if (run_status === RunStatus.NOT_BEGIN) { //即将开始
+      this.updateAction(RunStatus.NOT_BEGIN_ACTION);
+    } else if (run_status === RunStatus.RUNNING) {
+      this.updateAction(RunStatus.RUNING_ACTION);
+    } else if (run_status === RunStatus.CHECKING) {
+      this.updateAction(RunStatus.CHECKING_ACTION);
+    } else if (run_status === RunStatus.FINISH) {
+      this.updateAction(RunStatus.FINISH_ACTION);
     }
   },
 
@@ -415,15 +400,15 @@ Page({
     })
   },
 
-  resolveBanner(dataBean){
+  resolveBanner(dataBean) {
     let banners = [];
-    if(dataBean.design_list.length === 1){
+    if (dataBean.design_list.length === 1) {
       //一套设计直接取这套设计所有图片
       let designBean = dataBean.design_list[0];
       banners.push(designBean.left_img);
       banners.push(designBean.right_img);
       banners.push(designBean.inner_img);
-      banners =  banners.filter(element => Boolean(element.trim()));
+      banners = banners.filter(element => Boolean(element.trim()));
     } else {
       //多套设计取第一张
       dataBean.design_list.forEach(element => {
@@ -733,14 +718,14 @@ Page({
       success: res => {
         that.setData({
           isQueueing: true,
-          actionStatus: ACTION_ARR[5],
-          actionStr: '取消排队'
+          actionStatus: RunStatus.CANCEL_QUEUE_ACTION
         });
         that.setData({
           position: res.position,
           queue_count: res.queue_count,
           serial_number: res.serial_number,
-          visible: true
+          visible: true,
+          actionStr: RunStatus.updateActionStr(that.data.actionStatus)
         })
       },
       complete: res => {
@@ -815,13 +800,13 @@ Page({
       success: res => {
         that.setData({
           isQueueing: false,
-          actionStatus: ACTION_ARR[4],
-          actionStr: '预约排队',
+          actionStatus: RunStatus.QUEUE_ACTION,
           cancelLoading: false,
           visible: false,
           visibleUndo: false,
           doLoading: false
         });
+        that.updateAction(RunStatus.QUEUE_ACTION);
         $Toast({
           content: '取消成功',
           type: 'success'
@@ -830,6 +815,13 @@ Page({
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  updateAction(run_status) {
+    this.setData({
+      actionStatus: run_status,
+      actionStr: RunStatus.updateActionStr(run_status)
+    })
   },
 
   /**
@@ -851,37 +843,33 @@ Page({
   handleAction: function () {
     let that = this;
     switch (that.data.actionStatus) {
-      case ACTION_ARR[0]: //即将开始
+      case RunStatus.NOT_BEGIN_ACTION: //即将开始
         //nothing
+        ModalHelper.showWxModal('提示', '广告还未开始投放，请耐心等待~', '确定', false);
         break;
-      case ACTION_ARR[1]: //立即预约
+      case RunStatus.SUBSCRIBE_ACTION: //立即预约
         that.handleSubscribe();
         break;
-      case ACTION_ARR[2]: //不满足广告要求
-        that.rejectSubscribe();
+      case RunStatus.NO_COUNT_ACTION: //数量不足
+        ModalHelper.showWxModal('提示', '当前广告已被预约完，\n下次记得早点来预约哦~', '确定', false);
         break;
-      case ACTION_ARR[3]: //查看我的任务
+      case RunStatus.COLOR_REJECT_ACTION: //颜色不满足广告要求
+        ModalHelper.showWxModal('提示', `您的车身颜色为${ that.data.userCarColor },\n暂不满足广告要求`, '确定', false);
+        break;
+      case RunStatus.OWNER_ACTION: //查看我的任务
         wx.switchTab({
           url: '../task/task'
         })
         break;
-      case ACTION_ARR[4]: //预约排队
+      case RunStatus.QUEUE_ACTION: //预约排队
         that.takeParkInQueue();
         break;
-      case ACTION_ARR[5]: //取消排队
+      case RunStatus.CANCEL_QUEUE_ACTION: //取消排队
         that.setData({
           visibleUndo: true,
         })
         break;
     }
-  },
-
-  /**
-   * 不可预约处理
-   */
-  rejectSubscribe() {
-    const that = this;
-    ModalHelper.showWxModal('提示', that.data.errorComment, '确定', false);
   },
 
   /** 预览设计效果图 */
@@ -914,11 +902,9 @@ Page({
           return;
         }
         if (that.data.adInfo.color_limit.indexOf(res.car_color) == -1) {
+          that.updateAction(RunStatus.COLOR_REJECT_ACTION);
           that.setData({
-            userCarColor: res.car_color,
-            actionStatus: ACTION_ARR[2],
-            actionStr: '立即预约',
-            errorComment: `您的车身颜色为${ res.car_color },\n暂不满足广告要求`
+            userCarColor: res.car_color
           })
         } else {
           that.setData({
@@ -964,7 +950,7 @@ Page({
     })
   },
 
-  sortStationList(stationList){
+  sortStationList(stationList) {
     let targetStationList = [];
     //筛选有可预约数量
     let useableStationList = stationList.filter(element => parseInt(element.surplus_count) !== 0);
@@ -979,11 +965,11 @@ Page({
     return targetStationList;
   },
 
-  sortBySurplusCount(a, b){
+  sortBySurplusCount(a, b) {
     return b.surplus_count - a.surplus_count;
   },
 
-  sortByDistance(a, b){
+  sortByDistance(a, b) {
     return a.distance - b.distance;
   },
 

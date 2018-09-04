@@ -25,8 +25,8 @@ export function getRunStatus(dataBean) {
   if (status === SERVER_FINISH) {
     return FINISH;
   }
-  if(status === SERVER_RUNING){
-    if(dataBean.now_date <= dataBean.end_date){
+  if (status === SERVER_RUNING) {
+    if (dataBean.now_date <= dataBean.end_date) {
       return RUNNING;
     } else {
       return CHECKING;
@@ -63,4 +63,64 @@ export function getAdStatusStr(adBean) {
       break;
   }
   return adStatusStr;
+}
+
+//未开始
+export const NOT_BEGIN_ACTION = 0;
+//可预约
+export const SUBSCRIBE_ACTION = 1;
+//预约数量不足
+export const NO_COUNT_ACTION = 2;
+//已经接了广告
+export const OWNER_ACTION = 3;
+//投放中
+export const RUNING_ACTION = 4;
+//检测中
+export const CHECKING_ACTION = 5;
+//已结束
+export const FINISH_ACTION = 6;
+//可排队
+export const QUEUE_ACTION = 7;
+//取消排队
+export const CANCEL_QUEUE_ACTION = 8;
+//车身颜色不满足
+export const COLOR_REJECT_ACTION = 9;
+
+/**
+ * 预约按钮文字
+ */
+export function updateActionStr(actionStatus) {
+  let actionStr = '';
+  switch (actionStatus) {
+    case NOT_BEGIN_ACTION:
+      actionStr = '即将开始';
+      break;
+    case SUBSCRIBE_ACTION:
+    case NO_COUNT_ACTION:
+    case COLOR_REJECT_ACTION:
+      actionStr = '立即预约';
+      break;
+    case OWNER_ACTION:
+      actionStr = '查看我的任务';
+      break;
+    case RUNING_ACTION:
+      actionStr = '广告投放中';
+      break;
+    case CHECKING_ACTION:
+      actionStr = '广告检测中';
+      break;
+    case FINISH_ACTION:
+      actionStr = '广告已结束';
+      break;
+    case QUEUE_ACTION:
+      actionStr = '预约排队';
+      break;
+    case QUEUE_ACTION:
+      actionStr = '取消排队';
+      break;
+    default:
+      break;
+  }
+  console.log(actionStr);
+  return actionStr;
 }

@@ -1285,7 +1285,7 @@ button {
 
 .subscribe_immediately {
   flex: 2;
-  font-size: 24rpx;
+  font-size: 32rpx;
   color: #fff;
   position: relative;
 }
@@ -1294,30 +1294,18 @@ button {
   background: linear-gradient(90deg, #ff555c, #FB653D);
 }
 
-.b-not-begin {
+.b-action-disenable {
   background: linear-gradient(90deg, #ff555c, #FB653D);
   opacity: 0.5
 }
 
-.b-reject-error {
-  background: linear-gradient(90deg, #ff555c, #FB653D);
-  opacity: 0.8
-}
-
-.b-own-ad{
-  background: linear-gradient(90deg, #ff555c, #FB653D);
-  opacity: 0.8
-}
-
 .subcribe-wrapper {
+  height: 100%;
   display: flex;
+  font-weight: 500;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
+  align-items: center
 }
 
 .action_bottom {
@@ -1504,8 +1492,8 @@ button {
 }
 
 .b-effect-image {
-  width: 320rpx;
-  height: 180rpx;
+  width: 480rpx;
+  height: 270rpx;
   border-radius: 5rpx;
 }
 

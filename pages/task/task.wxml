@@ -300,23 +300,8 @@
                 <view class='b-run-item'>
                   <view class='b-run-top'>
                     <block wx:if="{{ runningTask.yesterdayAmount }}">
-                      <view class='b-run-item-left'>{{ runningTask.yesterdayAmount }}
-                        <text wx:if="{{ runningTask.yesterdayAmount.level == 1 }}">小于{{
-                          runningTask.yesterdayAmount.duration_max
-                          }}
-                        </text>
-                        <text wx:if="{{ runningTask.yesterdayAmount.level == 2 }}">{{
-                          runningTask.yesterdayAmount.duration_max
-                          }}
-                        </text>
-                        <text wx:if="{{ runningTask.yesterdayAmount.level == 3 }}">{{
-                          runningTask.yesterdayAmount.duration
-                          }}
-                        </text>
-                        <text wx:if="{{ runningTask.yesterdayAmount.level == 4 }}">{{
-                          runningTask.yesterdayAmount.duration
-                          }}
-                        </text>
+                      <view class='b-run-item-left'>
+                        <text>{{ runningTask.yesterdayAmount.durationStr }}</text>
                       </view>
                       <view class='b-run-item-right'>时</view>
                     </block>

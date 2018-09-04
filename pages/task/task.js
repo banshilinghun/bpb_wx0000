@@ -74,7 +74,6 @@ Page({
       success: res => {
         //进行中
         let runningTempTask = res.runningTask;
-        let overTempTask = res.overTask;
         if (runningTempTask && Object.keys(runningTempTask).length !== 0) {
           runningTempTask.date = timeUtil.formatDateTimeSprit(runningTempTask.begin_date) + "-" + timeUtil.formatDateTimeSprit(runningTempTask.end_date);
           runningTempTask.ad_name = StringUtil.formatAdName(runningTempTask.ad_name, runningTempTask.city_name);
@@ -91,14 +90,10 @@ Page({
           that.transformInstall(runningTempTask);
           //判断视图显示隐藏
           runningTempTask.action = StrategyHelper.getTaskActionDisplay(runningTempTask);
+          //按时计费数据处理
+          that.transformByTime(runningTempTask);
         } else {
           runningTempTask = null;
-        }
-        //已完成列表
-        if(overTempTask && overTempTask.length !== 0){
-          overTempTask.forEach(element => {
-            element.ad_name = StringUtil.formatAdName(element.ad_name, element.city_name);
-          })
         }
         //已完成数据处理
         that.transformOverTask(res.overTask);
@@ -187,10 +182,27 @@ Page({
     }, 1000);
   },
 
+  /**
+   * 按时计费数据处理
+   */
+  transformByTime(runningTempTask){
+    let yesterdayAmount = runningTempTask.yesterdayAmount;
+    if(yesterdayAmount){
+      let level = parseInt(yesterdayAmount.level);
+      // level: 在线时长等级,duration_min 和 duration_max 只在 等级为 1 和 2 时返回
+      if(level === 1 || level === 2){
+        yesterdayAmount.durationStr = `${yesterdayAmount.duration_min}~${yesterdayAmount.duration_max}`;
+      } else if(level === 3 || level === 4){
+        yesterdayAmount.durationStr = yesterdayAmount.duration;
+      }
+    }
+  },
+
   transformOverTask(overTaskList){
     const that = this;
     if(overTaskList && overTaskList.length !== 0){
       overTaskList.forEach(element => {
+        element.ad_name = StringUtil.formatAdName(element.ad_name, element.city_name);
         element.begin_date = timeUtil.formatDateTime(element.begin_date);
         element.end_date = timeUtil.formatDateTime(element.end_date);
       });
