@@ -7,7 +7,7 @@
       </view>
       <view class='b-task-content'>
         <view class='b-cotnent-detail'>
-          <block wx:if="{{ !runningTask.action.runingFixed && !runningTask.action.runingFixed }}">
+          <block wx:if="{{ !runningTask.action.runingFixed && !runningTask.action.runingByTime }}">
             <view>
               <!-- 状态标题 -->
               <view class='b-task-status-title'>
@@ -321,7 +321,7 @@
                       <view class='b-run-item-right'>时</view>
                     </block>
                     <block wx:else>
-                      <view class="b-run-statistics">统计中,请耐心等待</view>
+                      <view class="b-run-statistics">统计中</view>
                     </block>
                   </view>
                   <view class='b-run-item-bottom'>昨日在线时长</view>
@@ -333,7 +333,7 @@
                       <view class='b-run-item-right'>元</view>
                     </block>
                     <block wx:else>
-                      <view class="b-run-statistics">统计中,请耐心等待</view>
+                      <view class="b-run-statistics">统计中</view>
                     </block>
                   </view>
                   <view class='b-run-item-bottom'>昨日收益</view>

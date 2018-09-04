@@ -5,7 +5,7 @@
 
 .b-task-content {
   margin: 30rpx 30rpx 0 30rpx;
-  box-shadow: 0 0 30rpx #ddd;
+  box-shadow: 0 2px 8px #ccc;
   border-radius: 16rpx
 }
 

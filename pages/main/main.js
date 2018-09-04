@@ -22,7 +22,7 @@ Page({
     isShowView: true,
     //测试数据
     userList: [],
-    background: ['banner3', 'banner1', 'banner2'],
+    background: [],
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -35,7 +35,6 @@ Page({
     showRecommend: false,
     shareAwardText: '分享',
     isDiDi: 0, //是否是滴滴车主
-    bannerFlag: 0,
     showDialog: false,
     isShowLoadingMore: false,
     showNomore: false,
@@ -58,7 +57,7 @@ Page({
     queue_serverId: ''
   },
 
-  onLoad: function(options) {
+  onLoad: function (options) {
     //console.log(options);
     var that = this;
     that.setData({
@@ -90,7 +89,7 @@ Page({
     this.judgeCanIUse();
     this.checkUpdate();
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         that.setData({
           windowWidth: res.windowWidth,
           bannerHeight: res.windowWidth * 0.466666,
@@ -104,12 +103,12 @@ Page({
   /**
    * 判断 微信版本 兼容性
    */
-  judgeCanIUse: function() {
+  judgeCanIUse: function () {
     var that = this;
     //组件不兼容
     //微信版本过低
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         if (res.SDKVersion >= '1.1.1' && !wx.canIUse('picker.mode.selector')) {
           that.showLowVersionTips();
         }
@@ -117,30 +116,29 @@ Page({
     })
   },
 
-  showLowVersionTips: function() {
+  showLowVersionTips: function () {
     wx.showModal({
       title: '提示',
       content: '您当前微信版本过低，将导致无法使用部分重要功能，请升级到微信最新版本。',
       showCancel: false,
-      success: function(res) {},
+      success: function (res) {},
     })
   },
 
-  onShow: function() {
+  onShow: function () {
     this.commonRequest();
   },
 
-  commonRequest: function() {
-    var z = this;
+  commonRequest: function () {
+    var that = this;
     var loginFlag = app.globalData.login;
     var reqData = {};
-    z.followFlag();
-    z.getShareFlag();
-    //请求定位信息
-    z.getLocation(loginFlag, reqData);
+    that.followFlag();
+    that.getShareFlag();
     //请求车主认证状态
     if (loginFlag == 1) {
-      z.requestAuthStatus(reqData);
+      that.getMyAd(reqData)
+      that.requestAuthStatus(reqData);
       //确认排队预约信息 todo 打开
       //z.requestQueueInfo();
     }
@@ -154,7 +152,7 @@ Page({
   /**
    * 查询预约排队信息
    */
-  requestQueueInfo: function() {
+  requestQueueInfo: function () {
     let that = this;
     let requestData = {
       url: ApiConst.QUERY_QUEUE_INFO,
@@ -177,7 +175,7 @@ Page({
   /**
    * 加载广告列表
    */
-  requestAdList: function(currentPageIndex) {
+  requestAdList: function (currentPageIndex) {
     var that = this;
     let reqInfo = {
       page: currentPageIndex,
@@ -245,7 +243,7 @@ Page({
     })
   },
 
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     wx.showToast({
       title: '奔跑中🚗...',
       icon: 'loading'
@@ -256,113 +254,39 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     var that = this;
     if (!that.data.hasmore || that.data.isShowLoadingMore) {
       return;
     }
-    //this.showLoadingToast();
     that.setData({
       isShowLoadingMore: true
     });
-    setTimeout(function() {
+    setTimeout(function () {
       that.requestAdList(that.data.pageIndex + 1);
     }, 1000);
   },
 
-  getLocation: function(loginFlag, reqData) {
+  requestAuthStatus() {
     let that = this;
-    wx.getLocation({
-      type: 'gcj02',
-      success: function(res) {
-        var latitude = res.latitude
-        var longitude = res.longitude
-        //        console.log(res.longitude)
-        that.setData({
-          latitude: latitude,
-          longitude: longitude
-        })
-        reqData.lat = latitude;
-        reqData.lng = longitude;
-        if (loginFlag == 1) {
-          that.getMyAd(reqData)
-        }
-      }
-    })
-  },
-
-  requestAuthStatus: function(reqData) {
-    let z = this;
-    wx.request({
+    let requestData = {
       url: ApiConst.GET_AUTH_STATUS,
       data: {},
-      header: app.globalData.header,
       success: res => {
-        if (res.data.code == 1000) {
-          z.setData({
-            bannerFlag: z.data.bannerFlag + 1,
-            status: res.data.data.status,
-            name: res.data.data.real_name,
-            province: res.data.data.province,
-            city: res.data.data.city,
-            plate_no: res.data.data.plate_no,
-            isDiDi: res.data.data.user_type //是否是滴滴车主
-          })
-          if (z.data.bannerFlag == 2) {
-            if (z.data.showRecommend) { //可以显示推荐朋友圈
-              if (z.data.isDiDi == 1) { //滴滴合法车主
-                z.setData({
-                  background: ['banner3', 'banner1', 'banner2']
-                })
-              } else { //不是滴滴合法车主
-                z.setData({
-                  background: ['banner1', 'banner2']
-                })
-              }
-            } else { //不显示推荐朋友圈
-              if (z.data.isDiDi == 1) { //滴滴合法车主
-                z.setData({
-                  background: ['banner3', 'banner1']
-                })
-              } else { //不是滴滴合法车主
-                z.setData({
-                  background: ['banner1']
-                })
-              }
-            }
-            z.setData({
-              bannerFlag: 0
-            })
-          }
-          z.setData({
-            indicatorDots: z.data.background.length > 1
-          })
-        } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
+        that.setData({
+          status: res.status,
+          name: res.real_name,
+          province: res.province,
+          city: res.city,
+          plate_no: res.plate_no,
+          isDiDi: res.user_type //是否是滴滴车主
+        })
       }
-    })
-    if (z.data.latitude == null) {
-      z.getMyAd(reqData);
-    } else {
-      reqData.lat = z.data.latitude;
-      reqData.lng = z.data.longitude;
-      z.getMyAd(reqData);
     }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
-  getMyAd: function(reqData) {
+  getMyAd: function (reqData) {
     var z = this;
     wx.request({
       url: ApiConst.MY_AD,
@@ -371,7 +295,6 @@ Page({
       success: res => {
         if (res.data.code == 1000) {
           if (res.data.data != null) {
-            var nowdate = util.dateToString(new Date());
             if (res.data.data.subscribe != null && res.data.data.check == null) {
               res.data.data.subscribe.date = res.data.data.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
             }
@@ -420,7 +343,7 @@ Page({
   /**
    * 广告详情
    */
-  go: function(event) {
+  go: function (event) {
     //		console.log(event)
     var adId = event.currentTarget.dataset.name;
     wx.navigateTo({
@@ -429,7 +352,7 @@ Page({
   },
 
   //分享
-  onShareAppMessage: function(res) {
+  onShareAppMessage: function (res) {
     if (res.from == 'button') {
       console.log(res);
       var shareTitle = shareUtil.getShareAdTitle(res.target.dataset.adname);
@@ -452,7 +375,7 @@ Page({
       desc: desc,
       path: 'pages/index/index?adId=' + adid + '&user_id=' + app.globalData.uid + '&type=' + shareType,
       imageUrl: adimg,
-      success: function(res) {
+      success: function (res) {
         wx.showToast({
           title: '分享成功',
           icon: '',
@@ -461,7 +384,7 @@ Page({
           mask: true,
         })
       },
-      fail: function() {
+      fail: function () {
         wx.showToast({
           title: '分享取消',
           icon: '',
@@ -473,7 +396,7 @@ Page({
     }
   },
 
-  goMap: function(e) {
+  goMap: function (e) {
     //		console.log(e.currentTarget.dataset);
     wx.openLocation({
       longitude: Number(e.currentTarget.dataset.longitude),
@@ -483,8 +406,7 @@ Page({
     })
   },
 
-
-  selCheck: function(e) {
+  selCheck: function (e) {
     this.setData({
       showDialog: true,
       srver_longitude: Number(e.currentTarget.dataset.longitude),
@@ -493,7 +415,8 @@ Page({
       srver_address: e.currentTarget.dataset.address
     })
   },
-  severCheck: function() {
+  
+  severCheck: function () {
     var that = this;
     wx.openLocation({
       longitude: Number(that.data.srver_longitude),
@@ -505,8 +428,8 @@ Page({
       showDialog: false
     })
   },
-  
-  tapName: function(event) {
+
+  tapName: function (event) {
     var that = this;
     console.log(event.currentTarget.dataset.hi)
     if (event.currentTarget.dataset.hi == 'banner1') {
@@ -522,122 +445,68 @@ Page({
       })
     }
   },
-  hideShare: function() {
+
+  hideShare: function () {
     var that = this;
     that.setData({
       shareit: false
     })
   },
-  followFlag: function() { //查询是否关注公众号
+
+  followFlag: function () { //查询是否关注公众号
     var that = this
-    wx.request({
+    let requestData = {
       url: ApiConst.USER_HAS_SUBCRIBE,
-      header: app.globalData.header,
+      data: {},
       success: res => {
-        if (res.data.code == 1000) {
-          //console.log(res.data)
-          that.setData({
-            isFollow: res.data.data
-          })
-        } else {
-          //					console.log(res.data)
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
+        that.setData({
+          isFollow: res
+        })
       }
-    })
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
    * 查询是否显示朋友圈
    */
-  getShareFlag: function() {
+  getShareFlag: function () {
     var that = this;
-    wx.request({
+    let requestData = {
       url: ApiConst.GET_SHARE_FLAG,
-      header: app.globalData.header,
+      data: {},
       success: res => {
-        if (res.data.code == 1000) {
-          app.globalData.shareFlag = res.data.data;
-          that.setData({
-            bannerFlag: that.data.bannerFlag + 1,
-            showRecommend: res.data.data,
-            background: res.data.data ? ['banner1', 'banner2'] : ['banner1'],
-            shareAwardText: res.data.data ? '分享有奖' : '分享',
-          })
-          //console.log(that.data.bannerFlag);
-          if (that.data.bannerFlag == 2) {
-            if (that.data.showRecommend) { //可以显示推荐朋友圈
-              if (that.data.isDiDi == 1) { //滴滴合法车主
-                that.setData({
-                  background: ['banner3', 'banner1', 'banner2']
-                })
-              } else { //不是滴滴合法车主
-                that.setData({
-                  background: ['banner1', 'banner2']
-                })
-              }
-            } else { //不显示推荐朋友圈
-              if (that.data.isDiDi == 1) { //滴滴合法车主
-                that.setData({
-                  background: ['banner3', 'banner1']
-                })
-              } else { //不是滴滴合法车主
-                that.setData({
-                  background: ['banner1']
-                })
-              }
-            }
-            that.setData({
-              bannerFlag: 0
-            })
-          }
-          that.setData({
-            indicatorDots: that.data.background.length > 1
-          })
-        } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
+        app.globalData.shareFlag = res;
+        const totalBanner = ['banner1', 'banner2'];
+        const singleBanner = ['banner1'];
+        that.setData({
+          showRecommend: res,
+          background: res ? totalBanner : singleBanner,
+          shareAwardText: res ? '分享有奖' : '分享',
+        })
+        that.setData({
+          indicatorDots: that.data.background.length > 1
+        })
       }
-    })
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
    * 版本更新
    */
-  checkUpdate: function() {
+  checkUpdate: function () {
     if (wx.canIUse('getUpdateManager')) {
       const updateManager = wx.getUpdateManager();
-      updateManager.onCheckForUpdate(function(res) {
+      updateManager.onCheckForUpdate(function (res) {
         // 请求完新版本信息的回调
       })
 
-      updateManager.onUpdateReady(function() {
+      updateManager.onUpdateReady(function () {
         wx.showModal({
           title: '更新提示',
           content: '新版本已经准备好，即刻体验？',
-          success: function(res) {
+          success: function (res) {
             if (res.confirm) {
               // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
               updateManager.applyUpdate();
@@ -646,22 +515,22 @@ Page({
         })
       })
 
-      updateManager.onUpdateFailed(function() {
+      updateManager.onUpdateFailed(function () {
         // 新的版本下载失败
       })
     }
   },
 
-  recommendClick: function() {
+  recommendClick: function () {
     this.skipRecommend();
   },
 
-  skipRecommend: function() {
+  skipRecommend: function () {
     wx.navigateTo({
       url: '../recommend/recommend?flag=active',
     })
   },
-  hideDialog: function() {
+  hideDialog: function () {
     this.setData({
       showDialog: false
     })
@@ -675,7 +544,7 @@ Page({
     that.setData({
       confirmLoading: true
     });
-    setTimeout(function() {
+    setTimeout(function () {
       let requestData = {
         url: ApiConst.CONFIRM_SUBS_QUEUE,
         data: {},
@@ -703,7 +572,7 @@ Page({
     that.setData({
       cancelLoading: true
     });
-    setTimeout(function() {
+    setTimeout(function () {
       let requestData = {
         url: ApiConst.REGUSE_SUBS_QUEUE,
         data: {},
@@ -725,7 +594,7 @@ Page({
     }, 1000);
   },
 
-  handleGoTask(){
+  handleGoTask() {
     wx.switchTab({
       url: '../task/task'
     })

@@ -360,6 +360,7 @@ Page({
         actionStr: '查看我的广告',
         actionStatus: ACTION_ARR[3]
       });
+      return;
     } else {
       //运行状态过滤
       if (dataBean.info.run_status == 1) {
@@ -459,9 +460,6 @@ Page({
           showJoining: dataList.length == 0 ? false : true,
           joinAvatarList: tempAvatarList
         });
-      },
-      complete: res => {
-
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
