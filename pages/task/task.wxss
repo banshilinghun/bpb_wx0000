@@ -93,6 +93,7 @@
 .b-overtime-tip{
   color: #ff555c;
   font-size: 24rpx;
+  font-weight: 500;
   text-align: left;
   padding: 30rpx 0 0 0
 }

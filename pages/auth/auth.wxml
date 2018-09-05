@@ -1,7 +1,6 @@
 <view class='contain'>
   <!--2.列表View-->
   <view class="swiper">
-
     <block>
       <form bindsubmit="formSubmit" report-submit="{{istrue}}">
         <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
@@ -12,17 +11,9 @@
                   <view class="weui-label">车主姓名</view>
                 </view>
                 <view class="weui-cell__bd">
-                  <input id="name" class="weui-input" name="name" maxlength='11' type="text" placeholder="填本人姓名（非公司名称）" />
+                  <input id="name" class="weui-input" name="name" value="{{ userName }}" maxlength='11' type="text" placeholder="填本人姓名（非公司名称）" />
                 </view>
               </view>
-              <!-- <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
-                <view class="weui-cell__hd">
-                  <view class="weui-label">选择城市</view>
-                </view>
-                <view class="weui-cell__bd" bindtap="selectDistrict">
-                  <input class="weui-input" id="city" name="city" maxlength='20' type="text" placeholder="请选择城市" value="{{areaInfo}}" disabled='disabled' />
-                </view>
-              </view> -->
               <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__hd">
                   <view class="weui-label">车牌号</view>
@@ -30,7 +21,7 @@
                 <view class="weui-cell__bd">
                   <block wx:if="{{!isFocus}}">
                     <input id="carcode" disabled="{{disabled}}" class="weui-input" maxlength='20' type="text"
-                      placeholder="请输入车牌号" bindtap="showKeyboard" />
+                      placeholder="请输入车牌号" bindtap="showKeyboard"/>
                   </block>
                   <block wx:else="{{isFocus}}">
                     <input id="carcode" name="carcode" disabled="{{disabled}}" class="weui-input" maxlength='20' type="text"
@@ -45,35 +36,21 @@
                 <view class="weui-cell__bd">
                   <radio-group class='wtstw' bindchange="radioChange">
                     <label class="radio">
-                      <radio value="1" checked="true" />网约车
+                      <radio value="1" checked="{{ car_type == 1 }}" />网约车
                     </label>
                     <label class="radio">
-                      <radio value="2" />私家车
+                      <radio value="2" checked="{{ car_type == 2 }}"/>私家车
                     </label>
-                    <!-- <label class="radio">
-                      <radio value="0" />其他
-                    </label> -->
                   </radio-group>
                 </view>
               </view>
-              <!-- <view class="weui-cell weui-cell_input">
-                <view class="weui-cell__hd">
-                  <view class="weui-label">租赁公司</view>
-                </view>
-                <view class="weui-cell__bd">
-                  <picker range="{{nameList}}" bindchange="sourceTypeChange" value="{{sourceTypeIndex}}" mode="selector">
-                    <input class="weui-input" wx:if='{{sourceTypeIndex==""}}' id="city" name="lease" maxlength='20' type="text" placeholder="请选择租赁公司" disabled='disabled' />
-                    <view class="weui-input" wx:if='{{sourceTypeIndex!=""}}'>{{nameList[sourceTypeIndex]}}</view>
-                  </picker>
-                </view>
-              </view> -->
               <view class="weui-cell weui-cell_input" bindtap="hideKeyboard">
                 <view class="weui-cell__hd">
                   <view class="weui-label">选择车型</view>
                 </view>
                 <view class="weui-cell__bd" bindtap="selectBrand">
                   <input class="weui-input" id="brand" name="brand" maxlength='20' type="text" placeholder="请选择车辆品牌/车型"
-                    value="{{ areaInfo2 }}" disabled='disabled' />
+                    value="{{ brandName }}" disabled='disabled' />
                 </view>
               </view>
               <view class="weui-cell weui-cell_input">
@@ -81,10 +58,10 @@
                   <view class="weui-label">车身颜色</view>
                 </view>
                 <view class="weui-cell__bd">
-                  <picker range="{{colorName}}" bindchange="sourceTypeChange2" value="{{sourceTypeIndex2}}" mode="selector">
-                    <input class="weui-input" wx:if='{{sourceTypeIndex2==""}}' maxlength='20' name='color' type="text"
+                  <picker range="{{colorName}}" bindchange="sourceTypeChange2" mode="selector">
+                    <input class="weui-input" wx:if='{{ !car_color }}' maxlength='20' name='color' type="text"
                       placeholder="请选择车身颜色" disabled='disabled' />
-                    <view class="weui-input" wx:if='{{sourceTypeIndex2!=""}}'>{{color[sourceTypeIndex2].name}}</view>
+                    <view class="weui-input" wx:if='{{ car_color }}'>{{ car_color }}</view>
                   </picker>
                 </view>
               </view>
@@ -95,10 +72,10 @@
                 <view class="weui-cell__bd">
                   <radio-group class='wtstw' bindchange="switchChange">
                     <label class="radio radio2">
-                      <radio value="2" checked="true" />否
+                      <radio value="2" checked="{{ is_bad == 2 }}" />否
                     </label>
                     <label class="radio">
-                      <radio value="1" />是
+                      <radio value="1" checked="{{ is_bad == 1 }}"/>是
                     </label>
                   </radio-group>
                 </view>
@@ -155,7 +132,9 @@
             </view>
           </view>
         </scroll-view>
-        <button id='commit' formType="submit" class='btn-quit'> 提交</button>
+        <view  id='commit' class="b-commit-wrapper">
+          <button formType="submit" class='btn-quit'> 提交</button>
+        </view>
       </form>
     </block>
   </view>

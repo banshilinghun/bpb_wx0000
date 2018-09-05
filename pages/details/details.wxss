@@ -1691,6 +1691,10 @@ button {
   flex-direction: row
 }
 
+.b-server-disable{
+  background: rgba(241, 241, 241, 0.5)
+}
+
 .b-server-select {
   background: #fff;
   border: 1rpx solid #ff555c

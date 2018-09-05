@@ -28,14 +28,16 @@ text {
   width: 56px;
 }
 
+.b-commit-wrapper{
+  padding: 20rpx 0
+}
+
 .btn-quit {
   width: 95%;
   margin: 0 auto;
-  margin-top: 20px;
   border: none;
   background-color: #ff555c;
-  color: #fff;
-  margin-bottom: 20px;
+  color: #fff
 }
 
 page {

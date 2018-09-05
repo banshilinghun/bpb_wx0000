@@ -195,3 +195,6 @@ export const GET_WITHDRAW_RECORD_LIST = baseUrl + "app/get/withdraw_record_list"
 
 //更新车主车辆年检时间信息
 export const SET_USER_CAR_CHECK_DATE = baseUrl + "app/update/user_car_check_date";
+
+//获取车主认证信息
+export const GET_USER_AUTH_INFO = baseUrl + "app/get/user_auth_info";

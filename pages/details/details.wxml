@@ -320,13 +320,13 @@
                   <view class='b-server-right'>
                     <view class='b-server-right-middle'>
                       <view class='b-server-right-top'>
-                        <view class='b-right-name {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{
+                        <view class='b-right-name {{ item.enable? "" : "gray-color" }} {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{
                           item.station_name }}</view>
-                        <view class='b-right-distance'>{{ item.distance }}km</view>
+                        <view class='b-right-distance {{ item.enable? "" : "gray-color" }}'>{{ item.distance }}km</view>
                       </view>
                       <view class='b-right-address-wrapper'>
                         <image class='b-right-location-icon' src='../../image/dw.png'></image>
-                        <view class='b-right-address'>{{ item.station_address }}</view>
+                        <view class='b-right-address {{ item.enable? "" : "gray-color" }}'>{{ item.station_address }}</view>
                         <view class='b-go-map' catchtap='handleNavigation' data-nav="{{ item }}">
                           <image class='b-map-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-nav-icon.png'></image>
                           <view class='b-map-text'>

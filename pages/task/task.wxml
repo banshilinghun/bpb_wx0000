@@ -78,8 +78,8 @@
                       </view>
                     </view>
                   </view>
-                  <view class='b-overtime-tip'>
-                    <text>已超时！剩余24分23秒自动取消</text>
+                  <view class='b-overtime-tip' wx:if="{{ overtimeTip }}">
+                    <text>{{ overtimeTip }}</text>
                   </view>
                 </view>
               </block>
@@ -261,7 +261,7 @@
                 </view>
               </view>
               <view class='b-run-income-tip'>
-                <text>投放周期结束后您可以在待收收益中领取广告奖励</text>
+                <text>投放周期结束后您可以在待收收益中领取广告收益</text>
               </view>
               <view class='b-run-detail'>
                 <!-- 非滴滴双证车主 -->
@@ -293,7 +293,7 @@
                 </view>
               </view>
               <view class='b-run-income-tip'>
-                <text>投放周期结束后您可以在待收收益中领取广告奖励</text>
+                <text>投放周期结束后您可以在待收收益中领取广告收益</text>
               </view>
               <view class='b-run-detail'>
                 <!-- 滴滴双证车主 -->

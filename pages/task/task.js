@@ -1,4 +1,3 @@
-
 /** 
  * todo 
  * 1、超时未签到处理
@@ -56,7 +55,7 @@ Page({
     this.requestTaskList();
   },
 
-  onPullDownRefresh(){
+  onPullDownRefresh() {
     this.requestTaskList();
   },
 
@@ -64,7 +63,7 @@ Page({
     const that = this;
     //清除timer
     clearInterval(timer);
-    if(loadingFirst){
+    if (loadingFirst) {
       LoadingHelper.showLoading();
     }
     let requestData = {
@@ -78,6 +77,7 @@ Page({
           runningTempTask.date = timeUtil.formatDateTimeSprit(runningTempTask.begin_date) + "-" + timeUtil.formatDateTimeSprit(runningTempTask.end_date);
           runningTempTask.ad_name = StringUtil.formatAdName(runningTempTask.ad_name, runningTempTask.city_name);
           runningTempTask.statusStr = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(runningTempTask));
+          runningTempTask.process = 2; //todo
           //初始化状态
           that.setData({
             status: StrategyHelper.getCurrentStatus(runningTempTask),
@@ -103,7 +103,7 @@ Page({
         })
       },
       complete: res => {
-        if(loadingFirst){
+        if (loadingFirst) {
           LoadingHelper.hideLoading();
           loadingFirst = false;
         }
@@ -113,7 +113,7 @@ Page({
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
-  transformReserve(runningTempTask){
+  transformReserve(runningTempTask) {
     const that = this;
     if (runningTempTask.reserveDate) {
       runningTempTask.reserveDate.subscribeTime = timeUtil.formatDateTime(runningTempTask.reserveDate.date) + " " + runningTempTask.reserveDate.begin_time + "-" + runningTempTask.reserveDate.end_time;
@@ -122,10 +122,45 @@ Page({
           distance: distance
         })
       });
+      that.calucateRemainTime(runningTempTask);
     }
   },
 
-  transformWait(runningTempTask){
+  /**
+   * 计算预约剩余时间
+   */
+  calucateRemainTime(runningTempTask) {
+    let that = this;
+    if (that.data.status === StrategyHelper.SUBSCRIBE_OVER_TIME) {
+      //预约时间
+      let targetTime = timeUtil.getTimeStapByDate(runningTempTask.reserveDate.date, runningTempTask.reserveDate.end_time);
+      let nowTime = timeUtil.getTimeStapOnlyDate(runningTempTask.now_date);
+      let remainTime = nowTime - targetTime;
+      if(remainTime < 60 * 60){
+        timer = setInterval(() => {
+          //超时只限一个小时内
+          if(remainTime < 60 * 60){
+            let remainSeconds = 60 * 60 - remainTime;
+            //剩余分钟数
+            let minutes = Math.floor(remainSeconds / 60);
+            //剩余秒数
+            let seconds = Math.floor(remainSeconds % 60);
+            that.setData({
+              overtimeTip: `已超时！剩余${ minutes }分${ seconds }秒自动取消`
+            });
+            remainTime++;
+          } else {
+            that.requestTaskList();
+            that.setData({
+              overtimeTip: ''
+            });
+          }
+        }, 1000);
+      }
+    }
+  },
+
+  transformWait(runningTempTask) {
     const that = this;
     if (runningTempTask.waitInfo) {
       let nowTime = timeUtil.getTimeStapOnlyDate(runningTempTask.now_date);
@@ -150,7 +185,7 @@ Page({
     }, 1000);
   },
 
-  transformInstall(runningTempTask){
+  transformInstall(runningTempTask) {
     const that = this;
     if (runningTempTask.installInfo) {
       if (!runningTempTask.installInfo.end_time) {
@@ -185,22 +220,22 @@ Page({
   /**
    * 按时计费数据处理
    */
-  transformByTime(runningTempTask){
+  transformByTime(runningTempTask) {
     let yesterdayAmount = runningTempTask.yesterdayAmount;
-    if(yesterdayAmount){
+    if (yesterdayAmount) {
       let level = parseInt(yesterdayAmount.level);
       // level: 在线时长等级,duration_min 和 duration_max 只在 等级为 1 和 2 时返回
-      if(level === 1 || level === 2){
+      if (level === 1 || level === 2) {
         yesterdayAmount.durationStr = `${yesterdayAmount.duration_min}~${yesterdayAmount.duration_max}`;
-      } else if(level === 3 || level === 4){
+      } else if (level === 3 || level === 4) {
         yesterdayAmount.durationStr = yesterdayAmount.duration;
       }
     }
   },
 
-  transformOverTask(overTaskList){
+  transformOverTask(overTaskList) {
     const that = this;
-    if(overTaskList && overTaskList.length !== 0){
+    if (overTaskList && overTaskList.length !== 0) {
       overTaskList.forEach(element => {
         element.ad_name = StringUtil.formatAdName(element.ad_name, element.city_name);
         element.begin_date = timeUtil.formatDateTime(element.begin_date);
@@ -216,41 +251,6 @@ Page({
     let seconds = targetTime % 60;
     let tempTime = (days == 0 ? '' : `${days}天`) + (hours == 0 && days == 0 ? '' : `${hours}时`) + (minutes == 0 && days == 0 && hours == 0 ? '' : `${minutes}分`) + (`${seconds}秒`);
     return tempTime;
-  },
-
-  /**
-   * 判断预约剩余时间，车主是否已超时
-   */
-  getRemainTime(element) {
-    //预约时间
-    let that = this;
-    let targetTime = timeUtil.getTimeStapByDate(element.date, element.end_time);
-    timer = setInterval(() => {
-      //当前时间
-      let currentTime = new Date().getTime() / 1000;
-      let remainTime = currentTime - targetTime;
-      if (remainTime > 0) { //说明已超时
-        // 一个小时之内倒计时，所以为 3600
-        let remainSeconds = 3600 - (currentTime - targetTime);
-        if (remainSeconds > 0) {
-          //剩余分钟数
-          let minutes = Math.floor(remainSeconds / 60);
-          //剩余秒数
-          let seconds = Math.floor(remainSeconds % 60);
-          that.setData({
-            prepareTip: '已超时！剩余' + minutes + '分' + seconds + '秒自动取消'
-          });
-        } else {
-          that.setData({
-            prepareTip: ''
-          });
-        }
-      } else {
-        that.setData({
-          prepareTip: ''
-        });
-      }
-    }, 1000);
   },
 
   /**
@@ -297,7 +297,7 @@ Page({
     let that = this;
     let registObj = {
       classify: that.data.runningTask.classify,
-      regist_id: that.data.status === StrategyHelper.INSTALL_FAIL? that.data.runningTask.registInfo.regist_id : that.data.runningTask.regist_id,
+      regist_id: that.data.status === StrategyHelper.INSTALL_FAIL ? that.data.runningTask.registInfo.regist_id : that.data.runningTask.regist_id,
       flag: StrategyHelper.REGIST
     }
     wx.navigateTo({
@@ -346,8 +346,8 @@ Page({
   sign() {
     let that = this;
     LoadingHelper.showLoading();
-    let lat = that.data.status === StrategyHelper.REWORK? that.data.runningTask.stationInfo.lat : that.data.runningTask.reserveDate.lat;
-    let lng = that.data.status === StrategyHelper.REWORK? that.data.runningTask.stationInfo.lng : that.data.runningTask.reserveDate.lng;
+    let lat = that.data.status === StrategyHelper.REWORK ? that.data.runningTask.stationInfo.lat : that.data.runningTask.reserveDate.lat;
+    let lng = that.data.status === StrategyHelper.REWORK ? that.data.runningTask.stationInfo.lng : that.data.runningTask.reserveDate.lng;
     that.calculateDistance(lat, lng).then(distance => {
       //限制在服务网点五百米范围内可签到
       if (distance * 1000 > 500) {

@@ -132,13 +132,12 @@ Page({
   commonRequest: function () {
     var that = this;
     var loginFlag = app.globalData.login;
-    var reqData = {};
     that.followFlag();
     that.getShareFlag();
     //请求车主认证状态
     if (loginFlag == 1) {
-      that.getMyAd(reqData)
-      that.requestAuthStatus(reqData);
+      that.getMyAd()
+      that.requestAuthStatus();
       //确认排队预约信息 todo 打开
       //z.requestQueueInfo();
     }
@@ -286,28 +285,29 @@ Page({
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
-  getMyAd: function (reqData) {
+  getMyAd() {
     var z = this;
     wx.request({
       url: ApiConst.MY_AD,
-      data: reqData,
+      data: {},
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-          if (res.data.data != null) {
-            if (res.data.data.subscribe != null && res.data.data.check == null) {
-              res.data.data.subscribe.date = res.data.data.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+          let dataEntity = res.data.data;
+          if (dataEntity != null) {
+            if (dataEntity.subscribe != null && dataEntity.check == null) {
+              dataEntity.subscribe.date = dataEntity.subscribe.date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
             }
-            res.data.data.begin_date = res.data.data.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-            res.data.data.end_date = res.data.data.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
-            if (res.data.data.check != null) {
-              res.data.data.check.checkDate = res.data.data.check.checkDate.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日");
+            dataEntity.begin_date = dataEntity.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+            dataEntity.end_date = dataEntity.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日")
+            dataEntity.ad_name = StringUtil.formatAdName(dataEntity.ad_name, dataEntity.city_name);
+            if (dataEntity.check != null) {
+              dataEntity.check.checkDate = dataEntity.check.checkDate.replace(/(.+?)\-(.+?)\-(.+)/, "$1年$2月$3日");
             }
-            var myad = res.data.data;
-            myad.taskDesc = StrategyHelper.getMyTaskDesc(myad);
-            myad.taskStatus = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(myad));
+            dataEntity.taskDesc = StrategyHelper.getMyTaskDesc(dataEntity);
+            dataEntity.taskStatus = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(dataEntity));
             z.setData({
-              myAd: myad
+              myAd: dataEntity
             })
           } else {
             z.setData({
