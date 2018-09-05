@@ -141,7 +141,7 @@ Page({
     this.fillAuthInfo();
   },
 
-  setScrollHeight(){
+  setScrollHeight() {
     const that = this;
     let proSystem = new Promise(function (resolve, reject) {
       wx.getSystemInfo({
@@ -167,7 +167,7 @@ Page({
   /**
    * 填充车主已有认证信息
    */
-  fillAuthInfo(){
+  fillAuthInfo() {
     const that = this;
     LoadingHelper.showLoading();
     let requestData = {
@@ -342,49 +342,49 @@ Page({
       car_model: carModel
     }
     console.log(formData)
-      if(!user_name){
-        ModalHelper.showWxModal('提示', '请输入车主姓名', '我知道了', false);
-        return;
-      }
-      if(!this.checkCarCode(plate_no)){
-        return;
-      }
-      if(!carModel){
-        ModalHelper.showWxModal('提示', '请选择车型', '我知道了', false);
-        return;
-      }
-      if(!car_color){
-        ModalHelper.showWxModal('提示', '请选择车辆颜色', '我知道了', false);
-        return;
-      }
-      if (!carPhoto) {
-        ModalHelper.showWxModal('提示', '请上传车辆画面', '我知道了', false);
-        return;
-      }
-      if (!licensePhoto) {
-        ModalHelper.showWxModal('提示', '请上传行驶证照片', '我知道了', false);
-        return;
-      }
-      //发起提交认证请求
-      LoadingHelper.showLoading();
-      let requestData = {
-        url: ApiConst.AUTH_IDENTITY_INFO,
-        data: formData,
-        success: res => {
-          wx.showToast({
-            title: "提交成功"
+    if (!user_name) {
+      ModalHelper.showWxModal('提示', '请输入车主姓名', '我知道了', false);
+      return;
+    }
+    if (!this.checkCarCode(plate_no)) {
+      return;
+    }
+    if (!carModel) {
+      ModalHelper.showWxModal('提示', '请选择车型', '我知道了', false);
+      return;
+    }
+    if (!car_color) {
+      ModalHelper.showWxModal('提示', '请选择车辆颜色', '我知道了', false);
+      return;
+    }
+    if (!carPhoto) {
+      ModalHelper.showWxModal('提示', '请上传车辆画面', '我知道了', false);
+      return;
+    }
+    if (!licensePhoto) {
+      ModalHelper.showWxModal('提示', '请上传行驶证照片', '我知道了', false);
+      return;
+    }
+    //发起提交认证请求
+    LoadingHelper.showLoading();
+    let requestData = {
+      url: ApiConst.AUTH_IDENTITY_INFO,
+      data: formData,
+      success: res => {
+        wx.showToast({
+          title: "提交成功"
+        })
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '../state/state?followFlag=1'
           })
-          setTimeout(function () {
-            wx.redirectTo({
-              url: '../state/state?followFlag=1'
-            })
-          }, 1000);
-        },
-        complete: res => {
-          LoadingHelper.hideLoading();
-        }
+        }, 1000);
+      },
+      complete: res => {
+        LoadingHelper.hideLoading();
       }
-      ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   radioChange: function (e) {
