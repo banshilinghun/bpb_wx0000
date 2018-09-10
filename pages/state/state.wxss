@@ -59,20 +59,33 @@
 }
 
 .ar_cont_h1 {
-  font-size: 30rpx;
-  line-height: 10px;
-  color: #000;
+  font-size: 28rpx;
+  color: #666;
+  font-weight: 500
 }
 
 .ar_cont {
   width: 80%;
-  margin: 0 auto;
-  margin-top: 30px;
+  margin: 0 auto
 }
 
 .ar_cont_text {
-  font-size: 15px;
-  color: #999;
+  font-size: 24rpx;
+  color: #ff555c;
+  margin-left: 20rpx;
+  flex: 1
+}
+
+.b-reason-wrapper{
+  margin-top: 100rpx;
+  background: #fff;
+  box-shadow: 0 0 4px #ccc;
+  padding: 15rpx 20rpx;
+  opacity: 0.8;
+  border-radius: 5rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start
 }
 
 .btn-quit {
@@ -126,8 +139,8 @@
 }
 
 .state-text-wrapper {
-  font-size: 32rpx;
-  margin-top: 50rpx;
+  font-size: 30rpx;
+  margin-top: 20rpx;
   color: #333;
 }
 

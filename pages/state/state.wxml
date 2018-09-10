@@ -11,10 +11,10 @@
     </view>
 
     <!-- 未通过 -->
-    <view class="ar_cont" wx:if="{{status==2}}">
-      <text class="ar_cont_h1">未通过原因</text>
-      <view>
-        <text class="ar_cont_text">{{comment}}</text>
+    <view class="ar_cont" wx:if="{{ status==2 }}">
+      <view class="b-reason-wrapper">
+        <view class="ar_cont_h1">未通过原因:</view>
+        <view class="ar_cont_text">{{ comment + '厉害了文峰街道时间段厉害了文峰街道时间段厉害了文峰街道时间段厉害了文峰街道时间段厉害了文峰街道时间段'}}</view>
       </view>
       <button class="btn-quit" bindtap="bookTap">重新认证</button>
     </view>
