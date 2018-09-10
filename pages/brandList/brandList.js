@@ -109,22 +109,6 @@ Page({
     return letterList;
   },
 
-  clickLetter: function (e) {
-    console.log(e.currentTarget.dataset.letter)
-    var showLetter = e.currentTarget.dataset.letter;
-    this.setData({
-      showLetter: showLetter,
-      isShowLetter: true,
-      scrollTopId: showLetter,
-    })
-    var that = this;
-    setTimeout(function () {
-      that.setData({
-        isShowLetter: false
-      })
-    }, 1000)
-  },
-
   //选择车型
   bindCarBrand: function (e) {
     var that = this;
