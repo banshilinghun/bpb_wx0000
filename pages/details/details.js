@@ -502,9 +502,9 @@ Page({
   },
 
   /**
-   * 生成图片分享朋友圈
+   * 生成图片
    */
-  shareMomentListener: function () {
+  shareListener: function () {
     this.setData({
       showShareModel: true
     })

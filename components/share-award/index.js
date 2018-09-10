@@ -137,14 +137,14 @@ Component({
     _propertyChange: function (newVal, oldVal) {
       console.log('_propertyChange---------->' + newVal);
       if (newVal) {
-        this.shareMoments();
+        this.shareImage();
       }
     },
 
     /**
-     * 生成分享图到朋友圈
+     * 生成分享图
      */
-    shareMoments: function () {
+    shareImage: function () {
       var that = this;
       that.showLoading();
       that.getQRCode();
@@ -425,7 +425,7 @@ Component({
         success: function () {
           wx.showModal({
             title: '',
-            content: '✌️图片保存成功，\n快去分享到朋友圈吧',
+            content: '✌️图片保存成功',
             showCancel: false
           })
           that.hideDialog();

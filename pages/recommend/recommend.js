@@ -28,7 +28,7 @@ Page({
       {
         current: false,
         done: false,
-        text: '分享小程序给好友，或转发朋友圈'
+        text: '分享小程序给好友'
       },
       {
         done: false,
@@ -234,17 +234,7 @@ Page({
 
   },
 
-  /**
-   * 分享到朋友圈
-   */
-  shareMomentNormalClick: function () {
-    this.setData({
-      shareFriendType: 'normal'
-    })
-    this.shareMoments();
-  },
-
-  shareMoments: function () {
+  shareAction: function () {
     if (this.data.shareFriendType == 'award') {
       this.setData({
         showAwardModel: true
@@ -370,8 +360,8 @@ Page({
   /**
    * 生成分享图片
    */
-  shareMomentListener: function () {
-    this.shareMoments();
+  shareListener: function () {
+    this.shareAction();
   },
 
   showLoadingToast: function () {

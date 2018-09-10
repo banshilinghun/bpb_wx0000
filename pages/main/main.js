@@ -468,7 +468,7 @@ Page({
   },
 
   /**
-   * 查询是否显示朋友圈
+   * 查询是否显示推荐相关
    */
   getShareFlag: function () {
     var that = this;

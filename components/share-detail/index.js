@@ -192,7 +192,7 @@ Component({
       console.log('targetSharePath------------->' + this.data.targetSharePath);
       if (newVal) {
         if (!this.data.targetSharePath) {
-          this.shareMoments();
+          this.shareImage();
         } else {
           this.setData({
             realShow: true
@@ -201,9 +201,9 @@ Component({
       }
     },
     /**
-     * 生成分享图到朋友圈
+     * 生成分享图
      */
-    shareMoments: function () {
+    shareImage: function () {
       var that = this;
       that.showLoading();
       that.getQRCode();
@@ -605,7 +605,7 @@ Component({
         success: function () {
           wx.showModal({
             title: '',
-            content: '✌️图片保存成功，\n快去分享到朋友圈吧',
+            content: '✌️图片保存成功',
             showCancel: false
           })
           that.hideDialog();

@@ -100,12 +100,6 @@
       <text class='share-text share-color'>分享给好友</text>
     </button>
   </view>
-  <view class='share-wrapper' bindtap='shareMomentNormalClick'>
-    <view class='share-layout'>
-      <image class='share-icon' src='../../image/moment.png'></image>
-      <text class='share-text share-color'>分享到朋友圈</text>
-    </view>
-  </view>
 </view>
 
 <dialog showDialog='{{ showDialog }}' bind:btnclick='dialogClickListener' title='{{ shareTitle }}' description='邀请新用户安装广告，还能拿奖励10元哦!' btnText='邀请好友' />
@@ -116,4 +110,4 @@
 <!-- 奖励分享 -->
 <share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}' awardType='{{ shareInfo.awardType }}' showShareModel='{{ showAwardModel }}' bind:hideDialog='hideDialogListener'></share-award>
 
-<share-popup showPop='{{ showSharePop }}' shareFriendType='{{ shareFriendType }}' bind:shareMoment='shareMomentListener'></share-popup>
+<share-popup showPop='{{ showSharePop }}' shareFriendType='{{ shareFriendType }}' bind:shareFriends='shareListener'></share-popup>

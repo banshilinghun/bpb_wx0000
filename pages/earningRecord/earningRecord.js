@@ -25,7 +25,7 @@ Page({
     totalMoney: 100,
     titleArray: ['收益时间', '收益金额', '收益来源'],
     earningRecords: [],
-    //分享朋友圈数据
+    //分享数据
     shareInfo: {
       shareAvatar: '',
       shareNickname: '',
@@ -423,9 +423,9 @@ Page({
   },
 
   /**
-   * 朋友圈分享
+   * 分享
    */
-  shareMomentListener: function () {
+  shareListener: function () {
     this.setData({
       showShareModel: true
     })

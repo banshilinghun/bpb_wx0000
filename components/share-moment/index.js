@@ -1,6 +1,6 @@
 // components/share-moment/index.js
 /**
- * 生成分享到朋友圈的图
+ * 生成分享图
  */
 
 const app = getApp();
@@ -117,7 +117,7 @@ Component({
       console.log('_propertyChange---------->' + newVal);
       if (newVal) {
         if (!this.data.targetSharePath) {
-          this.shareMoments();
+          this.shareImage();
         } else {
           this.setData({
             realShow: true
@@ -127,9 +127,9 @@ Component({
     },
 
     /**
-     * 生成分享图到朋友圈
+     * 生成分享图
      */
-    shareMoments: function () {
+    shareImage: function () {
       var that = this;
       //没有分享图先用 canvas 生成，否则直接预览
       if (that.data.targetSharePath) {
@@ -397,7 +397,7 @@ Component({
         success: function () {
           wx.showModal({
             title: '',
-            content: '✌️图片保存成功，\n快去分享到朋友圈吧',
+            content: '✌️图片保存成功',
             showCancel: false
           })
           that.hideDialog();

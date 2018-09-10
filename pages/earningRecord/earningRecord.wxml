@@ -69,6 +69,6 @@
 <share-award avatar='{{ shareInfo.shareAvatar }}' nickname='{{ shareInfo.shareNickname }}' awardMoney='{{ shareInfo.awardMoney }}'
   awardType='{{ shareInfo.awardType }}' showShareModel='{{ showShareModel }}' bind:hideDialog='hideDialogListener' positionStatus='{{ positionStatus }}'></share-award>
 <!-- 分享选择pop -->
-<share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener'></share-popup>
+<share-popup showPop='{{ showSharePop }}' bind:shareFriends='shareListener'></share-popup>
 <!-- 轻提示 -->
 <b-toast id="toast"></b-toast>
