@@ -38,6 +38,12 @@ page{
   flex: 1;
 }
 
+.b-user-name-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
 .b-user-name{
   max-width: 300rpx;
   color: #fff;
@@ -54,9 +60,9 @@ page{
 }
 
 .b-header-auth-status{
-  width: 70rpx;
-  height: 80rpx;
-  margin-left: 30rpx
+  width: 88rpx;
+  height: 32rpx;
+  margin-left: 20rpx
 }
 
 .b-header-income{

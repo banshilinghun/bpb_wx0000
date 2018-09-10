@@ -4,7 +4,12 @@
       <view class='b-header-user'>
         <image class='b-header-avatar' src='{{ userInfo.avatarUrl }}'></image>
         <view class='b-header-detail'>
-          <view class='b-user-name'>{{ real_name? real_name : userInfo.nickName }}</view>
+          <view class="b-user-name-wrapper">
+              <view class='b-user-name'>{{ real_name? real_name : userInfo.nickName }}</view>
+              <image class='b-header-auth-status' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error.png'></image>
+              <image class='b-header-auth-status' wx:if='{{ status == 2 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error.png'></image>
+              <image class='b-header-auth-status' wx:if='{{ status == 3 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-success.png'></image>
+          </view>
           <view class='b-user-palte'>
             <text wx:if='{{ loginFlag == 0 }}'>未绑定手机号</text>
             <text wx:elif='{{ status == 0 }}'>未认证</text>
@@ -13,9 +18,6 @@
             <text wx:elif='{{ status == 3 }}'>{{ plate_no }}</text>
           </view>
         </view>
-        <image class='b-header-auth-status' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error.png'></image>
-        <image class='b-header-auth-status' wx:if='{{ status == 2 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error.png'></image>
-        <image class='b-header-auth-status' wx:if='{{ status == 3 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-success.png'></image>
       </view>
       <!-- 余额、待收收益、累计收益 -->
       <view class='b-header-income'>

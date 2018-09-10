@@ -19,12 +19,8 @@
                   <view class="weui-label">车牌号</view>
                 </view>
                 <view class="weui-cell__bd">
-                  <block wx:if="{{!isFocus}}">
-                    <input id="carcode" disabled="{{disabled}}" class="weui-input" maxlength='20' type="text"
-                      placeholder="请输入车牌号" bindtap="showKeyboard"/>
-                  </block>
-                  <block wx:else="{{isFocus}}">
-                    <input id="carcode" name="carcode" disabled="{{disabled}}" class="weui-input" maxlength='20' type="text"
+                  <block>
+                    <input id="carcode" name="carcode" disabled="{{ disabled }}" class="weui-input" maxlength='20' type="text"
                       placeholder="请输入车牌号" value='{{textValue}}' bindtap="bindFocus" />
                   </block>
                 </view>

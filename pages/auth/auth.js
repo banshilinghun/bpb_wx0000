@@ -21,7 +21,6 @@ Page({
     specialBtn: false,
     tapNum: false, //数字键盘是否可以点击
     parkingData: false, //是否展示剩余车位按钮
-    isFocus: false, //输入框聚焦
     flag: false, //防止多次点击的阀门
     keyboardNumber: '1234567890',
     keyboardAlph: 'QWERTYUIOPASDFGHJKL巛ZXCVBNM',
@@ -174,6 +173,8 @@ Page({
       url: ApiConst.GET_USER_AUTH_INFO,
       data: {},
       success: res => {
+        let carPhotoList = [res.car_photo];
+        let licensePhoto = [res.driving_license_photo];
         that.setData({
           userName: res.real_name,
           textValue: res.plate_no,
@@ -181,7 +182,13 @@ Page({
           is_bad: res.is_bad,
           brandName: res.brand_name,
           carModel: res.car_model,
-          car_color: res.car_color
+          car_color: res.car_color,
+          imageList: carPhotoList,
+          carPhoto: res.car_photo,
+          imageList2: licensePhoto,
+          licensePhoto: res.driving_license_photo,
+          show1: res.car_photo? false : true,
+          show2: res.driving_license_photo? false : true
         })
       },
       complete: res => {
@@ -333,7 +340,7 @@ Page({
     let carModel = this.data.carModel;
     let plate_no = this.data.textValue;
     var formData = {
-      real_name: param.name,
+      real_name: user_name,
       plate_no: plate_no,
       form_id: formId,
       car_color: car_color,
@@ -588,7 +595,6 @@ Page({
   showKeyboard: function () {
     var self = this;
     self.setData({
-      isFocus: true,
       isKeyboard: true
     });
   },
@@ -607,7 +613,6 @@ Page({
       } else {
         self.setData({
           isKeyboard: false,
-          isFocus: false
         });
       }
     }
@@ -619,12 +624,10 @@ Page({
       //说明键盘是显示的，再次点击要隐藏键盘
       self.setData({
         isKeyboard: false,
-        isFocus: true
       });
     } else {
       //说明键盘是隐藏的，再次点击显示键盘
       self.setData({
-        isFocus: true,
         isKeyboard: true
       });
     }

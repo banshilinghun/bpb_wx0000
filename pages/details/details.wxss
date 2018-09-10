@@ -1484,17 +1484,19 @@ button {
 .b-effect-wrapper {
   display: flex;
   flex-direction: row;
-  padding: 20rpx 0 0 0
+  padding: 20rpx 0
 }
 
 .b-effect-image-wrapper {
-  padding: 0 8rpx
+  margin: 10rpx 10rpx 0 20rpx;
+  border-radius: 10rpx;
+  box-shadow: 0 0 5px #ccc
 }
 
 .b-effect-image {
   width: 480rpx;
   height: 270rpx;
-  border-radius: 5rpx;
+  border-radius: 10rpx 10rpx 0 0
 }
 
 .b-effect-desc{
@@ -1888,4 +1890,11 @@ button::after {
 .b-server-surplus_count{
   color: #ff555c;
   margin-left: 10rpx
+}
+
+/*隐藏滚动条*/
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
 }
