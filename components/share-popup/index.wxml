@@ -17,5 +17,4 @@
     <view class='divider'></view>
     <button class='cancel' bindtap='toggleBottomPopup'>取消</button>
   </view>
-
 </popup>

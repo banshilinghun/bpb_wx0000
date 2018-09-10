@@ -65,3 +65,8 @@ button::after{
 .care-banner{
   width: 100%;
 }
+
+.b-divider{
+  height: 20rpx;
+  width: 100%
+}

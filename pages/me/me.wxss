@@ -65,6 +65,12 @@ page{
   margin-left: 20rpx
 }
 
+.b-header-auth-status-error{
+  width: 88rpx;
+  height: 40rpx;
+  margin-left: 20rpx
+}
+
 .b-header-income{
   width: 100%;
   display: flex;

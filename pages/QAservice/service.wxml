@@ -23,4 +23,8 @@
   </view>
 
   <cell cellList='{{ cellList }}' bind:navigate='navigateListener'></cell>
+
+  <view class="b-divider"></view>
+
+  <cell cellList='{{ protocol }}' bind:navigate='protocolListener'></cell>
 </view>

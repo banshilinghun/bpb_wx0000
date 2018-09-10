@@ -6,8 +6,8 @@
         <view class='b-header-detail'>
           <view class="b-user-name-wrapper">
               <view class='b-user-name'>{{ real_name? real_name : userInfo.nickName }}</view>
-              <image class='b-header-auth-status' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error.png'></image>
-              <image class='b-header-auth-status' wx:if='{{ status == 2 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error.png'></image>
+              <image class='b-header-auth-status-error' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error-icon.png'></image>
+              <image class='b-header-auth-status-error' wx:if='{{ status == 2 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error-icon.png'></image>
               <image class='b-header-auth-status' wx:if='{{ status == 3 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-success.png'></image>
           </view>
           <view class='b-user-palte'>

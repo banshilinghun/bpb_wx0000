@@ -11,7 +11,7 @@ const ApiConst = require("../../utils/api/ApiConst.js");
 const ModalHelper = require("../../helper/ModalHelper");
 
 //1:提现，2:提现记录 3:收益记录 4:损坏申报 5:掉漆申报 6:违章申报 7:推荐有奖 8:新手教程 9:注册认证 10: 补充车型
-const CELL_TYPE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const CELL_TYPE = ['withdraw', 'withdrawRecord', 'earningRecord', 'damage', 'drop', 'traffic', 'recommend', 'course', 'auth', 'carModel', 'protocol'];
 //推荐奖励是否关闭
 let shareFlag;
 
@@ -22,20 +22,20 @@ Page({
    */
   data: {
     incomeCells: [{
-        type: 1,
+        type: CELL_TYPE[0],
         text: '提现',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-withdraw-icon.png',
         url: '../withdraw/withdraw',
         visible: true
       },
       {
-        type: 2,
+        type: CELL_TYPE[1],
         text: '提现记录',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-withdraw-record.png',
         url: '../withdrawRecord/withdrawRecord',
         visible: true
       }, {
-        type: 3,
+        type: CELL_TYPE[2],
         text: '收益记录',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-income-record.png',
         url: '../earningRecord/earningRecord',
@@ -43,20 +43,20 @@ Page({
       }
     ],
     ExceptionCells: [{
-        type: 4,
+        type: CELL_TYPE[3],
         text: '损坏申报',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-damage-icon.png',
         url: '../declare/declare?type=damage',
         visible: true
       },
       {
-        type: 5,
+        type: CELL_TYPE[4],
         text: '掉漆申报',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-drop-icon.png',
         url: '../declare/declare?type=drop',
         visible: true
       }, {
-        type: 6,
+        type: CELL_TYPE[5],
         text: '违章申报',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-traffic-icon.png',
         url: '../declare/declare?type=violate',
@@ -64,20 +64,20 @@ Page({
       }
     ],
     actionCells: [{
-        type: 7,
+        type: CELL_TYPE[6],
         text: '推荐有奖',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-recommend-icon.png',
         url: '../recommend/recommend?flag=recommend',
         visible: true
       },
       {
-        type: 8,
+        type: CELL_TYPE[7],
         text: '新手教程',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-user-course.png',
         url: '../teaching/teaching',
         visible: true
       }, {
-        type: 9,
+        type: CELL_TYPE[8],
         text: '注册认证',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-auth-icon.png',
         url: '../auth/auth',
@@ -141,10 +141,10 @@ Page({
     let that = this;
     let actionCell = that.data.actionCells;
     //先过滤
-    actionCell = actionCell.filter(element => element.type !== 10);
+    actionCell = actionCell.filter(element => element.type !== CELL_TYPE[9]);
     if(app.globalData.is_add_car_model){
       actionCell.push({
-        type: 10,
+        type: CELL_TYPE[9],
         text: '车型补充',
         icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-add-car-model.png',
         url: '../brandList/brandList?flag=1',
