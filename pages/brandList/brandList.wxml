@@ -1,20 +1,13 @@
 <view class="i-index-demo">
-    <i-index height="100%" bind:change="onChange">
-        <i-index-item 
-            wx:for="{{ carList }}" 
-            wx:for-index="index" 
-            wx:key="{{index}}" 
-            wx:for-item="item" name="{{item.initial}}">
-            <view 
-                class="i-index-demo-item" 
-                wx:for="{{item.carInfo}}" 
-                wx:for-index="in" 
-                wx:key="{{in}}" 
-                wx:for-item="it"
-                data-brand="{{ it }}"
-                bindtap="bindCarBrand">
-                {{it.name}}
-            </view>
-        </i-index-item>
-    </i-index>
+  <i-index height="100%" bind:change="onChange">
+    <i-index-item wx:for="{{ carList }}" wx:for-index="index" wx:key="{{index}}" wx:for-item="item" name="{{item.initial}}">
+      <view class="item_brand" wx:for="{{ item.carInfo }}" wx:for-item="ci" wx:key="{{ ci.id }}" data-brand="{{ ci }}"
+        bindtap="bindCarBrand">
+        <image class='brand-logo' src='{{ ci.logo }}'></image>
+        <view class='brand-name'>
+          <text>{{ ci.name }}</text>
+        </view>
+      </view>
+    </i-index-item>
+  </i-index>
 </view>
