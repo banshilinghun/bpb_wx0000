@@ -20,3 +20,10 @@
 .b-bg-linear-gradient{
   background: linear-gradient(45deg, #FB653D, #ff555c);
 }
+
+/* 适配iPhone X */
+.fix-iphonex-button {
+  height: 68rpx!important;
+  width: 100%;
+  background: #fff
+}

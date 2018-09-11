@@ -280,8 +280,9 @@ Page({
       })
       return;
     }
-    switch (Number(item.type)) {
+    switch (item.type) {
       case CELL_TYPE[8]: //注册认证
+        console.log('status------------->' + this.data.status);
         if (this.data.status == 0) {
           that.navigateTo(item.url);
         } else {

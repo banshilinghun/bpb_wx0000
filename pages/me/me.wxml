@@ -27,7 +27,7 @@
               <text>余额</text>
             </view>
             <view class='b-balance-number'>
-              <text>￥{{ amount }}</text>
+              <text>{{ amount }}元</text>
             </view>
           </view>
         </view>
@@ -48,7 +48,7 @@
               <text>累计收益</text>
             </view>
             <view class='b-balance-number'>
-              <text>￥{{ total }}</text>
+              <text>{{ total }}元</text>
             </view>
           </view>
         </view>

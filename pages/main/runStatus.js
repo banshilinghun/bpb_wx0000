@@ -47,7 +47,7 @@ export function getAdStatusStr(adBean) {
       adStatusStr = '即将开始';
       break;
     case PUBLISHED:
-      adStatusStr = `剩余${ adBean.current_count }`;
+      adStatusStr = '剩余';
       break;
     case RUNNING:
       adStatusStr = '投放中';

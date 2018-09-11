@@ -14,7 +14,7 @@
             <text>{{ item.date }}</text>
           </view>
           <view class='b-body-common b-body-money'>
-            <text>￥{{ item.withdraw_amount }}</text>
+            <text>{{ item.withdraw_amount }}元</text>
           </view>
           <view class='b-body-common b-body-status'>
             <text>{{ item.statusStr}}</text>
@@ -35,7 +35,7 @@
       <text>提现次数: {{ count }}</text>
     </view>
     <view class='b-record-footer-item'>
-      <text>总提现金额: ￥{{ totalMoney }}</text>
+      <text>总提现金额: {{ totalMoney }}元</text>
     </view>
   </view>
 </view>

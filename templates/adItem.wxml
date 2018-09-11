@@ -12,8 +12,8 @@
           <label class="data-text">{{ amount }}元</label>
         </view>
         <view class="message" wx:if='{{ isDiDi==1 }}'>预计收益：
-          <label class="data-text">￥{{ min_amount }}
-            <label class="data-blt">~ </label>{{ max_amount }}</label>
+          <label class="data-text">{{ min_amount }}
+            <label class="data-blt">~ </label>{{ max_amount }}元</label>
         </view>
         <view class="message">投放时间：
           <label class="data-text">{{ begin_date }}

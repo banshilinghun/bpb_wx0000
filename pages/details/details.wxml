@@ -38,13 +38,13 @@
               <view class="profole-type-right tasts">***（身份认证后可查看收益）</view>
             </block>
             <block wx:elif="{{  adInfo.billing_mode == 0 }}">
-              <view class="profole-type-right red-text">￥{{ adInfo.predict_amount }}</view>
+              <view class="profole-type-right red-text">{{ adInfo.predict_amount }}元</view>
             </block>
             <block wx:elif='{{ adInfo.billing_mode == 1 }}'>
               <view class="profole-type-right red-text" bindtap='goValuation'>
                 <view class='b-income-explain-wrapper'>
-                  <view>￥{{ adInfo.min_amount }}
-                    <label class="data-blt2">~ </label>{{ adInfo.max_amount }}</view>
+                  <view>{{ adInfo.min_amount }}
+                    <label class="data-blt2">~ </label>{{ adInfo.max_amount }}元</view>
                   <image class='b-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
                 </view>
               </view>
@@ -168,24 +168,28 @@
   </scroll-view>
 
   <!-- 底部分享预约按钮 -->
-  <view class='action_bottom {{ adInfo? "action_bottom_visible" : "action_bottom_invisible" }}' id="b-detail-bottom">
-    <!-- 客服 -->
-    <button class='wtwabt' open-type='contact'>
-      <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_message_icon.png'></image>
-      <view class='sharetext'>在线客服</view>
-    </button>
-    <!-- 分享 -->
-    <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
-      <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_share_icon.png'></image>
-      <view class='sharetext'>{{ shareAwardText }}</view>
-    </button>
-    <!-- 预约排队 -->
-    <view class='subscribe_immediately b-start-subscribe {{ actionStatus === 0 || actionStatus === 4 || actionStatus === 5 || actionStatus === 6? "b-action-disenable" : "" }}'
-      bindtap='handleAction'>
-      <view class='subcribe-wrapper'>
-        <text>{{ actionStr }}</text>
+  <view  id="b-detail-bottom">
+    <view class='action_bottom {{ adInfo? "action_bottom_visible" : "action_bottom_invisible" }}'>
+      <!-- 客服 -->
+      <button class='wtwabt' open-type='contact'>
+        <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_message_icon.png'></image>
+        <view class='sharetext'>在线客服</view>
+      </button>
+      <!-- 分享 -->
+      <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
+        <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_share_icon.png'></image>
+        <view class='sharetext'>{{ shareAwardText }}</view>
+      </button>
+      <!-- 预约排队 -->
+      <view class='subscribe_immediately b-start-subscribe {{ actionStatus === 0 || actionStatus === 4 || actionStatus === 5 || actionStatus === 6? "b-action-disenable" : "" }}'
+        bindtap='handleAction'>
+        <view class='subcribe-wrapper'>
+          <text>{{ actionStr }}</text>
+        </view>
       </view>
     </view>
+    <!-- 适配iPhone X -->
+    <view class="{{ isIpx?'fix-iphonex-button':'' }}" wx:if="{{ isIpx }}"> </view>
   </view>
 </view>
 
@@ -287,13 +291,13 @@
         <view class='b-header-right'>
           <view class='b-header-info'>
             <view class='b-header-money b-theme-color'>
-              <text class='b-money-symbol'>￥</text>
               <block wx:if='{{ adInfo.billing_mode == 0 }}'>
                 <text class='b-money-number'>{{ adInfo.predict_amount}}</text>
               </block>
               <block wx:elif="{{ adInfo.billing_mode == 1 }}">
                 <text class='b-money-number'>{{ adInfo.min_amount + "~" + adInfo.max_amount }}</text>
               </block>
+              <text class='b-money-symbol'>元</text>
             </view>
             <view class='b-header-remain'>剩余{{ remainCount }}辆</view>
             <view class='b-header-select'>{{ selectStatusStr }}</view>

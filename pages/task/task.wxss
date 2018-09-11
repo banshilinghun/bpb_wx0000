@@ -99,7 +99,7 @@
 }
 
 .b-need-wait-text{
-  color: #666;
+  color: #ff555c;
   font-size: 24rpx;
   margin-left: 10rpx
 }

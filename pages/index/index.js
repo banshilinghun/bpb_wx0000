@@ -46,7 +46,16 @@ Page({
         adId: options.adId ? options.adId : null
       })
     }
-    //console.log(that.data.user_id)
+    this.getSystemInfo();
+  },
+
+  getSystemInfo(){
+    wx.getSystemInfo({
+      success: function(res) {
+        //检测当前手机型号是否是iPhone X, 保存到全局
+        app.globalData.isIpx = res.model.indexOf('iPhone X') !== -1
+      }
+    })
   },
 
   onShow: function () {

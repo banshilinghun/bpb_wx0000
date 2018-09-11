@@ -95,6 +95,7 @@ export function getCurrentStatus(runningTask){
  */
 export function getTaskActionDisplay(runningTask){
   let status = getCurrentStatus(runningTask);
+  console.log('getTaskActionDisplay---------->' + status);
   let action = {};
   action.subscribed = status === SUBSCRIBED;
   action.subscribeOvertime = status === SUBSCRIBE_OVER_TIME;

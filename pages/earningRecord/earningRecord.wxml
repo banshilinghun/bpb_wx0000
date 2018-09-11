@@ -34,7 +34,7 @@
                 <text>{{ item.date }}</text>
               </view>
               <view class='b-body-common'>
-                <text>￥{{ item.money }}</text>
+                <text>{{ item.money }}元</text>
               </view>
               <view class='b-body-common'>
                 <text wx:if='{{ item.type == 1 }}'>推荐奖励</text>
@@ -58,7 +58,7 @@
       <text>收益次数: {{ count }}</text>
     </view>
     <view class='b-record-footer-item'>
-      <text>收益总金额: ￥{{ totalMoney }}</text>
+      <text>收益总金额: {{ totalMoney }}元</text>
     </view>
   </view>
 </view>

@@ -103,7 +103,8 @@ Page({
     subscribeStation: '',
     subscribeTime: '',
     subscribeAddress: '',
-    visibleSubscribeTip: false
+    visibleSubscribeTip: false,
+    isIpx: false
   },
 
   onLoad: function (options) {
@@ -111,7 +112,8 @@ Page({
     that.setData({
       latitude: null,
       longitude: null,
-      adId: options.adId
+      adId: options.adId,
+      isIpx: app.globalData.isIpx
     })
     if (options.share != undefined) {
       this.setData({

@@ -77,7 +77,6 @@ Page({
           runningTempTask.date = timeUtil.formatDateTimeSprit(runningTempTask.begin_date) + "-" + timeUtil.formatDateTimeSprit(runningTempTask.end_date);
           runningTempTask.ad_name = StringUtil.formatAdName(runningTempTask.ad_name, runningTempTask.city_name);
           runningTempTask.statusStr = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(runningTempTask));
-          runningTempTask.process = 2; //todo
           //初始化状态
           that.setData({
             status: StrategyHelper.getCurrentStatus(runningTempTask),
@@ -161,10 +160,14 @@ Page({
   },
 
   transformWait(runningTempTask) {
+    console.log('transformWait------------>')
     const that = this;
     if (runningTempTask.waitInfo) {
       let nowTime = timeUtil.getTimeStapOnlyDate(runningTempTask.now_date);
+      console.log('nowTime----------->' + nowTime);
+      console.log('signInDate----------->' + runningTempTask.waitInfo.signInDate);
       let waitTime = Math.floor(nowTime - runningTempTask.waitInfo.signInDate);
+      console.log('waitTime----------->' + waitTime);
       that.lopperWaitTime(waitTime);
       that.setData({
         waitInfo: runningTempTask.waitInfo,

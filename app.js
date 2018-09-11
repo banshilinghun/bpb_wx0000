@@ -33,7 +33,9 @@ App({
     //年检时间
     car_check_date: null,
     //一个应用周期内是否展示过年检弹窗
-    visibleCheckDate: false
+    visibleCheckDate: false,
+    //是否是iPhone X
+    isIpx: false
   },
 
 })

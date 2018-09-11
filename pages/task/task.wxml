@@ -379,7 +379,7 @@
                 <text>实际收益：</text>
               </view>
               <view class='ad-money'>
-                <text>￥{{ finish.real_amount }}</text>
+                <text>{{ finish.real_amount }}元</text>
               </view>
             </view>
             <view class='ad-status'>

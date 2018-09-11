@@ -555,7 +555,6 @@ movable-view {
 
 .b-task-btn{
   background-color: #fff;
-  box-shadow:0px 2px 2px #ddd;
   color: #ff555c;
   font-size: 28rpx;
   border-radius: 10rpx;
