@@ -67,8 +67,8 @@ page {
 }
 
 .item_right {
+  min-width: 100rpx;
   overflow: hidden;
-  padding-right: 10px;
   text-align: center;
   display: flex;
   align-items: center;
@@ -79,6 +79,11 @@ page {
 .time {
   color: #03d0b7;
   font-size: 24rpx;
+  line-height: 1
+}
+
+.b-top-margin{
+  margin-top: 10rpx
 }
 
 .mark {

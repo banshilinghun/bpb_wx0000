@@ -22,9 +22,9 @@
   <image class='care-banner' src='https://wxapi.benpaobao.com/static/app_img/care-banner.png' style='height: {{ bannerHeight }}px'></image>
   </view>
 
-  <cell cellList='{{ cellList }}' bind:navigate='navigateListener'></cell>
-
+  <cell cellList='{{ prove }}' bind:navigate='proveListener'></cell>
   <view class="b-divider"></view>
-
+  <cell cellList='{{ cellList }}' bind:navigate='navigateListener'></cell>
+  <view class="b-divider"></view>
   <cell cellList='{{ protocol }}' bind:navigate='protocolListener'></cell>
 </view>

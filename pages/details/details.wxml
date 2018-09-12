@@ -35,7 +35,7 @@
               <view class='profole-type'>预计收益:</view>
             </view>
             <block wx:if="{{ loginStaus != 3 }}">
-              <view class="profole-type-right tasts">***（身份认证后可查看收益）</view>
+              <view class="profole-type-right tasts" bindtap="handleGoAuth">***（身份认证后可查看收益）</view>
             </block>
             <block wx:elif="{{  adInfo.billing_mode == 0 }}">
               <view class="profole-type-right red-text">{{ adInfo.predict_amount }}元</view>
@@ -278,6 +278,26 @@
       <view class='b-queue-model-item'>服务网点: {{ subscribeStation }}</view>
       <view class='b-queue-model-item'>预约时间: {{ subscribeTime }}</view>
       <view class='b-queue-model-item'>网点地址: {{ subscribeAddress }}</view>
+    </view>
+  </view>
+</model>
+
+<!-- 广告要求 -->
+<model visible="{{ visibleRequire }}" title="车辆要求" confirmText="我知道了" bind:confirm="handleRequireConfirm" showCancel="{{ false }}">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view class='b-queue-model-item'>
+        <view class="b-require-title">城市要求: </view>
+        <view class="b-require-content">{{ adInfo.cityRequire ? adInfo.cityRequire : "不限" }}</view>
+      </view>
+      <view class='b-queue-model-item'>
+          <view class="b-require-title">车辆类别: </view>
+          <view class="b-require-content">{{ adInfo.userRequire ? adInfo.userRequire : "不限" }}</view>
+      </view>
+      <view class='b-queue-model-item'>
+          <view class="b-require-title">车辆类型: </view>
+          <view class="b-require-content">{{ adInfo.carSizeRequire ? adInfo.carSizeRequire : "不限" }}</view>
+      </view>
     </view>
   </view>
 </model>

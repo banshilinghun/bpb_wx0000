@@ -33,7 +33,8 @@
     "pages/withdrawRecord/withdrawRecord",
     "pages/earningRecord/earningRecord",
     "pages/declare/declare",
-    "pages/task/task"
+    "pages/task/task",
+    "pages/prove/prove"
   ],
   "window": {
     "backgroundTextStyle": "light",

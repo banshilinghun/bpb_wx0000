@@ -48,7 +48,7 @@
                 </view>
                 <view class="message">投放时间：
                   <label class="data-text">{{ myAd.begin_date }}
-                    <label class="data-blt">~</label>{{ myAd.end_date }}</label>
+                    <label class="data-blt">~ </label>{{ myAd.end_date }}</label>
                 </view>
               </view>
             </view>
@@ -103,10 +103,9 @@
             </view>
           </view>
           <view class="item_right">
-            <view>
-              <text class="time  {{ (item.run_status === 0  ||item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{ item.adStatusStr }}</text>
+            <view class="time  {{ (item.run_status === 0  ||item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{ item.adStatusStr }}
             </view>
-            <view class="time" wx:if="{{ item.run_status === 1 }}">
+            <view class="time b-top-margin" wx:if="{{ item.run_status === 1 }}">
               <text>{{ item.current_count }}</text>
             </view>
             <button data-adName="{{ item.name }}" data-adId="{{ item.id }}" data-adImg="{{ item.share_img }}" class='wtwabt' open-type="share"

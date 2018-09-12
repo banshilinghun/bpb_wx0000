@@ -1,4 +1,3 @@
-
 /**
  * 红点帮助类
  */
@@ -10,7 +9,7 @@ const Api = require("../../utils/api/ApiConst.js");
  * 改变红点状态
  */
 function requestDotStatus() {
-  let promise = new Promise(function(resolve, reject){
+  let promise = new Promise(function (resolve, reject) {
     wx.request({
       url: Api.GET_DOT_URL,
       header: app.globalData.header,

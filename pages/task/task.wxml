@@ -341,7 +341,7 @@
           </view>
           <!-- action button -->
           <view class='b-task-action'>
-            <button class='b-action-btn b-action-cancel' wx:if='{{ runningTask.action.subscribed }}' catchtap='handleUnSubscribe'>取消预约</button>
+            <button class='b-action-btn b-action-cancel' wx:if='{{ runningTask.action.subscribed || runningTask.action.subscribeOvertime }}' catchtap='handleUnSubscribe'>取消预约</button>
             <block wx:if='{{ runningTask.action.subscribed || runningTask.action.subscribeOvertime || runningTask.action.rework }}'>
               <button class='b-action-btn' catchtap='handleAction'>签到</button>
             </block>

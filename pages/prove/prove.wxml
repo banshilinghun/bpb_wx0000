@@ -1,0 +1,8 @@
+<view class='wrapper'>
+  <view class='answer-reco-title'>
+    <text>车身广告合法证明文件</text>
+  </view>
+  <block wx:for='{{ reconList }}' wx:key='{{ reconsider }}'>
+    <image class='answer-reco-image' mode='widthFix' src='{{ item }}' bindtap='previewImage' data-image='{{ item }}' data-index='{{ index }}'></image>
+  </block>
+</view>

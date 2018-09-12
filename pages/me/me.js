@@ -86,9 +86,9 @@ Page({
     ],
     avatar: '',
     userInfo: {},
-    amount: '0.00',
+    amount: '0',
     incomeNumber: 0,
-    total: '0.00',
+    total: '0',
     rate: 0,
     showRecommend: false,
     dotVisible: false,
@@ -137,12 +137,12 @@ Page({
     that.requestAccountCoupon();
   },
 
-  controlCarModel(){
+  controlCarModel() {
     let that = this;
     let actionCell = that.data.actionCells;
     //先过滤
     actionCell = actionCell.filter(element => element.type !== CELL_TYPE[9]);
-    if(app.globalData.is_add_car_model){
+    if (app.globalData.is_add_car_model) {
       actionCell.push({
         type: CELL_TYPE[9],
         text: '车型补充',
@@ -200,8 +200,8 @@ Page({
         if (res.data.code == 1000) {
           if (res.data.data != null) {
             this.setData({
-              amount: util.toDecimal2(res.data.data.amount),
-              total: util.toDecimal2(res.data.data.total_amount),
+              amount: that.formatAmount(util.toDecimal2(res.data.data.amount)),
+              total: that.formatAmount(util.toDecimal2(res.data.data.total_amount)),
               rate: (res.data.data.rate) * 100
             });
           }
@@ -213,6 +213,18 @@ Page({
         that.showModal('网络错误');
       }
     })
+  },
+
+  /**
+   * 小数点后两位为0的话不保留小数位
+   */
+  formatAmount(amount) {
+    if (amount.toString().endsWith('.00')) {
+      let amountSplit = amount.split('.');
+      return amountSplit[0];
+    } else {
+      return amount;
+    }
   },
 
   /**
@@ -251,9 +263,9 @@ Page({
       url: ApiConst.ACCOUNT_COUPON,
       data: {},
       success: res => {
-        let couponList =  res.coupon_info;
+        let couponList = res.coupon_info;
         let couponCount = 0;
-        if(couponList && couponList.length !== 0){
+        if (couponList && couponList.length !== 0) {
           //状态为2表示已激活未领取的奖励
           couponCount = res.coupon_info.filter(element => {
             return parseInt(element.status) === 2;
@@ -272,7 +284,7 @@ Page({
     let that = this;
     let item = event.currentTarget.dataset.item;
     //判断车主是否登录，推荐有奖和新手教程无需登录
-    if ((item.type != CELL_TYPE[6] || item.type != CELL_TYPE[7]) && that.data.loginFlag == 0) {
+    if (parseInt(that.data.loginFlag) === 0 && item.type !== CELL_TYPE[6] && item.type !== CELL_TYPE[7]) {
       ModalHelper.showWxModalShowAllWidthCallback('登录提示', '你还没有登录', '立即登录', '取消', true, res => {
         if (res.confirm) {
           that.navigateTo('../register/register');
@@ -282,7 +294,6 @@ Page({
     }
     switch (item.type) {
       case CELL_TYPE[8]: //注册认证
-        console.log('status------------->' + this.data.status);
         if (this.data.status == 0) {
           that.navigateTo(item.url);
         } else {
@@ -307,7 +318,7 @@ Page({
 
   addCarModel(url) {
     ModalHelper.showWxModalShowAllWidthCallback('车型补充提示', '为了保证广告安装和广告计费正常进行，需要您补充完善车型信息', '立即补充', '取消', true, res => {
-      if(res.confirm){
+      if (res.confirm) {
         wx.navigateTo({
           url: url,
         })

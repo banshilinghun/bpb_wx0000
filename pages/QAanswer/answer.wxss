@@ -1,8 +1,4 @@
 
-.answer-container{
-  
-}
-
 .wrapper{
   padding: 20rpx 40rpx 20rpx 40rpx;
 }

@@ -104,7 +104,8 @@ Page({
     subscribeTime: '',
     subscribeAddress: '',
     visibleSubscribeTip: false,
-    isIpx: false
+    isIpx: false,
+    visibleRequire: false
   },
 
   onLoad: function (options) {
@@ -147,7 +148,7 @@ Page({
     })
     that.initUserAuthStatus();
     //请求广告信息
-    that.requestAdInfo();
+    that.requestDetail();
     that.requestJoinList();
     //that.requestQueueList(); 
     var pages = getCurrentPages();
@@ -290,10 +291,26 @@ Page({
     }
   },
 
+  requestDetail() {
+    const that = this;
+    let proAdInfo = new Promise((resolve, reject) => {
+      that.requestAdInfo(resolve);
+    });
+    let proUserInfo = new Promise((resolve, reject) => {
+      that.getUserCarInfo(resolve);
+    });
+    Promise.all([proAdInfo, proUserInfo]).then(results => {
+      that.initAdInfo(results[0]);
+      that.initUserInfo(results[1]);
+      //处理预约按钮状态
+      that.resolveAction(results[0], results[1]);
+    })
+  },
+
   /**
    * 请求广告信息
    */
-  requestAdInfo: function () {
+  requestAdInfo: function (resolve) {
     var that = this;
     if (loadingFirst) {
       LoadingHelper.showLoading();
@@ -304,37 +321,7 @@ Page({
         ad_id: that.data.adId
       },
       success: res => {
-        let dataBean = res;
-        let adTempInfo = dataBean.info;
-        adTempInfo.run_status = RunStatus.getRunStatus(adTempInfo);
-        adTempInfo.adStatusStr = RunStatus.getAdStatusStr(adTempInfo);
-        adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-        adTempInfo.end_date = adTempInfo.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-        adTempInfo.ad_name = StringUtil.formatAdName(adTempInfo.ad_name, adTempInfo.city_name);
-        //广告开放预约时间
-        if (adTempInfo.reserve_date.start_date && adTempInfo.reserve_date.last_date) {
-          adTempInfo.reserve_date.start_date = adTempInfo.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-          adTempInfo.reserve_date.last_date = adTempInfo.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-        }
-        //按钮状态
-        that.resolveAction(dataBean);
-        //广告效果图
-        that.resolveEffect(dataBean);
-        //banner
-        adTempInfo.banners = that.resolveBanner(dataBean);
-        //车辆要求
-        let city_name = adTempInfo.city_limit == 0 && adTempInfo.city_name ? `${ adTempInfo.city_name }车辆` : "";
-        let user_limit = adTempInfo.user_limit == 1 ? ", 双证车主" : adTempInfo.user_limit == 2 ? ", 普通网约车" : "";
-        let car_size_limit = adTempInfo.car_size_limit ? ", " + adTempInfo.car_size_limit : "";
-        adTempInfo.car_require = city_name + user_limit + car_size_limit;
-        that.setData({
-          adInfo: adTempInfo,
-          designList: dataBean.design_list,
-          joinCount: adTempInfo.total_count - adTempInfo.current_count,
-          carColor: (!adTempInfo.color_limit || adTempInfo.color_limit.length == 0) ? '不限' : adTempInfo.color_limit.join('、'),
-          //isQueueing: dataBean.ad_queue && JSON.stringify(dataBean.ad_queue) != '{}',
-        })
-        that.getUserCarInfo();
+        resolve(res);
       },
       complete: res => {
         if (loadingFirst) {
@@ -350,31 +337,76 @@ Page({
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
+  initAdInfo(res) {
+    const that = this;
+    let dataBean = res;
+    let adTempInfo = dataBean.info;
+    adTempInfo.run_status = RunStatus.getRunStatus(adTempInfo);
+    adTempInfo.adStatusStr = RunStatus.getAdStatusStr(adTempInfo);
+    adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+    adTempInfo.end_date = adTempInfo.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+    adTempInfo.ad_name = StringUtil.formatAdName(adTempInfo.ad_name, adTempInfo.city_name);
+    //广告开放预约时间
+    if (adTempInfo.reserve_date.start_date && adTempInfo.reserve_date.last_date) {
+      adTempInfo.reserve_date.start_date = adTempInfo.reserve_date.start_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+      adTempInfo.reserve_date.last_date = adTempInfo.reserve_date.last_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+    }
+    //广告效果图
+    that.resolveEffect(dataBean);
+    //banner
+    adTempInfo.banners = that.resolveBanner(dataBean);
+    //车辆要求
+    adTempInfo.cityRequire = adTempInfo.city_limit == 0 && adTempInfo.city_name ? `${ adTempInfo.city_name }车辆` : "";
+    adTempInfo.userRequire = adTempInfo.user_limit == 1 ? "双证车主" : adTempInfo.user_limit == 2 ? "普通网约车" : "";
+    adTempInfo.carSizeRequire = adTempInfo.car_size_limit ? adTempInfo.car_size_limit : "";
+    adTempInfo.car_require = `${ adTempInfo.cityRequire }${ adTempInfo.userRequire? ", " : "" }${ adTempInfo.userRequire }${ adTempInfo.carSizeRequire? ", " : "" }${ adTempInfo.carSizeRequire }`
+    that.setData({
+      adInfo: adTempInfo,
+      designList: dataBean.design_list,
+      joinCount: adTempInfo.total_count - adTempInfo.current_count,
+      carColor: (!adTempInfo.color_limit || adTempInfo.color_limit.length == 0) ? '不限' : adTempInfo.color_limit.join('、'),
+    })
+  },
+
   /**
    * 处理按钮状态
    */
-  resolveAction(dataBean) {
+  resolveAction(dataBean, carInfo) {
+    //已经有广告在运行
     if (dataBean.current_reserve || dataBean.current_ad) {
       this.updateAction(RunStatus.OWNER_ACTION);
       return;
     }
     //运行状态过滤
-    let run_status = dataBean.info.run_status;
-    if (run_status === RunStatus.PUBLISHED) {
-      // 剩余数过滤
-      if (parseInt(dataBean.info.current_count) !== 0) {
-        this.updateAction(RunStatus.SUBSCRIBE_ACTION);
-      } else {
-        this.updateAction(RunStatus.NO_COUNT_ACTION);
-      }
-    } else if (run_status === RunStatus.NOT_BEGIN) { //即将开始
-      this.updateAction(RunStatus.NOT_BEGIN_ACTION);
-    } else if (run_status === RunStatus.RUNNING) {
-      this.updateAction(RunStatus.RUNING_ACTION);
-    } else if (run_status === RunStatus.CHECKING) {
-      this.updateAction(RunStatus.CHECKING_ACTION);
-    } else if (run_status === RunStatus.FINISH) {
-      this.updateAction(RunStatus.FINISH_ACTION);
+    console.log('run_status---------->' + dataBean.info.run_status)
+    switch (dataBean.info.run_status) {
+      case RunStatus.PUBLISHED:
+        // 剩余数过滤
+        if (parseInt(dataBean.info.current_count) !== 0) {
+          //颜色不匹配
+          if (carInfo && this.data.adInfo.color_limit.indexOf(carInfo.car_color) === -1) {
+            this.updateAction(RunStatus.COLOR_REJECT_ACTION);
+          } else {
+            //可预约
+            this.updateAction(RunStatus.SUBSCRIBE_ACTION);
+          }
+        } else {
+          //数量不足
+          this.updateAction(RunStatus.NO_COUNT_ACTION);
+        }
+        break;
+      case RunStatus.NOT_BEGIN: //即将开始
+        this.updateAction(RunStatus.NOT_BEGIN_ACTION);
+        break;
+      case RunStatus.RUNNING: //投放中
+        this.updateAction(RunStatus.RUNING_ACTION);
+        break;
+      case RunStatus.CHECKING: //检测中
+        this.updateAction(RunStatus.CHECKING_ACTION);
+        break;
+      case RunStatus.FINISH: //已完成
+        this.updateAction(RunStatus.FINISH_ACTION);
+        break;
     }
   },
 
@@ -418,6 +450,31 @@ Page({
       })
     }
     return banners;
+  },
+
+  /**
+   * 用户车辆信息
+   */
+  getUserCarInfo(resolve) {
+    let requestData = {
+      url: ApiConst.GET_USER_CAR_INFO,
+      header: app.globalData.header,
+      success: res => {
+        resolve(res);
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  initUserInfo(res) {
+    let that = this;
+    //未注册或者未认证
+    if (!res) {
+      return;
+    }
+    that.setData({
+      userCarColor: res.car_color
+    })
   },
 
   /** 请求已参与车主列表 */
@@ -891,34 +948,6 @@ Page({
   },
 
   /**
-   * 用户车辆信息
-   */
-  getUserCarInfo() {
-    let that = this;
-    let requestData = {
-      url: ApiConst.GET_USER_CAR_INFO,
-      header: app.globalData.header,
-      success: res => {
-        //未注册或者未认证
-        if (!res) {
-          return;
-        }
-        if (that.data.adInfo.color_limit.indexOf(res.car_color) == -1) {
-          that.updateAction(RunStatus.COLOR_REJECT_ACTION);
-          that.setData({
-            userCarColor: res.car_color
-          })
-        } else {
-          that.setData({
-            userCarColor: res.car_color
-          })
-        }
-      }
-    }
-    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
-  },
-
-  /**
    * 获取广告站点列表
    */
   getAdStationList() {
@@ -1000,17 +1029,21 @@ Page({
       return;
     }
     //验证登录状态
-    if (app.globalData.login != 1) { //未登录注册
-      ModalHelper.showWxModalShowAllWidthCallback("提示", "你还没有登录，不能预约广告", "立即登录", "取消", true, sure => {
-        if (sure.confirm) {
-          wx.navigateTo({
-            url: '../register/register'
-          })
-        }
-      });
+    if (parseInt(app.globalData.login) !== 1) { //未登录注册
+      this.showLoginModal("您还没有登录，不能预约广告");
     } else {
       this.verifyAuthStatus();
     }
+  },
+
+  showLoginModal(content){
+    ModalHelper.showWxModalShowAllWidthCallback("提示", content, "立即登录", "取消", true, sure => {
+      if (sure.confirm) {
+        wx.navigateTo({
+          url: '../register/register'
+        })
+      }
+    });
   },
 
   /**
@@ -1018,19 +1051,19 @@ Page({
    */
   verifyAuthStatus() {
     let authStatus = app.globalData.checkStaus;
-    //认证失败
-    if (Number(authStatus) === 2) {
-      this.showAuthFailModal();
+    //未认证
+    if (parseInt(authStatus) === 0) {
+      this.showNotAuthModal("你没进行身份认证，不能预约广告");
       return;
     }
     //认证审核中
-    if (Number(authStatus) === 1) {
-      ModalHelper.showWxModal('提示', '你的身份认证信息正在审核中，不能预约广告', '我知道了', false);
+    if (parseInt(authStatus) === 1) {
+      this.showAuthingModal('你的身份认证信息正在审核中，不能预约广告');
       return;
     }
-    //未认证
-    if (Number(authStatus) === 0) {
-      this.showNotAuthModal();
+    //认证失败
+    if (parseInt(authStatus) === 2) {
+      this.showAuthFailModal("你没通过身份认证，不能预约广告");
       return;
     }
     //补充年检信息
@@ -1056,8 +1089,8 @@ Page({
     this.changeRemainCount();
   },
 
-  showAuthFailModal() {
-    ModalHelper.showWxModalShowAllWidthCallback("提示", "你没通过身份认证，不能预约广告", "立即认证", "取消", true, function (res) {
+  showAuthFailModal(content) {
+    ModalHelper.showWxModalShowAllWidthCallback("提示", content, "立即认证", "取消", true, function (res) {
       if (res.confirm) {
         wx.navigateTo({
           url: '../state/state'
@@ -1066,8 +1099,12 @@ Page({
     })
   },
 
-  showNotAuthModal() {
-    ModalHelper.showWxModalShowAllWidthCallback("提示", "你没进行身份认证，不能预约广告", "立即认证", "取消", true, function (res) {
+  showAuthingModal(content){
+    ModalHelper.showWxModal('提示', content, '我知道了', false);
+  },
+
+  showNotAuthModal(content) {
+    ModalHelper.showWxModalShowAllWidthCallback("提示", content, "立即认证", "取消", true, function (res) {
       if (res.confirm) {
         wx.navigateTo({
           url: '../auth/auth'
@@ -1351,7 +1388,7 @@ Page({
     let that = this;
     that.setData({
       subscribeStation: that.data.stationList[that.data.selectServerIndex].station_name,
-      subscribeTime: that.data.dateList[that.data.selectDateIndex].date + ' ' + that.data.timeList[that.data.selectTimeIndex].time,
+      subscribeTime: that.data.dateList[that.data.selectDateIndex].date + '　' + that.data.timeList[that.data.selectTimeIndex].time,
       subscribeAddress: that.data.stationList[that.data.selectServerIndex].station_address,
       visibleSubscribeTip: true
     })
@@ -1379,12 +1416,14 @@ Page({
           visibleSubscribeTip: false,
           visibleSubscribe: false
         })
-        that.requestAdInfo();
+        that.requestDetail();
         //预约成功跳转我的任务
         ModalHelper.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, function (res) {
-          wx.switchTab({
-            url: '../task/task'
-          })
+          if(res.confirm){
+            wx.switchTab({
+              url: '../task/task'
+            })
+          }
         });
       },
       complete: res => {
@@ -1412,17 +1451,24 @@ Page({
       return;
     }
     wx.previewImage({
-      // current: 'String', // 当前显示图片的链接，不填则默认为 urls 的第一张
       urls: [imageUrl],
     })
   },
 
   handleRequire(event) {
-    ModalHelper.showWxModal('车辆要求', event.currentTarget.dataset.require, "我知道了", false);
+    this.setData({
+      visibleRequire: true
+    })
   },
 
   handleCarColor(event) {
     ModalHelper.showWxModal('颜色要求', event.currentTarget.dataset.color, "我知道了", false);
+  },
+
+  handleRequireConfirm() {
+    this.setData({
+      visibleRequire: false
+    })
   },
 
   /**
@@ -1437,5 +1483,30 @@ Page({
       address: nav.station_address
     })
   },
+
+  /**
+   * 登录注册
+   */
+  handleGoAuth(){
+    if (parseInt(app.globalData.login) !== 1) { //未登录注册
+      this.showLoginModal("您还没有登录，暂不能查看收益");
+    } else {
+      let authStatus = app.globalData.checkStaus;
+      //未认证
+      if (parseInt(authStatus) === 0) {
+        this.showNotAuthModal("你没进行身份认证，暂不能查看收益");
+        return;
+      }
+      //认证审核中
+      if (parseInt(authStatus) === 1) {
+        this.showAuthingModal('你的身份认证信息正在审核中，暂不能查看收益');
+        return;
+      }
+      if (parseInt(authStatus) === 2) {
+        this.showAuthFailModal("你没通过身份认证，暂不能查看收益");
+        return;
+      }
+    }
+  }
 
 })

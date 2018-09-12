@@ -1368,6 +1368,8 @@ button {
 
 .b-queue-model-item {
   margin-bottom: 10rpx;
+  display: flex;
+  flex-direction: row
 }
 
 .b-queue-notify-text {
@@ -1698,8 +1700,7 @@ button {
 }
 
 .b-server-select {
-  background: #fff;
-  border: 1rpx solid #ff555c
+  background: rgba(255, 93, 57, 0.1);
 }
 
 .b-server-normal {
@@ -1795,8 +1796,7 @@ button {
 }
 
 .b-cell-select {
-  border: 1rpx solid #ff555c;
-  background: #fff;
+  background: rgba(255, 93, 57, 0.1);
   color: #ff555c
 }
 
@@ -1890,6 +1890,17 @@ button::after {
 .b-server-surplus_count{
   color: #ff555c;
   margin-left: 10rpx
+}
+
+.b-require-title{
+  color: #333;
+  font-weight: 500
+}
+
+.b-require-content{
+  color: #666;
+  margin-left: 20rpx;
+  flex: 1
 }
 
 /*隐藏滚动条*/

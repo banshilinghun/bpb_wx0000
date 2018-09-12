@@ -7,12 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cellList: [{ cellTitle: '合法证明！', path: '', src: '../../image/who.png'},
+    prove: [{ cellTitle: '合法证明！', path: '../prove/prove', src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-prove-icon.png' },],
+    cellList: [
       { cellTitle: '我们是谁？', path: url + '?flag=1', src: '../../image/who.png'},
       { cellTitle: '如何赚钱？', path: url + '?flag=2', src: '../../image/make_money.png'},
       { cellTitle: '拒绝法盲！', path: url + '?flag=3', src: '../../image/law.png'},
       { cellTitle: '其它问题。', path: url + '?flag=4', src: '../../image/other.png'}],
-    protocol: [{ cellTitle: '服务合作协议', path: '../protocol/index', src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-protocol-icon.png' }],
+    protocol: [{ cellTitle: '服务合作协议。', path: '../protocol/index', src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-protocol-icon.png' }],
     bannerHeight: 0
   },
 
@@ -41,6 +42,12 @@ Page({
   },
 
   protocolListener(event){
+    wx.navigateTo({
+      url: event.detail.cell.path,
+    })
+  },
+
+  proveListener(event){
     wx.navigateTo({
       url: event.detail.cell.path,
     })
