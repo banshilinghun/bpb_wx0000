@@ -35,8 +35,10 @@
     <view class="page-section">
       <view>提现金额</view>
       <view class='lintcon'>
-        <view class="price"></view>
-        <input type="digit" value="{{money}}" bindinput='searchMoney'  auto-focus/>
+        <view class="price">￥</view>
+        <input class="b-withdraw-input" type="digit" value="{{money}}" bindinput='searchMoney'  auto-focus/>
+        <view class="b-withdraw-tip" wx:if="{{ freeAmount === 0 }}">当月已没有免税额度，可下个月再提现</view>
+        <view class="b-withdraw-tip" wx:if="{{ freeAmount !== 0 }}">{{ "当月还剩余免税额度" + freeAmount + "元"  }}</view>
       </view>
       <view class="desc">可提现金额 ¥{{maxMoney}}
         <view class='qbtxtext' bindtap="allWithdraw">全部提现</view>
@@ -45,7 +47,7 @@
     <view>
       <view class="tipcon">
         <view class="tiptext">提现金额：</view>
-        <view class='ptm-text'>最小提现金额为1元</view>
+        <view class='ptm-text'>最小提现金额为1元；每月免税提现金额为800元，若超过800元，超出部分需要扣除20%个税。</view>
       </view>
          <view class="tipcon tipcon2">
         <view class="tiptext">到账时间：</view>

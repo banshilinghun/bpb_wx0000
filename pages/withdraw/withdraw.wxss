@@ -48,26 +48,11 @@
 }
 
 .price {
-  margin-top: 30rpx;
-  margin-bottom: 25rpx;
-  position: relative;
-  display: inline-block;
-  font-size: 76rpx;
-  line-height: 1;
+  font-size: 40rpx;
 }
 
 input {
-  padding-left: 36rpx;
-  font-size: 52rpx;
-  margin-top: -20rpx;
-}
-
-.price:before {
-  content: "¥";
-  position: absolute;
-  font-size: 40rpx;
-  top: 12rpx;
-  left: 0;
+  font-size: 52rpx
 }
 
 .profile-wrapper, .account-wrapper {
@@ -101,8 +86,13 @@ input {
 }
 
 .lintcon {
-  padding-bottom: 20rpx;
+  padding-bottom: 5rpx;
   border-bottom: 3rpx solid #ccc;
+  margin-top: 30rpx;
+  margin-bottom: 25rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center
 }
 
 .tipcon {
@@ -114,6 +104,7 @@ input {
   padding-right: 30rpx;
   flex-direction: row;
 }
+
 .tipcon2{
   margin-top: 20rpx;
   padding-top: 0;
@@ -124,6 +115,18 @@ input {
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
 }
+
 .btn-quit{
   margin-top: 80rpx;
+  background: linear-gradient(90deg, #ff555c, #ff5d39);
+  border-radius: 10rpx
+}
+
+.b-withdraw-input{
+  flex: 1;
+}
+
+.b-withdraw-tip{
+  font-size: 24rpx;
+  color: #ff555c;
 }

@@ -1,87 +1,65 @@
 var app = getApp()
 var util = require("../../utils/common/util");
+const ApiManager = require("../../utils/api/ApiManager");
 const ApiConst = require("../../utils/api/ApiConst.js");
+const ModalHelper = require("../../helper/ModalHelper");
 Page({
 	data: {
-		maxMoney: "0.00"
+		maxMoney: "0.00",
+		freeAmount: 100
 	},
+	
 	onLoad: function() {
 
 	},
+
 	onShow: function() {
-		wx.request({
-			url: ApiConst.USER_BBANCARD,
-			data: {},
-			header: app.globalData.header,
-			success: res => {
-				if(res.data.code == 1000) {
-					if(res.data.data != null) {
-						this.setData({
-							haveCard: true,
-							bankName: res.data.data.bank_name,
-							bankIcon: res.data.data.icon,
-							digits: res.data.data.bank_no.substr(res.data.data.bank_no.length - 4, 4),
-							bank_id: res.data.data.id
-						})
-					} else {
-						this.setData({
-							haveCard: false
-						})
-					}
-
-				} else {
-
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: res.data.msg
-					});
-				}
-			},
-			fail: res => {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '网络错误'
-				});
-			}
-		})
-
-		wx.request({
-			url: ApiConst.GET_USER_ACCOUNT,
-			data: {},
-			header: app.globalData.header,
-			success: res => {
-				if(res.data.code == 1000) {
-					if(res.data.data != null) {
-						this.setData({
-							maxMoney: util.toDecimal2(res.data.data.activityable_amount)
-						})
-					}
-
-				} else {
-
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: res.data.msg
-					});
-				}
-			},
-			fail: res => {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '网络错误'
-				});
-			}
-		})
+		this.requestUserBandcard();
+		this.requestUserAccount();
 	},
+
+	requestUserBandcard(){
+		let requestData = {
+      url: ApiConst.USER_BBANCARD,
+      data: {},
+      success: res => {
+        if(res) {
+					this.setData({
+						haveCard: true,
+						bankName: res.bank_name,
+						bankIcon: res.icon,
+						digits: res.bank_no.substr(res.bank_no.length - 4, 4),
+						bank_id: res.id
+					})
+				} else {
+					this.setData({
+						haveCard: false
+					})
+				}
+      }
+    }
+		ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+	},
+
+	requestUserAccount(){
+		let requestData = {
+      url: ApiConst.GET_USER_ACCOUNT,
+      data: {},
+      success: res => {
+        this.setData({
+					maxMoney: util.toDecimal2(res.activityable_amount)
+				})
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+	},
+
 	addCard: function() {
 		wx.navigateTo({
 			url: '../addBankCard/addBankCard'
 		})
 	},
+
 	changeCard: function() {
 		wx.showModal({
 			title: "提示",
@@ -97,27 +75,42 @@ Page({
 			}
 		})
 	},
+
 	allWithdraw: function() {
 		var maxMoney = this.data.maxMoney;
 		this.setData({
 			money: maxMoney
 		})
 	},
+
 	searchMoney: function(e) {
-    //console.log(e.detail.value);
-    //console.log(this.data.maxMoney);
-    var inputMoney = Number(e.detail.value);
-    var maxMoney = Number(this.data.maxMoney)
-    if (inputMoney > maxMoney) {
+		const that = this;
+    let inputMoney = e.detail.value;
+		var maxMoney = this.data.maxMoney;
+    if (Number(inputMoney) > Number(maxMoney)) {
 			this.setData({
 				money: this.data.maxMoney
 			})
 		}else{
 			this.setData({
-				money: e.detail.value
+				money: that.formatMoney(inputMoney)
 			})
 		}
 	},
+
+	formatMoney(inputMoney){
+		if(inputMoney.toString().indexOf('.') !== -1 ){
+			let inputArr = inputMoney.toString().split('.');
+			if(inputArr.length === 2){
+				console.log(inputArr);
+				if(inputArr[1].length > 2){
+					inputMoney = Number(inputMoney).toFixed(2);
+				}
+			}
+		}
+		return inputMoney;
+	},
+
 	submitWithdraw: function() {
 		var bankId = this.data.bank_id;
 		var money = this.data.money;
@@ -127,72 +120,39 @@ Page({
 		reqdata.bank_id = bankId;
 		reqdata.withdraw_amount = money;
 		if(!bankId) {
-			wx.showModal({
-				title: '提示',
-				showCancel: false,
-				content: '请绑定银行卡'
-			});
+			ModalHelper.showWxModal('提示', '请绑定银行卡', '我知道了', false);
 		} else {
 			if(!money) {
-				wx.showModal({
-					title: '提示',
-					showCancel: false,
-					content: '请输入提现金额'
-				});
+				ModalHelper.showWxModal('提示', '请输入提现金额', '我知道了', false);
 			} else {
 				if(money < 1) {
-					wx.showModal({
-						title: '提示',
-						showCancel: false,
-						content: '提现金额不能小于1元'
-					});
+					ModalHelper.showWxModal('提示', '提现金额不能小于1元', '我知道了', false);
 				} else {
-					wx.showModal({
-						title: "提示",
-						content: "确认要提现？",
-						confirmText: "确认",
-						cancelText: "取消",
-						success: function(res) {
-							if(res.confirm) {
-								wx.request({
-									url: ApiConst.WITHDRAW,
-									data: reqdata,
-									header: app.globalData.header,
-									success: res => {
-										if(res.data.code == 1000) {
-											wx.showToast({
-												title: "提现成功"
-											})
-											setTimeout(function() {
-												wx.switchTab({
-													url: '../me/me'
-												})
-											}, 1000);
-
-										} else {
-
-											wx.showModal({
-												title: '提示',
-												showCancel: false,
-												content: res.data.msg
-											});
-										}
-									},
-									fail: res => {
-										wx.showModal({
-											title: '提示',
-											showCancel: false,
-											content: '网络错误'
-										});
-									}
-								})
-							}
+					ModalHelper.showWxModalShowAllWidthCallback('提示', '确认要提现？', '确认', '取消', false, res => {
+						if(res.confirm){
+							this.sendWithdrawCommit(reqdata);
 						}
 					})
-
 				}
 			}
 		}
+	},
 
+	sendWithdrawCommit(){
+		let requestData = {
+			url: ApiConst.WITHDRAW,
+			data: reqdata,
+			success: res => {
+				wx.showToast({
+					title: "提现成功"
+				})
+				setTimeout(function() {
+					wx.switchTab({
+						url: '../me/me'
+					})
+				}, 1000);
+			}
+		}
+		ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
 	}
 })
