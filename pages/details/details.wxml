@@ -22,8 +22,8 @@
             <view class="profile-item cwsfts">{{ adInfo.ad_name }}</view>
             <view class='profile-ad-status'>
               <view>
-                <text class="time  {{ (item.run_status === 0  ||item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{
-                    adInfo.adStatusStr }}</text>
+                <text class="time  {{ (item.run_status === 0  || item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{
+                    adInfo.adStatusStr }} </text>
               </view>
             </view>
           </view>
@@ -333,6 +333,7 @@
             <view class='b-title-wrapper'>
               <view class='b-body-color-title'>服务网点</view>
               <view class='b-title-stauts' wx:if='{{ selectServerIndex === -1 }}'>请选择服务网点</view>
+              <view class="b-cancel-select" bindtap="handleCancelSelect" data-type="server" wx:if="{{ selectServerIndex !== -1 }}">取消选中</view>
             </view>
             <view class='b-body-wrapper'>
               <view class='b-body-server' wx:for="{{ stationList }}" wx:key="server" wx:if="{{ selectServerIndex === -1 || (selectServerIndex !== -1 &&  index === selectServerIndex) }}">
@@ -368,6 +369,7 @@
             <view class='b-title-wrapper'>
               <view class='b-body-color-title'>预约日期</view>
               <view class='b-title-stauts' wx:if='{{ selectDateIndex === -1 }}'>请选择预约日期</view>
+              <view class="b-cancel-select" bindtap="handleCancelSelect" data-type="date" wx:if="{{ selectDateIndex !== -1 }}">取消选中</view>
             </view>
             <view class='b-body-wrapper'>
               <view class='b-body-date' wx:for="{{ dateList }}" wx:key="date" wx:if="{{ selectDateIndex === -1 || (selectDateIndex !== -1 &&  index === selectDateIndex) }}">
@@ -381,6 +383,7 @@
             <view class='b-title-wrapper'>
               <view class='b-body-color-title'>预约时间</view>
               <view class='b-title-stauts' wx:if='{{ selectTimeIndex === -1 }}'>请选择预约时间</view>
+              <view class="b-cancel-select" bindtap="handleCancelSelect" data-type="time" wx:if="{{ selectTimeIndex !== -1 }}">取消选中</view>
             </view>
             <view class='b-body-wrapper'>
               <view class='b-body-date' wx:for="{{ timeList }}" wx:key="date" wx:if="{{ selectTimeIndex === -1 || (selectTimeIndex !== -1 &&  index === selectTimeIndex) }}">

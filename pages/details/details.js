@@ -343,6 +343,7 @@ Page({
     let adTempInfo = dataBean.info;
     adTempInfo.run_status = RunStatus.getRunStatus(adTempInfo);
     adTempInfo.adStatusStr = RunStatus.getAdStatusStr(adTempInfo);
+    adTempInfo.adStatusStr = adTempInfo.run_status === 1 ? `${adTempInfo.adStatusStr}${adTempInfo.current_count}` : adTempInfo.adStatusStr;
     adTempInfo.begin_date = adTempInfo.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
     adTempInfo.end_date = adTempInfo.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
     adTempInfo.ad_name = StringUtil.formatAdName(adTempInfo.ad_name, adTempInfo.city_name);
@@ -1036,7 +1037,7 @@ Page({
     }
   },
 
-  showLoginModal(content){
+  showLoginModal(content) {
     ModalHelper.showWxModalShowAllWidthCallback("提示", content, "立即登录", "取消", true, sure => {
       if (sure.confirm) {
         wx.navigateTo({
@@ -1099,7 +1100,7 @@ Page({
     })
   },
 
-  showAuthingModal(content){
+  showAuthingModal(content) {
     ModalHelper.showWxModal('提示', content, '我知道了', false);
   },
 
@@ -1210,14 +1211,18 @@ Page({
       that.resetStationCount();
       that.initDateList(index);
     } else { //取消选中
-      that.setData({
-        selectServerIndex: -1,
-        selectDateIndex: -1,
-        selectTimeIndex: -1
-      })
+      that.resetServerSelect();
       that.setRemainCount(that.data.totalCount);
     }
     that.initSelectStatus();
+  },
+
+  resetServerSelect(){
+    this.setData({
+      selectServerIndex: -1,
+      selectDateIndex: -1,
+      selectTimeIndex: -1
+    })
   },
 
   resetStationCount() {
@@ -1274,14 +1279,18 @@ Page({
       // 设置选中日期的剩余数
       that.resetDateCount();
     } else {
-      that.setData({
-        selectDateIndex: -1,
-        selectTimeIndex: -1
-      })
+      that.resetDateSelect();
       //重置数量
       that.resetStationCount();
     }
     that.initSelectStatus();
+  },
+
+  resetDateSelect(){
+    this.setData({
+      selectDateIndex: -1,
+      selectTimeIndex: -1
+    })
   },
 
   resetDateCount() {
@@ -1319,12 +1328,16 @@ Page({
       })
       that.resetTimeCount();
     } else {
-      that.setData({
-        selectTimeIndex: -1
-      })
+      that.resetTimeSelect();
       that.resetDateCount();
     }
     that.initSelectStatus();
+  },
+
+  resetTimeSelect(){
+    this.setData({
+      selectTimeIndex: -1
+    })
   },
 
   resetTimeCount() {
@@ -1346,8 +1359,22 @@ Page({
       })
     } else { //有选项未选择
       that.setData({
-        selectStatusStr: '请选择 ' + (selectServerIndex !== -1 ? "" : "服务网点 ") + (selectDateIndex !== -1 ? "" : "预约日期 ") + (selectTimeIndex !== -1 ? "" : "预约时间段")
+        selectStatusStr: '请选择 ' + (selectServerIndex !== -1 ? "" : "服务网点 ") + (selectDateIndex !== -1 ? "" : "预约日期 ") + (selectTimeIndex !== -1 ? "" : "预约时间")
       })
+    }
+  },
+
+  handleCancelSelect(event) {
+    switch (event.currentTarget.dataset.type) {
+      case 'server':
+        this.resetServerSelect();
+        break;
+      case 'date':
+        this.resetDateSelect();
+        break;
+      case 'time':
+      this.resetTimeSelect();
+        break;
     }
   },
 
@@ -1373,7 +1400,7 @@ Page({
     }
     if (selectTimeIndex === -1) {
       $Toast({
-        content: '请选择 预约时间段',
+        content: '请选择 预约时间',
         type: 'warning'
       });
       return;
@@ -1419,7 +1446,7 @@ Page({
         that.requestDetail();
         //预约成功跳转我的任务
         ModalHelper.showWxModalUseConfirm("提示", "预约成功", "查看任务", true, function (res) {
-          if(res.confirm){
+          if (res.confirm) {
             wx.switchTab({
               url: '../task/task'
             })
@@ -1487,7 +1514,7 @@ Page({
   /**
    * 登录注册
    */
-  handleGoAuth(){
+  handleGoAuth() {
     if (parseInt(app.globalData.login) !== 1) { //未登录注册
       this.showLoginModal("您还没有登录，暂不能查看收益");
     } else {

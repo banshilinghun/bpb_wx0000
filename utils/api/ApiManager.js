@@ -1,4 +1,6 @@
 
+const ModalHelper = require("../../helper/ModalHelper");
+
 /**
  * API 接口管理
  */
@@ -110,8 +112,15 @@ function sendRequest(requestInfo) {
         if (typeof (dataBean) === 'string') {
           dataBean = JSON.parse(dataBean);
         }
-        if (Number(dataBean.code) === 1000) {
+        if (parseInt(dataBean.code) === 1000) {
           requestInfo.success && requestInfo.success(dataBean.data);
+        } else if(parseInt(dataBean.code) === 2003) {
+          //补充车型
+          ModalHelper.showWxModalUseConfirm('提示', dataBean.msg, '立即补充', false, res => {
+            wx.navigateTo({
+              url: '../brandList/brandList?flag=1'
+            })
+          })
         } else {
           showModel(dataBean.msg);
           requestInfo.fail && requestInfo.fail(res);
@@ -134,7 +143,6 @@ function sendRequest(requestInfo) {
 }
 
 function showModel(content) {
-  console.log('content--------->' + content);
   if (!content) {
     content = '服务器开小差了\n\r~~~~(>_<)~~~~';
   }

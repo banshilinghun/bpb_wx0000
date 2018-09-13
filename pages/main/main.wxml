@@ -40,11 +40,10 @@
               </view>
               <view class="myad-li">
                 <view class="message" wx:if='{{ myAd.billing_mode == 0 }}'>预计收益：
-                  <label class="data-text">{{ myAd.predict_amount }}元</label>
+                  <label class="data-text b-amount-blod">{{ myAd.predict_amount }}元</label>
                 </view>
                 <view class="message" wx:if='{{ myAd.billing_mode == 1 }}'>预计收益：
-                  <label class="data-text">{{ myAd.min_amount }}
-                    <label class="data-blt">~ </label>{{ myAd.max_amount }}元</label>
+                  <label class="data-text b-amount-blod">{{ myAd.min_amount }}<label class="data-blt b-amount-blod">~</label>{{ myAd.max_amount }}元</label>
                 </view>
                 <view class="message">投放时间：
                   <label class="data-text">{{ myAd.begin_date }}
@@ -85,11 +84,10 @@
             </view>
             <view class="myad-li">
               <view class="message" wx:if="{{ status == 3 && item.billing_mode == 0 }}">预计收益：
-                <label class="data-text">{{ item.predict_amount }}元</label>
+                <label class="data-text b-amount-blod">{{ item.predict_amount }}元</label>
               </view>
               <view class="message" wx:if="{{ status == 3 && item.billing_mode == 1 }}">预计收益：
-                <label class="data-text">{{ item.min_amount }}
-                  <label class="data-blt">~ </label>{{ item.max_amount }}元</label>
+                <label class="data-text b-amount-blod">{{ item.min_amount }}<label class="data-blt b-amount-blod">~</label>{{ item.max_amount }}元</label>
               </view>
               <view class="message" wx:if="{{ status != 3 }}">预计收益：
                 <label class="data-text ywxst">***

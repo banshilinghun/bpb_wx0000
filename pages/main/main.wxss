@@ -57,7 +57,7 @@ page {
 .message {
   font-family: "微软雅黑";
   color: #888;
-  line-height: 24rpx;
+  line-height: 1;
   font-size: 24rpx;
   padding: 0 16rpx, 0, 16rpx;
   overflow: hidden;
@@ -120,6 +120,11 @@ page {
 
 .data-text {
   color: #ff555c;
+}
+
+.b-amount-blod{
+  font-size: 32rpx;
+  font-weight: 500
 }
 
 .myad-li {

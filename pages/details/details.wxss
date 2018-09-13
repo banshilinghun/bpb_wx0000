@@ -1829,7 +1829,7 @@ button::after {
 }
 
 .btn-enable {
-  background: linear-gradient(90deg, #FB653D, #ff555c);
+  background: linear-gradient(90deg, #ff555c, #FB653D);
   opacity: 1
 }
 
@@ -1901,6 +1901,16 @@ button::after {
   color: #666;
   margin-left: 20rpx;
   flex: 1
+}
+
+.b-cancel-select{
+  padding: 5rpx 10rpx;
+  margin-left: 20rpx;
+  color: #ff5a39;
+  border: 1rpx solid #ff5a39;
+  font-size: 20rpx;
+  border-radius: 10rpx;
+  display: inline-block
 }
 
 /*隐藏滚动条*/
