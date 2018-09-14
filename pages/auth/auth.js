@@ -178,8 +178,8 @@ Page({
         that.setData({
           userName: res.real_name,
           textValue: res.plate_no,
-          car_type: res.car_type,
-          is_bad: res.is_bad,
+          car_type: res.car_type? res.car_type : 1,
+          is_bad: res.is_bad? res.is_bad : 2,
           brandName: res.brand_name,
           carModel: res.car_model,
           car_color: res.car_color,
@@ -330,8 +330,7 @@ Page({
   },
 
   mysubmit: function (param, formId) {
-    console.log(param)
-    let user_name = this.data.userName;
+    let user_name = param.name;
     var carPhoto = this.data.carPhoto;
     var licensePhoto = this.data.licensePhoto;
     var car_color = this.data.car_color;

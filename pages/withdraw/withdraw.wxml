@@ -32,29 +32,63 @@
         </view>
       </block>
     </view>
-    <view class="page-section">
-      <view>提现金额</view>
-      <view class='lintcon'>
-        <view class="price">￥</view>
-        <input class="b-withdraw-input" type="digit" value="{{money}}" bindinput='searchMoney'  auto-focus/>
-        <view class="b-withdraw-tip" wx:if="{{ freeAmount === 0 }}">当月已没有免税额度，可下个月再提现</view>
-        <view class="b-withdraw-tip" wx:if="{{ freeAmount !== 0 }}">{{ "当月还剩余免税额度" + freeAmount + "元"  }}</view>
+    <form bindsubmit="submitWithdraw" report-submit="{{ hasFormId }}">
+      <view class="page-section">
+        <view>提现金额</view>
+        <view class='lintcon'>
+          <view class="price">￥</view>
+          <input class="b-withdraw-input" type="digit" value="{{money}}" bindinput='searchMoney' auto-focus />
+          <block wx:if="{{ freeAmount > 0 }}">
+            <view class="b-withdraw-tip">{{ "当月免税额度还剩 " + freeAmount + " 元" }}</view>
+          </block>
+          <block wx:else>
+            <view class="b-withdraw-tip">当月已没有免税额度，可下个月再提现</view>
+          </block>
+        </view>
+        <view class="desc">可提现金额 ¥{{maxMoney}}
+          <view class='qbtxtext' bindtap="allWithdraw">全部提现</view>
+        </view>
       </view>
-      <view class="desc">可提现金额 ¥{{maxMoney}}
-        <view class='qbtxtext' bindtap="allWithdraw">全部提现</view>
+      <view>
+        <view class="tipcon">
+          <view class="tiptext">提现金额：</view>
+          <view class='ptm-text'>最小提现金额为1元；每月免税提现金额为800元，若超过800元，超出部分需要扣除20%个税。</view>
+        </view>
+        <view class="tipcon tipcon2">
+          <view class="tiptext">到账时间：</view>
+          <view class='ptm-text'>预计3个工作日内到账,实际到账时间可能会受银行影响</view>
+        </view>
       </view>
-    </view>
-    <view>
-      <view class="tipcon">
-        <view class="tiptext">提现金额：</view>
-        <view class='ptm-text'>最小提现金额为1元；每月免税提现金额为800元，若超过800元，超出部分需要扣除20%个税。</view>
-      </view>
-         <view class="tipcon tipcon2">
-        <view class="tiptext">到账时间：</view>
-        <view class='ptm-text'>预计3个工作日内到账,实际到账时间可能会受银行影响</view>
-      </view>
-    </view>
-    <button  class='btn-quit' bindtap="submitWithdraw">提现</button>
+      <button class='btn-quit' formType="submit">提现</button>
+    </form>
   </view>
-
 </view>
+
+<!-- 确认预约提示 -->
+<model visible="{{ visibleWithdraw }}" title="提现确认" cancelText="取消" confirmText="确定" confirmLoading="{{ confirmWithdrawLoading }}"
+  bind:confirm="handleConfirmWithdraw" bind:cancel="handleWithdrawCancel">
+  <view class='b-modal-wrapper'>
+    <view class="b-modal-content">
+      <view class="b-flex">
+        <view class="b-top-wrapper b-border-right">
+          <view>当月累计提现金额</view>
+          <view>{{ withdrawInfo.month_amount }}元</view>
+        </view>
+        <view class="b-top-wrapper">
+          <view>本次提现金额</view>
+          <view>{{ withdrawInfo.withdraw_amount }}元</view>
+        </view>
+      </view>
+      <view class="b-flex">
+        <view class="b-top-wrapper b-border-right b-theme-color">
+          <view>本次需缴个税</view>
+          <view class="b-important">{{ withdrawInfo.now_tax_amount }}元</view>
+        </view>
+        <view class="b-top-wrapper b-theme-color">
+          <view>实际到账金额</view>
+          <view class="b-important">{{ withdrawInfo.real_amount }}元</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</model>

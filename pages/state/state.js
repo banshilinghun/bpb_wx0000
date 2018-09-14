@@ -55,7 +55,7 @@ Page({
           if (parseInt(status) === 1){//审核中
             that.setData({
               stateSrc: 'https://wxapi.benpaobao.com/static/app_img/v2/checking-icon.png',
-              stateStr: '您的资料已提交审核，请耐心等待审核结果'
+              stateStr: '您的资料已提交审核，\n审核时间为三个工作日内，请耐心等待审核结果'
             })
           }else if(status == 2){//未通过
             that.setData({

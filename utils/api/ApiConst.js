@@ -198,3 +198,12 @@ export const SET_USER_CAR_CHECK_DATE = baseUrl + "app/update/user_car_check_date
 
 //获取车主认证信息
 export const GET_USER_AUTH_INFO = baseUrl + "app/get/user_auth_info";
+
+//获取用户当前提现额度
+export const GET_USER_TAXFREE = baseUrl + "app/get/user_taxfree";
+
+//用户提现
+export const COMMIT_USER_WITHDRAW = baseUrl + "app/commit/user_withdraw";
+
+//确认提现信息
+export const COMMIT_WITHDRAW_INFO = baseUrl + "app/commit/confirm_withdraw_info";

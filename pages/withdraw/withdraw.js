@@ -3,27 +3,49 @@ var util = require("../../utils/common/util");
 const ApiManager = require("../../utils/api/ApiManager");
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ModalHelper = require("../../helper/ModalHelper");
+const LoadingHelper = require("../../helper/LoadingHelper");
 Page({
 	data: {
 		maxMoney: "0.00",
-		freeAmount: 100
+		freeAmount: 0,
+		visibleWithdraw: false,
+		confirmWithdrawLoading: false,
+		withdrawInfo: null,
+		hasFormId: true
 	},
-	
-	onLoad: function() {
+
+	onLoad: function () {
 
 	},
 
-	onShow: function() {
+	onShow: function () {
 		this.requestUserBandcard();
 		this.requestUserAccount();
+		this.requestUserTaxfree();
 	},
 
-	requestUserBandcard(){
+	/**
+	 * 用户当前提现额度
+	 */
+	requestUserTaxfree() {
 		let requestData = {
-      url: ApiConst.USER_BBANCARD,
-      data: {},
-      success: res => {
-        if(res) {
+			url: ApiConst.GET_USER_TAXFREE,
+			data: {},
+			success: res => {
+				this.setData({
+					freeAmount: Number(res.total_amount) - Number(res.month_amount)
+				})
+			}
+		}
+		ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+	},
+
+	requestUserBandcard() {
+		let requestData = {
+			url: ApiConst.USER_BBANCARD,
+			data: {},
+			success: res => {
+				if (res) {
 					this.setData({
 						haveCard: true,
 						bankName: res.bank_name,
@@ -36,38 +58,38 @@ Page({
 						haveCard: false
 					})
 				}
-      }
-    }
+			}
+		}
 		ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
 	},
 
-	requestUserAccount(){
+	requestUserAccount() {
 		let requestData = {
-      url: ApiConst.GET_USER_ACCOUNT,
-      data: {},
-      success: res => {
-        this.setData({
+			url: ApiConst.GET_USER_ACCOUNT,
+			data: {},
+			success: res => {
+				this.setData({
 					maxMoney: util.toDecimal2(res.activityable_amount)
 				})
-      }
-    }
-    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+			}
+		}
+		ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
 	},
 
-	addCard: function() {
+	addCard: function () {
 		wx.navigateTo({
 			url: '../addBankCard/addBankCard'
 		})
 	},
 
-	changeCard: function() {
+	changeCard: function () {
 		wx.showModal({
 			title: "提示",
 			content: "确认更换为其它银行卡？",
 			confirmText: "确认",
 			cancelText: "取消",
-			success: function(res) {
-				if(res.confirm) {
+			success: function (res) {
+				if (res.confirm) {
 					wx.navigateTo({
 						url: '../addBankCard/addBankCard'
 					})
@@ -76,34 +98,34 @@ Page({
 		})
 	},
 
-	allWithdraw: function() {
+	allWithdraw: function () {
 		var maxMoney = this.data.maxMoney;
 		this.setData({
 			money: maxMoney
 		})
 	},
 
-	searchMoney: function(e) {
+	searchMoney: function (e) {
 		const that = this;
-    let inputMoney = e.detail.value;
+		let inputMoney = e.detail.value;
 		var maxMoney = this.data.maxMoney;
-    if (Number(inputMoney) > Number(maxMoney)) {
+		if (Number(inputMoney) > Number(maxMoney)) {
 			this.setData({
 				money: this.data.maxMoney
 			})
-		}else{
+		} else {
 			this.setData({
 				money: that.formatMoney(inputMoney)
 			})
 		}
 	},
 
-	formatMoney(inputMoney){
-		if(inputMoney.toString().indexOf('.') !== -1 ){
+	formatMoney(inputMoney) {
+		if (inputMoney.toString().indexOf('.') !== -1) {
 			let inputArr = inputMoney.toString().split('.');
-			if(inputArr.length === 2){
+			if (inputArr.length === 2) {
 				console.log(inputArr);
-				if(inputArr[1].length > 2){
+				if (inputArr[1].length > 2) {
 					inputMoney = Number(inputMoney).toFixed(2);
 				}
 			}
@@ -111,46 +133,84 @@ Page({
 		return inputMoney;
 	},
 
-	submitWithdraw: function() {
+	submitWithdraw: function (event) {
+		let formId = event.detail.formId;
 		var bankId = this.data.bank_id;
 		var money = this.data.money;
-		console.log(money)
-		//console.log(bankId)
 		var reqdata = {};
 		reqdata.bank_id = bankId;
 		reqdata.withdraw_amount = money;
-		if(!bankId) {
+		reqdata.formId = formId;
+		if (!bankId) {
 			ModalHelper.showWxModal('提示', '请绑定银行卡', '我知道了', false);
 		} else {
-			if(!money) {
+			if (!money) {
 				ModalHelper.showWxModal('提示', '请输入提现金额', '我知道了', false);
 			} else {
-				if(money < 1) {
+				if (money < 1) {
 					ModalHelper.showWxModal('提示', '提现金额不能小于1元', '我知道了', false);
 				} else {
-					ModalHelper.showWxModalShowAllWidthCallback('提示', '确认要提现？', '确认', '取消', false, res => {
-						if(res.confirm){
-							this.sendWithdrawCommit(reqdata);
-						}
-					})
+					this.sendWithdrawCommit(reqdata);
 				}
 			}
 		}
 	},
 
-	sendWithdrawCommit(){
+	/**
+	 * 请求提现信息
+	 */
+	sendWithdrawCommit(reqdata) {
+		const that = this;
+		LoadingHelper.showLoading();
 		let requestData = {
-			url: ApiConst.WITHDRAW,
+			url: ApiConst.COMMIT_USER_WITHDRAW,
 			data: reqdata,
 			success: res => {
-				wx.showToast({
-					title: "提现成功"
+				that.setData({
+					withdrawInfo: res,
+					visibleWithdraw: true
 				})
-				setTimeout(function() {
-					wx.switchTab({
-						url: '../me/me'
+			},
+			complete: res => {
+				LoadingHelper.hideLoading();
+			}
+		}
+		ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+	},
+
+	handleWithdrawCancel() {
+		this.setData({
+			visibleWithdraw: false
+		})
+	},
+
+	/**
+	 * 提现确认
+	 */
+	handleConfirmWithdraw() {
+		const that = this;
+		that.setData({
+			confirmWithdrawLoading: true
+		})
+		let requestData = {
+			url: ApiConst.COMMIT_WITHDRAW_INFO,
+			data: {
+				union_key: that.data.withdrawInfo.union_key
+			},
+			success: res => {
+				that.setData({
+					visibleWithdraw: false
+				})
+				ModalHelper.showWxModalUseConfirm('提交成功', '提现申请已提交，请耐心等待', '我知道了', false, res => {
+					wx.redirectTo({
+						url: '../withdrawRecord/withdrawRecord'
 					})
-				}, 1000);
+				})
+			},
+			complete: res => {
+				that.setData({
+					confirmWithdrawLoading: false
+				})
 			}
 		}
 		ApiManager.sendRequest(new ApiManager.requestInfo(requestData));

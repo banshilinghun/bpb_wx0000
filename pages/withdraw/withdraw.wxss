@@ -130,3 +130,63 @@ input {
   font-size: 24rpx;
   color: #ff555c;
 }
+
+.b-modal-wrapper{
+  text-align: center
+}
+
+.b-modal-content{
+  border: 1rpx solid #ddd;
+  border-radius: 10rpx
+}
+
+.b-modal-wrapper{
+  padding: 0 20rpx 20rpx 20rpx
+}
+
+.b-model-item{
+  display: flex;
+  font-size: 26rpx;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 0
+}
+
+.b-item-border{
+  margin-bottom: 10rpx;
+  padding-bottom: 10rpx
+}
+
+.b-item-bottom{
+  display: flex
+}
+
+.b-border-bottom{
+  border-bottom: 1rpx solid #ddd;
+}
+
+.b-flex{
+  display: flex;
+  border-bottom: 1rpx solid #ddd
+}
+
+.b-top-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 20rpx 0;
+  font-size: 26rpx;
+  color: #666
+}
+
+.b-border-right{
+  border-right: 1rpx solid #ddd
+}
+
+.b-important{
+  font-size: 36rpx;
+  font-weight: 500
+}

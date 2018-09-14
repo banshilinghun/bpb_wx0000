@@ -1,26 +1,28 @@
 <view class='b-record-container'>
-  <!-- title -->
-  <view class='b-record-title'>
-    <view class='b-record-title-item' wx:for='{{ titleArray }}' wx:key='title'>
-      <text>{{ item }}</text>
-    </view>
-  </view>
   <!-- 列表 body -->
-  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
+  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px' class="b-scroll">
     <block wx:if='{{ withdrawRecords && withdrawRecords.length !== 0 }}'>
-      <view class='b-record-body' wx:for='{{ withdrawRecords }}' wx:key='body'>
+      <view wx:for='{{ withdrawRecords }}' wx:key='body'>
         <view class='b-body-item'>
-          <view class='b-body-common'>
+          <view class="b-item-amount">
+            <text>提现金额: </text>
+            <text class="b-other-amount">{{ item.withdraw_amount }}元</text>
+          </view>
+          <view class="b-tax-amount">
+            <text>需缴个税: </text>
+            <text class="b-other-amount">{{ item.tax_amount }}元</text>
+          </view>
+          <view class="b-status">
+            <text>{{ item.statusStr }}</text>
+          </view>
+          <view class="b-time">
             <text>{{ item.date }}</text>
           </view>
-          <view class='b-body-common b-body-money'>
-            <text>{{ item.withdraw_amount }}元</text>
-          </view>
-          <view class='b-body-common b-body-status'>
-            <text>{{ item.statusStr}}</text>
+          <view class="b-body-real">
+            <text>实际到账: </text>
+            <text class="b-real-amount">{{ item.real_amount }}元</text>
           </view>
         </view>
-        <view class='b-item-line' wx:if='{{ index !== withdrawRecords.length - 1 }}'></view>
       </view>
       <loading-more isShowLoadingMore="{{ isShowLoadingMore }}" showNomore="{{ showNomore }}"></loading-more>
     </block>

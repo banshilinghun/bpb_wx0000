@@ -47,7 +47,7 @@ Date.prototype.Format = function () {
   const h = this.getHours() + ':';
   const m = this.getMinutes() + ':';
   const s = this.getSeconds();
-  return `${Y}${M}${D}`;
+  return `${Y}${M}${D} ${h}${m}${s}`;
 }
 
 /**

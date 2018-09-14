@@ -10,7 +10,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    titleArray: ['提现时间', '提现金额', '提现状态'],
     scrollHeight: 0,
     count: 0,
     totalMoney: 0,
@@ -33,7 +32,7 @@ Page({
     wx.getSystemInfo({
       success: res => {
         this.setData({
-          scrollHeight: res.windowHeight - 120
+          scrollHeight: res.windowHeight - 60
         })
       },
     })
@@ -57,7 +56,7 @@ Page({
           that.setData({
             page: pageIndex,
             count: res.total_info.total_count,
-            totalMoney: res.total_amount || 0,
+            totalMoney: res.total_info.total_amount || 0,
             withdrawRecords: res.list
           })
         } else {
