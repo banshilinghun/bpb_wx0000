@@ -2,8 +2,8 @@
 .service-container{
   height: 100vh;
   width: 100%;
-  background-color: #F6F6F6;
-  padding-top: 20rpx;
+  background-color: rgba(236, 235, 242, 0.7);
+  padding-top: 30rpx;
 }
 
 .service-wrapper{
@@ -13,24 +13,26 @@
   flex-direction: row;
   align-items: center;
   text-align: left;
-  min-height: 140rpx;
+  height: 180rpx;
   padding: 24rpx 30rpx 24rpx 30rpx;
+  border-top: 1rpx solid #ddd;
+  border-bottom: 1rpx solid #ddd;
 }
 
 .service-image-wrapper{
-  width: 92rpx;
-  height: 92rpx;
+  width: 130rpx;
+  height: 130rpx;
 }
 
 .service-image{
   width: 100%;
   height: 100%;
-  border-radius: 5rpx;
+  border-radius: 10rpx;
 }
 
 .text-wrapper{
   flex: 1;
-  margin-left: 20rpx;
+  margin-left: 30rpx;
 }
 
 .text1{
@@ -41,7 +43,7 @@
 }
 
 .text2{
-  margin-top: 5rpx;
+  margin-top: 15rpx;
   font-size: 28rpx;
   color: #999999;
   line-height: 40rpx;
@@ -67,6 +69,11 @@ button::after{
 }
 
 .b-divider{
+  height: 40rpx;
+  width: 100%
+}
+
+.b-divider-top{
   height: 20rpx;
   width: 100%
 }

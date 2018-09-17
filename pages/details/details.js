@@ -1210,6 +1210,12 @@ Page({
       })
       that.resetStationCount();
       that.initDateList(index);
+      if(!app.globalData.showSubscribeClickTip){
+        app.globalData.showSubscribeClickTip = true;
+        $Toast({
+          content: '再次点击可取消选中哦'
+        })
+      }
     } else { //取消选中
       that.resetServerSelect();
       that.setRemainCount(that.data.totalCount);

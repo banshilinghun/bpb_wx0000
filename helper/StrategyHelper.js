@@ -154,10 +154,10 @@ let taskTitleStrategy = {
   },
 
   //投放中，固定收益
-  8: () => "广告投放中",
+  8: () => "奔跑中",
 
   //投放中，按时计费
-  9: () => "广告投放中",
+  9: () => "奔跑中",
   
   //广告处于检测中
   10: function(runningTask){
@@ -195,7 +195,7 @@ let taskStatusStrategy = {
   installAudit: () => '审核中',
   installFail: () => '投放异常',
   rework: () => taskStatusStrategy.installFail(),
-  runingFixed: ()=> '投放中',
+  runingFixed: ()=> '奔跑中',
   runingByTime: () => taskStatusStrategy.runingFixed(),
   needCheck: () => '待检测',
   checkAudit: () => '检测中',
@@ -211,6 +211,37 @@ export function getTaskStatusStr(taskStatus){
     return;
   }
   return taskStatusStrategy[taskStatus]();
+}
+
+let stepStrategy = {
+  subscribed: () => 1,
+  subscribeOvertime: () => stepStrategy.subscribed(),
+  signedWaitInstall: () => stepStrategy.subscribed(),
+  installing: () => stepStrategy.subscribed(),
+  installed: () => stepStrategy.subscribed(),
+  installAudit: () => stepStrategy.subscribed(),
+  installFail: () => stepStrategy.subscribed(),
+  rework: () => stepStrategy.subscribed(),
+  runingFixed: ()=> 2,
+  runingByTime: () => stepStrategy.runingFixed(),
+  needCheck: () => 3,
+  checkAudit: () => stepStrategy.needCheck(),
+  checkfail: () => stepStrategy.needCheck()
+}
+
+/**
+ * 步骤条进度
+ */
+export function getCurrentStep(status){
+  console.log('status---------->' + status);
+  let current = 1;
+  try{
+    current = stepStrategy[status]();
+  } catch(error) {
+    current = 4;
+  }
+  console.log('current---------->' + current);
+  return current;
 }
 
 /**

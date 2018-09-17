@@ -4,7 +4,7 @@
 
 .divider {
   height: 20rpx;
-  background-color: #f6f6f6;
+  background-color: rgba(236, 235, 242, 0.7);
 }
 
 .queue-list {

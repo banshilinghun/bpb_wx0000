@@ -2,7 +2,7 @@
   <!-- 列表 body -->
   <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px' class="b-scroll">
     <block wx:if='{{ withdrawRecords && withdrawRecords.length !== 0 }}'>
-      <view wx:for='{{ withdrawRecords }}' wx:key='body'>
+      <view class="b-item-container" wx:for='{{ withdrawRecords }}' wx:key='body'>
         <view class='b-body-item'>
           <view class="b-item-amount">
             <text>提现金额: </text>

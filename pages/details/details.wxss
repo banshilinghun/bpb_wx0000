@@ -1,6 +1,6 @@
 @import "../../style/common.wxss";
 page {
-  background-color: #f6f6f6;
+  background-color: rgba(236, 235, 242, 0.7);
   padding-bottom: 0
 }
 
@@ -1399,7 +1399,8 @@ button {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap
+  white-space: nowrap;
+  text-decoration: underline
 }
 
 .b-color-content{
@@ -1471,7 +1472,7 @@ button {
 .b-design-effect-image {
   border-radius: 5rpx;
   width: 100%;
-  background: #f6f6f6;
+  background: rgba(236, 235, 242, 0.7);
 }
 
 .b-design-effect-type {
@@ -1893,8 +1894,7 @@ button::after {
 }
 
 .b-require-title{
-  color: #333;
-  font-weight: 500
+  color: #333
 }
 
 .b-require-content{

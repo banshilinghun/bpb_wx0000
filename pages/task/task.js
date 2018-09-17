@@ -1,9 +1,3 @@
-/** 
- * todo 
- * 1、超时未签到处理
- * 2、地理位置显示处理，距离显示
- * 3、多个计时器
- */
 
 
 const app = getApp();
@@ -41,7 +35,8 @@ Page({
     isDiDi: false,
     installTime: '',
     waitTime: '',
-    installOverTime: ''
+    installOverTime: '',
+    stepArray: ['预约','安装','奔跑中','检测','结束']
   },
 
   /**
@@ -76,11 +71,12 @@ Page({
         if (runningTempTask && Object.keys(runningTempTask).length !== 0) {
           runningTempTask.date = timeUtil.formatDateTimeSprit(runningTempTask.begin_date) + "-" + timeUtil.formatDateTimeSprit(runningTempTask.end_date);
           runningTempTask.ad_name = StringUtil.formatAdName(runningTempTask.ad_name, runningTempTask.city_name);
-          runningTempTask.statusStr = StrategyHelper.getTaskStatusStr(StrategyHelper.getCurrentStatus(runningTempTask));
           //初始化状态
           that.setData({
             status: StrategyHelper.getCurrentStatus(runningTempTask),
           })
+          runningTempTask.statusStr = StrategyHelper.getTaskStatusStr(that.data.status);
+          runningTempTask.current = StrategyHelper.getCurrentStep(that.data.status);
           //计算距离 process=1 || process=2
           that.transformReserve(runningTempTask);
           //签到未安装等待时间,等待人数  process=3
@@ -515,6 +511,23 @@ Page({
       }
     }
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
+  handleStepDetail(){
+    const that = this;
+    wx.navigateTo({
+      url: '../stepDetail/stepDetail?status=' + that.data.status
+    })
+  },
+
+  handleCallPhone(event){
+    ModalHelper.showWxModalShowAllWidthCallback('提示', '确定要联系服务网点？', '确定', '取消', true, res => {
+      if(res.confirm){
+        wx.makePhoneCall({
+          phoneNumber: event.currentTarget.dataset.phone
+        })
+      }
+    })
   }
 
 })

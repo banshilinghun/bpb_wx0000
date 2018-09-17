@@ -5,6 +5,8 @@
   "usingComponents": {
     "b-toast": "../../components/toast/index",
     "emptyView": "../../components/emptyView/index",
-    "model": "../../components/model/index"
+    "model": "../../components/model/index",
+    "i-steps": "../../components/steps/index",
+    "i-step": "../../components/step/index"
   }
 }

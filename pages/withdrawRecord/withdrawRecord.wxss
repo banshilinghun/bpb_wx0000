@@ -19,11 +19,16 @@
   position: relative;
 }
 
+.b-item-container{
+  padding: 15rpx 0;
+  height: 180rpx;
+}
+
 .b-body-item{
   position: relative;
-  min-height: 180rpx;
+  height: 180rpx;
   background-color: #fff;
-  margin: 15rpx 20rpx;
+  margin: 0 20rpx;
   border: 1rpx solid #ddd;
   border-radius: 10rpx
 }
@@ -118,7 +123,7 @@
 }
 
 .b-scroll{
-  background-color: #f6f6f6;
+  background-color: rgba(236, 235, 242, 0.7);
   padding-top: 10rpx
 }
 

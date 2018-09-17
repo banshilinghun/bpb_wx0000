@@ -266,9 +266,9 @@ Page({
         let couponList = res.coupon_info;
         let couponCount = 0;
         if (couponList && couponList.length !== 0) {
-          //状态为2表示已激活未领取的奖励
+          //状态为2表示已激活未领取的奖励, 状态为1表示未激活的奖励
           couponCount = res.coupon_info.filter(element => {
-            return parseInt(element.status) === 2;
+            return parseInt(element.status) === 2 || parseInt(element.status) === 1;
           }).length;
         }
         that.setData({

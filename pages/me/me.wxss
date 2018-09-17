@@ -1,7 +1,7 @@
 
 page{
-  background: #f6f6f6;
-  padding-bottom: 20rpx
+  background: rgba(236, 235, 242, 0.7);
+  padding-bottom: 40rpx
 }
 
 .b-me-header{
@@ -29,7 +29,7 @@ page{
   height: 120rpx;
   border-radius: 50%;
   border: 1rpx solid #fff;
-  background: #f6f6f6;
+  background: rgba(236, 235, 242, 0.7);
   box-shadow: 0 0 10rpx #666
 }
 
@@ -111,7 +111,7 @@ page{
 }
 
 .b-me-income{
-  margin-top: 20rpx;
+  margin-top: 30rpx;
   background: #fff
 }
 

@@ -6,8 +6,8 @@
 
 .cell-group{
   width: 100%;
-  /* border-top: 1rpx solid #ddd;
-  border-bottom: 1rpx solid #ddd; */
+  border-top: 1rpx solid #ddd;
+  border-bottom: 1rpx solid #ddd;
 }
 
 .cell-item{

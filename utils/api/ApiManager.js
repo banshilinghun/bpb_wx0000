@@ -23,12 +23,11 @@ let domainStrategy = {
  * 加载域名
  */
 function getBaseUrl() {
-  return domainStrategy['test']();
+  return domainStrategy['release2']();
 }
 
 class uploadInfo {
   constructor(object) {
-    console.log('filePath------uploadInfo--->' + object.filePath);
     this.url = object.url;
     this.filePath = object.filePath;
     this.fileName = object.fileName;

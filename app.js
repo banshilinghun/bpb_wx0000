@@ -35,7 +35,9 @@ App({
     //一个应用周期内是否展示过年检弹窗
     visibleCheckDate: false,
     //是否是iPhone X
-    isIpx: false
+    isIpx: false,
+    //是否展示过预约点击取消提示
+    showSubscribeClickTip: false
   },
 
 })

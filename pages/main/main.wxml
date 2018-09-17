@@ -164,5 +164,20 @@
     <view>系统已为你预约成功，是否接受安排？</view>
   </view>
 </model>
+<!-- 任务弹窗 -->
+<model visible="{{ visibleNewVersion }}" title="{{ title }}" cancelText="{{ cancelText }}" confirmText="{{ confirmText }}" cancelLoading="{{ cancelLoading }}"
+  confirmLoading="{{ confirmLoading }}" bind:cancel="handleCancel" bind:confirm="handleConfirm">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view>{{ subsAdName }}</view>
+      <view>{{ subsServerName }}</view>
+      <view>{{ subsServerAddress }}</view>
+    </view>
+    <view>系统已为你预约成功，是否接受安排？</view>
+  </view>
+</model>
 <!-- 轻提示 -->
 <b-toast id="toast"></b-toast>
+
+<dialog-guide showDialog='{{ showGuideDialog }}' imageSrc='{{ guideModalInfo.src }}'
+  btnStr='{{ guideModalInfo.btnStr }}' content='{{ guideModalInfo.content }}' bind:action='handleGuideTap'></dialog-guide>

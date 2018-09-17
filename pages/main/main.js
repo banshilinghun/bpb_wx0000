@@ -9,6 +9,7 @@ const ApiManager = require("../../utils/api/ApiManager.js");
 const RunStatus = require("../main/runStatus");
 const StrategyHelper = require("../../helper/StrategyHelper");
 const StringUtil = require("../../utils/string/stringUtil");
+const StrorageHelper = require("../../helper/StorageHelper");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -54,7 +55,8 @@ Page({
     subsServerName: '',
     subsServerAddress: '',
     queue_adId: '',
-    queue_serverId: ''
+    queue_serverId: '',
+    showGuideDialog: false
   },
 
   onLoad: function (options) {
@@ -97,6 +99,34 @@ Page({
           checkImg2: res.windowWidth * 0.8 * 0.466667
         })
       }
+    })
+    //检测新版本弹窗
+    //this.checkNewVersionModal();
+  },
+
+  //todo
+  checkNewVersionModal(){
+    let showNewVersionModal = StrorageHelper.getLocalStorage(StrorageHelper.NEW_VERSION);
+    console.log('showNewVersionModal-------------->' + showNewVersionModal);
+    if(!showNewVersionModal){
+      StrorageHelper.saveLocalStorage(StrorageHelper.NEW_VERSION, true);
+      this.setData({
+        showGuideDialog: true,
+        guideModalInfo: {
+          src: "https://wxapi.benpaobao.com/static/app_img/auth-icon.png",
+          btnStr: "立即查看",
+          content: "穿新版本"
+        }
+      })
+    }
+  },
+
+  handleGuideTap(){
+    wx.navigateTo({
+      url: '../stepDetail/stepDetail'
+    })
+    this.setData({
+      showGuideDialog: false
     })
   },
 
@@ -598,6 +628,6 @@ Page({
     wx.switchTab({
       url: '../task/task'
     })
-  }
+  },
 
 })

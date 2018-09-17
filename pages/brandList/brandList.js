@@ -1,4 +1,3 @@
-
 /** 车型列表 */
 
 const ApiConst = require("../../utils/api/ApiConst.js");
@@ -14,8 +13,8 @@ Page({
     // bHeight: 0,
     carList: [],
     isShowLetter: false,
-    scrollTop: 0,//置顶高度
-    scrollTopId: '',//置顶id
+    scrollTop: 0, //置顶高度
+    scrollTopId: '', //置顶id
     flag: 1, //1：表示补充车型，2：表示注册选择车型
   },
 
@@ -33,7 +32,7 @@ Page({
   },
 
   //请求所有车型信息
-  requestAllBrands: function(){
+  requestAllBrands: function () {
     var that = this;
     wx.showLoading({
       title: '奔跑中🚗...'
@@ -46,6 +45,17 @@ Page({
         console.log(res);
         let letterList = that.getLetterList(res);
         let carList = that.divideGroup(res);
+        carList.forEach(element => {
+          for (let i = 0; i < element.carInfo.length; i++) {
+            let carBean = element.carInfo[i];
+            if (!carBean.logo) {
+              continue;
+            }
+            if (!carBean.logo.endsWith(".png") && !carBean.logo.endsWith(".jpg")) {
+              carBean.logo = "";
+            }
+          }
+        });
         that.setData({
           carList: carList,
           searchLetter: letterList,
@@ -71,15 +81,15 @@ Page({
   },
 
   //分组
-  divideGroup: function(targetList){
+  divideGroup: function (targetList) {
     let letterList = this.sortLetter(targetList);
     let tempList = [];
     for (let i = 0; i < letterList.length; i++) {
       let tempObj = {};
       tempObj.carInfo = [];
       tempObj.initial = letterList[i];
-      for(let j = 0; j < targetList.length; j++){
-        if (letterList[i] == targetList[j].initial){
+      for (let j = 0; j < targetList.length; j++) {
+        if (letterList[i] == targetList[j].initial) {
           targetList[j].brandId = targetList[j].id;
           tempObj.carInfo.push(targetList[j]);
         }
@@ -92,7 +102,7 @@ Page({
   /**
    * 首字母数组
    */
-  sortLetter: function(targetList){
+  sortLetter: function (targetList) {
     let letterList = [];
     for (let i = 0; i < targetList.length; i++) {
       let dataBean = targetList[i];
@@ -126,7 +136,7 @@ Page({
     })
   },
 
-  handleImageError(event){
+  handleImageError(event) {
     console.log(event);
   }
 })

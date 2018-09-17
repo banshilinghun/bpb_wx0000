@@ -4,7 +4,7 @@
 }
 
 .b-task-content {
-  margin: 30rpx 30rpx 0 30rpx;
+  margin: 30rpx;
   box-shadow: 0 2px 8px #ccc;
   border-radius: 16rpx
 }
@@ -83,6 +83,18 @@
   flex-direction: row;
   align-items: center;
   margin-top: 8rpx
+}
+
+.b-server-name{
+  text-decoration: underline;
+  display: flex;
+  align-items: center
+}
+
+.b-call-phone{
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 20rpx
 }
 
 .b-location-distance{
@@ -234,7 +246,7 @@
 
 .b-action-btn {
   display: inline-block;
-  padding: 0 20rpx;
+  padding: 0 25rpx;
   outline: none;
   margin: 0;
   background: linear-gradient(90deg, #ff555c, #FB653D);
@@ -246,8 +258,9 @@
 }
 
 .b-action-cancel {
-  margin-right: 10rpx;
-  background: #F2F2F2;
+  margin-right: 20rpx;
+  background: #fff;
+  box-shadow: 0 2px 8px #ccc;
   color: #333
 }
 
@@ -362,7 +375,7 @@ button::after {
   padding: 20rpx;
   border-radius: 10rpx;
   background: linear-gradient(90deg, #ff555c, #FB653D);
-  opacity: 0.8;
+  opacity: 0.7;
   font-size: 24rpx;
   margin-top: 20rpx;
   display: flex;
@@ -376,6 +389,44 @@ button::after {
 
 .b-reason-content{
   flex: 1
+}
+
+.b-step-wrapper{
+  padding-bottom: 20rpx
+}
+
+.b-task-divider{
+  height: 20rpx;
+  background-color: rgba(236, 235, 242, 0.7)
+}
+
+.b-step-title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20rpx
+}
+
+.b-step-title-left{
+  font-size: 32rpx;
+  color: #333;
+  flex: 1
+}
+
+.b-step-arrow{
+  height: 28rpx;
+  width: 28rpx;
+}
+
+.b-step-title-right{
+  color: #999;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center
+}
+
+.b-task-step{
+  border-bottom: 1rpx solid #ddd
 }
 
 /* 已结束 over */

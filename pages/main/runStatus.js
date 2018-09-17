@@ -50,7 +50,7 @@ export function getAdStatusStr(adBean) {
       adStatusStr = '剩余';
       break;
     case RUNNING:
-      adStatusStr = '投放中';
+      adStatusStr = '奔跑中';
       break;
     case CHECKING:
       adStatusStr = '检测中';
@@ -104,7 +104,7 @@ export function updateActionStr(actionStatus) {
       actionStr = '查看我的任务';
       break;
     case RUNING_ACTION:
-      actionStr = '广告投放中';
+      actionStr = '奔跑中';
       break;
     case CHECKING_ACTION:
       actionStr = '广告检测中';

@@ -3,7 +3,7 @@
   height: 100rpx;
   width: 100%;
   position: relative;
-  background-color: #F6F6F6;
+  background-color: rgba(236, 235, 242, 0.7);
 }
 
 .no-more-wrapper {
@@ -12,7 +12,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #F6F6F6;
+  background-color: rgba(236, 235, 242, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #F6F6F6;
+  background-color: rgba(236, 235, 242, 0.7);
 }
 
 .weui-loadmore__tips{

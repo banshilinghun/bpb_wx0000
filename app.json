@@ -34,7 +34,8 @@
     "pages/earningRecord/earningRecord",
     "pages/declare/declare",
     "pages/task/task",
-    "pages/prove/prove"
+    "pages/prove/prove",
+    "pages/stepDetail/stepDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

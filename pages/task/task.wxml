@@ -6,6 +6,27 @@
         <text>进行中</text>
       </view>
       <view class='b-task-content'>
+        <block>
+          <view class='b-task-step' bindtap="handleStepDetail">
+            <view class="b-step-title">
+              <view class="b-step-title-left">进度</view>
+              <view class="b-step-title-right">
+                <view>详情</view>
+                <image class="b-step-arrow" src="../../image/arrow.png"></image>
+              </view>
+            </view>
+            <!-- 步骤条 -->
+            <i-steps i-class="b-step-wrapper" current="{{ runningTask.current }}">
+              <block wx:for="{{ stepArray }}" wx:key="item.id">
+                <i-step>
+                  <view slot="title">
+                    {{ item }}
+                  </view>
+                </i-step>
+              </block>
+            </i-steps>
+          </view>
+        </block>
         <view class='b-cotnent-detail'>
           <block wx:if="{{ !runningTask.action.runingFixed && !runningTask.action.runingByTime }}">
             <view>
@@ -40,8 +61,9 @@
                   </view>
                   <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.reserveDate.address }}'>
                     <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
-                    <view class='b-time-text'>
+                    <view class='b-time-text b-server-name'>
                       <text>{{ runningTask.reserveDate.server_name }}</text>
+                      <image wx:if="{{ runningTask.reserveDate.phone }}" class="b-call-phone" src="https://wxapi.benpaobao.com/static/app_img/v2/b-call-phone.png" catchtap="handleCallPhone" data-phone="{{ runningTask.reserveDate.phone }}"></image>
                     </view>
                     <!-- 导航 -->
                     <view class='b-go-map' catchtap='handleNavigation'>
@@ -57,7 +79,7 @@
               <block wx:elif="{{ runningTask.action.subscribeOvertime }}">
                 <view class='b-content-margin'>
                   <view class='b-subscribe-info'>
-                    <image class='b-time-image' src='{{ runningTask.logo }}'></image>
+                    <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-time-icon.png'></image>
                     <view class='b-time-text'>
                       <text>{{ runningTask.reserveDate.subscribeTime }}</text>
                     </view>
@@ -67,8 +89,9 @@
                   </view>
                   <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.reserveDate.address }}'>
                     <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
-                    <view class='b-time-text'>
+                    <view class='b-time-text b-server-name'>
                       <text>{{ runningTask.reserveDate.server_name }}</text>
+                      <image wx:if="{{ runningTask.reserveDate.phone }}" class="b-call-phone" src="https://wxapi.benpaobao.com/static/app_img/v2/b-call-phone.png" catchtap="handleCallPhone" data-phone="{{ runningTask.reserveDate.phone }}"></image>
                     </view>
                     <!-- 导航 -->
                     <view class='b-go-map' catchtap='handleNavigation'>
@@ -215,10 +238,11 @@
                   <view class='b-audit-fail'>
                     <!-- 返工 -->
                     <block>
-                      <view class='b-address' bindtap='handleShowAddress' data-address='{{ "一号车库一号车库一号车库一号车库一号车库一号车库一号车库" }}'>
+                      <view class='b-address' bindtap='handleShowAddress' data-address='{{ runningTask.stationInfo.name }}'>
                         <image class='b-time-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-location-icon.png'></image>
-                        <view class='b-time-text'>
-                          <text>一号车库一号车库一号车库一号车库一号车库一号车库一号车库</text>
+                        <view class='b-time-text b-server-name'>
+                          <text>{{ runningTask.stationInfo.name }}</text>
+                          <image wx:if="{{ runningTask.stationInfo.phone }}" class="b-call-phone" src="https://wxapi.benpaobao.com/static/app_img/v2/b-call-phone.png" catchtap="handleCallPhone" data-phone="{{ runningTask.stationInfo.phone }}"></image>
                         </view>
                         <!-- 导航 -->
                         <view class='b-go-map' catchtap='handleNavigation'>
@@ -257,7 +281,7 @@
                   <text>{{ runningTask.amountInfo.predict_amount }}元</text>
                 </view>
                 <view class='b-task-status'>
-                  <text>投放中</text>
+                  <text>奔跑中</text>
                 </view>
               </view>
               <view class='b-run-income-tip'>
@@ -289,7 +313,7 @@
                   <text>{{ runningTask.addUpAmount }}元</text>
                 </view>
                 <view class='b-task-status'>
-                  <text>投放中</text>
+                  <text>奔跑中</text>
                 </view>
               </view>
               <view class='b-run-income-tip'>
@@ -341,7 +365,8 @@
           </view>
           <!-- action button -->
           <view class='b-task-action'>
-            <button class='b-action-btn b-action-cancel' wx:if='{{ runningTask.action.subscribed || runningTask.action.subscribeOvertime }}' catchtap='handleUnSubscribe'>取消预约</button>
+            <button class='b-action-btn b-action-cancel' wx:if='{{ runningTask.action.subscribed || runningTask.action.subscribeOvertime }}'
+              catchtap='handleUnSubscribe'>取消预约</button>
             <block wx:if='{{ runningTask.action.subscribed || runningTask.action.subscribeOvertime || runningTask.action.rework }}'>
               <button class='b-action-btn' catchtap='handleAction'>签到</button>
             </block>
@@ -360,6 +385,7 @@
           </view>
         </view>
       </view>
+
     </block>
     <!-- 已完成任务列表 -->
     <block wx:if='{{ overTask && overTask.length !== 0 }}'>

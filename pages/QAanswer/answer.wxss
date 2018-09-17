@@ -1,6 +1,6 @@
 
 .wrapper{
-  padding: 20rpx 40rpx 20rpx 40rpx;
+  padding: 40rpx
 }
 
 .answer-text{
@@ -22,7 +22,7 @@
 
 .QA-text-inline{
   font-size: 28rpx;
-  color: #333333;
+  color: #080303;
 }
 
 .bold{
@@ -69,7 +69,7 @@ button::after{
   height: 10rpx;
   margin-top: 40rpx;
   margin-bottom: 20rpx;
-  background-color: #f6f6f6;
+  background-color: rgba(236, 235, 242, 0.7);
 }
 
 .answer-reco-title{

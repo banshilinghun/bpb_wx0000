@@ -7,7 +7,7 @@
     "banner": "../../components/banner/banner",
     "dialog": "../../components/dialog/bpb-dialog",
     "share-popup": "../../components/share-popup/index",
-    "bpb-steps": "../../components/steps/index",
+    "bpb-steps": "../../components/b-steps/index",
     "share-moment": "../../components/share-moment/index",
     "share-award": "../../components/share-award/index"
   }
