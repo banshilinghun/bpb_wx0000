@@ -27,6 +27,10 @@ Component({
     status: {
       type: String,
       value: ''
+    },
+    title: {
+      type: String,
+      value: ''
     }
   },
 
@@ -69,6 +73,7 @@ Component({
       this.setData({
         showDialog: false
       })
+      this.triggerEvent('cancel', {}, {});
     }
   }
 })

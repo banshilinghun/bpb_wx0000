@@ -224,8 +224,8 @@
 <dialog-address showAddressDialog='{{ showAddressDialog }}' address='{{ address }}' phone='{{ phone }}'></dialog-address>
 
 <!-- 注册认证弹框 -->
-<dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ "https://wxapi.benpaobao.com/static/app_img/auth-icon.png" }}'
-  btnStr='{{ authStr }}' status='{{ authStatus }}' content='{{ authContent }}' bind:action='handleActionTap'></dialog-auth>
+<dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ authModal.src }}'  title='{{ authModal.title }}'
+  btnStr='{{ authModal.authStr }}' status='{{ authModal.authStatus }}' content='{{ authModal.authContent }}' bind:action='handleActionTap'></dialog-auth>
 
 <!-- 预约排队 -->
 <model visible="{{ visible }}" title="预约排队确认" cancelText="暂不排队" confirmText="确认排队" cancelLoading="{{ cancelLoading }}"

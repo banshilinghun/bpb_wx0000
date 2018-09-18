@@ -240,7 +240,7 @@ Page({
         success: res => {
           this.setData({
             status: res.status,
-            isDiDi: res.user_type //是否是滴滴合法车主
+            isDiDi: parseInt(res.user_type) === 1 //是否是滴滴合法车主
           })
           if (res.status == 3) {
             that.setData({

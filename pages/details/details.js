@@ -283,9 +283,13 @@ Page({
     if (that.data.loginStaus == 0 || that.data.loginStaus == 1) {
       that.setData({
         showAuthDialog: true,
-        authStr: loginStatus == 0 ? '立即注册' : '立即认证',
-        authContent: loginStatus == 0 ? '先注册，抢活快\n广告安装无障碍' : '先认证，抢活快\n广告安装无障碍',
-        authStatus: loginStatus
+        authModal: {
+          authStr: loginStatus == 0 ? '立即注册' : '立即认证',
+          title: '注册认证',
+          authContent: loginStatus == 0 ? '先注册，抢活快\n广告安装无障碍' : '先认证，抢活快\n广告安装无障碍',
+          authStatus: loginStatus,
+          src: 'https://wxapi.benpaobao.com/static/app_img/auth-icon.png'
+        }
       })
       app.globalData.showAuthTip = true;
     }
@@ -1059,7 +1063,7 @@ Page({
     }
     //认证审核中
     if (parseInt(authStatus) === 1) {
-      this.showAuthingModal('你的身份认证信息正在审核中，不能预约广告');
+      this.showAuthingModal('你的身份认证信息正在审核中，\n不能预约广告');
       return;
     }
     //认证失败

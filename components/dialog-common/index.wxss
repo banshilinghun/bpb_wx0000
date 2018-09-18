@@ -9,9 +9,9 @@
   width: 100%;
   height: 100%;
   position: fixed;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 2;
-}
+}  
 
 .rule-mask-active{
   opacity: 0.5;
@@ -27,14 +27,13 @@
   width: 70%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center
 }
 
 .content-wrapper {
   width: 100%;
-  padding: 40rpx;
-  background-color: #fff;
-  border-radius: 10rpx;
+  padding: 5rpx;
+  background-color: #fff
 }
 
 .content-root{
@@ -45,52 +44,55 @@
 }
 
 .btn {
-  width: 100%;
-  height: 90rpx;
-  line-height: 90rpx;
-  background-color: #ff555c;
-  font-size: 36rpx;
-  border-radius: 8rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  width: 50%;
+  font-size: 28rpx;
+  border-radius: 40rpx;
   color: #fff;
-}
-
-button::after {
-  border: none;
+  border: 1px solid #ff555c;
+  background-color: #fff;
+  color: #ff555c;
+  margin: 40rpx auto
 }
 
 .auth-image{
   width: 100%;
 }
 
+.title{
+  text-align: center;
+  font-size: 36rpx;
+  color: #333;
+  font-weight: 500;
+  margin-top: 50rpx
+}
+
 .content{
   width: 100%;
-  min-height: 180rpx;
-  font-size: 36rpx;
-  font-weight: 400;
-  position: relative;
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  box-sizing: border-box
+}
+
+.content-padding{
+  padding: 20rpx 40rpx 0 40rpx
 }
 
 .text-divider{
   line-height: 1.2;
 }
 
-.text{
-  width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  position: absolute;
-  text-align: center;
-}
-
 .vertical-line{
   width: 4rpx;
   height: 40rpx;
-  background-color: #fff;
+  background-color: #fff
 }
 
 .colse {
-  width: 80rpx;
-  height: 80rpx;
+  width: 50rpx;
+  height: 50rpx;
   z-index: 99;
-  margin-top: 80rpx;
+  margin-top: 120rpx;
 }

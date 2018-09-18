@@ -4,14 +4,17 @@
     <view class='content-wrapper'>
       <view class='content-root'>
         <image class='auth-image' src='{{ imageSrc }}' style='height: {{ imageHeight }}px'></image>
+        <view class="title">
+          <text>{{ title }}</text>
+        </view>
         <view class='content'>
-          <view class='text'>
-            <text class='text-divider'>{{ content }}</text>
+          <view class="content-padding">
+              <text class='text-divider'>{{ content }}</text>
           </view>
         </view>
       </view>
       <button class='btn' bindtap='actionListener' data-status='{{ status }}'>{{ btnStr }}</button>
     </view>
-    <image class="colse" src="../../image/close.png" bindtap="hideDialog"></image>
+    <image class="colse" src="https://wxapi.benpaobao.com/static/app_img/v2/b-dialog-close.png" bindtap="hideDialog"></image>
   </view>
 </view>

@@ -10,9 +10,9 @@
   <view class="page-section page-section-spacing swiper">
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'
       circular='{{ circular }}'>
-      <block wx:for="{{background}}" wx:key="*this">
-        <swiper-item data-hi='{{item}}' bindtap="tapName">
-          <view class="swiper-item {{item}}" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'></view>
+      <block wx:for="{{background}}" wx:key="item.id">
+        <swiper-item data-hi='{{ item.type }}' bindtap="tapName">
+          <image class="swiper-item banner" style='height:{{ bannerHeight }}px' src="{{ item.url }}"></image>
         </swiper-item>
       </block>
     </swiper>
@@ -179,5 +179,5 @@
 <!-- 轻提示 -->
 <b-toast id="toast"></b-toast>
 
-<dialog-guide showDialog='{{ showGuideDialog }}' imageSrc='{{ guideModalInfo.src }}'
-  btnStr='{{ guideModalInfo.btnStr }}' content='{{ guideModalInfo.content }}' bind:action='handleGuideTap'></dialog-guide>
+<dialog-guide showDialog='{{ showGuideDialog }}' imageSrc='{{ guideModalInfo.src }}' title="{{ guideModalInfo.title }}"
+  btnStr='{{ guideModalInfo.btnStr }}' content='{{ guideModalInfo.content }}' bind:action='handleGuideTap' bind:cancel="handleGuideCancel"></dialog-guide>

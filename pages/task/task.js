@@ -36,7 +36,7 @@ Page({
     installTime: '',
     waitTime: '',
     installOverTime: '',
-    stepArray: ['预约','安装','奔跑中','检测','结束']
+    stepArray: ['预约','安装','奔跑','检测']
   },
 
   /**

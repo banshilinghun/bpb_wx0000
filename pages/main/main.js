@@ -101,21 +101,19 @@ Page({
       }
     })
     //检测新版本弹窗
-    //this.checkNewVersionModal();
+    this.checkNewVersionModal();
   },
 
-  //todo
   checkNewVersionModal(){
     let showNewVersionModal = StrorageHelper.getLocalStorage(StrorageHelper.NEW_VERSION);
-    console.log('showNewVersionModal-------------->' + showNewVersionModal);
     if(!showNewVersionModal){
-      StrorageHelper.saveLocalStorage(StrorageHelper.NEW_VERSION, true);
       this.setData({
         showGuideDialog: true,
         guideModalInfo: {
-          src: "https://wxapi.benpaobao.com/static/app_img/auth-icon.png",
-          btnStr: "立即查看",
-          content: "穿新版本"
+          src: "https://wxapi.benpaobao.com/static/app_img/v2/b-teach-modal.jpg",
+          title: '新版本上线',
+          content: "新的版本，解锁赚钱新方式",
+          btnStr: "点击了解详情"
         }
       })
     }
@@ -123,11 +121,16 @@ Page({
 
   handleGuideTap(){
     wx.navigateTo({
-      url: '../stepDetail/stepDetail'
+      url: '../teaching/teaching'
     })
     this.setData({
       showGuideDialog: false
     })
+    StrorageHelper.saveLocalStorage(StrorageHelper.NEW_VERSION, true);
+  },
+
+  handleGuideCancel(){
+    StrorageHelper.saveLocalStorage(StrorageHelper.NEW_VERSION, true);
   },
 
   /**
@@ -308,7 +311,7 @@ Page({
           province: res.province,
           city: res.city,
           plate_no: res.plate_no,
-          isDiDi: res.user_type //是否是滴滴车主
+          isDiDi: parseInt(res.user_type) === 1 //是否是滴滴车主
         })
       }
     }
@@ -507,8 +510,17 @@ Page({
       data: {},
       success: res => {
         app.globalData.shareFlag = res;
-        const totalBanner = ['banner1', 'banner2'];
-        const singleBanner = ['banner1'];
+        const totalBanner = [{
+          url: 'https://wxapi.benpaobao.com/static/app_img/b-user-guide.png',
+          type: 'banner1'
+        }, {
+          url: 'https://wxapi.benpaobao.com/static/app_img/home_bannerV2.png',
+          type: 'banner2'
+        }];
+        const singleBanner = [{
+          url: 'https://wxapi.benpaobao.com/static/app_img/b-user-guide.png',
+          type: 'banner1'
+        }];
         that.setData({
           showRecommend: res,
           background: res ? totalBanner : singleBanner,

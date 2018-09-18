@@ -174,7 +174,13 @@ Page({
       data: {},
       success: res => {
         let carPhotoList = [res.car_photo];
-        let licensePhoto = [res.driving_license_photo];
+        if(res.car_photo){
+          carPhotoList.push(res.car_photo);
+        }
+        let licensePhoto = [];
+        if(res.driving_license_photo){
+          licensePhoto.push(res.driving_license_photo);
+        }
         that.setData({
           userName: res.real_name,
           textValue: res.plate_no,

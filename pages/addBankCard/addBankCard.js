@@ -59,7 +59,6 @@ Page({
 			header: app.globalData.header,
 			success: res => {
 				if(res.data.code == 1000) {
-
 					this.setData({
 						real_name: res.data.data.real_name
 					})

@@ -1,5 +1,4 @@
 
 .b-step-wrapper{
-  margin-top: 30rpx;
-  margin-left: 20rpx
+  margin: 30rpx 20rpx
 }

@@ -44,13 +44,13 @@ let taskStrategy = {
   6: () => INSTALLED,
 
   //已提交登记信息, 但有审核中、审核失败（不需要返工）状态
-  7: function(runningTask){
-    if(!runningTask.registInfo){
+  7: function (runningTask) {
+    if (!runningTask.registInfo) {
       console.error('登记信息 field "registInfo" to null or undefined is invalid')
     }
-    if(Number(runningTask.registInfo.status) === 1){
+    if (Number(runningTask.registInfo.status) === 1) {
       return INSTALL_AUDIT;
-    } else if(Number(runningTask.registInfo.status) == 2) {
+    } else if (Number(runningTask.registInfo.status) == 2) {
       return INSTALL_FAIL;
     }
   },
@@ -60,15 +60,15 @@ let taskStrategy = {
 
   //投放中，按时计费
   9: () => RUNNING_BY_TIME,
-  
+
   //广告处于检测中
-  10: function(runningTask){
+  10: function (runningTask) {
     //未提交审核
-    if(Number(runningTask.detectionInfo.status) === 0){
+    if (Number(runningTask.detectionInfo.status) === 0) {
       return NEED_CHECK;
-    } else if(Number(runningTask.detectionInfo.status) === 1) {
+    } else if (Number(runningTask.detectionInfo.status) === 1) {
       return CHECK_AUDIT;
-    } else if(Number(runningTask.detectionInfo.status) === 2) {
+    } else if (Number(runningTask.detectionInfo.status) === 2) {
       return CHECK_FAIL;
     }
   }
@@ -80,8 +80,8 @@ let taskStrategy = {
  * @param {*} runningTask 运行中广告信息
  * @returns 状态
  */
-export function getCurrentStatus(runningTask){
-  if(!runningTask){
+export function getCurrentStatus(runningTask) {
+  if (!runningTask) {
     console.error("runningTask to null or undefind is invalid");
     return;
   }
@@ -93,7 +93,7 @@ export function getCurrentStatus(runningTask){
  * 
  * @param {*} status 当前状态
  */
-export function getTaskActionDisplay(runningTask){
+export function getTaskActionDisplay(runningTask) {
   let status = getCurrentStatus(runningTask);
   console.log('getTaskActionDisplay---------->' + status);
   let action = {};
@@ -118,13 +118,13 @@ export function getTaskActionDisplay(runningTask){
  */
 let taskTitleStrategy = {
   //预约中
-  1: function(runningTask){
+  1: function (runningTask) {
     let date = TimeUtil.formatDateTime(runningTask.reserveDate.date);
     return `预约时间: ${ date } ${ runningTask.reserveDate.begin_time }-${ runningTask.reserveDate.end_time }`;
   },
 
   //已超时未签到
-  2: function(runningTask){ 
+  2: function (runningTask) {
     let date = TimeUtil.formatDateTime(runningTask.reserveDate.date);
     return `预约时间: ${ date } ${ runningTask.reserveDate.begin_time }-${ runningTask.reserveDate.end_time }`;
   },
@@ -142,13 +142,13 @@ let taskTitleStrategy = {
   6: () => "请及时上传车辆上画照片",
 
   //已提交登记信息, 但有审核中、审核失败（不需要返工）状态
-  7: function(runningTask){
-    if(!runningTask.registInfo){
+  7: function (runningTask) {
+    if (!runningTask.registInfo) {
       console.error('登记信息 field "registInfo" to null or undefined is invalid')
     }
-    if(runningTask.registInfo.status == 1){
+    if (runningTask.registInfo.status == 1) {
       return "登记审核中，通过后自动投放广告";
-    } else if(runningTask.registInfo.status == 2) {
+    } else if (runningTask.registInfo.status == 2) {
       return "安装审核未通过，请重新拍照审核";
     }
   },
@@ -158,15 +158,15 @@ let taskTitleStrategy = {
 
   //投放中，按时计费
   9: () => "奔跑中",
-  
+
   //广告处于检测中
-  10: function(runningTask){
+  10: function (runningTask) {
     //未提交审核
-    if(runningTask.detectionInfo.status == 0){
+    if (runningTask.detectionInfo.status == 0) {
       return "广告已结束，检测领取收益";
-    } else if(runningTask.detectionInfo.status == 1) {
+    } else if (runningTask.detectionInfo.status == 1) {
       return "检测审核中，通过后可提取收益";
-    } else if(runningTask.detectionInfo.status == 2) {
+    } else if (runningTask.detectionInfo.status == 2) {
       return "广告检测未通过，请重新检测";
     }
   }
@@ -178,8 +178,8 @@ let taskTitleStrategy = {
  * @param {*} runningTask 运行中广告信息
  * @returns 状态
  */
-export function getMyTaskDesc(runningTask){
-  if(!runningTask){
+export function getMyTaskDesc(runningTask) {
+  if (!runningTask) {
     console.error("runningTask to null or undefind is invalid");
     return;
   }
@@ -195,7 +195,7 @@ let taskStatusStrategy = {
   installAudit: () => '审核中',
   installFail: () => '投放异常',
   rework: () => taskStatusStrategy.installFail(),
-  runingFixed: ()=> '奔跑中',
+  runingFixed: () => '奔跑中',
   runingByTime: () => taskStatusStrategy.runingFixed(),
   needCheck: () => '待检测',
   checkAudit: () => '检测中',
@@ -205,8 +205,8 @@ let taskStatusStrategy = {
 /**
  * 任务状态文字信息
  */
-export function getTaskStatusStr(taskStatus){
-  if(!taskStatus){
+export function getTaskStatusStr(taskStatus) {
+  if (!taskStatus) {
     console.error("taskStatus to null or undefind is invalid");
     return;
   }
@@ -222,7 +222,7 @@ let stepStrategy = {
   installAudit: () => stepStrategy.subscribed(),
   installFail: () => stepStrategy.subscribed(),
   rework: () => stepStrategy.subscribed(),
-  runingFixed: ()=> 2,
+  runingFixed: () => 2,
   runingByTime: () => stepStrategy.runingFixed(),
   needCheck: () => 3,
   checkAudit: () => stepStrategy.needCheck(),
@@ -232,15 +232,9 @@ let stepStrategy = {
 /**
  * 步骤条进度
  */
-export function getCurrentStep(status){
-  console.log('status---------->' + status);
+export function getCurrentStep(status) {
   let current = 1;
-  try{
-    current = stepStrategy[status]();
-  } catch(error) {
-    current = 4;
-  }
-  console.log('current---------->' + current);
+  current = stepStrategy[status]();
   return current;
 }
 
@@ -256,6 +250,6 @@ const withDrawStrategy = {
   6: () => '转账失败',
 }
 
-export function getWithdrawStatus(status){
+export function getWithdrawStatus(status) {
   return withDrawStrategy[status]();
 }
