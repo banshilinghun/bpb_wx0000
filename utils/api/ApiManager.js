@@ -23,7 +23,7 @@ let domainStrategy = {
  * 加载域名
  */
 function getBaseUrl() {
-  return domainStrategy['release2']();
+  return domainStrategy['test']();
 }
 
 class uploadInfo {
