@@ -173,13 +173,13 @@ Page({
       url: ApiConst.GET_USER_AUTH_INFO,
       data: {},
       success: res => {
-        let carPhotoList = [res.car_photo];
+        let carPhotoList = [];
         if(res.car_photo){
           carPhotoList.push(res.car_photo);
         }
-        let licensePhoto = [];
+        let licensePhotoList = [];
         if(res.driving_license_photo){
-          licensePhoto.push(res.driving_license_photo);
+          licensePhotoList.push(res.driving_license_photo);
         }
         that.setData({
           userName: res.real_name,
@@ -191,7 +191,7 @@ Page({
           car_color: res.car_color,
           imageList: carPhotoList,
           carPhoto: res.car_photo,
-          imageList2: licensePhoto,
+          imageList2: licensePhotoList,
           licensePhoto: res.driving_license_photo,
           show1: res.car_photo? false : true,
           show2: res.driving_license_photo? false : true
