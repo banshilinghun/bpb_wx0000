@@ -5,15 +5,11 @@ const {
 } = require('../../components/base/index');
 const Constant = require("../../utils/constant/Constant");
 const shareUtil = require("../../utils/module/shareUtil");
-const dotHelper = require("../../pages/me/dotHelper.js");
+const dotHelper = require("./dotHelper.js");
 const ApiManager = require('../../utils/api/ApiManager.js');
 const ApiConst = require("../../utils/api/ApiConst.js");
 const ModalHelper = require("../../helper/ModalHelper");
-
-//1:提现，2:提现记录 3:收益记录 4:损坏申报 5:掉漆申报 6:违章申报 7:推荐有奖 8:新手教程 9:注册认证 10: 补充车型
-const CELL_TYPE = ['withdraw', 'withdrawRecord', 'earningRecord', 'damage', 'drop', 'traffic', 'recommend', 'course', 'auth', 'carModel', 'protocol'];
-//推荐奖励是否关闭
-let shareFlag;
+const MineData = require("./data");
 
 Page({
 
@@ -21,69 +17,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    incomeCells: [{
-        type: CELL_TYPE[0],
-        text: '提现',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-withdraw-icon.png',
-        url: '../withdraw/withdraw',
-        visible: true
-      },
-      {
-        type: CELL_TYPE[1],
-        text: '提现记录',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-withdraw-record.png',
-        url: '../withdrawRecord/withdrawRecord',
-        visible: true
-      }, {
-        type: CELL_TYPE[2],
-        text: '收益记录',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-income-record.png',
-        url: '../earningRecord/earningRecord',
-        visible: false
-      }
-    ],
-    ExceptionCells: [{
-        type: CELL_TYPE[3],
-        text: '损坏申报',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-damage-icon.png',
-        url: '../declare/declare?type=damage',
-        visible: true
-      },
-      {
-        type: CELL_TYPE[4],
-        text: '掉漆申报',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-drop-icon.png',
-        url: '../declare/declare?type=drop',
-        visible: true
-      }, {
-        type: CELL_TYPE[5],
-        text: '违章申报',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-traffic-icon.png',
-        url: '../declare/declare?type=violate',
-        visible: true
-      }
-    ],
-    actionCells: [{
-        type: CELL_TYPE[6],
-        text: '推荐有奖',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-recommend-icon.png',
-        url: '../recommend/recommend?flag=recommend',
-        visible: true
-      },
-      {
-        type: CELL_TYPE[7],
-        text: '新手教程',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-user-course.png',
-        url: '../teaching/teaching',
-        visible: true
-      }, {
-        type: CELL_TYPE[8],
-        text: '注册认证',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-auth-icon.png',
-        url: '../auth/auth',
-        visible: true
-      }
-    ],
+    incomeCells: MineData.incomeCells,
+    ExceptionCells: MineData.ExceptionCells,
+    actionCells: MineData.actionCells,
     avatar: '',
     userInfo: {},
     amount: '0',
@@ -109,10 +45,9 @@ Page({
 
   onShow: function () {
     let that = this;
-    shareFlag = app.globalData.shareFlag;
     //是否显示推荐有奖
     let actionCells = that.data.actionCells;
-    actionCells[0].visible = shareFlag;
+    actionCells[0].visible = app.globalData.shareFlag;
     this.setData({
       loginFlag: app.globalData.login,
       actionCells: actionCells
@@ -141,50 +76,13 @@ Page({
     let that = this;
     let actionCell = that.data.actionCells;
     //先过滤
-    actionCell = actionCell.filter(element => element.type !== CELL_TYPE[9]);
+    actionCell = actionCell.filter(element => element.type !== MineData.CAR_MODAL);
     if (app.globalData.is_add_car_model) {
-      actionCell.push({
-        type: CELL_TYPE[9],
-        text: '车型补充',
-        icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-add-car-model.png',
-        url: '../brandList/brandList?flag=1',
-        visible: true
-      });
+      actionCell.push(MineData.carModelCell);
     }
     that.setData({
       actionCells: actionCell
     })
-  },
-
-  /**
-   * 查询是否关注公众号
-   */
-  followFlag: function () {
-    var that = this
-    wx.request({
-      url: ApiConst.USER_HAS_SUBCRIBE,
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          that.setData({
-            isFollow: res.data.data
-          })
-        } else {
-          that.showModel(res.data.msg);
-        }
-      },
-      fail: res => {
-        that.showModel('网络错误');
-      }
-    })
-  },
-
-  showModel(msg) {
-    wx.showModal({
-      title: '提示',
-      showCancel: false,
-      content: msg
-    });
   },
 
   /**
@@ -284,7 +182,7 @@ Page({
     let that = this;
     let item = event.currentTarget.dataset.item;
     //判断车主是否登录，推荐有奖和新手教程无需登录
-    if (parseInt(that.data.loginFlag) === 0 && item.type !== CELL_TYPE[6] && item.type !== CELL_TYPE[7]) {
+    if (parseInt(that.data.loginFlag) === 0 && item.type !== MineData.RECOMMEND && item.type !== MineData.COURSE) {
       ModalHelper.showWxModalShowAllWidthCallback('登录提示', '你还没有登录', '立即登录', '取消', true, res => {
         if (res.confirm) {
           that.navigateTo('../register/register');
@@ -293,7 +191,7 @@ Page({
       return;
     }
     switch (item.type) {
-      case CELL_TYPE[8]: //注册认证
+      case MineData.AUTH: //注册认证
         if (this.data.status == 0) {
           that.navigateTo(item.url);
         } else {
@@ -301,7 +199,7 @@ Page({
           that.navigateTo('../state/state');
         }
         break;
-      case CELL_TYPE[9]:
+      case MineData.CAR_MODAL:
         that.addCarModel(item.url);
         break;
       default:

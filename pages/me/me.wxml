@@ -76,24 +76,6 @@
       </view>
     </view>
   </view>
-  <!-- 异常处理（损坏申报、掉漆申报、违章申报） -->
-  <view class='b-me-income' wx:if="{{ false }}">
-    <view class='b-me-panel'>
-      <view class='b-panel-title'>
-        <text>异常处理</text>
-      </view>
-    </view>
-    <view class='b-me-cell'>
-      <view class='b-cell-item' wx:for="{{ ExceptionCells }}" wx:key='{{ exception }}' wx:if='{{ item.visible }}' bindtap='handleAction' data-item='{{ item }}'>
-        <view class='b-cell-wrapper'>
-          <image class='b-cell-image' src='{{ item.icon }}'></image>
-          <view class='b-cell-action'>
-            <text>{{ item.text }}</text>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
   <!-- action（推荐有奖、新手教程、注册认证） -->
   <view class='b-me-income'>
     <view class='b-me-panel'>
@@ -103,6 +85,24 @@
     </view>
     <view class='b-me-cell'>
       <view class='b-cell-item' wx:for="{{ actionCells }}" wx:key='{{ action }}' wx:if='{{ item.visible }}' bindtap='handleAction' data-item='{{ item }}'>
+        <view class='b-cell-wrapper'>
+          <image class='b-cell-image' src='{{ item.icon }}'></image>
+          <view class='b-cell-action'>
+            <text>{{ item.text }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 异常处理（损坏申报、掉漆申报、违章申报） -->
+  <view class='b-me-income'>
+    <view class='b-me-panel'>
+      <view class='b-panel-title'>
+        <text>异常处理</text>
+      </view>
+    </view>
+    <view class='b-me-cell'>
+      <view class='b-cell-item' wx:for="{{ ExceptionCells }}" wx:key='{{ exception }}' wx:if='{{ item.visible }}' bindtap='handleAction' data-item='{{ item }}'>
         <view class='b-cell-wrapper'>
           <image class='b-cell-image' src='{{ item.icon }}'></image>
           <view class='b-cell-action'>

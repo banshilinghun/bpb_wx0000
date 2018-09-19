@@ -207,3 +207,12 @@ export const COMMIT_USER_WITHDRAW = baseUrl + "app/commit/user_withdraw";
 
 //确认提现信息
 export const COMMIT_WITHDRAW_INFO = baseUrl + "app/commit/confirm_withdraw_info";
+
+//获取最近一次的广告信息
+export const GET_LAST_AD_INFO = baseUrl + "app/get/last_ad_info";
+
+//申请广告异常处理
+export const COMMIT_AD_EXCEPTION = baseUrl + "app/commit/apply_for_ad_exception";
+
+//上传广告异常处理图片
+export const UPLOAD_EXCEPTION_IMG = baseUrl + "app/upload/apply_for_ad_exception_imgs";
