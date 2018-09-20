@@ -1,8 +1,8 @@
 <view class='b-container'>
     <form bindsubmit="formSubmit" report-submit="{{ report }}">
-      <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
+      <view style='height: {{ scrollHeight }}px;overflow:auto'>
        <slot></slot>
-      </scroll-view>
+      </view>
       <view id='commit' class='b-commit-btn-wrapper'>
         <button class='b-commit-btn' form-type='submit'>{{ btnSubmitText }}</button>
       </view>
