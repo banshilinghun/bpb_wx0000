@@ -40,7 +40,6 @@ Page({
     that.setData({
       userInfo: app.globalData.userInfo
     })
-    console.log(that.data.userInfo);
   },
 
   onShow: function () {
@@ -70,6 +69,8 @@ Page({
     that.controlCarModel();
     //待收收益数量
     that.requestAccountCoupon();
+    //获取最新一次安装的广告
+    that.requestRecentlyAdInfo();
   },
 
   controlCarModel() {
@@ -177,6 +178,20 @@ Page({
     ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
+  requestRecentlyAdInfo(){
+    let that = this;
+    let requestData = {
+      url: ApiConst.GET_LAST_AD_INFO,
+      data: {},
+      success: res => {
+        that.setData({
+          recentlyAdInfo: res
+        })
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
+  },
+
   handleAction(event) {
     console.log(event);
     let that = this;
@@ -202,6 +217,9 @@ Page({
       case MineData.CAR_MODAL:
         that.addCarModel(item.url);
         break;
+      case MineData.DECLARE:
+        that.goDeclare(item.url);
+        break;
       default:
         that.navigateTo(item.url);
         break;
@@ -221,6 +239,12 @@ Page({
           url: url,
         })
       }
+    })
+  },
+
+  goDeclare(url){
+    wx.navigateTo({
+      url: url + '&adInfo=' + JSON.stringify(this.data.recentlyAdInfo)
     })
   },
 

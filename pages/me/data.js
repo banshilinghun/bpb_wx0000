@@ -1,14 +1,14 @@
 
+const DeclareType = require('../declare/declareType');
+
 export const WITHDRAW = 'withdraw';
 export const WITHDRAW_RECORD = 'withdrawRecord';
 export const EARNINNG_RECORD = 'earningRecord';
-export const DAMAGE = 'damage';
-export const DROP = 'drop';
-export const TRAFFIC = 'traffic';
 export const RECOMMEND = 'recommend';
 export const COURSE = 'course';
 export const AUTH = 'auth';
 export const CAR_MODAL = 'carModel';
+export const DECLARE = 'declare';
 
 /**
  * 收益
@@ -37,22 +37,22 @@ export let incomeCells = [{
  * 异常处理
  */
 export let ExceptionCells = [{
-  type: DAMAGE,
+  type: DECLARE,
   text: '损坏申报',
   icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-damage-icon.png',
-  url: '../declare/declare?type=damage',
+  url: '../declareRecord/declareRecord?type=' + DeclareType.DAMAGE,
   visible: true
 },{
-  type: DROP,
+  type: DECLARE,
   text: '掉漆申报',
   icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-drop-icon.png',
-  url: '../declare/declare?type=drop',
+  url: '../declareRecord/declareRecord?type=' + DeclareType.DROP,
   visible: true
 }, {
-  type: TRAFFIC,
+  type: DECLARE,
   text: '违章申报',
   icon: 'https://wxapi.benpaobao.com/static/app_img/v2/b-traffic-icon.png',
-  url: '../declare/declare?type=violate',
+  url: '../declareRecord/declareRecord?type=' + DeclareType.VIOLATE,
   visible: true
 }]
 

@@ -35,7 +35,8 @@
     "pages/declare/declare",
     "pages/task/task",
     "pages/prove/prove",
-    "pages/stepDetail/stepDetail"
+    "pages/stepDetail/stepDetail",
+    "pages/declareRecord/declareRecord"
   ],
   "window": {
     "backgroundTextStyle": "light",

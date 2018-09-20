@@ -95,7 +95,7 @@
     </view>
   </view>
   <!-- 异常处理（损坏申报、掉漆申报、违章申报） -->
-  <view class='b-me-income'>
+  <view class='b-me-income' wx:if="{{ recentlyAdInfo }}">
     <view class='b-me-panel'>
       <view class='b-panel-title'>
         <text>异常处理</text>

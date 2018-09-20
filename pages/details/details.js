@@ -9,7 +9,6 @@ const ModalHelper = require("../../helper/ModalHelper");
 const RunStatus = require("../main/runStatus");
 const TimeUtil = require("../../utils/time/timeUtil");
 const StringUtil = require("../../utils/string/stringUtil");
-
 const {
   $Toast
 } = require('../../components/base/index');

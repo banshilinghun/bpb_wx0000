@@ -1,6 +1,6 @@
 {
   "usingComponents": {
     "container": "../../components/container/index",
-    "b-toast": "../../components/toast/index"
+    "emptyView": "../../components/emptyView/index"
   }
 }

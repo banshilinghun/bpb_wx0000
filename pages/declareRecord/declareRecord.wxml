@@ -1,0 +1,9 @@
+<container bind:submit="handleSubmit" btnSubmitText="我要申报">
+  <block wx:if="{{ declareList && declareList.length !== 0 }}">
+
+  </block>
+  <block wx:else>
+    <!-- 空视图 -->
+    <emptyView title='您还没有相关的申报记录' content='幸运女神眷顾哦~' topMargin='50' />
+  </block>
+</container>

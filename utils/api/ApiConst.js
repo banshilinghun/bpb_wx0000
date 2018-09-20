@@ -216,3 +216,6 @@ export const COMMIT_AD_EXCEPTION = baseUrl + "app/commit/apply_for_ad_exception"
 
 //上传广告异常处理图片
 export const UPLOAD_EXCEPTION_IMG = baseUrl + "app/upload/apply_for_ad_exception_imgs";
+
+//获取用户提交的异常申请列表
+export const GET_EXCEPTION_LIST = baseUrl + "app/get/apply_for_ad_exception_list";
