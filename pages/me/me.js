@@ -51,6 +51,11 @@ Page({
       loginFlag: app.globalData.login,
       actionCells: actionCells
     })
+    that.initReuqest();
+  },
+
+  initReuqest(){
+    const that = this;
     //请求判断是否显示红点(有可领取奖励)
     dotHelper.requestDotStatus().then((result) => {
       that.setData({
@@ -73,6 +78,10 @@ Page({
     that.requestRecentlyAdInfo();
   },
 
+  onPullDownRefresh() {
+    this.initReuqest();
+  },
+
   controlCarModel() {
     let that = this;
     let actionCell = that.data.actionCells;
@@ -90,28 +99,24 @@ Page({
    * 请求余额等信息
    */
   requestUserAccount() {
-    let that = this;
-    wx.request({
+    const that = this;
+    let requestData = {
       url: ApiConst.USER_ACCOUNT,
       data: {},
-      header: app.globalData.header,
       success: res => {
-        if (res.data.code == 1000) {
-          if (res.data.data != null) {
-            this.setData({
-              amount: that.formatAmount(util.toDecimal2(res.data.data.amount)),
-              total: that.formatAmount(util.toDecimal2(res.data.data.total_amount)),
-              rate: (res.data.data.rate) * 100
-            });
-          }
-        } else {
-          that.showModal(res.data.msg);
+        if (res != null) {
+          this.setData({
+            amount: that.formatAmount(util.toDecimal2(res.amount)),
+            total: that.formatAmount(util.toDecimal2(res.total_amount)),
+            rate: (res.rate) * 100
+          });
         }
       },
-      fail: res => {
-        that.showModal('网络错误');
+      complete: res => {
+        wx.stopPullDownRefresh();
       }
-    })
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -131,7 +136,6 @@ Page({
    */
   requestAuthStatus() {
     let that = this;
-    console.log(Boolean(0));
     if (that.data.loginFlag == 1) { //登录了
       let requestData = {
         url: ApiConst.GET_AUTH_STATUS,
@@ -260,17 +264,6 @@ Page({
    */
   handleIncomeClick() {
     this.navigateTo('../earningRecord/earningRecord');
-  },
-
-  /**
-   * 下拉刷新
-   */
-  onPullDownRefresh: function () {
-    wx.showToast({
-      title: '奔跑中🚗...',
-      icon: 'loading'
-    })
-    this.onShow();
   },
 
   //分享

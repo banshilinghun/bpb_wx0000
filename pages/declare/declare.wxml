@@ -1,7 +1,7 @@
 <container bind:submit="handleSubmit">
   <!-- 基础信息 -->
   <view class="b-content">
-    <view>
+    <view class="b-declare-panel">
       <!-- 广告名 -->
       <view class='b-declare-cell'>
         <view class='b-cell-title'>
@@ -50,16 +50,20 @@
       <view class='b-declare-reason-title'>
         <view class="b-image-title">
           <text>{{ declareInfo.evidenceImage }}</text>
+          <text class="b-image-title-desc">（可上传一张或多张）</text>
         </view>
       </view>
       <block wx:for="{{ imageList }}" wx:key="item.id">
         <view class='b-declare-picture-wrapper' bindtap="handlePreviewImage" data-image="{{ item }}">
-          <image class="b-declare-iamge" src="{{ item }}"></image>
+          <view class="b-declare-item">
+            <image class="b-declare-close" src="https://wxapi.benpaobao.com/static/app_img/v2/b-declare-close.png" catchtap="handleDeleteImage" data-index="{{ index }}"></image>
+            <image class="b-declare-iamge" src="{{ item }}"></image>
+          </view>
         </view>
       </block>
       <block>
         <view class='b-declare-picture-wrapper' bindtap="handleAddImage" wx:if="{{ imageList.length < 5 }}">
-          <image class="b-declare-iamge" src="https://wxapi.benpaobao.com/static/app_img/v2/b-add.png"></image>
+          <image class="b-declare-iamge" src="{{ declareInfo.src }}"></image>
         </view>
       </block>
     </view>
@@ -69,7 +73,8 @@
       <view class='b-declare-reason-title'>
         <text>{{ declareInfo.reason }}</text>
       </view>
-      <textarea class='b-declare-reason-detail' placeholder='{{ declareInfo.reasonTip }}' value="{{ reason }}" bindinput="handleReasonInput"></textarea>
+      <textarea class='b-declare-reason-detail' placeholder='{{ declareInfo.reasonTip }}' value="{{ reason }}"
+        bindinput="handleReasonInput"></textarea>
     </view>
   </view>
 </container>

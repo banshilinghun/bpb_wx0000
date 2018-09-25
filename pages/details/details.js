@@ -1196,6 +1196,12 @@ Page({
     })
   },
 
+  toggleBottomPopup(){
+    this.setData({
+      visibleSubscribe: false
+    })
+  },
+
   /**
    * 选择服务网点
    */

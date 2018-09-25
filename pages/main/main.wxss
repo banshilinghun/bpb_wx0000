@@ -35,7 +35,6 @@ page {
   width: 128rpx;
   height: 128rpx;
   /* border-radius: 64rpx; */
-  background-color: #eee;
 }
 
 .item-middle {
@@ -564,4 +563,10 @@ movable-view {
   margin: 20rpx;
   box-shadow: 0 2px 6px #aaa;
   overflow: hidden
+}
+
+.b-official-account{
+  margin: 20rpx 0;
+  border-bottom: 1rpx solid #ddd;
+  border-top: 1rpx solid #ddd
 }

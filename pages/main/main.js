@@ -10,6 +10,7 @@ const RunStatus = require("../main/runStatus");
 const StrategyHelper = require("../../helper/StrategyHelper");
 const StringUtil = require("../../utils/string/stringUtil");
 const StrorageHelper = require("../../helper/StorageHelper");
+const Scene = require("../../utils/common/scene");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -56,11 +57,11 @@ Page({
     subsServerAddress: '',
     queue_adId: '',
     queue_serverId: '',
-    showGuideDialog: false
+    showGuideDialog: false,
+    showOfficialAccount: false, //判断显示自定义关注组件还是微信公众号关注组件
   },
 
   onLoad: function (options) {
-    //console.log(options);
     var that = this;
     that.setData({
       userInfo: app.globalData.userInfo
@@ -104,9 +105,9 @@ Page({
     this.checkNewVersionModal();
   },
 
-  checkNewVersionModal(){
+  checkNewVersionModal() {
     let showNewVersionModal = StrorageHelper.getLocalStorage(StrorageHelper.NEW_VERSION);
-    if(!showNewVersionModal){
+    if (!showNewVersionModal) {
       this.setData({
         showGuideDialog: true,
         guideModalInfo: {
@@ -119,7 +120,7 @@ Page({
     }
   },
 
-  handleGuideTap(){
+  handleGuideTap() {
     wx.navigateTo({
       url: '../teaching/teaching'
     })
@@ -129,32 +130,25 @@ Page({
     StrorageHelper.saveLocalStorage(StrorageHelper.NEW_VERSION, true);
   },
 
-  handleGuideCancel(){
+  handleGuideCancel() {
     StrorageHelper.saveLocalStorage(StrorageHelper.NEW_VERSION, true);
   },
 
   /**
-   * 判断 微信版本 兼容性
+   * 判断 微信低版本，2.3.0及以上才显示公众号组件
    */
   judgeCanIUse: function () {
     var that = this;
-    //组件不兼容
-    //微信版本过低
     wx.getSystemInfo({
       success: function (res) {
-        if (res.SDKVersion >= '1.1.1' && !wx.canIUse('picker.mode.selector')) {
-          that.showLowVersionTips();
-        }
+        let showOfficialAccountLocal = false;
+        if(res.SDKVersion >= '2.3.0'){
+          showOfficialAccountLocal = Scene.checkSceneOfficial(app.globalData.scene);
+        } 
+        that.setData({
+          showOfficialAccount: showOfficialAccountLocal
+        })
       },
-    })
-  },
-
-  showLowVersionTips: function () {
-    wx.showModal({
-      title: '提示',
-      content: '您当前微信版本过低，将导致无法使用部分重要功能，请升级到微信最新版本。',
-      showCancel: false,
-      success: function (res) {},
     })
   },
 
@@ -189,7 +183,6 @@ Page({
     let requestData = {
       url: ApiConst.QUERY_QUEUE_INFO,
       data: {},
-      header: app.globalData.header,
       success: res => {
         that.setData({
           visible: res,
@@ -208,7 +201,7 @@ Page({
    * 加载广告列表
    */
   requestAdList: function (currentPageIndex) {
-    var that = this;
+    const that = this;
     let reqInfo = {
       page: currentPageIndex,
       page_count: that.data.count
@@ -216,55 +209,38 @@ Page({
     if (currentPageIndex != 0 && that.data.sorted_key) {
       reqInfo.sorted_key = that.data.sorted_key
     }
-    wx.request({
+    let requestData = {
       url: ApiConst.AD_LIST_URL,
       data: reqInfo,
-      header: app.globalData.header,
       success: res => {
-        if (res.data.code == 1000) {
-          //更新pageIndex
-          that.setData({
-            pageIndex: currentPageIndex
-          })
-          let dataList = res.data.data.ad_list;
-          if (dataList.length > 0) {
-            for (var i = 0; i < dataList.length; i++) {
-              let dataBean = dataList[i];
-              dataBean.run_status = RunStatus.getRunStatus(dataBean);
-              dataBean.adStatusStr = RunStatus.getAdStatusStr(dataBean);
-              dataBean.begin_date = dataBean.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-              dataBean.end_date = dataBean.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
-              dataBean.ad_name = StringUtil.formatAdName(dataBean.ad_name, dataBean.city_name);
-            }
-            if (currentPageIndex != 0) {
-              dataList = that.data.adList.concat(dataList);
-            }
-            that.setData({
-              adList: dataList,
-              showNomore: !res.data.data.hasMore,
-              hasmore: res.data.data.hasMore,
-              sorted_key: res.data.data.sortedKey
-            })
-          } else {
-            that.setData({
-              adList: []
-            })
+        //更新pageIndex
+        that.setData({
+          pageIndex: currentPageIndex
+        })
+        let dataList = res.ad_list;
+        if (dataList.length > 0) {
+          for (var i = 0; i < dataList.length; i++) {
+            let dataBean = dataList[i];
+            dataBean.run_status = RunStatus.getRunStatus(dataBean);
+            dataBean.adStatusStr = RunStatus.getAdStatusStr(dataBean);
+            dataBean.begin_date = dataBean.begin_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+            dataBean.end_date = dataBean.end_date.replace(/(.+?)\-(.+?)\-(.+)/, "$2月$3日");
+            dataBean.ad_name = StringUtil.formatAdName(dataBean.ad_name, dataBean.city_name);
           }
+          if (currentPageIndex != 0) {
+            dataList = that.data.adList.concat(dataList);
+          }
+          that.setData({
+            adList: dataList,
+            showNomore: !res.hasMore,
+            hasmore: res.hasMore,
+            sorted_key: res.sortedKey
+          })
         } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
+          that.setData({
+            adList: []
+          })
         }
-      },
-      fail: res => {
-        wx.stopPullDownRefresh();
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
       },
       complete: res => {
         wx.stopPullDownRefresh();
@@ -272,14 +248,11 @@ Page({
           isShowLoadingMore: false
         });
       }
-    })
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   onPullDownRefresh: function () {
-    wx.showToast({
-      title: '奔跑中🚗...',
-      icon: 'loading'
-    })
     this.commonRequest();
   },
 
@@ -448,7 +421,7 @@ Page({
       srver_address: e.currentTarget.dataset.address
     })
   },
-  
+
   severCheck: function () {
     var that = this;
     wx.openLocation({

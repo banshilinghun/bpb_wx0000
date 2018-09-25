@@ -4,6 +4,8 @@ const ApiConst = require("../../utils/api/ApiConst.js");
 const ApiManager = require('../../utils/api/ApiManager.js');
 const DeclareType = require("./declareType");
 const UploadConfig = require("../../utils/common/uploadConfig");
+const ModalHelper = require("../../helper/ModalHelper");
+const LoadingHelper = require("../../helper/LoadingHelper");
 const {
   $Toast
 } = require('../../components/base/index');
@@ -53,7 +55,7 @@ Page({
             evidenceTip: '拍摄车辆广告损坏位置图片',
             reason: '损坏原因',
             reasonTip: '简短语言描述广告损坏原因',
-            src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-add.png'
+            src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-damage-image.jpg'
           }
         })
         break;
@@ -66,7 +68,7 @@ Page({
             evidenceTip: '拍摄车辆掉漆位置图片',
             reason: '掉漆原因',
             reasonTip: '简短语言描述车辆掉漆原因',
-            src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-add.png'
+            src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-drop-image.jpg'
           }
         })
         break;
@@ -81,7 +83,7 @@ Page({
             evidenceTip: '拍摄车辆违章通知单',
             reason: '违章原因',
             reasonTip: '简短语言描述车辆违章原因',
-            src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-add.png'
+            src: 'https://wxapi.benpaobao.com/static/app_img/v2/b-traffic-image.jpg'
           }
         })
         break;
@@ -272,6 +274,45 @@ Page({
     this.setData({
       reason: event.detail.value
     })
+  },
+
+  /**
+   * 删除图片
+   */
+  handleDeleteImage(event){
+    ModalHelper.showWxModalShowAllWidthCallback('删除确认', '确认要删除这张图片吗', '确定', '取消', true, res => {
+      if(res.confirm){
+        this.removeImageRequest(event.currentTarget.dataset.index);
+      }
+    })
+  },
+
+  removeImageRequest(index){
+    const that = this;
+    LoadingHelper.showLoading();
+    let requestData = {
+      url: ApiConst.REMOVE_EXCEPTION_IMG,
+      data: {
+        ad_id: that.data.adInfo.ad_id,
+        type: that.data.type,
+        img_index: index
+      },
+      success: res => {
+        $Toast({
+          content: '删除成功',
+          type: 'success'
+        });
+        let imageTempList = that.data.imageList;
+        imageTempList.splice(index, 1);
+        that.setData({
+          imageList: imageTempList
+        })
+      },
+      complete: res => {
+        LoadingHelper.hideLoading();
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   }
 
 })

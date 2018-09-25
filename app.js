@@ -3,11 +3,15 @@ const app = getApp();
 //user_type 为1时表示滴滴认证,其余状态为普通
 
 App({
-  onLaunch: function () {
-    // 获取用户信息
+  onLaunch: function (options) {
+    //获取运行小程序的场景值
+    console.log('场景值为：' + options.scene);
+    this.globalData.scene = options.scene;
   },
 
   globalData: {
+    //场景值
+    scene: 0,
     userInfo: null,
     login: 0,
     uid:'',

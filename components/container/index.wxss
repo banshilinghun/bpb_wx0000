@@ -3,7 +3,11 @@
 .b-commit-btn-wrapper{
   padding: 15px;
   background-color: #fff;
-  border-top: 1rpx solid #ddd
+  border-top: 1rpx solid #ddd;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .b-commit-btn{
@@ -19,4 +23,8 @@
 
 button::after{
   border: none;
+}
+
+.b-content{
+  padding-bottom: 74px
 }

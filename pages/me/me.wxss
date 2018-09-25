@@ -4,14 +4,8 @@ page{
   padding-bottom: 40rpx
 }
 
-.b-me-header{
-  padding: 30rpx;
-  background: #fff
-}
-
 .b-header-wrapper{
-  border-radius: 10rpx;
-  background: linear-gradient(180deg, #ff555c, #FB653D);
+  background: #ff555c;
   box-shadow: 0px 3px 10px #aaa
 }
 
@@ -26,9 +20,8 @@ page{
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  border: 1rpx solid #fff;
+  border: 2px solid #fff;
   background: rgba(236, 235, 242, 0.7);
-  box-shadow: 0 0 10rpx #666
 }
 
 .b-header-detail{
@@ -44,6 +37,7 @@ page{
 
 .b-user-name{
   max-width: 300rpx;
+  font-weight: bold;
   color: #fff;
   font-size: 36rpx;
   overflow: hidden;
@@ -69,12 +63,20 @@ page{
   margin-left: 20rpx
 }
 
+.b-income-container{
+  background: linear-gradient(180deg, #ff555c, rgba(236, 235, 242, 0.7));
+  padding-top: 20rpx;
+}
+
 .b-header-income{
-  width: 100%;
   display: flex;
   flex-direction: row;
-  padding: 20rpx 0;
-  box-sizing: border-box
+  padding: 20rpx;
+  margin: 0 20rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px #ddd
 }
 
 .b-user-balance{
@@ -83,19 +85,18 @@ page{
 
 .b-balance-wrapper{
   text-align: center;
-  color: #fff;
+  color: #666;
   position: relative;
 }
 
 .b-red-dot{
   position: absolute;
   background: #f00;
-  width: 20rpx;
-  height: 20rpx;
-  border: 1px solid #fff;
+  width: 18rpx;
+  height: 18rpx;
   border-radius: 50%;
-  right: 40rpx;
-  top: -15rpx
+  right: 70rpx;
+  top: -5rpx
 }
 
 .b-balance-title{
@@ -103,14 +104,20 @@ page{
 }
 
 .b-balance-number{
-  font-size: 36rpx;
-  font-weight: 500;
-  margin-top: 5rpx
+  font-size: 50rpx;
+  color: #333;
+  font-weight: bolder;
+  font-family: "微软雅黑";
+  margin-top: 5rpx;
+  line-height: 1.2
 }
 
 .b-me-income{
-  margin-top: 30rpx;
-  background: #fff
+  background: #fff;
+  margin: 20rpx 20rpx 0 20rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 0 8px #ddd;
+  padding: 10rpx
 }
 
 .b-me-panel{
@@ -155,5 +162,10 @@ page{
 
 .b-cell-action{
   color: #666;
-  font-size: 28rpx
+  font-size: 24rpx
+}
+
+.b-unit{
+  font-size: 24rpx;
+  margin-left: 5rpx
 }

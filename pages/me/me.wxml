@@ -5,10 +5,10 @@
         <image class='b-header-avatar' src='{{ userInfo.avatarUrl }}'></image>
         <view class='b-header-detail'>
           <view class="b-user-name-wrapper">
-              <view class='b-user-name'>{{ real_name? real_name : userInfo.nickName }}</view>
-              <image class='b-header-auth-status-error' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error-icon.png'></image>
-              <image class='b-header-auth-status-error' wx:if='{{ status == 2 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error-icon.png'></image>
-              <image class='b-header-auth-status' wx:if='{{ status == 3 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-success.png'></image>
+            <view class='b-user-name'>{{ real_name? real_name : userInfo.nickName }}</view>
+            <image class='b-header-auth-status-error' wx:if='{{ loginFlag == 0 || status == 0 || status == 1 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error-icon.png'></image>
+            <image class='b-header-auth-status-error' wx:if='{{ status == 2 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-error-icon.png'></image>
+            <image class='b-header-auth-status' wx:if='{{ status == 3 }}' src='https://wxapi.benpaobao.com/static/app_img/v2/b-auth-success.png'></image>
           </view>
           <view class='b-user-palte'>
             <text wx:if='{{ loginFlag == 0 }}'>未绑定手机号</text>
@@ -19,37 +19,41 @@
           </view>
         </view>
       </view>
-      <!-- 余额、待收收益、累计收益 -->
-      <view class='b-header-income'>
-        <view class='b-user-balance'>
-          <view class='b-balance-wrapper'>
-            <view class='b-balance-title'>
-              <text>余额</text>
-            </view>
-            <view class='b-balance-number'>
-              <text>{{ amount }}元</text>
-            </view>
+    </view>
+  </view>
+  <!-- 余额、待收收益、累计收益 -->
+  <view class='b-income-container'>
+    <view class='b-header-income'>
+      <view class='b-user-balance'>
+        <view class='b-balance-wrapper'>
+          <view class='b-balance-number'>
+            <text>{{ amount }}</text>
+            <text class='b-unit'>元</text>
+          </view>
+          <view class='b-balance-title'>
+            <text>余额</text>
           </view>
         </view>
-        <view class='b-user-balance' bindtap='handleIncomeClick'>
-          <view class='b-balance-wrapper'>
-            <view class='b-balance-title'>
-              <text>待收收益</text>
-            </view>
-            <view class='b-balance-number'>
-              <text>{{ incomeNumber }}</text>
-            </view>
-            <view class='b-red-dot' wx:if='{{ dotVisible }}'></view>
+      </view>
+      <view class='b-user-balance' bindtap='handleIncomeClick'>
+        <view class='b-balance-wrapper'>
+          <view class='b-balance-number'>
+            <text>{{ incomeNumber }}</text>
           </view>
+          <view class='b-balance-title'>
+            <text>待收收益</text>
+          </view>
+          <view class='b-red-dot' wx:if='{{ dotVisible }}'></view>
         </view>
-        <view class='b-user-balance'>
-          <view class='b-balance-wrapper'>
-            <view class='b-balance-title'>
-              <text>累计收益</text>
-            </view>
-            <view class='b-balance-number'>
-              <text>{{ total }}元</text>
-            </view>
+      </view>
+      <view class='b-user-balance'>
+        <view class='b-balance-wrapper'>
+          <view class='b-balance-number'>
+            <text>{{ total }}</text>
+            <text class='b-unit'>元</text>
+          </view>
+          <view class='b-balance-title'>
+            <text>累计收益</text>
           </view>
         </view>
       </view>
