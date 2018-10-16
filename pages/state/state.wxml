@@ -1,37 +1,38 @@
 <view class="contain">
-<scroll-view>
-<!--头部-->
-<view class="headerView">
- <image class="picture" src="{{picture}}"></image>
- <label class="name">{{name}}</label>
-   <view class="userinfo-desc">{{plate_no}}</view>
- <view class="userinfo-desc"><label class="province-text">{{province}}</label>{{city}}</view>
-</view>
+  <scroll-view>
+    <!--头部-->
+    <view class='state-root'>
+      <view class='state-wrapper'>
+        <image class='state-image' src='{{ stateSrc }}'></image>
+        <view class='state-text-wrapper'>
+          <text>{{ stateStr }}</text>
+        </view>
+      </view>
+    </view>
 
-<!--表格-->
- <block wx:for-items="{{items}}" wx:key="item.id">   
-<view class="item">
- <image class="icon" src="{{item.icon}}"></image>
- <label>{{item.text}}</label>
-  <text class="sta-text" wx:if="{{status==1}}">审核中</text>
-  <text class="sta-text" wx:elif="{{status==2}}">未通过</text>
-  <text class="sta-text" wx:elif="{{status==3}}">已认证</text>
+    <!-- 未通过 -->
+    <view class="ar_cont" wx:if="{{ status==2 }}">
+      <view class="b-reason-wrapper">
+        <view class="ar_cont_h1">未通过原因:</view>
+        <view class="ar_cont_text">{{ comment + '厉害了文峰街道时间段厉害了文峰街道时间段厉害了文峰街道时间段厉害了文峰街道时间段厉害了文峰街道时间段'}}</view>
+      </view>
+      <button class="btn-quit" bindtap="bookTap">重新认证</button>
+    </view>
+    <!-- 已通过 -->
+    <view class='btn-action-wrapper' wx:if='{{ status == 3 }}'>
+      <button class='btn-action' bindtap='handlePass'>立即出发</button>
+    </view>
+    <!-- 审核中 -->
+    <view class='btn-action-wrapper' wx:if='{{ status == 1 && isFollow }}'>
+      <button class='btn-action' bindtap='handleChecking'>随便逛逛</button>
+    </view>
+  </scroll-view>
 </view>
- </block>
- <view class="ar_cont" wx:if="{{status==2}}">
-    <text class="ar_cont_h1">未通过原因</text>
-    <text class="ar_cont_text">
-     {{comment}}
-    </text>
-    <button class="btn-quit" bindtap="bookTap">重新认证</button>
- </view>
-</scroll-view>
-</view>
- <!-- <dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='车主认证已提交' description="车主认证信息正在审核中，关注服务号可实时获取审核结果"  btnText='立即关注' />
+<!-- <dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='车主认证已提交' description="车主认证信息正在审核中，关注服务号可实时获取审核结果"  btnText='立即关注' />
  <bpb-follow shareit='{{shareit}}'></bpb-follow> -->
- <view class='fllowgz' wx:if='{{!isFollow&&status==1 }}'>
-<view class='fllowgz_text'>关注公众号，开启提醒功能及时</view>
-<view class='fllowgz_text'>获取审核结果和广告信息</view>
-<button class='fllow_btn' open-type="contact"> 立即关注公众号
- </button>
+<view class='fllowgz' wx:if='{{!isFollow&&status==1 }}'>
+  <view class='fllowgz_text'>关注公众号，开启提醒功能及时</view>
+  <view class='fllowgz_text'>获取审核结果和广告信息</view>
+  <button class='fllow_btn' open-type="contact"> 立即关注公众号
+  </button>
 </view>

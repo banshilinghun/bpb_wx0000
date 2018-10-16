@@ -1,8 +1,13 @@
 /* pages/joinList/joinList.wxss */
 @import '../../weui.wxss';
 
+page{
+  background: rgba(236, 235, 242, 0.7)
+}
+
 .root-container {
   width: 100%;
+  background: #fff;
 }
 
 .join-wrapper {
@@ -54,18 +59,19 @@
 }
 
 .no-more {
-  height: 60rpx;
+  height: 100rpx;
   width: 100%;
   position: relative;
-  background-color: #e5e5e5;
+  background-color: rgba(236, 235, 242, 0.7);
 }
 
 .no-more-wrapper {
-  width: 40%;
+  padding: 0 30rpx;
   height: 100%;
   position: absolute;
-  left: 30%;
-  background-color: #e5e5e5;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(236, 235, 242, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,7 +88,7 @@
   top: 50%;
   left: 10%;
   height: 1rpx;
-  background-color: #999;
+  background-color: #ccc;
 }
 
 .load-more {
@@ -91,5 +97,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e5e5e5;
+  background-color: rgba(236, 235, 242, 0.7);
 }

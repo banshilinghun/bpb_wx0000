@@ -1,0 +1,83 @@
+<container bind:submit="handleSubmit">
+  <!-- 基础信息 -->
+  <view class="b-content">
+    <view class="b-declare-panel">
+      <!-- 广告名 -->
+      <view class='b-declare-cell'>
+        <view class='b-cell-title'>
+          <text>{{ declareInfo.adName }}</text>
+        </view>
+        <view class="b-delcare-ad-name">{{ adInfo.ad_name }}</view>
+        <view class='b-declare-line'></view>
+      </view>
+      <!-- 日期 -->
+      <view class='b-declare-cell'>
+        <view class='b-cell-title'>
+          <text>{{ declareInfo.date }}</text>
+        </view>
+        <picker class='b-picker' mode="date" value="{{ date }}" start="{{ startDate }}" end="{{ currentDate }}"
+          bindchange="bindDateChange">
+          <view class="b-picker-item">
+            {{ date }}
+          </view>
+        </picker>
+        <image class='b-declare-arrow' src='../../image/arrow.png'></image>
+        <view class='b-declare-line' wx:if='{{ declareInfo.address }}'></view>
+      </view>
+      <!-- 地点 -->
+      <view class='b-declare-cell' wx:if='{{ declareInfo.address }}'>
+        <view class='b-cell-title'>
+          <text>{{ declareInfo.address }}</text>
+        </view>
+        <view class='b-cell-content'>
+          <input placeholder='请输入{{ declareInfo.address }}' value="{{ trafficAddress }}" bindinput="handleAddressInput"></input>
+        </view>
+        <view class='b-declare-line'></view>
+      </view>
+      <!-- 成本 -->
+      <view class='b-declare-cell' wx:if='{{ declareInfo.price }}'>
+        <view class='b-cell-title'>
+          <text>{{ declareInfo.price }}</text>
+        </view>
+        <view class='b-cell-content'>
+          <input placeholder='请输入{{ declareInfo.price }}' value="{{ trafficCost }}" bindinput="handleCostInput"></input>
+        </view>
+      </view>
+    </view>
+    <!-- 凭证 -->
+    <view class='b-declare-divider'></view>
+    <view class='b-picture-wrapper'>
+      <view class='b-declare-reason-title'>
+        <view class="b-image-title">
+          <text>{{ declareInfo.evidenceImage }}</text>
+          <text class="b-image-title-desc">（可上传一张或多张）</text>
+        </view>
+      </view>
+      <block wx:for="{{ imageList }}" wx:key="item.id">
+        <view class='b-declare-picture-wrapper' bindtap="handlePreviewImage" data-image="{{ item }}">
+          <view class="b-declare-item">
+            <image class="b-declare-close" src="https://wxapi.benpaobao.com/static/app_img/v2/b-declare-close.png" catchtap="handleDeleteImage" data-index="{{ index }}"></image>
+            <image class="b-declare-iamge" src="{{ item }}"></image>
+          </view>
+        </view>
+      </block>
+      <block>
+        <view class='b-declare-picture-wrapper' bindtap="handleAddImage" wx:if="{{ imageList.length < 5 }}">
+          <image class="b-declare-iamge" src="{{ declareInfo.src }}"></image>
+        </view>
+      </block>
+    </view>
+    <view class='b-declare-divider'></view>
+    <!-- 原因 -->
+    <view class='b-reason-wrapper'>
+      <view class='b-declare-reason-title'>
+        <text>{{ declareInfo.reason }}</text>
+      </view>
+      <textarea class='b-declare-reason-detail' placeholder='{{ declareInfo.reasonTip }}' value="{{ reason }}"
+        bindinput="handleReasonInput"></textarea>
+    </view>
+  </view>
+</container>
+
+<!-- 轻提示 -->
+<b-toast id="toast"></b-toast>

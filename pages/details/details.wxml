@@ -1,168 +1,213 @@
-<view class='taewtw' wx:if='{{loginStaus==0}}' bindtap="goRegister">立马注册，躺着赚钱，速速来抢</view>
-<view class='taewtw' wx:if='{{loginStaus==1}}' bindtap="goAuth">立马认证，躺着赚钱，速速来抢</view>
 <view>
-  <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>
-      <block wx:for="{{banners}}" wx:key="item.id">
-        <swiper-item>
-          <image src="{{item}}" mode="scaleToFill" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'></image>
-        </swiper-item>
-      </block>
-    </swiper>
+  <view id='b-detail-top'>
+    <view class='taewtw' wx:if='{{ loginStaus==0 }}' bindtap="goRegister">立马注册，躺着赚钱，速速来抢</view>
+    <view class='taewtw' wx:if='{{ loginStaus==1 }}' bindtap="goAuth">立马认证，躺着赚钱，速速来抢</view>
   </view>
-  <view class="profile-wrapper">
-    <block>
-      <view class="profile frpro">
-        <view class="profile-item cwsfts">{{adInfo.name}}</view>
-        <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
-          <image src='../../image/shareicon.png'></image>
-          <view class='sharetext'>{{ shareAwardText }}</view>
-        </button>
+  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px' wx:if="{{ adInfo }}">
+    <view class='detail-container'>
+      <view class="page-section page-section-spacing swiper">
+        <swiper indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="800" class="swiper-banner bg-white"
+          style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'>
+          <block wx:for="{{ adInfo.banners }}" wx:key="item.id">
+            <swiper-item>
+              <image src="{{ item }}" mode="scaleToFill" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'></image>
+            </swiper-item>
+          </block>
+        </swiper>
       </view>
-    </block>
-     <block>
-      <view class="profile">
-        <view class="profile-item">广告类型:</view>
-        <view class="right-text">
-          <label class="data-text swtwxs" wx:if="{{adInfo.type==0}}">车尾</label>
-          <label class="data-text swtwxs" wx:if="{{adInfo.type==1}}">车内</label>
-          <label class="data-text swtwxs" wx:if="{{adInfo.type==2}}">车尾+车内</label>
-          <label class="data-text swtwxs" wx:if="{{adInfo.type==3}}">车内+车外</label>
-          <label class="data-text swtwxs" wx:if="{{adInfo.type==4}}">车外</label>
-        </view>
-      </view>
-    </block> 
-    <block>
-      <view class="profile">
-        <view class="profile-item" wx:if='{{isDiDi!=1}}'>实际收益:</view>
-        <view class="profile-item" wx:if='{{isDiDi==1}}'>预计收益:</view>
-        <view class="right-text red-text" wx:if='{{adInfo.amount!=null&&isDiDi!=1}}'>{{adInfo.amount}}元</view>
-        <view class="right-text red-text adxtwtx" bindtap='goValuation' wx:if='{{isDiDi==1}}'>300<label class="data-blt2">~</label>868元<icon type="info" size="16"  color='#ff555c'/></view>
-        <view class="right-text tasts" wx:if='{{adInfo.amount==null}}'>身份认证后可查看收益</view>
-      </view>
-    </block>
-    <block>
-      <view class="profile">
-        <view class="profile-item">投放车辆:</view>
-        <view class="right-text">{{adInfo.total_count}}辆</view>
-      </view>
-    </block>
-    <block>
-      <view class="profile">
-        <view class="profile-item">投放时间:</view>
-        <view class="right-text">{{adInfo.begin_date}}
-          <label class="data-blt">~</label>{{adInfo.end_date}}</view>
-      </view>
-    </block>
-  </view>
-  <block wx:if="{{checkPlan}}">
-    <view class="profile-wrapper" bindtap="checkPlan" data-adId="{{adInfo.id}}">
-      <view class="profile frpro">
-        <view class="profile-item cwsfts">检测计划</view>
-        <image class="profile-arrow" src="/image/arrow.png"></image>
-      </view>
-    </view>
-  </block>
-  <view class='join-list-wrapper' wx:if='{{showJoining}}' bindtap='joinClick'>
-    <view class='join-left-layout'>
-      <text class='already-join-text'>已参与</text>
-      <text class='already-join-number'>{{ joinCount + '人'}}</text>
-    </view>
-    <view class='join-center-line'></view>
-    <scroll-view class='join-avatar-scroll' scroll-x='true'>
-      <view class='join-avatar-wrapper' wx:for='{{avatarList}}' wx:for-item='item' wx:key='index'>
-        <view class='join-avatar-item'>
-          <image class='join-avatar' src='{{item.wx_avatar}}'></image>
-        </view>
-      </view>
-    </scroll-view>
-  </view>
-  <view class="profile-wrapper protwo">
-    <block wx:if="{{service.length>0}}">
-      <view class="profile frpro">
-        <view class="profile-item cwsfts">预约前往下列服务网点</view>
-        <view class='action-wrapper' bindtap='changeListMap' style='display:none'>
-          <image class='action-image' src='{{ showMap? "../../image/ad-list-icon.png" : "../../image/ad-map-icon.png" }}'></image>
-        </view>
-      </view>
-    </block>
-
-    <view class='list-root-wrapper'>
-      <view class='list-inner {{ showMap? "list-inner-click" : "" }}'>
-        <!-- 列表 -->
-        <view class='list-transform'>
-          <block wx:for="{{service}}" wx:for-index="index" wx:key="item.id" wx:if='{{ !showMap }}'>
-            <view class="itemcon {{item.lista==2?'curitem':''}}">
-              <view class="item {{item.lista==2?'curitemList':''}}">
-                <image src='../../image/sev_tips.png' class='sev_tips' wx:if='{{index==0&&item.lista!=2&&haveLoca}}'></image>
-                <image src='../../image/already.png' class='sev_tips' wx:if='{{index==0&&item.lista==2}}'></image>
-                <image wx:if='{{item.small_logo!=null}}' src='{{item.small_logo}}' class='sev_logo' catchtap='previewImage' data-image='{{ item.logo }}' data-samllImage='{{item.small_logo}}'></image>
-                <image wx:if='{{item.small_logo==null}}' src='../../image/noimg.png' class='sev_logo'></image>
-                <view class="item-middle">
-                  <view>
-                    <text class="title">{{item.name}}</text>
-                  </view>
-                  <view class="myad-li" bindtap='showAddress' data-address='{{item.address}}'>
-                    <view class="message">
-                      <image src='../../image/dw.png'></image>{{item.address}}
-                    </view>
-                    <!-- <label class="province-text txtstx" wx:if='{{item.lista==2}}'>已预约{{selDate}} {{selTime}}</label> -->
-                    <view class="mmtext">剩余车辆
-                      <label class="province-text">{{item.ad_count-item.subscribe_count}}辆</label>
-
-                    </view>
-                  </view>
-
-                </view>
-                <view class="item_right">
-                  <view>
-                    <text class="time">{{item.distance}}km</text>
-                  </view>
-                  <view class="orgtext" bindtap="goMap" data-longitude="{{item.lng}}" data-latitude="{{item.lat}}" data-name="{{item.name}}" data-address="{{item.address}}">
-                    <image src='../../image/dh.png'></image>导航
-                  </view>
-                  <view class="fastwx" wx:if='{{item.lista==1}}' bindtap="arrangement" data-adId="{{adId}}" data-serverId="{{item.id}}"> 预约</view>
-                  <view class="fastwx3" wx:if='{{item.lista==2}}' bindtap="cancel"> 取消</view>
-                  <view class="fastwx2" wx:if='{{item.lista==0}}'> 预约</view>
-                </view>
-              </view>
-              <view class='yy_time' wx:if='{{item.lista==2}}'>
-                <label class="province-text">已预约{{selDate}} {{selTime}}</label>
+      <!-- 广告状态 -->
+      <view class="profile-wrapper">
+        <block>
+          <view class="profile frpro">
+            <view class="profile-item cwsfts">{{ adInfo.ad_name }}</view>
+            <view class='profile-ad-status'>
+              <view>
+                <text class="time  {{ (item.run_status === 0  || item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{
+                    adInfo.adStatusStr }} </text>
               </view>
             </view>
-          </block>
-        </view>
-        <!-- 地图 -->
-        <view class='map-transform'>
-          <block wx:if='{{ showMap }}'>
-            <view class='map-wrapper ' style='height:{{ mapHeight }}px'>
-              <map class='map' id='myMap' longitude="{{ longitude }}" latitude="{{ latitude }}" scale="{{ scale }}" show-location="true" markers="{{ markers }}" bindmarkertap="bindMarkertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{ controls }}'
-                bindtap='bindMapTap'>
-                <!--定位当前位置-->
-                <cover-view class='cover-layout' bindtap='moveToSelfLocation'>
-                  <cover-image class='self-location' src='../../image/self-location.png'></cover-image>
-                </cover-view>
-              </map>
+          </view>
+        </block>
+        <block>
+          <view class="profile">
+            <!-- 预计收益 -->
+            <view class="profile-item">
+              <view class='profole-type'>预计收益:</view>
             </view>
-          </block>
+            <block wx:if="{{ loginStaus != 3 }}">
+              <view class="profole-type-right tasts" bindtap="handleGoAuth">***（身份认证后可查看收益）</view>
+            </block>
+            <block wx:elif="{{  adInfo.billing_mode == 0 }}">
+              <view class="profole-type-right red-text">{{ adInfo.predict_amount }}元</view>
+            </block>
+            <block wx:elif='{{ adInfo.billing_mode == 1 }}'>
+              <view class="profole-type-right red-text" bindtap='goValuation'>
+                <view class='b-income-explain-wrapper'>
+                  <view>{{ adInfo.min_amount }}
+                    <label class="data-blt2">~ </label>{{ adInfo.max_amount }}元</view>
+                  <image class='b-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
+                </view>
+              </view>
+            </block>
+          </view>
+        </block>
+        <!-- 广告类型 -->
+        <block>
+          <view class='profile'>
+            <view class="profile-item">
+              <text>广告类型:</text>
+            </view>
+            <view class="right-text">
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 0 }}">车尾</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 1 }}">车内</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 2 }}">车尾+车内</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 3 }}">车内+车外</label>
+              <label class="data-text swtwxs" wx:if="{{ adInfo.classify == 4 }}">车外</label>
+            </view>
+          </view>
+        </block>
+        <block>
+          <view class="profile">
+            <view class="profile-item">收益时间:</view>
+            <view class="right-text">{{ adInfo.begin_date }}
+              <label class="data-blt">~</label>{{ adInfo.end_date }}</view>
+          </view>
+        </block>
+        <block wx:if="{{ adInfo.reserve_date.start_date && adInfo.reserve_date.last_date }}">
+          <view class="profile">
+            <view class="profile-item">安装时间:</view>
+            <view class="right-text">{{ adInfo.reserve_date.start_date }}
+              <label class="data-blt">~</label>{{ adInfo.reserve_date.last_date }}</view>
+          </view>
+        </block>
+        <block>
+          <view class="profile">
+            <view class="profile-item">车辆要求:</view>
+            <view class="right-text horizontal-center" bindtap='handleColorExplain'>
+              <image class='b-car-require' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
+              <text class="b-require-text" catchtap='handleRequire' data-require='{{  adInfo.car_require }}'>{{
+                adInfo.car_require }}</text>
+            </view>
+          </view>
+        </block>
+        <block>
+          <view class="profile">
+            <view class="profile-item">车辆颜色:</view>
+            <view class="right-text b-color-content" bindtap='handleCarColor' data-color='{{ carColor }}'>{{ carColor
+              }}</view>
+          </view>
+        </block>
+      </view>
+
+      <!-- 参与列表 -->
+      <view class='join-list-wrapper' wx:if='{{ showJoining }}' bindtap='joinClick'>
+        <view class='join-left-layout'>
+          <text class='already-join-text'>已参与</text>
+          <text class='already-join-number'>{{ joinCount + '人'}}</text>
+        </view>
+        <view class='join-center-line'></view>
+        <scroll-view class='join-avatar-scroll' scroll-x='true'>
+          <view class='join-avatar-wrapper' wx:for='{{ avatarList }}' wx:for-item='item' wx:key='index'>
+            <view class='join-avatar-item'>
+              <image class='join-avatar' src='{{ item.wx_avatar }}'></image>
+            </view>
+          </view>
+        </scroll-view>
+        <view>
+          <image class='arrow-image' src='../../image/arrow.png'></image>
+        </view>
+      </view>
+      <!-- 排队中列表 -->
+      <view class='join-list-wrapper queue' wx:if='{{ showWaiting }}' bindtap='queueClick'>
+        <view class='join-left-layout'>
+          <text class='already-join-text'>排队中</text>
+          <text class='already-join-number'>{{ queueCount + '人'}}</text>
+        </view>
+        <view class='join-center-line'></view>
+        <scroll-view class='join-avatar-scroll' scroll-x='true'>
+          <view class='join-avatar-wrapper' wx:for='{{ queueList }}' wx:for-item='item' wx:key='index'>
+            <view class='join-avatar-item'>
+              <image class='join-avatar' src='{{ item.wx_avatar }}'></image>
+            </view>
+          </view>
+        </scroll-view>
+        <view>
+          <image class='arrow-image' src='../../image/arrow.png'></image>
+        </view>
+      </view>
+      <!-- 广告介绍和设计样式预览 -->
+      <view class='b-design-container'>
+        <view class='b-design-introduce'>
+          <view class='b-ad-introduce-title'>广告介绍</view>
+          <view class='b-ad-introduce-content'>
+            <text>{{ adInfo.introduction }}</text>
+          </view>
+        </view>
+        <view>
+          <view class='b-ad-design-title'>广告设计预览</view>
+          <view>
+            <view wx:for="{{ designList }}" wx:for-item='design' class='b-design-wrapper' wx:key='design.id'>
+              <view class='b-design-item-title'>{{ design.title }}</view>
+              <scroll-view scroll-x='true' class="b-scroll-effect">
+                <view class='b-effect-wrapper'>
+                  <view id='effect-image' class='b-effect-image-wrapper' wx:for='{{ design.effect }}' wx:for-item='effect'
+                    wx:key='effect.id'>
+                    <image class='b-effect-image' src='{{ effect.img }}' bindtap='handlePreviewDesign' data-effect='{{ design.effect }}'
+                      data-current='{{ effect.img }}'></image>
+                    <view class="b-effect-desc">
+                      <text>{{ effect.desc }}</text>
+                    </view>
+                  </view>
+                </view>
+              </scroll-view>
+            </view>
+          </view>
         </view>
       </view>
     </view>
+  </scroll-view>
+
+  <!-- 底部分享预约按钮 -->
+  <view  id="b-detail-bottom">
+    <view class='action_bottom {{ adInfo? "action_bottom_visible" : "action_bottom_invisible" }}'>
+      <!-- 客服 -->
+      <button class='wtwabt' open-type='contact'>
+        <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_message_icon.png'></image>
+        <view class='sharetext'>在线客服</view>
+      </button>
+      <!-- 分享 -->
+      <button data-adName="{{adInfo.name}}" class='wtwabt' bindtap='shareDetailListener'>
+        <image src='https://wxapi.benpaobao.com/static/app_img/v2/b_share_icon.png'></image>
+        <view class='sharetext'>{{ shareAwardText }}</view>
+      </button>
+      <!-- 预约排队 -->
+      <view class='subscribe_immediately b-start-subscribe {{ actionStatus === 0 || actionStatus === 4 || actionStatus === 5 || actionStatus === 6? "b-action-disenable" : "" }}'
+        bindtap='handleAction'>
+        <view class='subcribe-wrapper'>
+          <text>{{ actionStr }}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 适配iPhone X -->
+    <view class="{{ isIpx?'fix-iphonex-button':'' }}" wx:if="{{ isIpx }}"> </view>
   </view>
 </view>
 
-
-
-<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!' btnText='分享微信好友' />
+<!-- 预约成功弹框 -->
+<dialog showDialog='{{showGoodsDetail}}' bind:btnclick='dialogClickListener' title='预约成功' description='分享给微信好友，让你的朋友们一起赚钱吧!'
+  btnText='分享微信好友' />
 <view class="scrollUp" wx:if="{{goHome}}" bindtap="backHome">
   <view class="count">
   </view>
 </view>
 <bpb-reward reward='{{reward}}'></bpb-reward>
-<share-popup showPop='{{ showSharePop }}' bind:shareMoment='shareMomentListener' adId="{{ adInfo.id }}"></share-popup>
-<share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}' joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}' showShareModel='{{ showShareModel }}'
-  adId='{{adId}}' bind:hideDialog='hideDialogListener'>
+<share-popup showPop='{{ showSharePop }}' bind:shareFriends='shareListener' adId="{{ adInfo.id }}"></share-popup>
+
+<share-detail avatar='{{ shareAvatar }}' nickname='{{ shareNickname }}' incomeMoney='{{ incomeMoney }}' joinNumber='{{ joinNumber }}'
+  joinAvatarList='{{ joinAvatarList }}' adImageUrl='{{ adImageUrl }}' adName='{{ adName }}' adTime='{{ adTime }}'
+  showShareModel='{{ showShareModel }}' adId='{{adId}}' bind:hideDialog='hideDialogListener'>
 </share-detail>
+
 <!--正在加载-->
 <view class='load-more' hidden='{{!isShowLoadingMore}}'>
   <view class="weui-loadmore">
@@ -170,13 +215,203 @@
     <view class="weui-loadmore__tips" style='color:#999999'>奔跑中🚗...</view>
   </view>
 </view>
-<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail'  data-adId="{{adId}}" data-serverId="{{serverId}}"></rule-dialog>
-<!-- <view class='msite-nav'>
- <button class='msite-a2'  open-type="contact" >
-  <image src='../../image/kf_icon.png'></image>
-  <text>客服</text>
- </button>
-  <view class='msite-a'>
-  <text>分享</text>
- </view>
-</view>  -->
+
+<!-- 规则弹框 -->
+<rule-dialog showRuleDialog='{{ showRule }}' bind:btnclick='iKnow' bind:btnclickDetail='goRuleDetail' data-adId="{{ adId }}"
+  data-serverId="{{ serverId }}" data-serverName='{{ serverName }}' data-serverAddress='{{ serverAddress }}'></rule-dialog>
+
+<!-- 地址弹框 -->
+<dialog-address showAddressDialog='{{ showAddressDialog }}' address='{{ address }}' phone='{{ phone }}'></dialog-address>
+
+<!-- 注册认证弹框 -->
+<dialog-auth showDialog='{{ showAuthDialog }}' imageSrc='{{ authModal.src }}'  title='{{ authModal.title }}'
+  btnStr='{{ authModal.authStr }}' status='{{ authModal.authStatus }}' content='{{ authModal.authContent }}' bind:action='handleActionTap'></dialog-auth>
+
+<!-- 预约排队 -->
+<model visible="{{ visible }}" title="预约排队确认" cancelText="暂不排队" confirmText="确认排队" cancelLoading="{{ cancelLoading }}"
+  confirmLoading="{{ confirmLoading }}" bind:cancel="handleQueueCancel" bind:confirm="handleQueueConfirm" explain='排队说明'
+  bind:explain="handleModelExplain">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view class='b-queue-model-item'>排队序号: {{ serial_number }}</view>
+      <view class='b-queue-model-item'>当前排队人数: {{ queue_count }}</view>
+      <view class='b-queue-model-item'>需等待人数: {{ position }}</view>
+    </view>
+    <view class='b-queue-notify-text'>请及时关注公众号通知，查看排队情况。</view>
+  </view>
+</model>
+
+<!-- 取消排队 -->
+<model visible="{{ visibleUndo }}" title="取消确认" cancelText="暂不取消" confirmText="确认取消" confirmLoading="{{ doLoading }}"
+  bind:cancel="handleUndoCancel" bind:confirm="handleConfirmCancel">
+  <view class='subscribe-wrapper'>
+    <view class='b-cancel-queue-tip'>
+      <view class='b-queue-model-item'>取消后，需重新参加排队，</view>
+      <view class='b-queue-model-item'>您确认取消当前排队吗？</view>
+    </view>
+  </view>
+</model>
+
+<!-- 年检弹窗 -->
+<model visible="{{ visibleAnnual }}" title="完善车辆年检日期" cancelText="取消" confirmText="保存" confirmLoading="{{ annualLoading }}"
+  bind:cancel="handleAnnualCancel" bind:confirm="handleAnnualConfirm">
+  <view class='b-annual-container'>
+    <view class='b-annual-left'>
+      <text>年检日期: </text>
+    </view>
+    <picker-view indicator-style="height: 50px;" class='b-picker-view' value="{{value}}" bindchange="bindAnnualChange">
+      <picker-view-column>
+        <view wx:for="{{months}}" wx:key='item.id' class='b-pick-item'>{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" wx:key='item.id' class='b-pick-item'>{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</model>
+
+<!-- 确认预约提示 -->
+<model visible="{{ visibleSubscribeTip }}" title="预约确认" cancelText="暂不预约" confirmText="确认预约" confirmLoading="{{ confirmSubTipLoading }}"
+  bind:cancel="handleSubscribeCancel" bind:confirm="handleSubscribeRequest">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view class='b-queue-model-item'>服务网点: {{ subscribeStation }}</view>
+      <view class='b-queue-model-item'>预约时间: {{ subscribeTime }}</view>
+      <view class='b-queue-model-item'>网点地址: {{ subscribeAddress }}</view>
+    </view>
+  </view>
+</model>
+
+<!-- 广告要求 -->
+<model visible="{{ visibleRequire }}" title="车辆要求" confirmText="我知道了" bind:confirm="handleRequireConfirm" showCancel="{{ false }}">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view class='b-queue-model-item'>
+        <view class="b-require-title">城市要求: </view>
+        <view class="b-require-content">{{ adInfo.cityRequire ? adInfo.cityRequire : "不限" }}</view>
+      </view>
+      <view class='b-queue-model-item'>
+          <view class="b-require-title">车辆类别: </view>
+          <view class="b-require-content">{{ adInfo.userRequire ? adInfo.userRequire : "不限" }}</view>
+      </view>
+      <view class='b-queue-model-item'>
+          <view class="b-require-title">车辆类型: </view>
+          <view class="b-require-content">{{ adInfo.carSizeRequire ? adInfo.carSizeRequire : "不限" }}</view>
+      </view>
+    </view>
+  </view>
+</model>
+
+<!-- 预约弹窗 -->
+<popup show="{{ visibleSubscribe }}" type="bottom" bindclose="toggleBottomPopup" overlay="{{true}}">
+  <view class='b-subscribe-container'>
+    <view class='b-subscribe-header'>
+      <view class='b-header-wrapper'>
+        <image class='b-subscribe-logo' src='{{ adInfo.logo }}' mode='aspectFill'></image>
+        <view class='b-header-right'>
+          <view class='b-header-info'>
+            <view class='b-header-money b-theme-color'>
+              <block wx:if='{{ adInfo.billing_mode == 0 }}'>
+                <text class='b-money-number'>{{ adInfo.predict_amount}}</text>
+              </block>
+              <block wx:elif="{{ adInfo.billing_mode == 1 }}">
+                <text class='b-money-number'>{{ adInfo.min_amount + "~" + adInfo.max_amount }}</text>
+              </block>
+              <text class='b-money-symbol'>元</text>
+            </view>
+            <view class='b-header-remain'>剩余{{ remainCount }}辆</view>
+            <view class='b-header-select'>{{ selectStatusStr }}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view>
+      <scroll-view scroll-y="true" class='b-scroll-body'>
+        <view class='b-scroll-content'>
+          <!-- 服务网点 -->
+          <view class='b-body-title'>
+            <view class='b-title-wrapper'>
+              <view class='b-body-color-title'>服务网点</view>
+              <view class='b-title-stauts' wx:if='{{ selectServerIndex === -1 }}'>请选择服务网点</view>
+            </view>
+            <view class='b-body-wrapper'>
+              <view class='b-body-server' wx:for="{{ stationList }}" wx:key="server" wx:if="{{ selectServerIndex === -1 || (selectServerIndex !== -1 &&  index === selectServerIndex) }}">
+                <view class='b-server-cell {{ index === selectServerIndex? "b-server-select" : "b-server-normal" }}'
+                  bindtap='handleServerClick' data-index='{{ index }}' data-station="{{ item }}">
+                  <image class='b-server-logo' src="{{ item.small_logo || '../../image/noimg.png' }}" catchtap='handlePreviewStation'
+                    data-image="{{ item.logo }}"></image>
+                  <view class='b-server-right'>
+                    <view class='b-server-right-middle'>
+                      <view class='b-server-right-top'>
+                        <view class='b-right-name {{ item.enable? "" : "gray-color" }} {{ index === selectServerIndex? "b-theme-color" : "" }}'>{{
+                          item.station_name }}</view>
+                        <view class='b-right-distance {{ item.enable? "" : "gray-color" }}'>{{ item.distance }}km</view>
+                      </view>
+                      <view class='b-right-address-wrapper'>
+                        <image class='b-right-location-icon' src='../../image/dw.png'></image>
+                        <view class='b-right-address {{ item.enable? "" : "gray-color" }}'>{{ item.station_address }}</view>
+                        <view class='b-go-map' catchtap='handleNavigation' data-nav="{{ item }}">
+                          <image class='b-map-image' src='https://wxapi.benpaobao.com/static/app_img/v2/b-nav-icon.png'></image>
+                          <view class='b-map-text'>
+                            <text>导航</text>
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 预约日期 -->
+          <view class='b-body-title' wx:if='{{ selectServerIndex !== -1 }}'>
+            <view class='b-title-wrapper'>
+              <view class='b-body-color-title'>预约日期</view>
+              <view class='b-title-stauts' wx:if='{{ selectDateIndex === -1 }}'>请选择预约日期</view>
+            </view>
+            <view class='b-body-wrapper'>
+              <view class='b-body-date' wx:for="{{ dateList }}" wx:key="date" wx:if="{{ selectDateIndex === -1 || (selectDateIndex !== -1 &&  index === selectDateIndex) }}">
+                <view class='b-date-cell {{ index === selectDateIndex? "theme-color" : (item.enable? "normal-color" : "gray-color") }} {{ index === selectDateIndex? "b-server-select" : "b-server-normal" }}'
+                  bindtap="handleDateClick" data-index='{{ index }}' data-date="{{ item }}">{{ item.date }}</view>
+              </view>
+            </view>
+          </view>
+          <!-- 预约某个日期的时间段 -->
+          <view class='b-body-title' wx:if="{{ selectServerIndex !== -1 && selectDateIndex !== -1 }}">
+            <view class='b-title-wrapper'>
+              <view class='b-body-color-title'>预约时间</view>
+              <view class='b-title-stauts' wx:if='{{ selectTimeIndex === -1 }}'>请选择预约时间</view>
+            </view>
+            <view class='b-body-wrapper'>
+              <view class='b-body-date' wx:for="{{ timeList }}" wx:key="date" wx:if="{{ selectTimeIndex === -1 || (selectTimeIndex !== -1 &&  index === selectTimeIndex) }}">
+                <view class='b-date-cell {{index === selectTimeIndex? "theme-color" : item.enable? "normal-color" : "gray-color" }} {{ index === selectTimeIndex? "b-server-select" : "b-server-normal" }}'
+                  bindtap="handleTimeClick" data-index='{{ index }}' data-time="{{ item }}">{{ item.time }}</view>
+              </view>
+            </view>
+          </view>
+          <!-- 车身颜色 -->
+          <view class='b-body-title b-body-title-color'>
+            <view class='b-title-wrapper'>
+              <view class='b-body-color-title'>车身颜色</view>
+            </view>
+            <view class='b-body-wrapper'>
+              <view wx:for="{{ colorList }}" wx:key="color" class='b-body-color-item'>
+                <view class='b-color-cell {{ item == userCarColor? "b-cell-select" : "b-cell-normal" }}'>{{ item }}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class='b-btn-wrapper'>
+      <button class='b-subscribe-btn btn-enable' bindtap='handleConfirmSubscribe'>确认预约</button>
+    </view>
+    <!-- 关闭按钮 -->
+    <view class='b-close' bindtap='handleSubscribeClose'>
+      <image class='b-close-image' src='https://wxapi.benpaobao.com/static/app_img/close-gray.png'></image>
+    </view>
+  </view>
+</popup>
+
+<!-- 轻提示 -->
+<b-toast id="toast"></b-toast>

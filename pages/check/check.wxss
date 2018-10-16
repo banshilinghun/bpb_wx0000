@@ -1,22 +1,88 @@
 @import "../auth/auth.wxss";
-
 .widgets__info-img {
-width:32rpx;
-height:32rpx;
-transition:transform .4s;
-transform:rotate(90deg);
-display:inline-block;
-overflow:hidden;
-
+  width: 32rpx;
+  height: 32rpx;
+  transition: transform .4s;
+  transform: rotate(90deg);
+  display: inline-block;
+  overflow: hidden;
 }
-.weui-cells_after-title{
+
+.weui-cells_after-title {
   width: 90%;
   margin: 0 auto;
-  border-left:1px solid #D9D9D9;
-  border-right:1px solid #D9D9D9;
+  border-left: 1px solid #D9D9D9;
+  border-right: 1px solid #D9D9D9;
   margin-top: 16px;
-  background:rgba(238,238,238,1);
+  background: rgba(238, 238, 238, 1);
 }
-.weui-input{
-  color:#999
+
+.weui-input {
+  color: #999
+}
+
+.weui-cells {
+  margin-top: 0;
+}
+
+.check-help-wrapper {
+  width: 100%;
+  position: relative;
+  height: 35px
+}
+
+.check-image-wrapper {
+  right: 20rpx;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-help-image {
+  width: 35rpx;
+  height: 35rpx;
+  margin-right: 10rpx;
+}
+
+.check-help-text {
+  font-size: 26rpx;
+  color: #FD500D;
+  display: block;
+  line-height: 1;
+}
+
+.carwimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/check-carw.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.carnimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/check-carn.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.carleftimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/car_left-check.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.carrightimg {
+  background: url(https://wxapi.benpaobao.com/static/app_img/car_right-check.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+
+.btn-quit {
+  width: 95%;
+  margin: 0 auto;
+  border: none;
+  background-color: #FD500D;
+  color: #fff;
+}
+
+.b-commit-wrapper {
+  padding: 20rpx 0;
 }

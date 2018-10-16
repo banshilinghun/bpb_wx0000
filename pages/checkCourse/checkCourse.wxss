@@ -1,0 +1,24 @@
+
+.b-check-image{
+  width: 100%;
+}
+
+.b-check-btn-wrapper{
+  padding: 15px;
+  box-shadow: 0 0 12rpx #ddd;
+}
+
+.b-check-btn{
+  height: 44px;
+  line-height: 44px;
+  background: #FD500D;
+  padding: 0;
+  margin: 0;
+  font-size: 32rpx;
+  color: #fff;
+  border-radius: 10rpx;
+}
+
+button::after{
+  border: none;
+}

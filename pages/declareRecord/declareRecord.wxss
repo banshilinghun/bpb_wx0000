@@ -1,0 +1,85 @@
+
+page{
+  background-color: rgba(236, 235, 242, 0.7);
+}
+
+.b-declare-record-container{
+  margin: 10rpx 20rpx 0 20rpx;
+  border-radius: 10rpx;
+  border: 1rpx solid #ddd;
+  background-color: #fff;
+  padding: 30rpx
+}
+
+.b-item-title{
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.b-item-name{
+  flex: 1;
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500
+}
+
+.b-auditing{
+  color: #ff5d39;
+  font-size: 24rpx
+}
+
+.b-audit-fail{
+  color: #f00;
+  font-size: 24rpx
+}
+
+.b-audit-success{
+  color: #03d0b7;
+  font-size: 24rpx
+}
+
+.b-date-wrapper{
+  display: flex;
+  align-items: flex-end;
+  margin-top: 20rpx
+}
+
+.b-declare-date{
+  color: #999;
+  font-size: 24rpx;
+  text-align: center;
+  margin-top: 40rpx
+}
+
+.b-re-declare{
+  font-size: 24rpx;
+  color: #fff;
+  background: linear-gradient(90deg, #FD500D, #ff5d39);
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx
+}
+
+.b-item-info-wrapper{
+  margin-top: 20rpx;
+  color: #666;
+  font-size: 28rpx
+}
+
+.b-item-info{
+  margin-bottom: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.b-declare-refuse-comment{
+  flex: 1;
+  background: linear-gradient(90deg, #FD500D, #ff5d39);
+  opacity: 0.7;
+  border-radius: 10rpx;
+  padding: 10rpx 20rpx;
+  margin-right: 40rpx;
+  color: #fff;
+  font-size: 24rpx
+}

@@ -1,4 +1,5 @@
-const app = getApp()
+const app = getApp();
+const ApiConst = require("../../utils/api/ApiConst.js");
 
 Page({
 
@@ -12,7 +13,9 @@ Page({
       text: '身份认证'
     }],
     showGoodsDetail: false,
-    shareit: false
+    shareit: false,
+    stateSrc: '',
+    stateStr: ''
   },
   onLoad: function (options) {
     //console.log(options.followFlag)
@@ -28,46 +31,41 @@ Page({
     }
     that.followFlag();
   },
+
   onShow: function () {
     // 页面初始化 options为页面跳转所带来的参数
     var z = this;
-    //		console.log(app.globalData.userInfo)
-    if (app.globalData.userInfo != null) {
-      z.setData({
-        picture: app.globalData.userInfo.avatarUrl
-      })
-    }
 
-    //console.log(app.globalData.userInfo.avatarUrl)
-    app.userInfoReadyCallback = res => {
-      //			console.log(res)
-      app.globalData.userInfo = res.userInfo
-      z.setData({
-        picture: app.globalData.userInfo.avatarUrl
-      })
-      //console.log(app.globalData.userInfo)
-    }
-    //		var uidData = {};
-    //		uidData.user_id = app.globalData.uid;
+    this.requestAuthStatus();
+  },
 
+  requestAuthStatus: function(){
+    let that = this;
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_auth_status',
+      url: ApiConst.GET_AUTH_STATUS,
       data: {},
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
-          //					console.log(res.data)
-          z.setData({
-            name: res.data.data.real_name,
-            province: res.data.data.province,
-            city: res.data.data.city,
-            plate_no: res.data.data.plate_no,
-            status: res.data.data.status,
+          let status = res.data.data.status;
+          that.setData({
+            status: status,
             comment: res.data.data.comment
           })
-          if (res.data.data.status == 3) {
-            wx.redirectTo({
-              url: '../main/main'
+          if (parseInt(status) === 1){//审核中
+            that.setData({
+              stateSrc: 'https://wxapi.benpaobao.com/static/app_img/v2/checking-icon.png',
+              stateStr: '您的资料已提交审核，\n审核时间为三个工作日内，请耐心等待审核结果'
+            })
+          }else if(status == 2){//未通过
+            that.setData({
+              stateSrc: 'https://wxapi.benpaobao.com/static/app_img/v2/check-refuse.png',
+              stateStr: '很抱歉!您的资料未能通过审核,\n您可重新提交认证'
+            })
+          }else if(status == 3){//已通过
+            that.setData({
+              stateSrc: 'https://wxapi.benpaobao.com/static/app_img/v2/check-over.png',
+              stateStr: '您的资料已审核通过，快去预约广告吧~'
             })
           }
         } else {
@@ -87,11 +85,13 @@ Page({
       }
     })
   },
+
   bookTap: function () {
     wx.redirectTo({
       url: '../auth/auth'
     })
   },
+
   dialogClickListener: function () {
     var that = this;
     that.setData({
@@ -99,10 +99,11 @@ Page({
       shareit: true
     })
   },
+
   followFlag: function () {//查询是否关注公众号
     var that = this;
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_has_subscribe',
+      url: ApiConst.USER_HAS_SUBCRIBE,
       header: app.globalData.header,
       success: res => {
         if (res.data.code == 1000) {
@@ -111,7 +112,6 @@ Page({
             isFollow: res.data.data
           })
         } else {
-          //					console.log(res.data)
           wx.showModal({
             title: '提示',
             showCancel: false,
@@ -128,55 +128,26 @@ Page({
       }
     })
   },
+
   onPullDownRefresh: function () {
     var z = this;
     wx.showToast({
       title: '奔跑中🚗...',
       icon: 'loading'
     })
-    //		var uidData = {};
-    //		uidData.user_id = app.globalData.uid;
-
-    wx.request({
-      url: app.globalData.baseUrl + 'app/get/user_auth_status',
-      data: {},
-      header: app.globalData.header,
-      success: res => {
-        wx.stopPullDownRefresh();
-        if (res.data.code == 1000) {
-          //					console.log(res.data)
-
-          z.setData({
-            name: res.data.data.real_name,
-            province: res.data.data.province,
-            city: res.data.data.city,
-            plate_no: res.data.data.plate_no,
-            status: res.data.data.status,
-            comment: res.data.data.comment
-          })
-          if (res.data.data.status == 3) {
-            wx.redirectTo({
-              url: '../main/main' //
-            })
-          }
-        } else {
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.stopPullDownRefresh();
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
-
+    this.requestAuthStatus();
   },
+
+  handlePass: function(){
+    wx.switchTab({
+      url: '../main/main'
+    })
+  },
+
+  handleChecking: function(){
+    wx.switchTab({
+      url: '../main/main'
+    })
+  }
 
 })

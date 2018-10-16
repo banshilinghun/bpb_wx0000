@@ -1,0 +1,15 @@
+<!-- 步骤条 -->
+<view class="b-step-wrapper">
+  <i-steps current="{{ current }}" direction="vertical">
+    <block wx:for="{{ stepArray }}" wx:key="item.id">
+      <i-step>
+        <view slot="title">
+          {{ item.title }}
+        </view>
+        <view slot="content">
+          {{ item.content }}
+        </view>
+      </i-step>
+    </block>
+  </i-steps>
+</view>

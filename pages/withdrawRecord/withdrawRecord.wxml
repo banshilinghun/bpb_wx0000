@@ -1,0 +1,43 @@
+<view class='b-record-container'>
+  <!-- 列表 body -->
+  <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px' class="b-scroll">
+    <block wx:if='{{ withdrawRecords && withdrawRecords.length !== 0 }}'>
+      <view class="b-item-container" wx:for='{{ withdrawRecords }}' wx:key='item.id'>
+        <view class='b-body-item'>
+          <view class="b-item-amount">
+            <text>提现金额: </text>
+            <text class="b-other-amount">{{ item.withdraw_amount }}元</text>
+          </view>
+          <view class="b-tax-amount">
+            <text>需缴个税: </text>
+            <text class="b-other-amount">{{ item.tax_amount }}元</text>
+          </view>
+          <view class="b-status">
+            <text>{{ item.statusStr }}</text>
+          </view>
+          <view class="b-time">
+            <text>{{ item.date }}</text>
+          </view>
+          <view class="b-body-real">
+            <text>实际到账: </text>
+            <text class="b-real-amount">{{ item.real_amount }}元</text>
+          </view>
+        </view>
+      </view>
+      <loading-more isShowLoadingMore="{{ isShowLoadingMore }}" showNomore="{{ showNomore }}"></loading-more>
+    </block>
+    <block wx:else>
+      <!-- 空视图 -->
+      <emptyView title='您还没有相关的提现记录' content='赶紧努力吧~' topMargin='50' />
+    </block>
+  </scroll-view>
+  <!-- footer -->
+  <view class='b-record-footer'>
+    <view class='b-record-footer-item'>
+      <text>提现次数: {{ count }}</text>
+    </view>
+    <view class='b-record-footer-item'>
+      <text>总提现金额: {{ totalMoney }}元</text>
+    </view>
+  </view>
+</view>

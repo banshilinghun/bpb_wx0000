@@ -1,21 +1,22 @@
 // pages/recommend/recommend.js
 const app = getApp();
-const timeUtil = require('../../utils/timeUtil.js');
-const Constant = require("../../utils/Constant.js");
-const shareUtil = require("../../utils/shareUtil.js");
+const timeUtil = require('../../utils/time/timeUtil');
+const Constant = require("../../utils/constant/Constant");
+const shareUtil = require("../../utils/module/shareUtil");
 const dotHelper = require("../../pages/me/dotHelper.js");
+const ApiConst = require("../../utils/api/ApiConst.js");
 
 //活动或者推荐 推荐和活动的页面布局有变化
 //active:活动，recommend:推荐，rule:活动规则，mp:公众号跳转
 const FLAG_ARRAY = ['active', 'recommend', 'rule', 'mp'];
 //二维码地址
-const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
+const QR_CODE_URL = ApiConst.QR_CODE;
 //推荐地址
-const RECOMMEND_URL = app.globalData.baseUrl + 'app/get/recommendation_user';
+const RECOMMEND_URL = ApiConst.RECOMMENDDATION_USER;
 //领取奖励
-const COUPON_URL = app.globalData.baseUrl + 'app/get/collect_account_coupon';
+const COUPON_URL = ApiConst.COLLECT_ACCOUNT_COUPON;
 //发送一键邀请通知
-const NOTIFY_URL = app.globalData.baseUrl + 'app/send/recommender_notify';
+const NOTIFY_URL = ApiConst.RECOMMENDER_NOTIFY;
 
 Page({
 
@@ -27,7 +28,7 @@ Page({
       {
         current: false,
         done: false,
-        text: '分享小程序给好友，或转发朋友圈'
+        text: '分享小程序给好友'
       },
       {
         done: false,
@@ -44,8 +45,8 @@ Page({
       {
         done: false,
         current: false,
-        text: '双方各获得',
-        secondText: '30元',
+        text: '即可获得',
+        secondText: '10元',
         thirdText: '奖励'
       }
     ],
@@ -54,7 +55,7 @@ Page({
     //顶部图片
     topImage: {
       imageHeight: 120,
-      imageSrc: 'https://wxapi.benpaobao.com/static/app_img/recommend-icon.png'
+      imageSrc: 'https://wxapi.benpaobao.com/static/app_img/recommend-iconV2.png'
     },
     //一键提醒 view 宽度
     remindWidth: 0,
@@ -203,7 +204,7 @@ Page({
         }
       },
       fail: function (res) {
-        that.showModel(res.data.msg);
+        that.showModel('服务器开小差了~');
       },
       complete: function () {
         wx.stopPullDownRefresh();
@@ -233,17 +234,7 @@ Page({
 
   },
 
-  /**
-   * 分享到朋友圈
-   */
-  shareMomentNormalClick: function () {
-    this.setData({
-      shareFriendType: 'normal'
-    })
-    this.shareMoments();
-  },
-
-  shareMoments: function () {
+  shareAction: function () {
     if (this.data.shareFriendType == 'award') {
       this.setData({
         showAwardModel: true
@@ -346,7 +337,7 @@ Page({
         }
       },
       fail: function (res) {
-        that.showModel(res.data.msg);
+        that.showModel('服务器开小差了~');
       }
     })
   },
@@ -369,8 +360,8 @@ Page({
   /**
    * 生成分享图片
    */
-  shareMomentListener: function () {
-    this.shareMoments();
+  shareListener: function () {
+    this.shareAction();
   },
 
   showLoadingToast: function () {

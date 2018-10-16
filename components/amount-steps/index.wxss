@@ -61,7 +61,7 @@
 .zan-steps--steps .zan-steps__step--done .zan-steps__circle {
   width: 5px;
   height: 5px;
-  background-color: #FF555C;
+  background-color: #FD500D;
 }
 
 .zan-steps--steps .zan-steps__step--cur .zan-steps__icons {
@@ -180,7 +180,7 @@
 .zan-steps--vsteps .zan-steps__step--done .zan-steps__circle {
   width: 8px;
   height: 8px;
-  background-color: #FF555C;
+  background-color: #FD500D;
 }
 
 .zan-steps--vsteps .zan-steps__step--cur .zan-steps__circle {
@@ -224,7 +224,7 @@
 
 .bpb-award{
   font-size: 32rpx;
-  color: #FF555C;
+  color: #FD500D;
   font-weight: bold;
 }
 
@@ -232,11 +232,11 @@
   height: 60rpx;
   line-height: 60rpx;
   font-size: 32rpx;
-  color: #FF555C;
+  color: #FD500D;
   padding: 0;
   padding-left: 20rpx;
   padding-right: 20rpx;
-  border: 2rpx solid #FF555C;
+  border: 2rpx solid #FD500D;
   border-radius: 10rpx;
   background-color: #fff;
   font-weight: 500;

@@ -1,0 +1,25 @@
+.i-index-demo,page{
+  width:100%;
+  height:100%;
+}
+
+.item_brand {
+  display: flex;
+  background-color: #fff;
+  height: 100rpx;
+  padding-left: 30rpx;
+  align-items: center;
+  flex-direction: row;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.brand-logo{
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.brand-name{
+  margin-left: 30rpx;
+}
+

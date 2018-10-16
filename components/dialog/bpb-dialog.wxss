@@ -28,30 +28,33 @@
   overflow: hidden;
 }
 
-.title0{
+.title0 {
   text-align: center;
-  font-size:36rpx;
-  color: #FF555C;
-  padding-top:20rpx;
+  font-size: 36rpx;
+  color: #FD500D;
+  padding-top: 20rpx;
 }
-.title1{
+
+.title1 {
   text-align: right;
 }
-.title1 image{
+
+.title1 image {
   width: 48rpx;
   height: 48rpx;
 }
+
 .title2 {
   font-size: 32rpx;
   color: #333;
   margin-top: 20rpx;
   text-align: center;
 }
-.goodsdetail .title2 {
-padding:5rpx 60rpx;
-color:#333;
-font-size:32rpx;
 
+.goodsdetail .title2 {
+  padding: 5rpx 60rpx;
+  color: #333;
+  font-size: 32rpx;
 }
 
 .goodsdetail .title4 {
@@ -61,17 +64,18 @@ font-size:32rpx;
   color: #3c3c3c;
 }
 
-.wtwabt2{
-  background: #ff555c;
+.wtwabt2 {
+  background: #FD500D;
   color: #fff;
   width: 88%;
   margin: 0 auto;
 }
-.colse{
+
+.colse {
   width: 80rpx;
   height: 80rpx;
   position: fixed;
-  bottom:30%;
+  bottom: 30%;
   left: 50%;
   z-index: 99;
   margin-left: -40rpx;

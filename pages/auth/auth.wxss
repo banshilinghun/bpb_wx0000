@@ -10,7 +10,7 @@ text {
 }
 
 .menu-text.selected {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .input-area input {
@@ -28,14 +28,16 @@ text {
   width: 56px;
 }
 
+.b-commit-wrapper{
+  padding: 20rpx 0
+}
+
 .btn-quit {
   width: 95%;
   margin: 0 auto;
-  margin-top: 20px;
   border: none;
-  background-color: #ff555c;
-  color: #fff;
-  margin-bottom: 20px;
+  background-color: #FD500D;
+  color: #fff
 }
 
 page {
@@ -507,7 +509,7 @@ icon {
   float: left;
   margin-right: 9px;
   margin-bottom: 9px;
-  width: 96%;
+  width: 100%;
   height: 372rpx;
 }
 

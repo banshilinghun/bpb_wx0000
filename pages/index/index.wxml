@@ -1,5 +1,5 @@
 <!--index.wxml-->
- <image src='https://wxapi.benpaobao.com/static/app_img/bpb_welcome.png' class='welcomeImg' mode="aspectFill"></image>
+ <image src='https://wxapi.benpaobao.com/static/app_img/v2/bpb_welcome.jpg' class='welcomeImg' mode="aspectFill"></image>
   <view class="goods-detail" wx:if="{{showDialog}}">
     <view class="mask"></view>
     <view class="goodsdetail">

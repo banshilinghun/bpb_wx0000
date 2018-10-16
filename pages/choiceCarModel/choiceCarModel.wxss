@@ -1,0 +1,95 @@
+
+.model-title{
+  height: 120rpx;
+  font-size: 32rpx;
+  color: #333;
+  display: flex;
+  align-items: center;
+  padding-left: 30rpx;
+}
+
+.model-wrapper{
+  margin-left: 15rpx;
+  margin-right: 15rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.model-item{
+  width: 25%;
+}
+
+.model-content-wrapper{
+  padding: 0 15rpx 30rpx 15rpx;
+  display: flex;
+  align-items: center;
+}
+
+.model-content{
+  width: 100%;
+  min-height: 60rpx;
+  border: 1px solid #333;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.model-content-clicked{
+  width: 100%;
+  min-height: 60rpx;
+  border: 1px solid #fff;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FD500D;
+}
+
+.model-detail-name{
+  font-size: 28rpx;
+  color: #333;
+}
+
+.model-detail-name-clicked{
+  font-size: 28rpx;
+  color: #fff;
+}
+
+.model-action{
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  min-height: 150rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+button{
+  width: 240rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 10rpx;
+  display: inline-block;
+  font-size: 32rpx;
+  padding: 0;
+}
+
+button::after{
+  border: none;
+}
+
+.model-back{
+  background-color: #c6c6c6;
+  color: #666;
+  margin-right: 60rpx;
+}
+
+.model-sure{
+  background-color: #FD500D;
+  color: #fff;
+}

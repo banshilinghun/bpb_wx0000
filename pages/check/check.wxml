@@ -1,112 +1,120 @@
 <view class='contain'>
 
-
   <!--2.列表View-->
   <view class="swiper">
-
+    <block wx:if="{{ visibleCourse }}">
+      <view class='check-help-wrapper'>
+        <view class='check-image-wrapper' bindtap='handleHelp'>
+          <image class='check-help-image' src='../../image/check-help.png'></image>
+          <text class='check-help-text'>教程</text>
+        </view>
+      </view>
+    </block>
     <block>
-      <form bindsubmit="formSubmit" >
-        <view class="weui-cells my-cells">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__hd">
-                  <view class="weui-uploader__title">车身左侧</view>
-                </view>
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imageList}}" wx:for-item="image" wx:key="key">
-                      <view class="weui-uploader__file">
-                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="chooseImage"></image>
-                      </view>
-                    </block>
+      <form bindsubmit="formSubmit" report-submit="{{ hasFormId }}">
+        <scroll-view scroll-y='true' style='height: {{ scrollHeight }}px'>
+          <view class="weui-cells my-cells" wx:if='{{carOut}}'>
+            <view class="weui-cell">
+              <view class="weui-cell__bd">
+                <view class="weui-uploader">
+                  <view class="weui-uploader__hd">
+                    <view class="weui-uploader__title">车身左侧</view>
                   </view>
-                  <view class="weui-uploader__input-box carleftimg" wx:if="{{show1}}">
-                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
-                  </view>
-                </view>
-              </view>
-            </view>
-          </view>
-        </view>
-           <view class="weui-cells my-cells martnone">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__hd">
-                  <view class="weui-uploader__title">车身右侧</view>
-                </view>
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imageList4}}" wx:for-item="image" wx:key="key">
-                      <view class="weui-uploader__file">
-                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="chooseImage4"></image>
-                      </view>
-                    </block>
-                  </view>
-                  <view class="weui-uploader__input-box carrightimg" wx:if="{{show4}}">
-                    <view class="weui-uploader__input" bindtap="chooseImage4"></view>
+                  <view class="weui-uploader__bd">
+                    <view class="weui-uploader__files">
+                      <block wx:for="{{imageList}}" wx:for-item="image" wx:key="key">
+                        <view class="weui-uploader__file">
+                          <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="chooseImage"></image>
+                        </view>
+                      </block>
+                    </view>
+                    <view class="weui-uploader__input-box carleftimg" wx:if="{{show1}}">
+                      <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                    </view>
                   </view>
                 </view>
               </view>
             </view>
           </view>
-        </view>
-        <view class="weui-cells my-cells martnone">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__hd">
-                  <view class="weui-uploader__title">车内</view>
-                </view>
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imageList2}}" wx:for-item="image" wx:key="key">
-                      <view class="weui-uploader__file">
-                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="chooseImage2"></image>
-                      </view>
-                    </block>
+          <view class="weui-cells my-cells martnone" wx:if='{{carOut}}'>
+            <view class="weui-cell">
+              <view class="weui-cell__bd">
+                <view class="weui-uploader">
+                  <view class="weui-uploader__hd">
+                    <view class="weui-uploader__title">车身右侧</view>
                   </view>
-                  <view class="weui-uploader__input-box carnimg" wx:if="{{show2}}">
-                    <view class="weui-uploader__input" bindtap="chooseImage2"></view>
-                  </view>
-                </view>
-              </view>
-            </view>
-          </view>
-        </view>
-        <view class="weui-cells my-cells martnone">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__hd">
-                  <view class="weui-uploader__title">车尾(车牌)</view>
-                </view>
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imageList3}}" wx:for-item="image" wx:key="key">
-                      <view class="weui-uploader__file">
-                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="chooseImage3"></image>
-                      </view>
-                    </block>
-                  </view>
-                  <view class="weui-uploader__input-box carwimg" wx:if="{{show3}}">
-                    <view class="weui-uploader__input" bindtap="chooseImage3"></view>
+                  <view class="weui-uploader__bd">
+                    <view class="weui-uploader__files">
+                      <block wx:for="{{ imageList4 }}" wx:for-item="image" wx:key="key">
+                        <view class="weui-uploader__file">
+                          <image class="weui-uploader__img" src="{{ image }}" data-src="{{ image }}" bindtap="chooseImage4"></image>
+                        </view>
+                      </block>
+                    </view>
+                    <view class="weui-uploader__input-box carrightimg" wx:if="{{show4}}">
+                      <view class="weui-uploader__input" bindtap="chooseImage4"></view>
+                    </view>
                   </view>
                 </view>
               </view>
             </view>
           </view>
+          <view class="weui-cells my-cells martnone" wx:if='{{carIn}}'>
+            <view class="weui-cell">
+              <view class="weui-cell__bd">
+                <view class="weui-uploader">
+                  <view class="weui-uploader__hd">
+                    <view class="weui-uploader__title">车内</view>
+                  </view>
+                  <view class="weui-uploader__bd">
+                    <view class="weui-uploader__files">
+                      <block wx:for="{{imageList2}}" wx:for-item="image" wx:key="key">
+                        <view class="weui-uploader__file">
+                          <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="chooseImage2"></image>
+                        </view>
+                      </block>
+                    </view>
+                    <view class="weui-uploader__input-box carnimg" wx:if="{{show2}}">
+                      <view class="weui-uploader__input" bindtap="chooseImage2"></view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="weui-cells my-cells martnone" wx:if='{{carTail}}'>
+            <view class="weui-cell">
+              <view class="weui-cell__bd">
+                <view class="weui-uploader">
+                  <view class="weui-uploader__hd">
+                    <view class="weui-uploader__title">车头(车牌)</view>
+                  </view>
+                  <view class="weui-uploader__bd">
+                    <view class="weui-uploader__files">
+                      <block wx:for="{{imageList3}}" wx:for-item="image" wx:key="key">
+                        <view class="weui-uploader__file">
+                          <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="chooseImage3"></image>
+                        </view>
+                      </block>
+                    </view>
+                    <view class="weui-uploader__input-box carwimg" wx:if="{{show3}}">
+                      <view class="weui-uploader__input" bindtap="chooseImage3"></view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+        <view id="b-commit" class="b-commit-wrapper">
+            <button formType="submit" class='btn-quit'> 提交</button>
         </view>
-        <button formType="submit" class='btn-quit'> 提交</button>
-
       </form>
-
-
     </block>
   </view>
 </view>
-<view class="dialog-mask " style="z-index:11;visibility:{{addressMenuIsShow ? 'visible': 'hidden'}}" bindtap="hideCitySelected" />
+<view class="dialog-mask " style="z-index:11;visibility:{{addressMenuIsShow ? 'visible': 'hidden'}}" bindtap="hideCitySelected"
+/>
 <!--城市三级联动-->
 <!--使用动画时不能wx:if="{{city.length>0&&isVisible}}" ，不能hidden=''属性否则无动画效果-->
 <view class="picker-view" animation="{{animationAddressMenu}}" style="visibility:{{addressMenuIsShow ? 'visible':'hidden'}}">

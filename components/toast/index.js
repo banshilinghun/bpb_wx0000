@@ -1,40 +1,48 @@
-const DEFAULT_DATA = {
-  show: false,
-  message: '',
-  icon: '',
-  image: '',
-  mask: false
+const default_data = {
+    visible: false,
+    content: '',
+    icon: '',
+    image: '',
+    duration: 2,
+    mask: true,
+    type: 'default', // default || success || warning || error || loading
 };
 
-const SUPPORT_TYPE = ['loading', 'success', 'fail'];
+let timmer = null;
 
 Component({
-  data: {
-    ...DEFAULT_DATA
-  },
+    externalClasses: ['i-class'],
 
-  methods: {
-    show(options) {
-      const toastOptions = { ...options };
-
-      let icon = options.icon || '';
-      let image = options.image || '';
-      if (SUPPORT_TYPE.indexOf(options.type) > -1) {
-        icon = options.type;
-        image = '';
-      }
-
-      this.setData({
-        ...toastOptions,
-        icon,
-        image
-      });
+    data: {
+        ...default_data
     },
 
-    clear() {
-      this.setData({
-        ...DEFAULT_DATA
-      });
+    methods: {
+        handleShow (options) {
+            const { type = 'default', duration = 2 } = options;
+
+            this.setData({
+                ...options,
+                type,
+                duration,
+                visible: true
+            });
+
+            const d = this.data.duration * 1000;
+
+            if (timmer) clearTimeout(timmer);
+            if (d !== 0) {
+                timmer = setTimeout(() => {
+                    this.handleHide();
+                    timmer = null;
+                }, d);
+            }
+        },
+
+        handleHide () {
+            this.setData({
+                ...default_data
+            });
+        }
     }
-  }
 });

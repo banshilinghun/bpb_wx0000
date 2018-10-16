@@ -1,5 +1,6 @@
 // me.js
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 Page({
   data: {
@@ -41,7 +42,7 @@ Page({
     var reqData = {};
     reqData.ad_id = that.data.adId;
     wx.request({
-      url: app.globalData.baseUrl + 'app/find/ad_check_plans',
+      url: ApiConst.AD_CHECK_PLANS,
       data: reqData,
       header: app.globalData.header,
       success: res => {

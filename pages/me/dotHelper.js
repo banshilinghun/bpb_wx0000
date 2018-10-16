@@ -1,29 +1,33 @@
-
 /**
  * 红点帮助类
  */
 
 const app = getApp();
-const Api = require("../../utils/Api.js");
+const Api = require("../../utils/api/ApiConst.js");
 
 /**
  * 改变红点状态
  */
 function requestDotStatus() {
-  wx.request({
-    url: Api.dotUrl,
-    header: app.globalData.header,
-    success: function (res) {
-      let dataBean = res.data;
-      if (dataBean.code == 1000) {
-        if (dataBean.data) {
-          showTabBarRedDot();
-        } else {
-          hideTabBarRedDot();
+  let promise = new Promise(function (resolve, reject) {
+    wx.request({
+      url: Api.GET_DOT_URL,
+      header: app.globalData.header,
+      success: function (res) {
+        let dataBean = res.data;
+        if (dataBean.code == 1000) {
+          if (dataBean.data) {
+            showTabBarRedDot();
+            resolve(true);
+          } else {
+            hideTabBarRedDot();
+            reject(false);
+          }
         }
       }
-    }
-  })
+    });
+  });
+  return promise;
 }
 
 /**
@@ -32,7 +36,7 @@ function requestDotStatus() {
 function showTabBarRedDot() {
   if (wx.canIUse('showTabBarRedDot')) {
     wx.showTabBarRedDot({
-      index: 2,
+      index: 3,
     })
   }
 }
@@ -43,7 +47,7 @@ function showTabBarRedDot() {
 function hideTabBarRedDot() {
   if (wx.canIUse('hideTabBarRedDot')) {
     wx.hideTabBarRedDot({
-      index: 2,
+      index: 3,
     })
   }
 }

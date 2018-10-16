@@ -1,12 +1,19 @@
 // var order = ['demo1', 'demo2', 'demo3']
-const app = getApp()
+const app = getApp();
+const ApiConst = require("../../utils/api/ApiConst.js");
 Page({
   data: {
     toView: 'green',
     scrollLeft: 0,
     index: 0,
     dateList: [],
-    myProfile: []
+    myProfile: [],
+    showDialog: false,
+    serverName: '',
+    serverAddress: '',
+    content: '',
+    remark: '超过预约时间未到，系统会自动取消预约。',
+    time_id: '',
   },
   onLoad: function (options) {
     var adData = JSON.parse(options.arrangementData);
@@ -16,7 +23,9 @@ Page({
     var server_id = adData.serverid;
     this.getSubscribeDates(ad_id, server_id);
     this.setData({
-      backFlag: options.backFlag ? options.backFlag:0
+      backFlag: options.backFlag ? options.backFlag:0,
+      serverName: adData.servername,
+      serverAddress: adData.serveraddress
     })
   },
   onUnload:function(){
@@ -34,7 +43,7 @@ Page({
       server_id: server_id
     }
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/subscribe_dates',
+      url: ApiConst.GET_SUBSCRIBE_DATE,
       data: reqData,
       header: app.globalData.header,
       success: res => {
@@ -101,58 +110,65 @@ Page({
       myProfile: itemList
     })
   },
-  arrangement: function (e) {
-    // console.log(e.currentTarget.dataset)
-    var reqData = {};
-    reqData.time_id = e.currentTarget.dataset.id;
-    wx.showModal({
-      title: "提示",
-      content: "确定预约" + e.currentTarget.dataset.date + " " + e.currentTarget.dataset.btime + '-' + e.currentTarget.dataset.etime + "到服务网点安装广告",
-      confirmText: "确认",
-      cancelText: "取消",
-      success: function (sure) {
-        if (sure.confirm) {
-          wx.request({
-            url: app.globalData.baseUrl + 'app/save/ad_subscribe',
-            data: reqData,
-            header: app.globalData.header,
-            success: res => {
-              if (res.data.code == 1000) {
-                wx.showToast({
-                  title: "预约成功"
-                })
-                var pages = getCurrentPages();
-                var prevPage = pages[pages.length - 2]; //上一个页面
-                //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-                prevPage.setData({
-                  mydata: {share:  1}
-                })
-                setTimeout(function(){
-                  wx.navigateBack({
-                    delta: 1
-                  })
-                },1000)
-               
-              } else {
-                wx.showModal({
-                  title: '提示',
-                  showCancel: false,
-                  content: res.data.msg
-                });
-              }
 
-            },
-            fail: res => {
-              //console.log(2222);
-              wx.showModal({
-                title: '提示',
-                showCancel: false,
-                content: '网络错误'
-              });
-            }
+  arrangement: function (e) {
+    console.log(e);
+    this.setData({
+      showDialog: true,
+      content: '网点名称：' + this.data.serverName + '\n预约时间：' + e.currentTarget.dataset.date + " " + e.currentTarget.dataset.btime + '-' + e.currentTarget.dataset.etime + '\n网点地址：' + this.data.serverAddress,
+      time_id: e.currentTarget.dataset.id
+    })
+  },
+
+  sureListener: function(){
+    this.setData({
+      showDialog: false
+    })
+    var reqData = {};
+    reqData.time_id = this.data.time_id;
+    wx.request({
+      url: ApiConst.AD_SUBSCRIBE,
+      data: reqData,
+      header: app.globalData.header,
+      success: res => {
+        if (res.data.code == 1000) {
+          wx.showToast({
+            title: "预约成功"
           })
+          var pages = getCurrentPages();
+          var prevPage = pages[pages.length - 2]; //上一个页面
+          //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+          prevPage.setData({
+            mydata: { share: 1 }
+          })
+          setTimeout(function () {
+            wx.navigateBack({
+              delta: 1
+            })
+          }, 1000)
+
+        } else {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: res.data.msg
+          });
         }
+
+      },
+      fail: res => {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '网络错误'
+        });
       }
+    })
+  },
+
+  cancelListener: function(){
+    this.setData({
+      showDialog: false
     })
   }
 })

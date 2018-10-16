@@ -1,19 +1,21 @@
 // pages/joinList/joinList.js
 var app = getApp();
+const ApiConst = require("../../utils/api/ApiConst");
+const LoadingHelper = require('../../helper/LoadingHelper');
+const ApiManager = require("../../utils/api/ApiManager");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    joinListUrl: app.globalData.baseUrl + 'app/get/ad_joined_users',
     userInfo: [],
     adId: '',
     pageIndex: 1,
     count: 20,
     hasmore: false,
     showNomore: false,
-    isShowLoadingMore: false,
+    isShowLoadingMore: false
   },
 
   /**
@@ -42,73 +44,58 @@ Page({
 
   /** 请求已参与车主列表 */
   requestJoinList: function (currentPageIndex) {
+    LoadingHelper.showLoading();
     let that = this;
-    wx.request({
-      url: that.data.joinListUrl,
-      header: app.globalData.header,
+    let requestData = {
+      url: ApiConst.AD_JOINED_USER,
       data: {
         ad_id: that.data.adId,
         page_no: currentPageIndex,
         page_size: that.data.count,
       },
-      success: function (res) {
-        if (res.data.code == 1000) {
-          //更新pageIndex
-          that.setData({
-            pageIndex: currentPageIndex
-          })
-          //处理数据
-          var dataList = res.data.data.info;
-          for (var key in dataList) {
-            var dataBean = dataList[key];
-            var timeArray = dataBean.update_date.split(' ');
-            dataBean.time = timeArray[0];
+      success: res => {
+        //处理数据
+        var dataList = res.ad_list;
+        for (var key in dataList) {
+          var dataBean = dataList[key];
+          var timeArray = dataBean.update_date.split(' ');
+          dataBean.time = timeArray[0];
+        }
+        for (var key in dataList) {
+          var dataBean = dataList[key];
+          //过滤没有头像用户
+          if (!dataBean.wx_avatar.trim()) {
+            dataList.splice(key, 1);
           }
-          for (var key in dataList) {
-            var dataBean = dataList[key];
-            //过滤没有头像用户
-            if (!dataBean.wx_avatar.trim()) {
-              dataList.splice(key, 1);
-            }
-          }
+        }
 
-          //判断是上拉加载还是下拉刷新
-          if (currentPageIndex == 1) {
-            that.setData({
-              userInfo: dataList
-            });
-          } else {
-            dataList = that.data.userInfo.concat(dataList);
-            that.setData({
-              userInfo: dataList
-            })
-          }
+        //判断是上拉加载还是下拉刷新
+        if (currentPageIndex == 1) {
           that.setData({
-            hasmore: res.data.data.more_data == 0 ? false : true,
-            showNomore: res.data.data.more_data == 0 ? true : false
-          })
+            userInfo: dataList
+          });
         } else {
-          wx.showModal({
-            title: '提示',
-            content: res.data.msg,
-            showCancel: false,
+          dataList = that.data.userInfo.concat(dataList);
+          that.setData({
+            userInfo: dataList
           })
         }
-      },
-      fail: function (res) {
-        wx.showModal({
-          title: '提示',
-          content: '网络错误',
-          showCancel: false,
+        //更新pageIndex
+        that.setData({
+          pageIndex: currentPageIndex,
+          hasmore: res.more_data == 0 ? false : true,
+          showNomore: res.more_data == 0 ? true : false
         })
       },
-      complete: function () {
+      complete: res => {
+        LoadingHelper.hideLoading();
         wx.stopPullDownRefresh();
         that.setData({
           isShowLoadingMore: false
         });
       }
-    })
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
 

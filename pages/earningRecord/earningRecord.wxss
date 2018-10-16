@@ -1,0 +1,72 @@
+
+@import '../withdrawRecord/withdrawRecord.wxss';
+
+.b-earning-container{
+  background: url('https://wxapi.benpaobao.com/static/app_img/v2/b-earning-bg.jpeg');
+  min-height: 100vh
+}
+
+.b-earning-title{
+  padding: 30rpx 30rpx 0 30rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: black
+}
+
+.step-container{
+  margin-bottom: 20rpx;
+  padding: 30rpx
+}
+
+.step-empty{
+  width: 100%;
+  min-height: 120rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.step-empty-image{
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.step-empty-text{
+  font-size: 28rpx;
+  color: #999;
+  margin-left: 20rpx;
+}
+
+.b-divider{
+  width: 100%;
+  height: 20rpx;
+  background: rgba(236, 235, 242, 0.7);
+}
+
+.b-record-footer{
+  background: linear-gradient(90deg, #FD500D, #FB653D);
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0
+}
+
+.b-record-footer-item{
+  flex: 1;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 500
+}
+
+.b-earning-wrapper{
+  background-color: #fff;
+  box-shadow: 0 2px 4px #999; 
+  border-radius: 10rpx;
+  margin: 40rpx 20rpx;
+  opacity: 0.8;
+}

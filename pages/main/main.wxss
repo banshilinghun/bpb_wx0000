@@ -1,6 +1,7 @@
+@import '../joinList/joinList.wxss';
 
 page {
-  background-color: #F6F6F6;
+  background-color: rgba(236, 235, 242, 0.7);
 }
 
 .message_list {
@@ -13,11 +14,15 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 16rpx;
+  padding: 30rpx;
   background-color: #fff;
-  /**  border: 1rpx solid #eaeaea;
-  border-bottom: 1rpx solid #d0d0d0;
-  border-radius: 5rpx;*/
+}
+
+.my-item{
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 10rpx 20rpx
 }
 
 .item-left {
@@ -30,32 +35,28 @@ page {
   width: 128rpx;
   height: 128rpx;
   /* border-radius: 64rpx; */
-  background-color: #eee;
 }
 
 .item-middle {
   flex: 1;
   margin-left: 16rpx;
-  padding-top: 10rpx;
   overflow: hidden;
 }
 
 .title {
-  color: #444;
+  color: #333;
   font-family: "微软雅黑";
   font-weight: bold;
-  line-height: 20rpx;
-  padding: 32rpx 16rpx, 0, 16rpx;
-  font-size: 30rpx;
-  margin-top: 60rpx;
+  font-size: 36rpx;
   overflow: hidden; /*自动隐藏文字*/
   text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+  white-space: nowrap
 }
 
 .message {
   font-family: "微软雅黑";
   color: #888;
-  line-height: 24rpx;
+  line-height: 1;
   font-size: 24rpx;
   padding: 0 16rpx, 0, 16rpx;
   overflow: hidden;
@@ -65,15 +66,23 @@ page {
 }
 
 .item_right {
-  padding-top: 10rpx;
+  min-width: 100rpx;
   overflow: hidden;
-  padding-right: 10px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .time {
   color: #03d0b7;
   font-size: 24rpx;
+  line-height: 1
+}
+
+.b-top-margin{
+  margin-top: 10rpx
 }
 
 .mark {
@@ -93,10 +102,14 @@ page {
   display: table-cell;
 }
 
+.b-line-wrapper{
+  background: #fff
+}
+
 .line {
-  height: 1px;
-  width: 100%;
-  background-color: #e0e1e2;
+  height: 1rpx;
+  margin: 0 30rpx;
+  background: #eee
 }
 
 .data-blt {
@@ -105,7 +118,12 @@ page {
 }
 
 .data-text {
-  color: #ff555c;
+  color: #FD500D;
+}
+
+.b-amount-blod{
+  font-size: 32rpx;
+  font-weight: 500
 }
 
 .myad-li {
@@ -119,10 +137,9 @@ page {
   color: #fff;
   font-size: 28rpx;
   height: 90rpx;
-  line-height:90rpx;
-  padding-left:30rpx;
-padding-right:30rpx;
-
+  line-height: 90rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
 }
 
 .btn-gray {
@@ -132,30 +149,32 @@ padding-right:30rpx;
   color: #fff;
   font-size: 28rpx;
   height: 90rpx;
-  line-height:90rpx;
-   padding-left:30rpx;
-padding-right:30rpx;
+  line-height: 90rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
 }
 
 button::after {
   content: none;
 }
-.dh-btn{
+
+.dh-btn {
   text-align: left;
   position: relative;
 }
-.yjdh-btn{
+
+.yjdh-btn {
   position: absolute;
   top: 17rpx;
   right: 30rpx;
-  width:148rpx;
-height:56rpx;
-box-shadow:0rpx 0rpx 4rpx 0rpx rgba(161,17,0,1);
-border-radius:8rpx;
-background: #fff;
-color: #FB523E;
-line-height: 56rpx;
-text-align: center;
+  width: 148rpx;
+  height: 56rpx;
+  box-shadow: 0rpx 0rpx 4rpx 0rpx rgba(161, 17, 0, 1);
+  border-radius: 8rpx;
+  background: #fff;
+  color: #fb523e;
+  line-height: 56rpx;
+  text-align: center;
 }
 
 .watwx {
@@ -165,10 +184,6 @@ text-align: center;
 .mesge2 {
   width: 50%;
   display: inline-block;
-}
-
-.axstw {
-  margin-bottom: 20rpx;
 }
 
 .texst {
@@ -185,7 +200,7 @@ text-align: center;
 }
 
 .timetxt2 {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .notify_swiper {
@@ -225,7 +240,7 @@ text-align: center;
 
 .sharetext {
   font-size: 20rpx;
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .taewtw {
@@ -234,7 +249,7 @@ text-align: center;
   line-height: 60rpx;
   background: #fdffe8;
   font-size: 24rpx;
-  color: #ff555c;
+  color: #FD500D;
   text-align: center;
 }
 
@@ -243,23 +258,11 @@ text-align: center;
   height: 300rpx;
 }
 
-.banner1 {
+.banner{
   position: relative;
-  align-items: center;
-  justify-content: center;
-  background: url("https://wxapi.benpaobao.com/static/app_img/home_banner1.png") no-repeat;
-  background-size: 100% 100%;
   width: 100%;
 }
 
-.banner2 {
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  background: url("https://wxapi.benpaobao.com/static/app_img/home_banner2.png") no-repeat;
-  background-size: 100% 100%;
-  width: 100%;
-}
 .banner3 {
   position: relative;
   align-items: center;
@@ -309,25 +312,24 @@ movable-view {
   width: 100%;
 }
 
+/* FDFFE8 */
 .mpweixin {
-  height: 96rpx;
+  height: 80rpx;
   width: 100%;
   font-size: 26rpx;
-  background: #ff555c;
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   display: flex;
-  /* padding: 20rpx;
-  padding-top: 20rpx;
-  padding-bottom: 20rpx;
-  padding-left: 30rpx;
-  padding-right: 30rpx; */
   align-items: center;
   text-align: left;
   flex-direction: row;
-  color: #fff;
   padding-left: 40rpx;
   position: fixed;
   top: 0;
-  z-index: 999;
+  z-index: 9;
+}
+
+.b-contact-color{
+  color: #fff
 }
 
 .profile-arrow {
@@ -340,5 +342,231 @@ movable-view {
 }
 
 .page_index {
-  margin-top: 96rpx;
+  margin-top:80rpx;
+}
+
+.goods-detail .mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+}
+
+.goods-detail .mask {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.goodsdetail {
+  position: fixed;
+  top: 50%;
+  width: 80%;
+  min-height: 350rpx;
+  left: 10%;
+  margin-top: -240rpx;
+  background: #fff;
+  z-index: 9;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.title0 {
+  text-align: center;
+  font-size: 36rpx;
+  color: #FD500D;
+  padding-top: 20rpx;
+}
+
+.title1 {
+  text-align: right;
+}
+
+.title1 image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.title2 {
+  font-size: 32rpx;
+  color: #333;
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+.goodsdetail .title2 {
+  padding: 5rpx 60rpx;
+  color: #333;
+  font-size: 32rpx;
+}
+
+.goodsdetail .title4 {
+  width: 100%;
+  position: absolute;
+  bottom: 30rpx;
+  color: #3c3c3c;
+}
+
+.wtwabt2 {
+  background: #FD500D;
+  color: #fff;
+  width: 88%;
+  margin: 0 auto;
+}
+
+.colse {
+  width: 80rpx;
+  height: 80rpx;
+  position: fixed;
+  bottom: 30%;
+  left: 50%;
+  z-index: 99;
+  margin-left: -40rpx;
+}
+
+.kind-list-item-bd-show {
+  height: auto;
+  overflow: hidden;
+}
+
+.navigator-box-show {
+  position: relative;
+  background-color: #fff;
+  line-height: 1.41176471;
+  font-size: 34rpx;
+}
+
+.navigator {
+  padding: 20rpx 30rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: auto;
+  width: auto;
+}
+
+.navigator-text {
+  flex: 1;
+}
+
+.navigator-arrow {
+  padding-right: 26rpx;
+  position: relative;
+}
+
+.navigator-arrow:after {
+  content: " ";
+  display: inline-block;
+  height: 18rpx;
+  width: 18rpx;
+  border-width: 2rpx 2rpx 0 0;
+  border-color: #888;
+  border-style: solid;
+  transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+  position: absolute;
+  top: 50%;
+  margin-top: -8rpx;
+  right: 28rpx;
+}
+
+.navigator:before {
+  content: " ";
+  position: absolute;
+  left: 30rpx;
+  top: 0;
+  right: 30rpx;
+  height: 1px;
+  border-top: 1rpx solid #d8d8d8;
+  color: #d8d8d8;
+}
+
+.navigator:first-child:before {
+  display: none;
+}
+
+.blod{
+  font-weight: 500;
+}
+
+.subscribe-wrapper {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.subscribe-body {
+  width: auto;
+  margin-bottom: 30rpx;
+  text-align: left;
+  box-sizing: content-box;
+}
+
+.b-main-title{
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+  text-align: left;
+  box-sizing: border-box;
+  padding: 10rpx 0 10rpx 30rpx
+}
+
+.b-my-main-title{
+  display: flex;
+  flex-direction: row;
+  font-size: 36rpx;
+  color: #333;
+  font-weight: 500;
+  box-sizing: border-box;
+  padding: 15rpx 20rpx 0 20rpx
+}
+
+.b-title-left{
+  flex: 1;
+}
+
+.b-title-right{
+  color: #FD500D
+}
+
+.b-task-wrapper{
+  background: linear-gradient(90deg, #FD500D, #FB653D);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20rpx 20rpx;
+  border-radius: 10rpx;
+  margin: 0 20rpx 20rpx 20rpx
+}
+
+.b-task-desc{
+  font-size: 28rpx;
+  color: #fff;
+  flex: 1;
+}
+
+.b-task-btn{
+  background-color: #fff;
+  color: #FD500D;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+  padding: 5rpx 10rpx
+}
+
+.b-my-ad-wrapper{
+  border-radius: 10rpx;
+  background-color: #fff;
+  margin: 20rpx;
+  box-shadow: 0 2px 6px #aaa;
+  overflow: hidden
+}
+
+.b-official-account{
+  margin: 20rpx 0;
+  border-bottom: 1rpx solid #ddd;
+  border-top: 1rpx solid #ddd
 }

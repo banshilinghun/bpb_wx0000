@@ -1,121 +1,185 @@
-<!--index.wxml-->
-<button class='mpweixin' wx:if='{{ !isFollow && showRecommend }}' open-type='contact' session-from='{"nickName":"{{userInfo.nickName}}" ,"avatarUrl":"{{userInfo.avatarUrl}}"}'>
-    <text class='profile-text'> 关注公众号，开启奖励提醒。点击进入客服回复数字1</text>
-     <image class='profile-arrow' src='/image/gomp2.png'></image>
-</button>
-<view class="{{ (isFollow || !showRecommend)?  '' : 'page_index' }}">
-  <!-- <view class='hr'></view> -->
 
-  <!-- <view class='taewtw'  bindtap="goRegister">立马注册，获取新手奖励</view> -->
+<!-- 关注公众号 -->
+<button class='mpweixin' wx:if='{{ !isFollow && showRecommend && !showOfficialAccount }}' open-type='contact' session-from='{"nickName":"{{userInfo.nickName}}" ,"avatarUrl":"{{userInfo.avatarUrl}}"}'>
+  <text class='profile-text b-contact-color'> 关注公众号，开启奖励提醒。点击进入客服回复数字1</text>
+  <image class='profile-arrow' src='https://wxapi.benpaobao.com/static/app_img/v2/b-white-arrow.png'></image>
+</button>
+<!-- 公众号组件 -->
+<view class="b-official-account" wx:if="{{ showOfficialAccount }}">
+  <official-account></official-account>
+</view>
+<view class="{{ (isFollow || !showRecommend || showOfficialAccount)?  '' : 'page_index' }}">
   <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}' circular='{{ circular }}'>
-      <block wx:for="{{background}}" wx:key="*this">
-        <swiper-item data-hi='{{item}}' bindtap="tapName">
-          <view class="swiper-item {{item}}" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'></view>
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='height:{{bannerHeight+"px"}};width:{{windowWidth+"px"}}'
+      circular='{{ circular }}'>
+      <block wx:for="{{background}}" wx:key="item.id">
+        <swiper-item data-hi='{{ item.type }}' bindtap="tapName">
+          <image class="swiper-item banner" style='height:{{ bannerHeight }}px' src="{{ item.url }}"></image>
         </swiper-item>
       </block>
     </swiper>
   </view>
   <view class="message__list">
-    <block wx:if="{{haveMyAd}}">
-      <view class="axstw">
-        <view class="item2">
-          <view class="item-left" bindtap="go" data-name="{{myAd.id}}">
-            <image src="{{myAd.logo}}" class="image" />
+    <!-- 我的任务 -->
+    <block wx:if="{{ myAd }}">
+      <view class="b-my-ad-wrapper">
+        <view class='b-my-main-title'>
+          <view class="b-title-left">
+            <text>我的任务</text>
           </view>
-          <view class="item-middle" bindtap="go" data-name="{{myAd.id}}">
-            <view>
-              <text class="title">{{myAd.name}}</text>
+          <view class="b-title-right">
+            <text>{{ myAd.taskStatus }}</text>
+          </view>
+        </view>
+        <view class="axstw">
+          <view class="my-item" bindtap="go" data-name="{{ myAd.id }}">
+            <view class="item-left">
+              <image src="{{ myAd.logo }}" class="image" />
             </view>
-            <view class="myad-li" >
-              <view class="message" wx:if='{{isDiDi!=1}}'>实际收益：
-                <label class="data-text">{{myAd.amount}}元</label>
+            <view class="item-middle">
+              <view class="title">
+                {{ myAd.ad_name }}
               </view>
-               <view class="message" wx:if='{{isDiDi==1}}'>预计收益：
-                <label class="data-text">300<label class="data-blt">~</label>868元</label>
+              <view class="myad-li">
+                <view class="message" wx:if='{{ myAd.billing_mode == 0 }}'>预计收益：
+                  <label class="data-text b-amount-blod">{{ myAd.predict_amount }}元</label>
+                </view>
+                <view class="message" wx:if='{{ myAd.billing_mode == 1 }}'>预计收益：
+                  <label class="data-text b-amount-blod">{{ myAd.min_amount }}<label class="data-blt b-amount-blod">~</label>{{ myAd.max_amount }}元</label>
+                </view>
+                <view class="message">投放时间：
+                  <label class="data-text">{{ myAd.begin_date }}
+                    <label class="data-blt">~ </label>{{ myAd.end_date }}</label>
+                </view>
+              </view>
+            </view>
+            <view class="item_right">
+              <view class='texst'>
+                <button data-adName="{{myAd.name}}" data-adId="{{myAd.id}}" data-adImg="{{myAd.img_url}}" class='wtwabt' open-type="share"
+                  wx:if='{{ showShareBtn }}'>
+                  <image src='../../image/shareicon.png'></image>
+                  <view class='sharetext'>分享有奖</view>
+                </button>
+              </view>
+            </view>
+          </view>
+          <view class="b-task-wrapper" bindtap="handleGoTask">
+            <view class="b-task-desc">{{ myAd.taskDesc }}</view>
+            <view class="b-task-btn">任务详情</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <!-- 广告市场 -->
+    <block wx:if="{{ adList && adList.length !== 0 }}">
+      <view class='b-main-title' wx:if='{{ myAd }}'>
+        <text>广告市场</text>
+      </view>
+      <block wx:for="{{ adList }}" wx:key="item.id">
+        <view class="item2" bindtap="go" data-name="{{item.id}}">
+          <view class="item-left">
+            <image src="{{ item.logo }}" class="image" />
+          </view>
+          <view class="item-middle">
+            <view class="title">
+              {{ item.ad_name }}
+            </view>
+            <view class="myad-li">
+              <view class="message" wx:if="{{ status == 3 && item.billing_mode == 0 }}">预计收益：
+                <label class="data-text b-amount-blod">{{ item.predict_amount }}元</label>
+              </view>
+              <view class="message" wx:if="{{ status == 3 && item.billing_mode == 1 }}">预计收益：
+                <label class="data-text b-amount-blod">{{ item.min_amount }}<label class="data-blt b-amount-blod">~</label>{{ item.max_amount }}元</label>
+              </view>
+              <view class="message" wx:if="{{ status != 3 }}">预计收益：
+                <label class="data-text ywxst">***
+                  <text class=''>（身份认证后可查看收益）</text>
+                </label>
               </view>
               <view class="message">投放时间：
-                <label class="data-text">{{myAd.begin_date}}
-                  <label class="data-blt">~</label>{{myAd.end_date}}</label>
+                <label class="data-text">{{ item.begin_date }}
+                  <label class="data-blt">~ </label>{{ item.end_date }}</label>
               </view>
             </view>
           </view>
           <view class="item_right">
-            <view class='texst'>
-              <view bindtap="go" data-name="{{myAd.id}}">
-                <text class="time">剩余{{myAd.current_count}}</text>
-              </view>
-              <button data-adName="{{myAd.name}}" data-adId="{{myAd.id}}" data-adImg="{{myAd.img_url}}" class='wtwabt' open-type="share">
-                <image src='../../image/shareicon.png'></image>
-                <view class='sharetext'>分享有奖</view>
-              </button>
+            <view class="time  {{ (item.run_status === 0  ||item.run_status === 2  || item.run_status === 3)? 'timetxt2' : '' }}{{ item.run_status === 4?  'timetxt' : ''}}">{{ item.adStatusStr }}
             </view>
-
+            <view class="time b-top-margin" wx:if="{{ item.run_status === 1 }}">
+              <text>{{ item.current_count }}</text>
+            </view>
+            <button data-adName="{{ item.name }}" data-adId="{{ item.id }}" data-adImg="{{ item.share_img }}" class='wtwabt' open-type="share"
+              wx:if='{{ showShareBtn }}'>
+              <image src='../../image/shareicon.png'></image>
+              <view class='sharetext'>{{ shareAwardText }}</view>
+            </button>
           </view>
         </view>
-        <button class="btn-red dh-btn" wx:if="{{canCheck==4}}" bindtap="goMap" data-longitude="{{myAd.subscribe.lng}}" data-latitude="{{myAd.subscribe.lat}}" data-name="{{myAd.subscribe.serviceName}}" data-address="{{myAd.subscribe.address}}"> 已预约{{myAd.subscribe.date}}{{myAd.subscribe.begin_time}}-{{myAd.subscribe.end_time}}<view class='yjdh-btn'>一键前往</view></button>
-        <button class="btn-red" bindtap="check" wx:if="{{canCheck==1}}" data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}"> 立即检测 </button>
-        <button class="btn-gray" wx:if="{{canCheck==0}}"> {{myAd.check.checkDate}}开始广告检测 </button>
-        <button class="btn-gray" wx:if="{{canCheck==2}}"> {{myAd.check.checkDate}}开始广告检测 </button>
-        <button class="btn-red dh-btn" wx:if="{{canCheck==3}}" bindtap="goMap" data-longitude="{{myAd.check.lng}}" data-latitude="{{myAd.check.lat}}" data-name="{{myAd.check.serviceName}}" data-address="{{myAd.check.address}}">广告检测，请前往服务网点检测 <view class='yjdh-btn'>一键前往</view></button>
-        <button class="btn-gray" wx:if="{{canCheck==5}}">检测审核中，通过后可提取收益</button>
-      </view>
+        <view class='b-line-wrapper'>
+          <view class="line"></view>
+        </view>
+      </block>
     </block>
-    <block wx:for="{{adList}}" wx:key="item.id">
-      <view class="item2">
-        <view class="item-left" bindtap="go" data-name="{{item.id}}">
-          <image src="{{item.logo}}" class="image" />
-        </view>
-        <view class="item-middle" bindtap="go" data-name="{{item.id}}">
-          <view>
-            <text class="title">{{item.name}}</text>
-          </view>
-          <view class="myad-li">
-            <view class="message" wx:if="{{status==3&&isDiDi!=1}}">实际收益：
-              <label class="data-text">{{item.amount}}元</label>
-            </view>
-            <view class="message" wx:if="{{status==3&&isDiDi==1}}">预计收益：
-              <label class="data-text">300<label class="data-blt">~</label>868元</label>
-            </view>
-            <view class="message" wx:if="{{status!=3}}">实际收益：
-              <label class="data-text ywxst">***
-                <text class=''>（身份认证后可查看收益）</text>
-              </label>
-            </view>
-            <view class="message">投放时间：
-              <label class="data-text">{{item.begin_date}}
-                <label class="data-blt">~</label>{{item.end_date}}</label>
-            </view>
-          </view>
-        </view>
-        <view class="item_right">
-          <view wx:if="{{item.state==0}}" bindtap="go" data-name="{{item.id}}">
-            <text class="time">剩余{{item.current_count}}</text>
-          </view>
-          <view wx:if="{{item.state==2}}" bindtap="go" data-name="{{item.id}}">
-            <text class="time timetxt">已投完</text>
-          </view>
-          <view wx:if="{{item.state==3}}" bindtap="go" data-name="{{item.id}}">
-            <text class="time timetxt">已结束</text>
-          </view>
-          <view wx:if="{{item.state==1}}" bindtap="go" data-name="{{item.id}}">
-            <text class="time timetxt2">即将开始</text>
-          </view>
-          <button data-adName="{{item.name}}" data-adId="{{item.id}}" data-adImg="{{item.share_img}}" class='wtwabt' open-type="share">
-            <image src='../../image/shareicon.png'></image>
-            <view class='sharetext'>{{ shareAwardText }}</view>
-          </button>
-        </view>
-      </view>
-      <view class="line"></view>
-    </block>
+    <!--正在加载-->
+    <loading-more isShowLoadingMore="{{ isShowLoadingMore }}" showNomore="{{ showNomore }}"></loading-more>
   </view>
 </view>
+
 <!-- 推荐有奖 -->
 <view class='movable-wrapper' bindtap='recommendClick' wx:if='{{ showRecommend }}'>
   <image class='active-img' src='../../image/recommend.gif'></image>
 </view>
 
+<view class="goods-detail" wx:if="{{showDialog}}">
+  <view class="mask" bindtap="hideDialog"></view>
+  <!-- <image class="colse" src="../../image/close.png" bindtap="hideDialog"></image> -->
+  <view class="goodsdetail">
+    <view>
+      <image src='../../image/selCheck.jpg' style='width:{{checkImg}}px;height:{{checkImg2}}px'></image>
+    </view>
+    <view class='kind-list-item-bd kind-list-item-bd-show'>
+      <view class='navigator-box navigator-box-show'>
+        <view class='navigator' bindtap='severCheck'>
+          <view class='navigator-text'>网点检测</view>
+          <view class='navigator-arrow'></view>
+        </view>
+        <view class='navigator' bindtap='selfCheck' data-checkId="{{myAd.check.id}}" data-type="{{myAd.type}}">
+          <view class='navigator-text'>自主检测</view>
+          <view class='navigator-arrow'></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
 <bpb-follow shareit='{{shareit}}'></bpb-follow>
 <bpb-reward reward='{{reward}}'></bpb-reward>
-<!-- <navigator url="../register/register" style='height:40px;width:40px;'> 2222222</navigator>         -->
+<!-- 确认预约排队信息 -->
+<model visible="{{ visible }}" title="{{ title }}" cancelText="{{ cancelText }}" confirmText="{{ confirmText }}" cancelLoading="{{ cancelLoading }}"
+  confirmLoading="{{ confirmLoading }}" bind:cancel="handleCancel" bind:confirm="handleConfirm">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view>{{ subsAdName }}</view>
+      <view>{{ subsServerName }}</view>
+      <view>{{ subsServerAddress }}</view>
+    </view>
+    <view>系统已为你预约成功，是否接受安排？</view>
+  </view>
+</model>
+<!-- 任务弹窗 -->
+<model visible="{{ visibleNewVersion }}" title="{{ title }}" cancelText="{{ cancelText }}" confirmText="{{ confirmText }}" cancelLoading="{{ cancelLoading }}"
+  confirmLoading="{{ confirmLoading }}" bind:cancel="handleCancel" bind:confirm="handleConfirm">
+  <view class='subscribe-wrapper'>
+    <view class='subscribe-body'>
+      <view>{{ subsAdName }}</view>
+      <view>{{ subsServerName }}</view>
+      <view>{{ subsServerAddress }}</view>
+    </view>
+    <view>系统已为你预约成功，是否接受安排？</view>
+  </view>
+</model>
+<!-- 轻提示 -->
+<b-toast id="toast"></b-toast>
+
+<dialog-guide showDialog='{{ showGuideDialog }}' imageSrc='{{ guideModalInfo.src }}' title="{{ guideModalInfo.title }}"
+  btnStr='{{ guideModalInfo.btnStr }}' content='{{ guideModalInfo.content }}' bind:action='handleGuideTap' bind:cancel="handleGuideCancel"></dialog-guide>

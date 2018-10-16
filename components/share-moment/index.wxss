@@ -45,7 +45,7 @@
 }
 
 .btn-save-local{
-  background: linear-gradient(45deg, #FB653D, #ff555c);
+  background: linear-gradient(45deg, #FB653D, #FD500D);
   width: 80%;
   height: 88rpx;
   line-height: 88rpx;

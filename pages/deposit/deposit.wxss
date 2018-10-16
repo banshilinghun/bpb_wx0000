@@ -1,4 +1,4 @@
-@import "../me/me.wxss";
+@import "../../style/common.wxss";
 page{
   background: #fff;
 }
@@ -105,7 +105,7 @@ page{
 }
 
 .data-text {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .myad-li {
@@ -117,7 +117,7 @@ page{
 .btn-red {
   border: none;
   border-radius: 0 !important;
-  background: #ff555c;
+  background: #FD500D;
   color: #fff;
   font-size: 15px;
   margin-bottom: 10px;
@@ -158,7 +158,7 @@ color:#333;
 .itemcircle{
   width: 28rpx;
   height: 28rpx;
-  background: #FF555C;
+  background: #FD500D;
   border-radius:14rpx;
   margin-right:40rpx;
 }

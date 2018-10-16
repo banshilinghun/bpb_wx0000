@@ -1,0 +1,35 @@
+<view class="b-model-mask {{ visible ? 'b-model-mask-show' : '' }}" bindtap='handleHide'></view>
+<view class="b-model {{ visible ? 'b-model-show' : '' }}">
+  <view class='b-model-main'>
+    <view class='b-model-content'>
+      <view class='b-model-explain-wrapper' wx:if='{{ explain }}' bindtap='handleExplainClick'>
+        <view class='b-model-explain'>
+          <view class='b-model-explain-text'>{{ explain }}</view>
+          <image class='b-model-explain-icon' src='https://wxapi.benpaobao.com/static/app_img/v2/b-theme-explain.png'></image>
+        </view>
+      </view>
+      <view class='b-model-title' wx:if="{{ title }}">{{ title }}</view>
+      <view class='b-model-body'>
+        <slot></slot>
+      </view>
+      <view class='b-model-actions' wx:if="{{ actions.length }}">
+      </view>
+      <view class='b-model-actions' wx:else>
+        <view class='b-model-btn-wrapper' wx:if="{{ showCancel || showConfirm }}">
+          <view class='b-model-grid-item' wx:if="{{ showCancel }}">
+            <button class='b-model-btn b-btn-cancel' bindtap='handleCilckCancel'>
+              <view class='b-modal-btn-loading' wx:if='{{ cancelLoading }}'></view>
+              <view class='b-model-btn-text' style='{{ cancelTextColor ? "color:" + cancelTextColor : "" }}'>{{ cancelText }}</view>
+            </button>
+          </view>
+          <view class='b-model-grid-item-last' wx:if="{{ showConfirm }}">
+            <button class='b-model-btn b-btn-confirm' bindtap='handleClickConfirm'>
+              <view class='b-modal-btn-loading' wx:if='{{ confirmLoading }}'></view>
+              <view class='b-model-btn-text' style='{{ confirmTextColor ? "color:" + confirmTextColor : "" }}'>{{ confirmText }}</view>
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

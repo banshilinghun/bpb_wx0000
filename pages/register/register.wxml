@@ -11,7 +11,7 @@
       <view class="smsCode">
         <image class="userinfo-verifiIcon" src="{{verifiIcon}}"></image>
         <input id="smsCode" name="smsCode" maxlength='6' type="number" placeholder="验证码" />
-        <button bindtap="getSmsCode" disabled="{{smsCodeDisabled}}" style="background-color:{{getSmsCodeBtnColor}};color:{{color}}" class="getSmsCodeBtn">{{getSmsCodeBtnTxt}}</button>
+        <button bindtap="handleSmsCode" disabled="{{smsCodeDisabled}}" style="background-color:{{getSmsCodeBtnColor}};color:{{color}}" class="getSmsCodeBtn">{{getSmsCodeBtnTxt}}</button>
       </view>
     </view>
     <view class="btn-area">

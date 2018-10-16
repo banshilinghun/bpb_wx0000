@@ -1,4 +1,8 @@
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
+const ApiManager = require('../../utils/api/ApiManager');
+const ApiConst = require("../../utils/api/ApiConst.js");
+const LoadingHelper = require('../../helper/LoadingHelper');
+const ModalHelper = require('../../helper/ModalHelper');
 const app = getApp()
 var sourceType = [
   ['camera'],
@@ -17,12 +21,10 @@ Page({
     specialBtn: false,
     tapNum: false, //数字键盘是否可以点击
     parkingData: false, //是否展示剩余车位按钮
-    isFocus: false, //输入框聚焦
     flag: false, //防止多次点击的阀门
     keyboardNumber: '1234567890',
     keyboardAlph: 'QWERTYUIOPASDFGHJKL巛ZXCVBNM',
-    keyboard1:
-    '京津沪冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤川青藏琼宁渝',
+    keyboard1: '京津沪冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤川青藏琼宁渝',
     keyboard2: '',
     keyboard2For: ['完成'],
     keyboardValue: '',
@@ -39,9 +41,8 @@ Page({
     city: '',
     address: {},
     carList: {},
-    sourceTypeIndex: '',
     sourceType: {},
-    sourceTypeIndex2: '',
+    car_color: '',
     menuType: 0,
     begin: null,
     status: 1,
@@ -58,64 +59,76 @@ Page({
     is_bad: 2,
     show1: true,
     show2: true,
-    color: [
-      { 'carColor': '#ffffff', 'name': '白色', id: 1 },
-      { 'carColor': '#323232', 'name': '黑色', id: 2 },
-      { 'carColor': '#e7e7e7', 'name': '银色', id: 3 },
-      { 'carColor': '#f00a0a', 'name': '红色', id: 4 },
-      { 'carColor': '#d8bc3c', 'name': '金色', id: 5 },
-      { 'carColor': '#3275e4', 'name': '蓝色', id: 6 },
-      { 'carColor': '#804318', 'name': '棕色', id: 7 },
-      { 'carColor': '#991abe', 'name': '紫色', id: 8 },
-      { 'carColor': '#50ce5f ', 'name': '绿色', id: 9 },
-      { 'carColor': '#f792c8 ', 'name': '粉色', id: 10 },
-      { 'carColor': '#ffac29  ', 'name': '黄色', id: 11 }
+    scrollHeight: 0,
+    color: [{
+        'carColor': '#ffffff',
+        'name': '白色',
+        id: 1
+      },
+      {
+        'carColor': '#323232',
+        'name': '黑色',
+        id: 2
+      },
+      {
+        'carColor': '#e7e7e7',
+        'name': '银色',
+        id: 3
+      },
+      {
+        'carColor': '#f00a0a',
+        'name': '红色',
+        id: 4
+      },
+      {
+        'carColor': '#d8bc3c',
+        'name': '金色',
+        id: 5
+      },
+      {
+        'carColor': '#3275e4',
+        'name': '蓝色',
+        id: 6
+      },
+      {
+        'carColor': '#804318',
+        'name': '棕色',
+        id: 7
+      },
+      {
+        'carColor': '#991abe',
+        'name': '紫色',
+        id: 8
+      },
+      {
+        'carColor': '#50ce5f ',
+        'name': '绿色',
+        id: 9
+      },
+      {
+        'carColor': '#f792c8 ',
+        'name': '粉色',
+        id: 10
+      },
+      {
+        'carColor': '#ffac29  ',
+        'name': '黄色',
+        id: 11
+      }
     ]
   },
+
   onLoad: function (options) {
     var that = this;
     that.judgeCanIUse();
-    //var sourceType2 = [];
     var colorName = [];
     for (var i = 0; i < that.data.color.length; i++) {
-      //sourceType2.push(that.data.color[i].name);
       colorName.push(that.data.color[i].name);
     }
     this.setData({
       colorName: colorName
     })
-   
-    wx.request({
-      url: app.globalData.baseUrl + 'app/get/brands',
-      data: {},
-      header: app.globalData.header,
-      success: res => {
-        if (res.data.code == 1000) {
-          //console.log(res.data.data)
-          var id = res.data.data.brands[0].id;
-          this.setData({
-            carList: res.data.data,
-            brands: res.data.data.brands,
-            models: res.data.data.brand_details[id]
-          })
-          //console.log(res.data);
-        } else {
-          //					console.log(res.data)
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: res.data.msg
-          });
-        }
-      },
-      fail: res => {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '网络错误'
-        });
-      }
-    })
+
     // 初始化动画变量
     var animation = wx.createAnimation({
       duration: 500,
@@ -123,6 +136,72 @@ Page({
       timingFunction: 'ease',
     })
     this.animation = animation;
+    this.setScrollHeight();
+    this.fillAuthInfo();
+  },
+
+  setScrollHeight() {
+    const that = this;
+    let proSystem = new Promise(function (resolve, reject) {
+      wx.getSystemInfo({
+        success: function (res) {
+          resolve(res);
+        }
+      });
+    })
+    let proButton = new Promise((resolve, reject) => {
+      let query = wx.createSelectorQuery();
+      //选择id
+      query.select('#commit').boundingClientRect(rect => {
+        resolve(rect);
+      }).exec();
+    });
+    Promise.all([proSystem, proButton]).then(results => {
+      that.setData({
+        scrollHeight: results[0].windowHeight - results[1].height
+      });
+    })
+  },
+
+  /**
+   * 填充车主已有认证信息
+   */
+  fillAuthInfo() {
+    const that = this;
+    LoadingHelper.showLoading();
+    let requestData = {
+      url: ApiConst.GET_USER_AUTH_INFO,
+      data: {},
+      success: res => {
+        let carPhotoList = [];
+        if(res.car_photo){
+          carPhotoList.push(res.car_photo);
+        }
+        let licensePhotoList = [];
+        if(res.driving_license_photo){
+          licensePhotoList.push(res.driving_license_photo);
+        }
+        that.setData({
+          userName: res.real_name,
+          textValue: res.plate_no,
+          car_type: res.car_type? res.car_type : 1,
+          is_bad: res.is_bad? res.is_bad : 2,
+          brandName: res.brand_name,
+          carModel: res.car_model,
+          car_color: res.car_color,
+          imageList: carPhotoList,
+          carPhoto: res.car_photo,
+          imageList2: licensePhotoList,
+          licensePhoto: res.driving_license_photo,
+          show1: res.car_photo? false : true,
+          show2: res.driving_license_photo? false : true
+        })
+      },
+      complete: res => {
+        LoadingHelper.hideLoading();
+      }
+    }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
 
   /**
@@ -142,7 +221,7 @@ Page({
       title: '提示',
       content: '您当前微信版本过低，将导致无法正常使用奔跑宝小程序，请升级到微信最新版本。',
       showCancel: false,
-      success: function (res) { },
+      success: function (res) {},
     })
   },
 
@@ -160,11 +239,10 @@ Page({
       animationData: this.animation.export(),
       isVisible: isShow
     })
-    //console.log(that.data)
   },
+
   // 执行动画
   startAddressAnimation: function (isShow) {
-    //		console.log(isShow)
     var that = this
     if (isShow) {
       that.animation.translateY(0 + 'vh').step()
@@ -176,8 +254,8 @@ Page({
       addressMenuIsShow: isShow,
     })
   },
+
   startAddressAnimation2: function (isShow) {
-    //		console.log(isShow)
     var that = this
     if (isShow) {
       that.animation.translateY(0 + 'vh').step()
@@ -195,11 +273,13 @@ Page({
       sourceTypeIndex: e.detail.value
     })
   },
+
   sourceTypeChange2: function (e) {
     this.setData({
-      sourceTypeIndex2: e.detail.value
+      car_color: this.data.colorName[e.detail.value]
     })
   },
+
   showMenuTap: function (e) {
     console.log('selectState')
     //获取点击菜单的类型 1点击状态 2点击时间 
@@ -226,232 +306,119 @@ Page({
     this.setData({
       status: status
     })
-    console.log(this.data)
-
   },
 
   // 点击所在地区弹出选择框
   selectDistrict: function (e) {
     var that = this
-    //console.log('111111111')
     if (that.data.addressMenuIsShow) {
       return
     }
     that.startAddressAnimation(true)
   },
+
   selectBrand: function (e) {
     var that = this
-    //console.log('22222')
     if (that.data.addressMenuIsShow2) {
       return
     }
-    that.startAddressAnimation2(true)
-  },
-
-  // 点击地区选择取消按钮
-  cityCancel: function (e) {
-    this.startAddressAnimation(false)
-    this.startAddressAnimation2(false)
-  },
-  // 点击地区选择确定按钮
-  citySure: function (e) {
-    var that = this
-    var city = that.data.city
-    var value = that.data.value
-    that.startAddressAnimation(false)
-    // 将选择的城市信息显示到输入框
-    //		console.log(that.data.citys[value[1]].id)
-    var areaInfo = that.data.citys[value[1]].name
-    that.setData({
-      areaInfo: areaInfo,
-      cityId: that.data.citys[value[1]].id
+    //车型选择改变
+    wx.navigateTo({
+      url: '../brandList/brandList?flag=2',
     })
   },
-  barndSure: function (e) {
-    var that = this
-    var model = that.data.model
-    var value = that.data.value2
-    that.startAddressAnimation2(false)
-    // 将选择的城市信息显示到输入框
-    //		console.log(that.data.citys[value[1]].id)
-    var brandText = that.data.brands[value[0]].name
-    var modelText = that.data.models[value[1]].name
-    var areaInfo = brandText + ' ' + modelText
-    that.setData({
-      areaInfo2: areaInfo,
-      modelId: that.data.models[value[1]].id
-    })
-  },
-  hideCitySelected: function (e) {
-    //		console.log(e)
-    this.startAddressAnimation(false)
-    this.startAddressAnimation2(false)
-  },
-  // 处理省市县联动逻辑
-  cityChange: function (e) {
-    //		console.log(e)
-    var value = e.detail.value
-    var provinces = this.data.provinces
-    if (provinces.length > 0) {
-      var citys = this.data.citys
-      var provinceNum = value[0]
-      var cityNum = value[1]
-      //		var countyNum = value[2]
-      if (this.data.value[0] != provinceNum) {
-        //			console.log(this.data.address);
-        var id = provinces[provinceNum].id
-        this.setData({
-          value: [provinceNum, 0, 0],
-          citys: this.data.address.citys[id]
-        })
-      } else if (this.data.value[1] != cityNum) {
-        var id = citys[cityNum].id
-        this.setData({
-          value: [provinceNum, cityNum]
-        })
-      } else {
-        this.setData({
-          value: [provinceNum, cityNum]
-        })
-      }
-    } else {
-      console.log("获取省市中")
-    }
 
-    //		console.log(this.data)
-  },
-  brandChange: function (e) {
-    //console.log(this.data.carList)
-    var value = e.detail.value
-    var brands = this.data.brands
-    if (brands.length > 0) {
-      var models = this.data.models
-      var brandNum = value[0]
-      var modelNum = value[1]
-      //		var countyNum = value[2]
-      if (this.data.value2[0] != brandNum) {
-        //console.log(this.data.carList);
-        var id = brands[brandNum].id
-        this.setData({
-          value2: [brandNum, 0],
-          models: this.data.carList.brand_details[id]
-        })
-      } else if (this.data.value2[1] != modelNum) {
-        var id = models[modelNum].id
-        this.setData({
-          value2: [brandNum, modelNum]
-        })
-      } else {
-        this.setData({
-          value2: [brandNum, modelNum]
-        })
-      }
-    } else {
-      console.log("获取车型中")
-    }
-
-    //		console.log(this.data)
-  },
   formSubmit: function (e) {
     console.log(e)
     var param = e.detail.value;
     var formId = e.detail.formId;
     this.mysubmit(param, formId);
   },
+
   mysubmit: function (param, formId) {
-    console.log(param)
+    let user_name = param.name;
     var carPhoto = this.data.carPhoto;
-    //var licensePhoto = this.data.licensePhoto;
-    var sourceTypeIndex2 = this.data.sourceTypeIndex2;
-    var sourceTypeIndex = this.data.sourceTypeIndex;
-    // var leaseId = this.data.idList[sourceTypeIndex];
-    // var leaseName = this.data.nameList[sourceTypeIndex];
-    var cityId = this.data.cityId;
-    var car_brand = this.data.modelId;
-    var car_color = this.data.colorName[sourceTypeIndex2];
+    var licensePhoto = this.data.licensePhoto;
+    var car_color = this.data.car_color;
     var is_bad = this.data.is_bad;
     var car_type = this.data.car_type;
-    console.log(is_bad);
-    //var car_type=
-    //var uid = app.globalData.uid;
-    //		console.log(param)
+    let carModel = this.data.carModel;
+    let plate_no = this.data.textValue;
     var formData = {
-      real_name: param.name,
-      plate_no: param.carcode,
+      real_name: user_name,
+      plate_no: plate_no,
       form_id: formId,
-      car_brand: car_brand,
       car_color: car_color,
       car_type: car_type,
-      is_bad: is_bad
-      // lease_company: leaseName,
-      // lease_id: leaseId
+      is_bad: is_bad,
+      car_model: carModel
     }
-    //console.log(formData)
-    //		console.log(formData);
-    var flag = this.checkName(param) && this.checkCarCode(param) && this.checkBrand(param) && this.checkColor(param)
-    var that = this;
-    if (flag) {
-      if (carPhoto == undefined) {
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '请上传车辆照片'
-        });
-      }
-
-      if (carPhoto != undefined) {
-        wx.request({
-          url: app.globalData.baseUrl + 'app/user/auth_identity_info',
-          data: formData,
-          header: app.globalData.header,
-          success: res => {
-            if (res.data.code == 1000) {
-              wx.showToast({
-                title: "提交成功"
-              })
-              setTimeout(function () {
-                wx.redirectTo({
-                  url: '../state/state?followFlag=1'
-                })
-              }, 1000);
-            } else {
-              //					console.log(res.data)
-              wx.showModal({
-                title: '提示',
-                showCancel: false,
-                content: res.data.msg
-              });
-            }
-          },
-          fail: res => {
-            wx.showModal({
-              title: '提示',
-              showCancel: false,
-              content: '网络错误'
-            });
-          }
+    console.log(formData)
+    if (!user_name) {
+      ModalHelper.showWxModal('提示', '请输入车主姓名', '我知道了', false);
+      return;
+    }
+    if (!this.checkCarCode(plate_no)) {
+      return;
+    }
+    if (!carModel) {
+      ModalHelper.showWxModal('提示', '请选择车型', '我知道了', false);
+      return;
+    }
+    if (!car_color) {
+      ModalHelper.showWxModal('提示', '请选择车辆颜色', '我知道了', false);
+      return;
+    }
+    if (!carPhoto) {
+      ModalHelper.showWxModal('提示', '请上传车辆画面', '我知道了', false);
+      return;
+    }
+    if (!licensePhoto) {
+      ModalHelper.showWxModal('提示', '请上传行驶证照片', '我知道了', false);
+      return;
+    }
+    //发起提交认证请求
+    LoadingHelper.showLoading();
+    let requestData = {
+      url: ApiConst.AUTH_IDENTITY_INFO,
+      data: formData,
+      success: res => {
+        wx.showToast({
+          title: "提交成功"
         })
+        setTimeout(function () {
+          wx.redirectTo({
+            url: '../state/state?followFlag=1'
+          })
+        }, 1000);
+      },
+      complete: res => {
+        LoadingHelper.hideLoading();
       }
     }
+    ApiManager.sendRequest(new ApiManager.requestInfo(requestData));
   },
+
   radioChange: function (e) {
-    //console.log(e.detail.value);
     this.setData({
       car_type: e.detail.value
     })
   },
+
   switchChange: function (e) {
-    // console.log(e.detail.value);
     this.setData({
       is_bad: e.detail.value
     })
   },
+
   goStep: function () {
     this.setData({
       currentMenuID: '1',
       currentPage: 1
     })
   },
+
+  //车辆照片
   chooseImage: function () {
     var that = this
     wx.chooseImage({
@@ -462,7 +429,7 @@ Page({
         console.log(res)
         var wxres = res;
         wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/user/upload_identity_img', //仅为示例，非真实的接口地址
+          url: ApiConst.UPLOAD_IDENTITY_IMG,
           filePath: res.tempFilePaths[0],
           name: 'car',
           header: {
@@ -471,7 +438,6 @@ Page({
           success: function (res) {
             var resdata = JSON.parse(res.data);
             if (resdata.code == 1000) {
-              //							console.log(res.data)
               that.setData({
                 imageList: wxres.tempFilePaths,
                 carPhoto: wxres.tempFilePaths[0],
@@ -497,9 +463,55 @@ Page({
       }
     })
   },
+
+  //行驶证
+  chooseImage2: function () {
+    var that = this
+    wx.chooseImage({
+      sourceType: sourceType[2],
+      sizeType: sizeType[0],
+      count: 1,
+      success: function (res) {
+        console.log(res)
+        var wxres = res;
+        wx.uploadFile({
+          url: ApiConst.UPLOAD_IDENTITY_IMG,
+          filePath: res.tempFilePaths[0],
+          name: 'license',
+          header: {
+            "Cookie": app.globalData.header.Cookie,
+          },
+          success: function (res) {
+            var resdata = JSON.parse(res.data);
+            if (resdata.code == 1000) {
+              that.setData({
+                imageList2: wxres.tempFilePaths,
+                licensePhoto: wxres.tempFilePaths[0],
+                show2: false
+              })
+            } else {
+              wx.showModal({
+                title: '提示',
+                showCancel: false,
+                content: resdata.msg
+              });
+            }
+          },
+          fail: res => {
+            console.log(res.data)
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: '网络错误'
+            });
+          }
+        })
+      }
+    })
+  },
+
   previewImage: function (e) {
     var current = e.target.dataset.src
-
     wx.previewImage({
       current: current,
       urls: this.data.imageList
@@ -508,7 +520,7 @@ Page({
 
   checkName: function (param) {
     var name = param.name;
-    if (name != '') {
+    if (name) {
       return true;
     } else {
       wx.showModal({
@@ -519,9 +531,10 @@ Page({
       return false;
     }
   },
+
   checkCity: function (param) {
     var city = param.city;
-    if (city != '') {
+    if (city) {
       return true;
     } else {
       wx.showModal({
@@ -532,11 +545,11 @@ Page({
       return false;
     }
   },
-  checkCarCode: function (param) {
-    var carcode = param.carcode;
-    console.log(carcode)
-    if (carcode != undefined) {
-      if (util.isVehicleNumber(carcode)) {
+
+  checkCarCode: function (plate_no) {
+    console.log(plate_no);
+    if (plate_no) {
+      if (util.isVehicleNumber(plate_no)) {
         return true;
       } else {
         wx.showModal({
@@ -555,9 +568,10 @@ Page({
     }
 
   },
+
   checkBrand: function (param) {
     var brand = param.brand;
-    if (brand != '') {
+    if (brand) {
       return true;
     } else {
       wx.showModal({
@@ -568,9 +582,10 @@ Page({
       return false;
     }
   },
+
   checkColor: function (param) {
     var color = param.color;
-    if (color != '') {
+    if (color) {
       return true;
     } else {
       wx.showModal({
@@ -581,13 +596,14 @@ Page({
       return false;
     }
   },
+
   showKeyboard: function () {
     var self = this;
     self.setData({
-      isFocus: true,
       isKeyboard: true
     });
   },
+
   /**
    * 点击页面隐藏键盘事件
    */
@@ -602,7 +618,6 @@ Page({
       } else {
         self.setData({
           isKeyboard: false,
-          isFocus: false
         });
       }
     }
@@ -614,12 +629,10 @@ Page({
       //说明键盘是显示的，再次点击要隐藏键盘
       self.setData({
         isKeyboard: false,
-        isFocus: true
       });
     } else {
       //说明键盘是隐藏的，再次点击显示键盘
       self.setData({
-        isFocus: true,
         isKeyboard: true
       });
     }
@@ -678,7 +691,6 @@ Page({
     }
   },
 
-
   onReady: function () {
     var self = this;
     //将keyboard1和keyboard2中的所有字符串拆分成一个一个字组成的数组
@@ -688,12 +700,21 @@ Page({
       keyboardValue: self.data.keyboard1
     });
   },
+
   onShow: function () {
     var self = this;
     self.setData({
       flag: false
     });
+    console.log('carModelDetail------->' + this.data.carModelDetail);
+    console.log('carModel------->' + this.data.carModel);
+    if (this.data.carModelDetail) {
+      this.setData({
+        brandName: this.data.carModelDetail
+      })
+    }
   },
+
   tapSpecBtn: function () {
     this.hideKeyboard();
   }

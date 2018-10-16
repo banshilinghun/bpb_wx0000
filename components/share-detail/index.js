@@ -1,12 +1,12 @@
 // components/share-detail/index.js
 const app = getApp();
-const stringUtil = require('../../utils/stringUtil.js');
-
+const stringUtil = require('../../utils/string/stringUtil');
+const ApiConst = require("../../utils/api/ApiConst.js");
 var windowWidth;
 var windowHeight;
 const TEXT_COLOR = '#000000';
 const WHITE = '#FFFFFF';
-const THEME_COLOR = '#FF555C';
+const THEME_COLOR = '#FD500D';
 const GRAY_COLOR = '#333333';
 const NORMAL_COLOR = '#666666';
 const TINT_COLOR = '#747474';
@@ -71,7 +71,7 @@ const bpbScale = 0.92 + temp * 2;
 //识别文字
 const decodeScale = 0.95 + temp * 2;
 //二维码地址
-const QR_CODE_URL = app.globalData.baseUrl + 'app/get/wx_code';
+const QR_CODE_URL = ApiConst.QR_CODE;
 
 Component({
   /**
@@ -192,7 +192,7 @@ Component({
       console.log('targetSharePath------------->' + this.data.targetSharePath);
       if (newVal) {
         if (!this.data.targetSharePath) {
-          this.shareMoments();
+          this.shareImage();
         } else {
           this.setData({
             realShow: true
@@ -201,9 +201,9 @@ Component({
       }
     },
     /**
-     * 生成分享图到朋友圈
+     * 生成分享图
      */
-    shareMoments: function () {
+    shareImage: function () {
       var that = this;
       that.showLoading();
       that.getQRCode();
@@ -605,7 +605,7 @@ Component({
         success: function () {
           wx.showModal({
             title: '',
-            content: '✌️图片保存成功，\n快去分享到朋友圈吧',
+            content: '✌️图片保存成功',
             showCancel: false
           })
           that.hideDialog();

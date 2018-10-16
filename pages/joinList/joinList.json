@@ -2,5 +2,8 @@
   "navigationBarTitleText": "参与人数",
   "enablePullDownRefresh": true,
   "navigationBarTextStyle": "white",
-  "navigationBarBackgroundColor": "#333"
+  "navigationBarBackgroundColor": "#333",
+  "usingComponents": {
+    "loading-more": "../../components/loading-more/index"
+  }
 }

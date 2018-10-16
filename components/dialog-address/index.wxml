@@ -1,0 +1,14 @@
+<view class='rule-dialog' wx:if='{{ showAddressDialog }}'>
+  <view class='rule-mask'></view>
+  <view class='rule-content-wrapper'>
+    <view class='content-root'>
+      <view class='address-wrapper'>
+        <text class='address-text'>{{ address }}</text>
+      </view>
+      <view class='phone-wrpper' bindtap='callListener' data-photo='{{ phone }}' wx:if='{{ phone }}'>
+        <text>{{ phone }}</text>
+      </view>
+    </view>
+    <button class='btn' bindtap='dismiss'>确定</button>
+  </view>
+</view>

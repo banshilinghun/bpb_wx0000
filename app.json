@@ -23,7 +23,20 @@
     "pages/valuation/valuation",
     "pages/QAservice/service",
     "pages/QAcell/QAcell",
-    "pages/QAanswer/answer"
+    "pages/QAanswer/answer",
+    "pages/checkCourse/checkCourse",
+    "pages/brandList/brandList",
+    "pages/brandDetail/brandDetail",
+    "pages/subscribeQueue/subscribeQueue",
+    "pages/choiceCarModel/choiceCarModel",
+    "pages/explain/explain",
+    "pages/withdrawRecord/withdrawRecord",
+    "pages/earningRecord/earningRecord",
+    "pages/declare/declare",
+    "pages/task/task",
+    "pages/prove/prove",
+    "pages/stepDetail/stepDetail",
+    "pages/declareRecord/declareRecord"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -35,8 +48,8 @@
   },
   "tabBar": {
     "color": "#7A7E83",
-    "selectedColor": "#ff555c",
-    "borderStyle": "white",
+    "selectedColor": "#FD500D",
+    "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
       {
@@ -44,6 +57,12 @@
         "iconPath": "image/icon_component.png",
         "selectedIconPath": "image/icon_component_HL.png",
         "text": "广告市场"
+      },
+      {
+        "pagePath": "pages/task/task",
+        "iconPath": "image/icon_ad.png",
+        "selectedIconPath": "image/icon_ad_HL.png",
+        "text": "我的任务"
       },
       {
         "pagePath": "pages/QAservice/service",
@@ -55,7 +74,7 @@
         "pagePath": "pages/me/me",
         "iconPath": "image/icon_API.png",
         "selectedIconPath": "image/icon_API_HL.png",
-        "text": "我的"
+        "text": "个人中心"
       }
     ]
   },

@@ -1,0 +1,42 @@
+<view>
+  <view class='brand-wrapper'>
+    <image class='brand-logo' src='{{ brandLogo }}'></image>
+    <view class='brand-name'>
+      <text>{{ brandName }}</text>
+    </view>
+  </view>
+  <view class="selection" wx:for="{{ modelList }}" wx:key="item.company_id">
+    <view class="item_letter" id="{{ item.initial }}">{{ item.company_name }}</view>
+    <view class="item_brand" wx:for="{{ item.models }}" wx:for-item="model" wx:key="model.model_id" data-brand="{{ model }}" bindtap="bindCarModel">
+      <image class='brand-child-logo' src='{{ model.model_logo }}' catchtap='previewModelLogo' data-image='{{ model.model_logo }}'></image>
+      <view class='brand-child-name'>
+        <text>{{ model.model_name }}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 改变了选择方式 -->
+<!-- <view class='rule-dialog' wx:if='{{ showDialog }}'>
+  <view class='rule-mask'></view>
+  <view class='root'>
+    <view class='content-wrapper'>
+      <view class='content-root'>
+        <view class='content'>
+          <view class='brand-title'>
+            <text>选择车型款式</text>
+          </view>
+          <scroll-view scroll-y="true" class='brand-scroll-view'>
+            <radio-group class="radio-group" bindchange="radioChange">
+                <radio class="radio" wx:for="{{ carModels }}" wx:for-item="item" wx:key="name" value="{{ item.detail_id }}" checked="{{ index === 0 }}">
+                    <text>{{ item.detail_name }}</text>
+                </radio>
+            </radio-group>
+          </scroll-view>
+        </view>
+      </view>
+      <button class='btn' bindtap='selectListener'>确认选择</button>
+    </view>
+    <image class="colse" src="../../image/close.png" bindtap="hideDialog"></image>
+  </view>
+</view> -->

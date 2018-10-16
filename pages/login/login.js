@@ -1,4 +1,5 @@
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 //console.log(222)
 
@@ -65,7 +66,7 @@ Page({
 		if(flag) {
 			this.setLoginData1();
 				wx.request({
-				url: app.globalData.baseUrl + 'app/user/login',
+				url: ApiConst.LOGIN_URL,
 				data: loginData,
 				header: {
 					'content-type': 'application/json'
@@ -74,11 +75,9 @@ Page({
 					that.setLoginData2();
 					if(res.data.code == 1000) {
 						app.globalData.header.Cookie = 'sessionid='+res.data.data.session_id;
-						//app.globalData.uid = res.data.data.uid;
 						wx.showToast({
 							title: "登录成功"
 						})
-//						that.redirectTo(res.data.data);
 						setTimeout(function() {
 							that.redirectTo(res.data.data);
 						}, 1000);

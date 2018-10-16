@@ -27,7 +27,7 @@ Component({
     openType: {
       type: String,
       value: ''
-    }
+    },
   },
 
   /**

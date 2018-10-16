@@ -1,0 +1,160 @@
+
+page{
+  background: rgba(236, 235, 242, 0.7)
+}
+
+.b-declare-panel{
+  border-top: 1rpx solid #ddd;
+  border-bottom: 1rpx solid #ddd;
+}
+
+.b-declare-cell{
+  padding: 20rpx 40rpx;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.b-cell-title{
+  min-width: 200rpx;
+  font-size: 28rpx;
+  color: #333
+}
+
+.b-cell-content{
+  flex: 1;
+  font-size: 28rpx;
+  color: #666
+}
+
+.b-declare-line{
+  position: absolute;
+  right: 0;
+  left: 40rpx;
+  bottom: 0;
+  height: 1rpx;
+  background: #ddd
+}
+
+.b-reason-wrapper{
+  border-top: 1rpx solid #ddd;
+  border-bottom: 1rpx solid #ddd;
+  padding: 30rpx 40rpx;
+  margin-bottom: 30rpx
+}
+
+.b-declare-reason-title{
+  font-size: 30rpx;
+  color: #333;
+  display: flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.b-declare-reason-detail{
+  margin-top: 20rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: #666;
+  padding: 20rpx;
+  width: 100%;
+  height: 200rpx;
+  border: 1rpx solid #ccc;
+  border-radius: 10rpx
+}
+
+.b-declare-divider{
+  width: 100%;
+  height: 30rpx;
+  background: rgba(236, 235, 242, 0.7)
+}
+
+.b-picture-wrapper{
+  border-top: 1rpx solid #ddd;
+  border-bottom: 1rpx solid #ddd;
+  padding: 30rpx 40rpx
+}
+
+.b-declare-picture-wrapper{
+  width: 100%;
+  height: 360rpx;
+  margin-top: 20rpx;
+  border-radius: 5rpx;
+  border: 1rpx solid #ddd
+}
+
+.b-declare-arrow{
+  width: 30rpx;
+  height: 30rpx
+}
+
+.b-picker{
+  flex: 1
+}
+
+.b-picker-item{
+  color: #666;
+  font-size: 28rpx
+}
+
+.b-delcare-ad-name{
+  font-size: 28rpx;
+  color: #666
+}
+
+.b-content{
+  margin-top: 30rpx;
+  background-color: #fff;
+}
+
+.b-declare-iamge{
+  height: 100%;
+  width: 100%
+}
+
+.b-image-title{
+  flex: 1
+}
+
+.b-add-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  border: 1rpx solid #ddd;
+  padding: 10rpx 20rpx
+}
+
+.b-add-image{
+  width: 25rpx;
+  height: 25rpx;
+}
+
+.b-add-text{
+  margin-left: 10rpx;
+  font-size: 20rpx;
+  color: #666
+}
+
+.b-declare-item{
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.b-declare-close{
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ccc;
+  top: -10rpx;
+  right: -10rpx
+}
+
+.b-image-title-desc{
+  font-size: 24rpx;
+  color: #999;
+}

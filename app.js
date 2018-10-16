@@ -1,22 +1,17 @@
 //app.js
 const app = getApp();
-
-//正式域名
-const releaseDomain = 'https://wxapi.benpaobao.com/';
-const releaseDomain2 = 'https://wxapi2.benpaobao.com/';
-//是否是发布状态，上线时改为true
-const release = false;
-const release2 = true;
-//true-ken测试地址，false-小彭测试地址
-const domainStatus = false;
+//user_type 为1时表示滴滴认证,其余状态为普通
 
 App({
-  onLaunch: function () {
-    // 获取用户信息
-    this.globalData.baseUrl = this.getApiUrl();
+  onLaunch: function (options) {
+    //获取运行小程序的场景值
+    console.log('场景值为：' + options.scene);
+    this.globalData.scene = options.scene;
   },
 
   globalData: {
+    //场景值
+    scene: 0,
     userInfo: null,
     login: 0,
     uid:'',
@@ -30,22 +25,23 @@ App({
     //分享传入的邀请人的id
     shareInviteId: '',
     checkStaus: '',
-    baseUrl: releaseDomain,
     isFirst:false,
     //分享开关
-    shareFlag: false
+    shareFlag: false,
+    //是否已经展示认证弹窗
+    showAuthTip: false,
+    //需要补全车型信息
+    is_add_car_model: false,
+    //是否展示过计价规则弹窗
+    showRuleTip: false,
+    //年检时间
+    car_check_date: null,
+    //一个应用周期内是否展示过年检弹窗
+    visibleCheckDate: false,
+    //是否是iPhone X
+    isIpx: false,
+    //是否展示过预约点击取消提示
+    showSubscribeClickTip: false
   },
 
-  /**
-   * 加载域名
-   */
-  getApiUrl: function(){
-    if(release){
-      return releaseDomain;
-    }else if(release2){
-      return releaseDomain2;
-    }else {
-      return domainStatus ? 'http://192.168.1.114:8000/' : 'http://192.168.1.142:8001/';
-    }
-  }
 })

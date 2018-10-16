@@ -1,4 +1,5 @@
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 var sourceType = [
   ['camera'],
@@ -75,7 +76,7 @@ Page({
         });
       } else {
         wx.request({
-          url: app.globalData.baseUrl + 'app/regist/user_ad',
+          url: ApiConst.UPLOAD_USER_AD,
           data: formData,
           header: app.globalData.header,
           success: res => {
@@ -125,7 +126,7 @@ Page({
       }
       if (cartPhoto != undefined && carnPhoto != undefined) {
         wx.request({
-          url: app.globalData.baseUrl + 'app/regist/user_ad',
+          url: ApiConst.UPLOAD_USER_AD,
           header: app.globalData.header,
           data: formData,
           success: res => {
@@ -174,7 +175,7 @@ Page({
       }
       if (carnPhoto != undefined && carwPhoto != undefined) {
         wx.request({
-          url: app.globalData.baseUrl + 'app/regist/user_ad',
+          url: ApiConst.UPLOAD_USER_AD,
           data: formData,
           header: app.globalData.header,
           success: res => {
@@ -219,7 +220,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/regist/upload_img',
+          url: ApiConst.UPLOAD_IMG,
           filePath: res.tempFilePaths[0],
           name: 'behind_car',
           header: {
@@ -276,7 +277,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/regist/upload_img',
+          url: ApiConst.UPLOAD_IMG,
           filePath: res.tempFilePaths[0],
           name: 'inside_car',
           header: {
@@ -332,7 +333,7 @@ Page({
         var wxres = res;
 
         wx.uploadFile({
-          url: app.globalData.baseUrl + 'app/regist/upload_img',
+          url: ApiConst.UPLOAD_IMG,
           filePath: res.tempFilePaths[0],
           name: 'front_car',
           header: {

@@ -46,7 +46,7 @@
   width: 30%;
   display: inline-block;
   text-align: right;
-  color: #ff555c;
+  color: #FD500D;
   font-weight: 600;
 }
 

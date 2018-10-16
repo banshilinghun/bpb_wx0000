@@ -1,0 +1,35 @@
+<container bind:submit="handleSubmit" btnSubmitText="我要申报">
+  <block wx:if="{{ declareList && declareList.length !== 0 }}">
+    <view wx:for="{{ declareList }}" wx:key="item.id">
+      <view class="b-declare-date">{{ item.create_date }}</view>
+      <view class="b-declare-record-container">
+        <view class="b-item-title">
+          <view class="b-item-name">{{ item.ad_name }}</view>
+          <block wx:if="{{ item.status == 1 }}">
+              <view class="b-auditing">审核中</view>
+          </block>
+          <block wx:if="{{ item.status == 2 }}">
+              <view class="b-audit-fail">审核拒绝</view>
+          </block>
+          <block wx:if="{{ item.status == 3 }}">
+              <view class="b-audit-success">审核通过</view>
+          </block>
+        </view>
+        <view class="b-item-info-wrapper">
+          <view class="b-item-info">{{ item.date }}</view>
+          <view class="b-item-info" wx:if="{{ isViolate }}">违章地点: {{ item.address }}</view>
+          <view class="b-item-info" wx:if="{{ isViolate }}">违章成本: {{ item.cost }}元</view>
+          <view class="b-item-info">{{ item.description }}</view>
+        </view>
+        <view class="b-date-wrapper" wx:if="{{ item.status == 2 }}" >
+          <view class="b-declare-refuse-comment">未通过原因: {{ item.comment? item.comment : '消失在外太空了~' }}</view>
+          <view class="b-re-declare" bindtap="handleReDeclare" data-item="{{ item }}">重新申报</view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <!-- 空视图 -->
+    <emptyView title='您还没有相关的申报记录' content='幸运女神眷顾哦~' topMargin='50' />
+  </block>
+</container>

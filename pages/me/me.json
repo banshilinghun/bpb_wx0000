@@ -1,13 +1,6 @@
 {
-  "navigationBarTitleText": "我的",
+  "navigationBarTitleText": "个人中心",
   "enablePullDownRefresh": true,
-  "navigationBarTextStyle": "white",
-  "navigationBarBackgroundColor": "#333",
-  "usingComponents": {
-    "amount-steps": "../../components/amount-steps/index",
-    "share-popup": "../../components/share-popup/index",
-    "dialog": "../../components/dialog/bpb-dialog",
-    "zan-toast": "../../components/toast/index",
-    "share-award": "../../components/share-award/index"
-  }
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#FD500D"
 }

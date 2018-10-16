@@ -10,3 +10,20 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+
+/* 主题色 */
+.b-theme-color{
+  color: #FD500D !important
+}
+
+/* 背景渐变 */
+.b-bg-linear-gradient{
+  background: linear-gradient(45deg, #FB653D, #FD500D);
+}
+
+/* 适配iPhone X */
+.fix-iphonex-button {
+  height: 68rpx!important;
+  width: 100%;
+  background: #fff
+}

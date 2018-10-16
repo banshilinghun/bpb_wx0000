@@ -1,0 +1,169 @@
+.queue-container {
+  background-color: #fff;
+}
+
+.divider {
+  height: 20rpx;
+  background-color: rgba(236, 235, 242, 0.7);
+}
+
+.queue-list {
+  display: flex;
+  padding: 30rpx 0;
+  flex-direction: row;
+  font-size: 28rpx;
+  color: #333;
+  box-shadow: 0 2px 2px #eee
+}
+
+.serial-tag {
+  flex: 1;
+  text-align: center;
+}
+
+.car-user-tag {
+  flex: 2;
+  text-align: center;
+}
+
+.queue-time-tag {
+  flex: 2;
+  text-align: center;
+}
+
+.queue-item {
+  height: 100rpx;
+  position: relative;
+}
+
+.item-detail {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.serial-tag-item {
+  width: 20%;
+  text-align: center;
+  line-height: 100rpx
+}
+
+.b-user-item {
+  width: 40%;
+  text-align: left;
+  box-sizing: border-box;
+  line-height: 100rpx
+}
+
+.b-user-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 30rpx
+}
+
+.queue-time-tag-item {
+  width: 40%;
+  text-align: center;
+  line-height: 100rpx
+}
+
+.queue-user-avatar {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.serial-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.user-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.queue-start-time {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.line {
+  width: 90%;
+  height: 1rpx;
+  background-color: #ddd;
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%
+}
+
+.model-action {
+  height: 150rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 0 6px #ddd;
+}
+
+button {
+  width: 300rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 8rpx;
+  display: inline-block;
+  font-size: 32rpx;
+  padding: 0;
+}
+
+button::after {
+  border: none;
+}
+
+.model-back {
+  color: #fff;
+  margin-left: 30rpx;
+  background-color: #FD500D;
+}
+
+.model-sure {
+  color: #fff;
+  background-color: #AAAAAA;
+}
+
+.b-queue-container {
+  padding: 40rpx 0;
+}
+
+.b-queue-cell {
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+}
+
+.b-queue-wait {
+  text-align: center;
+}
+
+.b-queue-title {
+  color: #333;
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+}
+
+.b-queue-wait-number {
+  font-size: 48rpx;
+}
+
+.b-queue-normal-number {
+  font-size: 28rpx;
+  color: #333;
+}

@@ -1,6 +1,7 @@
 //main.js
 //获取应用实例
-var md5 = require("../../utils/md5.js");
+var md5 = require("../../utils/entrypt/md5");
+const ApiConst = require("../../utils/api/ApiConst.js");
 var app = getApp()
 Page({
 	data: {
@@ -21,7 +22,7 @@ Page({
 	},
 	onShow: function() {
 		wx.request({
-			url: app.globalData.baseUrl + 'app/get/user_deposit_ispaid',
+			url: ApiConst.USER_DEPOSIT_ISPAID,
 			data: {},
 			header: app.globalData.header,
 			success: res => {
@@ -60,7 +61,7 @@ Page({
 					//console.log(res.code)
 					//发起网络请求
 					wx.request({
-						url: app.globalData.baseUrl + 'app/commit/pay_user_deposit',
+						url: ApiConst.PAY_USER_DESPOSIT,
 						data: {
 							wx_code: res.code
 						},
@@ -121,7 +122,7 @@ Page({
 	},
 	returnDeposit: function() {
 		wx.request({
-			url: app.globalData.baseUrl + 'app/get/user_not_finish_ad',
+			url: ApiConst.CHECK_AD_FINISH,
 			data: {},
 			header: app.globalData.header,
 			success: obj => {
@@ -139,11 +140,11 @@ Page({
 							confirmText: "不退了",
 							cancelText: "退押金",
 							cancelColor: "#ccc",
-							confirmColor: "#FF555C",
+							confirmColor: "#FD500D",
 							success: function(res) {
 								if(res.cancel) {
 									wx.request({
-										url: app.globalData.baseUrl + 'app/commit/deposit_sendback',
+										url: ApiConst.DESPOSIT_SENDBACK,
 										data: {},
 										header: app.globalData.header,
 										success: res2 => {

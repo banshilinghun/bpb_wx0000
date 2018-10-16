@@ -1,0 +1,30 @@
+
+
+.b-commit-btn-wrapper{
+  padding: 15px;
+  background-color: #fff;
+  border-top: 1rpx solid #ddd;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.b-commit-btn{
+  height: 44px;
+  line-height: 44px;
+  background: linear-gradient(90deg, #FD500D, #ff5d39);
+  padding: 0;
+  margin: 0;
+  font-size: 32rpx;
+  color: #fff;
+  border-radius: 10rpx;
+}
+
+button::after{
+  border: none;
+}
+
+.b-content{
+  padding-bottom: 74px
+}

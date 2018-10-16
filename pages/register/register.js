@@ -1,4 +1,5 @@
-var util = require("../../utils/util.js");
+var util = require("../../utils/common/util");
+const ApiConst = require("../../utils/api/ApiConst.js");
 const app = getApp()
 Page({
   data: {
@@ -16,43 +17,26 @@ Page({
     pwdIcon: "../../image/pwdIcon.png",
     verifiIcon: "../../image/verifiIcon.png",
     istrue: true,
-    wx_code: app.globalData.code,
+    wx_code: app.globalData.code
   },
 
   onLoad: function (options) {
-    app.globalData.shareInviteId = options.inviteId
-    //console.log('shareInviteId----------->' + app.globalData.shareInviteId)
-    this.getWxCode()
-  },
-
-  //获取wx_code
-  getWxCode: function () {
-    var that = this
-    wx.login({
-      success: res => {
-        that.setData({
-          wx_code: res.code,
-        })
-      },
-    })
+    app.globalData.shareInviteId = options.inviteId;
   },
 
   formSubmit: function (e) {
     var param = e.detail.value;
-    //console.log(e)
     this.mysubmit(param);
   },
 
   mysubmit: function (param) {
     var that = this;
-    //console.log(param)
     var registData = {};
     if (app.globalData.recomId) {
       registData.recommender_userid = app.globalData.recomId;
     }
     registData.phone_no = param.username.trim();
     registData.verify_code = param.smsCode.trim();
-    //registData.password = param.password.trim();
     registData.wx_code = that.data.wx_code.trim();
     if (app.globalData.userInfo) {
       registData.avatar = app.globalData.userInfo.avatarUrl;
@@ -68,7 +52,7 @@ Page({
     if (flag) {
       this.setregistData1();
       wx.request({
-        url: app.globalData.baseUrl + 'app/user/regist',
+        url: ApiConst.REGIST,
         data: registData,
         header: app.globalData.header,
         success: res => {
@@ -174,12 +158,26 @@ Page({
     })
   },
 
+  handleSmsCode(){
+    //先获取 wxcode
+    this.getWxCode();
+  },
+
+  //获取wx_code
+  getWxCode: function () {
+    var that = this
+    wx.login({
+      success: res => {
+        that.setData({
+          wx_code: res.code,
+        })
+        that.getSmsCode();
+      },
+    })
+  },
+
   getSmsCode: function () {
-    //		console.log(e)
     var that = this;
-    that.getWxCode();
-    // var phoneNo = that.data.phone;
-    //var wxcode = app.globalData.code.trim()
     var count = 60;
     var rqData = {
       phone_no: that.data.phone,
@@ -207,7 +205,7 @@ Page({
     }, 1000);
 
     wx.request({
-      url: app.globalData.baseUrl + 'app/get/regist_verify_wx',
+      url: ApiConst.REGIST_VERRIFY_WX,
       data: rqData,
       header: app.globalData.header,
       success: res => {

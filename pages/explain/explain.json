@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "explainView": "../../components/explainView/index"
+  }
+}
