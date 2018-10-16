@@ -45,7 +45,7 @@
 }
 
 .b-record-footer{
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   display: flex;
   position: fixed;
   bottom: 0;

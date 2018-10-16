@@ -113,7 +113,7 @@ page {
   margin: 0 auto;
   margin-top: 20px;
   border: none;
-  background-color: #ff555c;
+  background-color: #FD500D;
   color: #fff;
   margin-bottom: 20px;
 }
@@ -309,7 +309,7 @@ page {
 }
 
 .data-text {
-  color: #ff555c;
+  color: #FD500D;
   font-weight: 500;
 }
 
@@ -362,7 +362,7 @@ button::after {
 color:#999;
 }
 .timetxt2{
-color:#ff555c;
+color:#FD500D;
 }
 
 .notify_swiper{
@@ -391,10 +391,10 @@ height: 60rpx;
 line-height: 60rpx;
 padding:0;
 text-align:right;
-border:2rpx solid #ff555c;
+border:2rpx solid #FD500D;
 padding-left:24rpx;
 padding-right:24rpx;
-color:#ff555c;
+color:#FD500D;
 font-size: 32rpx;
 font-weight: 500;
 }
@@ -404,7 +404,7 @@ font-weight: 500;
 }
 .sharetext{
   font-size: 20rpx;
-  color: #ff555c;
+  color: #FD500D;
 }
 .taewtw{
   width: 100%;
@@ -412,7 +412,7 @@ font-weight: 500;
   line-height: 60rpx;
   background: #FDFFE8;
   font-size: 24rpx;
-  color: #FF555C;
+  color: #FD500D;
   text-align: center;
 }
 .amount{
@@ -466,7 +466,7 @@ font-weight: 500;
   height: 96rpx;
   width: 100%;
   font-size: 26rpx;
-  background: #FF555C;
+  background: #FD500D;
    display: flex;
   /* padding: 20rpx;
   padding-top: 20rpx;

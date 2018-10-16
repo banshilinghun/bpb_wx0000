@@ -43,7 +43,7 @@
 }
 
 .b-body-money{
-  color: #ff555c;
+  color: #FD500D;
   font-weight: 500;
   font-size: 28rpx
 }
@@ -65,7 +65,7 @@
 }
 
 .b-record-footer{
-  background: linear-gradient(45deg, #ff555c, #FB653D);
+  background: linear-gradient(45deg, #FD500D, #FB653D);
   display: flex
 }
 
@@ -109,7 +109,7 @@
 }
 
 .b-real-amount{
-  color: #ff555c;
+  color: #FD500D;
   font-size: 40rpx;
   font-weight: 500
 }

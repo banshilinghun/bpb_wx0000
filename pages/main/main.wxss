@@ -118,7 +118,7 @@ page {
 }
 
 .data-text {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .b-amount-blod{
@@ -200,7 +200,7 @@ button::after {
 }
 
 .timetxt2 {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .notify_swiper {
@@ -240,7 +240,7 @@ button::after {
 
 .sharetext {
   font-size: 20rpx;
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .taewtw {
@@ -249,7 +249,7 @@ button::after {
   line-height: 60rpx;
   background: #fdffe8;
   font-size: 24rpx;
-  color: #ff555c;
+  color: #FD500D;
   text-align: center;
 }
 
@@ -317,7 +317,7 @@ movable-view {
   height: 80rpx;
   width: 100%;
   font-size: 26rpx;
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   display: flex;
   align-items: center;
   text-align: left;
@@ -374,7 +374,7 @@ movable-view {
 .title0 {
   text-align: center;
   font-size: 36rpx;
-  color: #ff555c;
+  color: #FD500D;
   padding-top: 20rpx;
 }
 
@@ -408,7 +408,7 @@ movable-view {
 }
 
 .wtwabt2 {
-  background: #ff555c;
+  background: #FD500D;
   color: #fff;
   width: 88%;
   margin: 0 auto;
@@ -530,11 +530,11 @@ movable-view {
 }
 
 .b-title-right{
-  color: #ff555c
+  color: #FD500D
 }
 
 .b-task-wrapper{
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -551,7 +551,7 @@ movable-view {
 
 .b-task-btn{
   background-color: #fff;
-  color: #ff555c;
+  color: #FD500D;
   font-size: 28rpx;
   border-radius: 10rpx;
   padding: 5rpx 10rpx

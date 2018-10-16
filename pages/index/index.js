@@ -152,14 +152,16 @@ Page({
           //if (res.phone) {}
           that.switchPage(Router.MAIN_URL);
         } else {
-          if (that.data.jump == 'ads') {
+          if (that.data.jump === 'ads') {
             that.switchPage(Router.MAIN_URL);
-          } else if (that.data.jump == 'regist') {
+          } else if (that.data.jump === 'regist') {
             that.redirectPage('../register/register');
-          } else if (that.data.jump == 'recommend') {
+          } else if (that.data.jump === 'recommend') {
             that.redirectPage('../recommend/recommend?flag=mp');
-          } else if (that.data.jump == 'account') {
+          } else if (that.data.jump === 'account') {
             that.switchPage('../me/me');
+          } else if(that.data.jump === 'teach'){
+            that.redirectPage(Router.TEACHING_URL);
           } else {
             if (that.data.go_adId) {
               console.log(that.data.go_adId)

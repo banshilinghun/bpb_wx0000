@@ -8,7 +8,7 @@ var windowWidth;
 var windowHeight;
 const TEXT_COLOR = '#000000';
 const WHITE = '#FFFFFF';
-const THEME_COLOR = '#FF555C';
+const THEME_COLOR = '#FD500D';
 const GRAY_COLOR = '#333333';
 const NORMAL_COLOR = '#666666';
 const TINT_COLOR = '#747474';

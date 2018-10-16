@@ -10,7 +10,7 @@ text {
 }
 
 .menu-text.selected {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .input-area input {
@@ -36,7 +36,7 @@ text {
   width: 95%;
   margin: 0 auto;
   border: none;
-  background-color: #ff555c;
+  background-color: #FD500D;
   color: #fff
 }
 

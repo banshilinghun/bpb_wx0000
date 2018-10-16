@@ -71,7 +71,7 @@
 
 .ar_cont_text {
   font-size: 24rpx;
-  color: #ff555c;
+  color: #FD500D;
   margin-left: 20rpx;
   flex: 1
 }
@@ -93,7 +93,7 @@
   font-size: 32rpx;
   margin-top: 20px;
   border: none;
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   color: #fff;
 }
 
@@ -113,7 +113,7 @@
 
 .fllow_btn {
   width: 100%;
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   margin-top: 60rpx;
   border: 0;
   color: #fff;
@@ -151,7 +151,7 @@
 }
 
 .btn-action {
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   width: 300rpx;
   height: 80rpx;
   line-height: 80rpx;

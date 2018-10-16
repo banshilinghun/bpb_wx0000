@@ -162,8 +162,8 @@
 }
 
 .btn-enable {
-  color: #ff555c;
-  border: 2rpx solid #ff555c;
+  color: #FD500D;
+  border: 2rpx solid #FD500D;
 }
 
 .btn-disable {
@@ -289,7 +289,7 @@
 }
 
 .theme-color {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .share-color {

@@ -96,7 +96,7 @@ page{
   margin: 0 auto;
   margin-top: 20px;
   border: none;
-  background-color: #ff555c;
+  background-color: #FD500D;
   color: #fff;
   margin-bottom: 20px;
 }
@@ -146,7 +146,7 @@ page{
 .tips {
   font-size: 24rpx;
   text-align: center;
-  color: #ff555c;
+  color: #FD500D;
   margin-top: 40rpx;
 }
 .nobd{
@@ -156,7 +156,7 @@ page{
   color: #999;
 }
 .pltext2{
-  color: #FF555C;
+  color: #FD500D;
 }
 .pltext3{
   color:#03d0b7;

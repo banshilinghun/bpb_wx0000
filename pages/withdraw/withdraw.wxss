@@ -44,7 +44,7 @@
 
 .qbtxtext {
   float: right;
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .price {
@@ -118,7 +118,7 @@ input {
 
 .btn-quit{
   margin-top: 80rpx;
-  background: linear-gradient(90deg, #ff555c, #ff5d39);
+  background: linear-gradient(90deg, #FD500D, #ff5d39);
   border-radius: 10rpx
 }
 
@@ -128,7 +128,7 @@ input {
 
 .b-withdraw-tip{
   font-size: 24rpx;
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .b-modal-wrapper{

@@ -5,7 +5,7 @@ page{
 }
 
 .b-header-wrapper{
-  background: #ff555c;
+  background: #FD500D;
   box-shadow: 0px 3px 10px #aaa
 }
 
@@ -64,7 +64,7 @@ page{
 }
 
 .b-income-container{
-  background: linear-gradient(180deg, #ff555c, rgba(236, 235, 242, 0.7));
+  background: linear-gradient(180deg, #FD500D, rgba(236, 235, 242, 0.7));
   padding-top: 20rpx;
 }
 

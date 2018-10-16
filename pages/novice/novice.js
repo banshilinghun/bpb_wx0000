@@ -6,7 +6,7 @@ const ApiConst = require("../../utils/api/ApiConst.js");
 Page({
   data: {
     registBtnTxt: "确定",
-    registBtnBgBgColor: "#FF555C",
+    registBtnBgBgColor: "#FD500D",
     color: '#FF5539',
     getSmsCodeBtnTxt: "获取验证码",
     getSmsCodeBtnColor: "transparent",
@@ -157,7 +157,7 @@ Page({
     this.setData({
       registBtnTxt: "确定",
       registDisabled: !this.data.registDisabled,
-      registBtnBgBgColor: "#FF555C",
+      registBtnBgBgColor: "#FD500D",
       btnLoading: !this.data.btnLoading
     });
   },

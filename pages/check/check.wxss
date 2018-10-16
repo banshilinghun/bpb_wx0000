@@ -50,7 +50,7 @@
 
 .check-help-text {
   font-size: 26rpx;
-  color: #ff555c;
+  color: #FD500D;
   display: block;
   line-height: 1;
 }
@@ -79,7 +79,7 @@
   width: 95%;
   margin: 0 auto;
   border: none;
-  background-color: #ff555c;
+  background-color: #FD500D;
   color: #fff;
 }
 

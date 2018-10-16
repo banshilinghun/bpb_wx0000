@@ -108,7 +108,7 @@
   width: 50%;
   height: 70rpx;
   line-height: 70rpx;
-  background-color: #ff555c;
+  background-color: #FD500D;
   padding: 0;
   font-size: 32rpx;
   border-radius: 8rpx;

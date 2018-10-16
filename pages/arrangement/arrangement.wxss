@@ -272,7 +272,7 @@ button::after {
 }
 
 .theme-color{
-  color: #ff555c;
+  color: #FD500D;
   line-height: 1;
 }
 

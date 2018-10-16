@@ -71,7 +71,7 @@
 
 .b-model-explain-text{
   font-size: 24rpx;
-  color: #ff555c
+  color: #FD500D
 }
 
 .b-model-explain-icon{
@@ -133,7 +133,7 @@ button::after {
 }
 
 .b-btn-confirm {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .b-modal-btn-loading {

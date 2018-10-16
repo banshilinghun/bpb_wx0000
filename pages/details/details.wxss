@@ -420,7 +420,7 @@ button::after {
 .title0 {
   text-align: center;
   font-size: 40rpx;
-  color: #ff555c;
+  color: #FD500D;
   padding-top: 20rpx;
 }
 
@@ -732,14 +732,14 @@ button::after {
 
 .fastwx3 {
   background: #fff;
-  color: #ff555c;
+  color: #FD500D;
   font-size: 28rpx;
   text-align: center;
   height: 56rpx;
   line-height: 56rpx;
   width: 128rpx;
   border-radius: 28rpx;
-  border: 2rpx solid #ff555c;
+  border: 2rpx solid #FD500D;
 }
 
 .txtstx {
@@ -895,7 +895,7 @@ button::after {
 }
 
 .wtwabt2 {
-  background: #ff555c;
+  background: #FD500D;
   color: #fff;
   width: 88%;
   margin: 0 auto;
@@ -907,7 +907,7 @@ button::after {
   line-height: 80rpx;
   background: #fdffe8;
   font-size: 28rpx;
-  color: #ff555c;
+  color: #FD500D;
   text-align: center;
 }
 
@@ -1015,12 +1015,12 @@ button::after {
 }
 
 .tasts {
-  color: #ff555c;
+  color: #FD500D;
   font-size: 24rpx;
 }
 
 .red-text {
-  color: #ff555c;
+  color: #FD500D;
   position: relative;
 }
 
@@ -1213,7 +1213,7 @@ button {
   font-size: 24rpx;
   padding: 0;
   border-radius: 28rpx;
-  background-color: #ff555c;
+  background-color: #FD500D;
   margin: 0;
 }
 
@@ -1280,7 +1280,7 @@ button {
 }
 
 .timetxt2 {
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .subscribe_immediately {
@@ -1291,11 +1291,11 @@ button {
 }
 
 .b-start-subscribe {
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
 }
 
 .b-action-disenable {
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   opacity: 0.5
 }
 
@@ -1339,7 +1339,7 @@ button {
 
 .b-see-more-text {
   font-size: 28rpx;
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .subscribe-wrapper {
@@ -1549,7 +1549,7 @@ button {
   height: 80rpx;
   border-radius: 50%;
   color: #fff;
-  background: #ff555c;
+  background: #FD500D;
   font-size: 24rpx;
   position: fixed;
   top: 100rpx;
@@ -1676,7 +1676,7 @@ button {
 }
 
 .b-title-stauts {
-  color: #ff555c;
+  color: #FD500D;
   font-size: 24rpx;
   margin-left: 20rpx;
   display: inline-block
@@ -1798,7 +1798,7 @@ button {
 
 .b-cell-select {
   background: rgba(255, 93, 57, 0.1);
-  color: #ff555c
+  color: #FD500D
 }
 
 .b-cell-normal {
@@ -1830,7 +1830,7 @@ button::after {
 }
 
 .btn-enable {
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   opacity: 1
 }
 
@@ -1851,7 +1851,7 @@ button::after {
 }
 
 .theme-color {
-  color: #ff555c
+  color: #FD500D
 }
 
 .normal-color {
@@ -1889,7 +1889,7 @@ button::after {
 }
 
 .b-server-surplus_count{
-  color: #ff555c;
+  color: #FD500D;
   margin-left: 10rpx
 }
 

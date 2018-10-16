@@ -50,9 +50,9 @@
   font-size: 28rpx;
   border-radius: 40rpx;
   color: #fff;
-  border: 1px solid #ff555c;
+  border: 1px solid #FD500D;
   background-color: #fff;
-  color: #ff555c;
+  color: #FD500D;
   margin: 40rpx auto
 }
 

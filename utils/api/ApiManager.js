@@ -149,7 +149,7 @@ function showModel(content) {
     title: '提示',
     content: content,
     showCancel: false,
-    confirmColor: "#ff555c"
+    confirmColor: "#FD500D"
   })
 }
 

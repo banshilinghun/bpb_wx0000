@@ -140,7 +140,7 @@ Page({
 							confirmText: "不退了",
 							cancelText: "退押金",
 							cancelColor: "#ccc",
-							confirmColor: "#FF555C",
+							confirmColor: "#FD500D",
 							success: function(res) {
 								if(res.cancel) {
 									wx.request({

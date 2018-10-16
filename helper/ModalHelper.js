@@ -11,7 +11,7 @@
       content: content,
       confirmText: confirmText,
       showCancel: showCancel,
-      confirmColor: "#ff555c"
+      confirmColor: "#FD500D"
     })
   }
 
@@ -28,7 +28,7 @@
       content: content,
       confirmText: confirmText,
       showCancel: showCancel,
-      confirmColor: "#ff555c",
+      confirmColor: "#FD500D",
       success: confirmCallback
     })
   }
@@ -47,7 +47,7 @@
       cancelText: cancelText,
       confirmText: confirmText,
       showCancel: showCancel,
-      confirmColor: "#ff555c",
+      confirmColor: "#FD500D",
       success: confirmCallback
     })
   }

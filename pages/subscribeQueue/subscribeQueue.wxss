@@ -131,7 +131,7 @@ button::after {
 .model-back {
   color: #fff;
   margin-left: 30rpx;
-  background-color: #FF555C;
+  background-color: #FD500D;
 }
 
 .model-sure {

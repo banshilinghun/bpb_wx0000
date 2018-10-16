@@ -31,7 +31,7 @@
 .title0 {
   text-align: center;
   font-size: 36rpx;
-  color: #ff555c;
+  color: #FD500D;
   padding-top: 20rpx;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .wtwabt2 {
-  background: #ff555c;
+  background: #FD500D;
   color: #fff;
   width: 88%;
   margin: 0 auto;

@@ -44,7 +44,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ff555c;
+  background-color: #FD500D;
 }
 
 .model-detail-name{
@@ -90,6 +90,6 @@ button::after{
 }
 
 .model-sure{
-  background-color: #ff555c;
+  background-color: #FD500D;
   color: #fff;
 }

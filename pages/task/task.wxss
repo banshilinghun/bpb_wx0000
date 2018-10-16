@@ -28,7 +28,7 @@
 }
 
 .b-task-status {
-  color: #ff555c;
+  color: #FD500D;
   font-size: 36rpx;
   font-weight: 500;
   font-family:"微软雅黑";
@@ -103,7 +103,7 @@
 }
 
 .b-overtime-tip{
-  color: #ff555c;
+  color: #FD500D;
   font-size: 24rpx;
   font-weight: 500;
   text-align: left;
@@ -111,7 +111,7 @@
 }
 
 .b-need-wait-text{
-  color: #ff555c;
+  color: #FD500D;
   font-size: 24rpx;
   margin-left: 10rpx
 }
@@ -137,7 +137,7 @@
 
 .b-audit-fail{
   font-size: 28rpx;
-  color: #ff555c;
+  color: #FD500D;
   text-align: left
 }
 
@@ -151,7 +151,7 @@
 .b-run-income{
   flex: 1;
   font-size: 36rpx;
-  color: #ff555c;
+  color: #FD500D;
   margin-left: 20rpx;
   font-weight: 500
 }
@@ -181,20 +181,20 @@
 }
 
 .b-run-item-left{
-  color: #ff555c;
+  color: #FD500D;
   font-size: 60rpx;
   line-height: 1;
   font-weight: 600
 }
 
 .b-run-item-right{
-  color: #ff555c;
+  color: #FD500D;
   font-size: 26rpx;
   margin-left: 10rpx
 }
 
 .b-run-statistics{
-  color: #ff555c;
+  color: #FD500D;
   font-size: 32rpx
 }
 
@@ -249,7 +249,7 @@
   padding: 0 25rpx;
   outline: none;
   margin: 0;
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   color: #fff;
   font-family: "微软雅黑";
   font-size: 24rpx;
@@ -334,7 +334,7 @@ button::after {
 
 .ad-money {
   display: inline-block;
-  color: #ff555c;
+  color: #FD500D;
 }
 
 .ad-status {
@@ -357,7 +357,7 @@ button::after {
 }
 
 .ad-time-detail {
-  color: #ff555c;
+  color: #FD500D;
   font-size: 24rpx;
 }
 
@@ -374,7 +374,7 @@ button::after {
   color: #fff;
   padding: 20rpx;
   border-radius: 10rpx;
-  background: linear-gradient(90deg, #ff555c, #FB653D);
+  background: linear-gradient(90deg, #FD500D, #FB653D);
   opacity: 0.7;
   font-size: 24rpx;
   margin-top: 20rpx;
